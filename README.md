@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # sea_frontend
 
 ## Project setup
@@ -14,3 +15,7 @@ npm run serve
 ```
 npm run build
 ```
+=======
+# sea_fronend
+SEA项目前端代码
+>>>>>>> e5a03b8e2723e498472ccc6534512a10f3a8b1bc
