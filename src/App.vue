@@ -1,31 +1,41 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
 
+<script>
+export default {
+  name: "app",
+  created() {
+    if (localStorage.eleToken) {
+      const decode = localStorage.eleToken;
+      const user = localStorage.user;
+      const menu_tree = localStorage.menu_tree;
+      this.$store.dispatch("setAuthenticated", !this.isEmpty(decode));
+      this.$store.dispatch("setUser", user);
+      this.$store.dispatch("setMenuTree", menu_tree);
+    }
+  },
+  methods: {
+    isEmpty(value) {
+      return (
+        value === undefined ||
+        value === null ||
+        (typeof value === "object" && Object.keys(value).length === 0) ||
+        (typeof value === "string" && value.trim().length === 0)
+      );
+    }
+  }
+};
+</script>
+
+
 <style>
+html,
+body,
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  width: 100%;
+  height: 100%;
 }
 </style>
