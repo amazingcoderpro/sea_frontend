@@ -36,7 +36,8 @@ export default {
   name: "head_nav",
   computed: {
     user() {
-      return this.$store.getters.user;
+      // return this.$store.getters.user;
+      return window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user')) : this.$store.getters.user
     }
   },
   methods: {

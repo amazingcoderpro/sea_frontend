@@ -45,9 +45,15 @@
 <script>
 export default {
   name: "leftmenu",
+  computed: {
+    items () {
+      return window.localStorage.getItem('menu_tree') ? JSON.parse(window.localStorage.getItem('menu_tree')) : this.$store.getters.menu_tree
+    }
+  },
   data() {
     return {
-      items: this.$store.getters.menu_tree
+      // items: this.$store.getters.menu_tree
+      // items: JSON.parse(window.localStorage.getItem('menu_tree'))
       
       // items: [{
       //     icon: 'el-icon-lx-home',
@@ -81,6 +87,9 @@ export default {
       //     }]
       // }]      
     };
+  },
+  methods: {
+    
   }
 };
 </script>

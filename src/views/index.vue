@@ -16,6 +16,17 @@ export default {
     components:{
         HeadNav,
         LeftMenu
+    },
+    methods: {
+        created() {
+            console.log(1111)
+        },
+        mounted() {
+            console.log(2222)
+        },
+        updated() {
+            console.log(333)
+        }
     }
 }
 </script>

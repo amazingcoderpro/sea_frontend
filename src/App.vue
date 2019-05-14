@@ -10,8 +10,8 @@ export default {
   created() {
     if (localStorage.eleToken) {
       const decode = localStorage.eleToken;
-      const user = localStorage.user;
-      const menu_tree = localStorage.menu_tree;
+      const user = JSON.parse( localStorage.user);
+      const menu_tree = JSON.parse(localStorage.menu_tree);
       this.$store.dispatch("setAuthenticated", !this.isEmpty(decode));
       this.$store.dispatch("setUser", user);
       this.$store.dispatch("setMenuTree", menu_tree);

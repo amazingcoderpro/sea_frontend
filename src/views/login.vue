@@ -60,9 +60,9 @@ export default {
                 // token
                 const token=res.data.data.token
                 localStorage.setItem("eleToken", token);
-                localStorage.setItem("user", res.data.data.user);
-                localStorage.setItem("menu_tree", res.data.data.menu_tree);
-                localStorage.setItem("router_tree", res.data.data.router_list);
+                localStorage.setItem("user", JSON.stringify( res.data.data.user ));
+                localStorage.setItem("menu_tree", JSON.stringify( res.data.data.menu_tree ));
+                localStorage.setItem("router_tree", JSON.stringify( res.data.data.router_list ));
 
                 // // 解析token
                 // const decoded = jwt_decode(token)
@@ -70,10 +70,10 @@ export default {
 
                 // token 存储到vuex中
                 this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
-                this.$store.dispatch("setUser", res.data.data.user)
-                this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
-                this.$store.dispatch("setRouterTree", res.data.data.router_list)
-                this.$router.addRoutes(res.data.data.router_list)
+                this.$store.dispatch("setUser", JSON.stringify(res.data.data.user))
+                this.$store.dispatch("setMenuTree", JSON.stringify(res.data.data.menu_tree))
+                this.$store.dispatch("setRouterTree", JSON.stringify(res.data.data.router_list))
+                // this.$router.addRoutes(res.data.data.router_list)
                 this.$router.push('/index');
               });
           }
