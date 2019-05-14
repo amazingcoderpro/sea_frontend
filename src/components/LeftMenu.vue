@@ -2,8 +2,7 @@
     <el-row class="menu_page">
          <el-col>
            <el-menu 
-            :default-active="onRoutes" 
-            :collapse="collapse"
+            
             mode="vertical"
             background-color="#324057"
             text-color="#fff"

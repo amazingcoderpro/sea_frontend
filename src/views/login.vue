@@ -28,6 +28,8 @@
 
 <script>
 // import jwt_decode from 'jwt-decode';
+import router from '../router'
+import { type } from 'os';
 export default {
     name: "login",
     components:{},
@@ -60,6 +62,7 @@ export default {
                 localStorage.setItem("eleToken", token);
                 localStorage.setItem("user", res.data.data.user);
                 localStorage.setItem("menu_tree", res.data.data.menu_tree);
+                localStorage.setItem("router_tree", res.data.data.router_list);
 
                 // // 解析token
                 // const decoded = jwt_decode(token)
@@ -69,7 +72,8 @@ export default {
                 this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
                 this.$store.dispatch("setUser", res.data.data.user)
                 this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
-
+                this.$store.dispatch("setRouterTree", res.data.data.router_list)
+                this.$router.addRoutes(res.data.data.router_list)
                 this.$router.push('/index');
               });
           }
