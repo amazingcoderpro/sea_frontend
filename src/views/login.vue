@@ -56,10 +56,10 @@ export default {
             this.$axios.post('/api/v1/account/login/',this.loginUser)
             .then(res => {
                 // token
-                const token=res.data.token
+                const token=res.data.data.token
                 localStorage.setItem("eleToken", token);
-                localStorage.setItem("user", res.data);
-                localStorage.setItem("menu_tree", res.data.menu_tree);
+                localStorage.setItem("user", res.data.data.user);
+                localStorage.setItem("menu_tree", res.data.data.menu_tree);
 
                 // // 解析token
                 // const decoded = jwt_decode(token)
@@ -67,8 +67,8 @@ export default {
 
                 // token 存储到vuex中
                 this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
-                this.$store.dispatch("setUser", res.data.user)
-                this.$store.dispatch("setMenuTree", res.data.menu_tree)
+                this.$store.dispatch("setUser", res.data.data.user)
+                this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
 
                 this.$router.push('/index');
               });

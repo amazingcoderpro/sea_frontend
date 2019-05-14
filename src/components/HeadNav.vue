@@ -15,7 +15,7 @@
                     <span class='username'>
                         <el-dropdown trigger="click" @command='setDialogInfo'>
                             <span class="el-dropdown-link">
-                                下拉菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                                <i class="el-icon-caret-bottom el-icon--right"></i>
                             </span>
                             <el-dropdown-menu slot="dropdown">
                                 <!-- <el-dropdown-item command='info'>个人信息</el-dropdown-item> -->
@@ -33,7 +33,7 @@
 </template>
 <script>
 export default {
-  name: "head-nav",
+  name: "head_nav",
   computed: {
     user() {
       return this.$store.getters.user;

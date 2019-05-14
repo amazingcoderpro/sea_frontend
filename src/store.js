@@ -35,10 +35,11 @@ const mutations = {
       state.user = {}
   },
   [types.SET_MENU_TREE](state, menu_tree) {
-    if (sidebar.length > 0)
-      state.sidebar = sidebar
-    else
-      state.sidebar = []
+    // if (menu_tree.length > 0)
+    //   state.menu_tree = menu_tree
+    // else
+    //   state.menu_tree = []
+    state.menu_tree = menu_tree
   }
 }
 
