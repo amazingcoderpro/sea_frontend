@@ -4,6 +4,10 @@
 ## Project setup
 ```
 npm install
+npm install
+cnpm i element-ui -S
+cnpm install axios
+cnpm install jwt-decode
 ```
 
 ### Compiles and hot-reloads for development
@@ -15,7 +19,3 @@ npm run serve
 ```
 npm run build
 ```
-=======
-# sea_fronend
-SEA项目前端代码
->>>>>>> e5a03b8e2723e498472ccc6534512a10f3a8b1bc

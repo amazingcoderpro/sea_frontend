@@ -17,6 +17,7 @@ import Index from './views/index'
 // import RecordManager from './views/record_manager'
 // import UserManager from './views/user_manager'
 // import RoleManager from './views/role_manager'
+import Menufilter from './components/menufilter.js'
 
 
 Vue.use(Router)
@@ -25,10 +26,10 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: '/',
-      redirect: '/index',
-    },
+    // {
+    //   path: '/',
+    //   redirect: '/index',
+    // },
     {
       path: '/index',
       name: 'index',
@@ -54,8 +55,19 @@ router.beforeEach((to,from,next) =>{
   if(to.path == "/login" || to.path == "/register"){
     next()
   }else{
-    isLogin ? next() : next('/login');
+    // isLogin ? next() : next('/login');
+    if(isLogin) {
+      next()
+      let routes = []
+      let refreshPath = window.localStorage.getItem('router_tree') ? JSON.parse(window.localStorage.getItem('router_tree')) : this.$store.getters.router_tree
+      console.log(refreshPath)
+      Menufilter(routes, refreshPath)
+      router.addRoutes(routes)
+    }else{
+      next('/login')
+    }
   }
 });
+
 
 export default router;

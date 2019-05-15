@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import router from './router'
+// import menufilter from './components/menufilter.js'
 
 Vue.use(Vuex)
 
@@ -45,6 +47,10 @@ const mutations = {
     state.menu_tree = menu_tree
   },
   [types.SET_ROUTER_TREE](state, router_tree) {
+    // let routes = []
+    // menufilter(routes, router_tree)
+    // router.addRoutes(routes)
+    // router.push('/index');
     state.router_tree = router_tree
   }
 }
