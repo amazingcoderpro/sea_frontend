@@ -75,9 +75,9 @@ export default {
                 this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
                 this.$store.dispatch("setRouterTree", res.data.data.router_list)
                 let routes = []
-                Menufilter(routes, res.data.data.router_list)
-                router.addRoutes(routes)
-                router.push('/index');
+                // Menufilter(routes, res.data.data.router_list)
+                // router.addRoutes(routes)
+                router.push('/dashboard');
               });
           }
         });

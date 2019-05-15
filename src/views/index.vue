@@ -1,5 +1,5 @@
 <template>
-    <div class="index">
+    <div class="index"> 
         <HeadNav></HeadNav>
         <LeftMenu></LeftMenu>
         <div class="rightContainer">
