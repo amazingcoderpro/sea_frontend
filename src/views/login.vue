@@ -26,10 +26,11 @@
     </div>
 </template>
 
+
 <script>
 // import jwt_decode from 'jwt-decode';
 import router from '../router'
-import { type } from 'os';
+import Menufilter from '../components/menufilter.js'
 export default {
     name: "login",
     components:{},
@@ -70,10 +71,11 @@ export default {
 
                 // token 存储到vuex中
                 this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
-                this.$store.dispatch("setUser", JSON.stringify(res.data.data.user))
-                this.$store.dispatch("setMenuTree", JSON.stringify(res.data.data.menu_tree))
-                this.$store.dispatch("setRouterTree", JSON.stringify(res.data.data.router_list))
-                // this.$router.addRoutes(res.data.data.router_list)
+                this.$store.dispatch("setUser", res.data.data.user)
+                this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
+                this.$store.dispatch("setRouterTree", res.data.data.router_list)
+                Menufilter(router, res.data.data.router_list)
+                // this.$router.addRoutes(router)
                 this.$router.push('/index');
               });
           }

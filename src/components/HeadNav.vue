@@ -2,7 +2,7 @@
     <header class="head-nav">
         <el-row>
             <el-col :span="6" class='logo-container'>
-                <img src="../assets/logo.png" class='logo' alt="">
+                <img src="../assets/aopenglogo.png" class='logo' alt="">
                 <span class='title'>SEA后台管理系统</span>
             </el-col>
             <el-col :span='6' class="user">

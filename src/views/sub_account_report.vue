@@ -1,12 +1,12 @@
 <template>
-    <div class="dashboard">
+    <div class="sub_account_report">
         dashboard
     </div>
 </template>
 
 <script>
 export default {
-    name: "dashboard",
+    name: "sub_account_report",
     components:{
     }
 }
