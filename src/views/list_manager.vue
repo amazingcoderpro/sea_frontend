@@ -1,12 +1,12 @@
 <template>
-    <div class="list_manager">
+    <div class="pin_manager">
         dashboard
     </div>
 </template>
 
 <script>
 export default {
-    name: "list_manager",
+    name: "pin_manager",
     components:{
     }
 }
