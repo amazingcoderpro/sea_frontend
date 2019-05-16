@@ -86,7 +86,7 @@
                             size="small"
                             @click='handleDelete(scope.row,scope.$index)'
                         >删除</el-button>
-                    </template>
+                    </template>  
                 </el-table-column>
             </el-table>
         </div>
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import DialogFound from "./dialog/userinfoAdd";
+import DialogFound from "./dialog/user_manager";
 
 export default {
   name: "userinfo",

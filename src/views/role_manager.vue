@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import DialogFound from "./dialog/userinfoAdd";
+import DialogFound from "./dialog/user_manager";
 
 export default {
   name: "userinfo",
