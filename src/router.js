@@ -78,9 +78,9 @@ router.beforeEach((to,from,next) =>{
       }else{
         next('/login')
       }
-    }else{
-      next('/login')
-    }
+      }else{
+        next('/login')
+      }
   }
 });
 
