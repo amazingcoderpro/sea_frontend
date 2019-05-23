@@ -17,8 +17,6 @@ export default {
         console.log(localStorage.getItem('callbackHTML'))
         document.write(localStorage.getItem('callbackHTML'));
         document.close();
-
-
     },
     onSubmit() {
     }
