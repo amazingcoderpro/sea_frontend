@@ -15,7 +15,7 @@
                     style="margin:10px;width:auto;">
                     <!-- 用户名 -->
                     <el-form-item label="用户名" prop="username">
-                      <el-input v-model="form.username" placeholder="Leslie"></el-input>
+                      <el-input v-model="form.username" placeholder="admin"></el-input>
                     </el-form-item>
                     <!-- 部门 -->
                     <el-form-item label="部门" prop="section">
@@ -39,27 +39,44 @@
                           </el-option>
                       </el-select>
                     </el-form-item>
-                    <!-- 邮箱 -->
-                    <el-form-item label="邮箱" prop="email">
-                      <el-input v-model="form.email" placeholder="请输入email"></el-input>
-                    </el-form-item>
-                    <!-- 密码 -->
-                    <el-form-item label="密码" prop="password">
-                      <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
-                    </el-form-item>
-                    <!-- 确认密码 -->
-                    <el-form-item label="确认密码" prop="password2">
-                      <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
-                    </el-form-item>
+                    <!-- 创建时间 -->
+                     <el-form-item label="创建时间" prop="create_time">
+                       <el-date-picker
+                        v-model="value10"
+                        type="date"
+                        placeholder="选择日期"
+                        format="yyyy 年 MM 月 dd 日">
+                      </el-date-picker>
+                     </el-form-item>
+                     <!-- 更新时间 -->
+                       <el-form-item label="更新时间" prop="update_time">
+                       <el-date-picker
+                        v-model="value11"
+                        type="date"
+                        placeholder="选择日期"
+                        format="yyyy 年 MM 月 dd 日">
+                      </el-date-picker>
+                     </el-form-item>
                     <!-- 取消，提交 -->
                     <el-form-item  class="text_right">
                         <el-button @click="dialog.show = false">取 消</el-button>
                         <el-button type="primary" @click='onSubmit("form")'>提  交</el-button>
                     </el-form-item>
+
                 </el-form>
             </div>
         </el-dialog>
+        <el-tree
+          :data="data2"
+          show-checkbox
+          default-expand-all
+          node-key="id"
+          ref="tree"
+          highlight-current
+          :props="defaultProps">
+        </el-tree>
     </div>
+  
 </template>
 
 <script>
@@ -78,6 +95,8 @@ export default {
       }
     };
     return {
+        // value10: '',
+        // value11: '',
       form_rules: {
           username: [
             { required: true, message: "用户名不能为空", trigger: "change" },
@@ -111,27 +130,6 @@ export default {
       }
     };
   },
-  //  data() {
-  //     return {
-  //       options1: [{
-  //         value: '选项1',
-  //         label: '研发中心'
-  //       }, {
-  //         value: '选项2',
-  //         label: 'OP事业部'
-  //       }, {
-  //         value: '选项3',
-  //         label: '财务部'
-  //       }, {
-  //         value: '选项4',
-  //         label: '人事部'
-  //       }, {
-  //         value: '选项5',
-  //         label: 'BP'
-  //       }],
-  //       value: ''
-  //     }
-  //   },
   methods: {
 
     onSubmit(form) {
