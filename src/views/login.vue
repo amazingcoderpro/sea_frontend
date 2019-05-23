@@ -59,9 +59,9 @@ export default {
             this.$axios.post('/api/v1/account/login/',this.loginUser)
             .then(res => {
                 // token
-                console.log(res.data.data)
-                if(res.status && res.data.code == 1){
-                    const token=res.data.data.token
+                console.log(res.data)
+                if(res.data.code == 1){
+                    const token=res.data.data.token;
                     localStorage.setItem("eleToken", token);
                     localStorage.setItem("user", JSON.stringify( res.data.data.user ));
                     localStorage.setItem("menu_tree", JSON.stringify( res.data.data.menu_tree ));
@@ -81,11 +81,11 @@ export default {
                     // router.addRoutes(routes)
                     router.push('/dashboard');
                 }else{
-                this.$message({
-                  message: res.data.data,
-                  type: 'warning',
-                  center: true
-                });
+                  this.$message({
+                    message: res.data.data,
+                    type: 'warning',
+                    center: true
+                  });
                 }
               });
           }
