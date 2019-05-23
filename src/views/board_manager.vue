@@ -9,7 +9,6 @@
         </div>
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog='dialog'  ></DialogFound>
-        <!-- <iframe :src="iframeSrc" style="width:100%;height:500px;" frameborder="0"></iframe> -->
 
     </div>
 </template>
@@ -93,22 +92,10 @@ export default {
       };
     },
     getPinFun(row) {
-        // 获取权限
-        // this.$axios.post(`/api/v1/pinterest_account/${row.id}`).then(res => {
-
-
-        this.$axios.post(`/api/v1/pinterest_account/2/`).then(res => {
-            console.log(res.data)
+        this.$axios.post(`/api/v1/pinterest_account_outh/2/`).then(res => {
+            console.log(res)
             if(res.data.code == 1){
-              //  localStorage.removeItem('callbackHTML');
-                          console.log(res.data.data.message)
-
-                localStorage.setItem('callbackHTML',res.data.data.message);
-                this.dialog = {
-                  show: true,
-                  title: "获取权限",
-                  option: "put"
-                };  
+              window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
             }else{
                 this.$message({
                   message: res.data.msg,
