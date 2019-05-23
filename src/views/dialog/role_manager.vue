@@ -84,7 +84,20 @@ export default {
   name: "logfound",
   props: {
     dialog: Object,
-    form: Object
+    form: Object,
+    department: [{
+          value: '选项1',
+          label: '站长'
+        }, {
+          value: '选项2',
+          label: '运营专员'
+        }, {
+          value: '选项3',
+          label: '用户名'
+        }, {
+          value: '选项4',
+          label: '创建时间'
+        }]
   },
   data() {
     var validatePass2 = (rule, value, callback) => {

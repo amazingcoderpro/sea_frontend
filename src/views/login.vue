@@ -1,8 +1,7 @@
 <template>
     <div class="login">
         <section class="form_container">
-            <div class="manage_tip">
-                <span class="title">SEO后台管理系统</span>
+                  <span class="title">SEO后台管理系统</span>
                   <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
                     
                     <el-form-item label="账号" prop="username">
@@ -21,7 +20,6 @@
                         <p>还没有账号？现在<router-link to='/login'>注册</router-link> </p>
                     </div>
                   </el-form>
-            </div>
         </section>
     </div>
 </template>
@@ -82,7 +80,7 @@ export default {
                     router.push('/dashboard');
                 }else{
                   this.$message({
-                    message: res.data.data,
+                    message: res.data.msg.detail,
                     type: 'warning',
                     center: true
                   });

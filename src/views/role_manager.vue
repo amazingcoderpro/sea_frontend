@@ -2,9 +2,9 @@
   <div class="fillcontain">
     <!-- 搜索框 -->
     <div class="btnLeft">
-      <el-select v-model="value" placeholder="请选择">
+      <el-select v-model="RoleOptionsVal" placeholder="请选择">
         <el-option
-          v-for="item in options"
+          v-for="item in RoleOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -95,9 +95,6 @@
     <!-- 分页 -->
     <div class="block">
       <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
         :page-sizes="[10, 20, 30, 40]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
@@ -116,12 +113,26 @@ export default {
   name: "userinfo",
   data() {
     return {
+      RoleOptionsVal:"",
       tableData: [],
       dialog: {
         show: false,
         title: "",
         option: "edit"
       },
+      RoleOptions: [{
+        value: '选项1',
+        label: '站长'
+      }, {
+        value: '选项2',
+        label: '运营专员'
+      }, {
+        value: '选项3',
+        label: '用户名'
+      }, {
+        value: '选项4',
+        label: '创建时间'
+      }],
       form: {
         id: "",
         name: "",
@@ -129,24 +140,6 @@ export default {
       }
     };
   },
-  //  data() {
-  //     return {
-  //       options: [{
-  //         value: '选项1',
-  //         label: '站长'
-  //       }, {
-  //         value: '选项2',
-  //         label: '运营专员'
-  //       }, {
-  //         value: '选项3',
-  //         label: '用户名'
-  //       }, {
-  //         value: '选项4',
-  //         label: '创建时间'
-  //       }],
-  //       value8: ''
-  //     }
-  //   },
   components: {
     DialogFound
   },
@@ -157,8 +150,7 @@ export default {
     getProfile() {
       // 获取表格数据
       this.$axios("/api/v1/account/role/?page=1&page_size=10").then(res => {
-        this.tableData = res.data.results;
-        // this.filterTableData = res.data;
+        this.tableData = res.data.data.results;
       });
     },
     handleDelete(row) {
