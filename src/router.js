@@ -56,11 +56,6 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/BoardManagerHtml',
-      name: 'BoardManagerHtml',
-      component: BoardManagerHtml
-    },
-    {
       path: '*',
       name: '/404',
       component: Notfount
