@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="6" class='logo-container'>
                 <img src="../assets/aopenglogo.png" class='logo' alt="">
-                <span class='title'>SEA后台管理系统</span>
+                <span class='title'>Social Media管理系统</span>
             </el-col>
             <el-col :span='6' class="user">
                 <div class="userinfo">
@@ -86,11 +86,11 @@ export default {
   min-width: 400px;
 }
 .logo {
-  height: 50px;
-  width: 50px;
-  margin-right: 5px;
-  vertical-align: middle;
-  display: inline-block;
+    margin-left: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+    display: inline-block;
+    width: 42px;
 }
 .title {
   vertical-align: middle;

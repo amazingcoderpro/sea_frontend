@@ -7,6 +7,39 @@
                 </el-form-item>
             </el-form>
         </div>
+        <!-- 表单部分 -->
+        <div class="table_right">
+          <el-table :data="tableData" border>
+            <el-table-column prop="role_name" label="角色" align="center" width="400"></el-table-column>
+            <el-table-column prop="create_time" label="创建时间" align="center" width="400">
+              <template slot-scope="scope">
+                <i class="el-icon-time"></i>
+                <span style="margin-left: 10px">{{ scope.row.create_time }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="update_time" label="更新时间" align="center" width="400">
+              <template slot-scope="scope">
+                <i class="el-icon-time"></i>
+                <span style="margin-left: 10px">{{ scope.row.update_time }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="operation" align="center" label="操作" fixed="right" width="400">
+              <template slot-scope="scope">
+                  <el-button
+                  type="danger"
+                  icon="delete"
+                  size="small"
+                  @click="handleDelete(scope.row,scope.$index)"
+                >权限范围配置</el-button>
+                <el-button type="warning" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+
+
+
+
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog='dialog'  ></DialogFound>
 
@@ -36,20 +69,22 @@ export default {
         email: "",
         nickname: "",
       }
+
+
+
     };
   },
   components: {
      DialogFound
   },
   created() {
-    //this.getProfile();
+    this.init();
   },
   methods: {
-    getProfile() {
+    init() {
       // 获取表格数据
       this.$axios("/api/v1/account/users/?page=1&page_size=10").then(res => {
-        this.tableData = res.data.results;
-        // this.filterTableData = res.data;
+        this.tableData = res.data.data.results;
       });
     },
     handleEdit(row) {

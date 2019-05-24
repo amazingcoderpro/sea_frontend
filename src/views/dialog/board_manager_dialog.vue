@@ -8,7 +8,6 @@
             :close-on-press-escape='false'
             :modal-append-to-body="false">
 
-             <!-- <iframe :src="iframeSrc" style="width:100%;height:500px;" frameborder="0"></iframe>  -->
         </el-dialog>
     </div>
 </template>

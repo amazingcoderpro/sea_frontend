@@ -2,7 +2,6 @@
     <el-row class="menu_page">
          <el-col>
            <el-menu 
-            
             mode="vertical"
             background-color="#324057"
             text-color="#fff"
@@ -12,32 +11,34 @@
 
               <template v-for="item in items">
                   <template v-if="item.childs.length != 0">
-                      <el-submenu :index="item.menu_url" :key="item.menu_url">
+                          <el-submenu :index="item.menu_url" :key="item.menu_url">
                           <template slot="title">
                               <i :class="item.icon"></i><span slot="title">{{ item.menu_name }}</span>
                           </template>
                           <template v-for="subItem in item.childs">
-                              <el-submenu v-if="subItem.childs" :index="subItem.menu_url" :key="subItem.menu_url">
-                                  <template slot="title">{{ subItem.menu_name }}</template>
-                                  <!-- 三级菜单 -->
-                                  <el-menu-item v-for="(threeItem,i) in subItem.childs" :key="i" :index="threeItem.menu_url">
-                                      {{ threeItem.menu_name }}
-                                  </el-menu-item>
-                              </el-submenu>
-                              <el-menu-item v-else :index="subItem.menu_url" :key="subItem.menu_url">
+                              <!-- 二级菜单 -->
+                              <template v-if="subItem.menu_name !='BoardManager' && subItem.menu_name !='PinManager' ">
+                                <el-submenu v-if="subItem.childs.length != 0" :index="subItem.menu_url" :key="subItem.menu_url">
+                                    <template slot="title">{{ subItem.menu_name }}</template>
+                                    <!-- 三级菜单 -->
+                                    <el-menu-item v-for="(threeItem,i) in subItem.childs" :key="i" :index="threeItem.menu_url">
+                                        {{ threeItem.menu_name }}
+                                    </el-menu-item>
+                                </el-submenu>
+                                <el-menu-item  :index="subItem.menu_url" :key="subItem.menu_url"  v-else>
                                   {{ subItem.menu_name }}
-                              </el-menu-item>
+                                </el-menu-item>
+                              </template>
                           </template>
                       </el-submenu>
                   </template>
                   <!-- 没有二级菜单 -->
                   <template v-else>
-                      <el-menu-item :index="item.menu_url" :key="item.menu_url">
+                      <el-menu-item  :index="item.menu_url" :key="item.menu_url">
                           <i :class="item.icon"></i><span slot="title">{{ item.menu_name }}</span>
                       </el-menu-item>
                   </template>
               </template>
-
           </el-menu>
          </el-col>
     </el-row>
