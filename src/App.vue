@@ -38,4 +38,7 @@ body,
   width: 100%;
   height: 100%;
 }
+.paging{
+  text-align: right;  padding-right: 20px;padding-top: 20px;
+}
 </style>

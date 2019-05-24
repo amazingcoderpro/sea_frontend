@@ -10,13 +10,14 @@ import PinsDailyReport from './views/sub_account_daily_report'
 import SubAccountReport from './views/sub_account_report'
 import BoardReport from './views/board_report'
 import PinsReport from './views/pins_peport'
-import AccountManager from './views/account_manager'
-import BoardManager from './views/board_manager'
+import AccountList from './views/account/account_List'
+import BoardList from './views/board/board_List'
 import PinManager from './views/pin_manager'
-import ListManager from './views/list_manager'
+import RuleList from './views/rule/rule_list'
 import RecordManager from './views/record_manager'
 import UserManager from './views/user_manager'
 import RoleManager from './views/role_manager'
+import StoreManager from './views/store/store_manager'
 
 
 Vue.use(Router)
@@ -41,13 +42,14 @@ const router = new Router({
         { path: '/sub_account_report', name: 'sub_account_report', component: SubAccountReport},
         { path: '/board_report', name: 'board_report', component: BoardReport },
         { path: '/pins_peport', name: 'pins_peport', component: PinsReport },
-        { path: '/account_manager', name: 'account_manager', component: AccountManager },
-        { path: '/board_manager', name: 'board_manager', component: BoardManager },
+        { path: '/account_manager', name: 'account_List', component: AccountList },
+        { path: '/board_manager', name: 'board_List', component: BoardList },
         { path: '/pin_manager', name: 'pin_manager', component: PinManager },
-        { path: '/list_manager', name: 'list_manager', component: ListManager },
+        { path: '/list_manager', name: 'rule_list', component: RuleList },
         { path: '/record_manager', name: 'record_manager', component: RecordManager },
         { path: '/user_manager', name: 'user_manager', component: UserManager },
         { path: '/role_manager', name: 'role_manager', component: RoleManager },
+        { path: '/store_manager', name: 'store_manager', component: StoreManager },
       ]
     },
     {

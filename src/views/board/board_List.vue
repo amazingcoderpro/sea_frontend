@@ -1,5 +1,5 @@
 <template>
-    <div class="board_manager">
+    <div class="board_List ">
         <div>
             <el-form :inline="true" ref="add_data">
                  <el-form-item class="btnRight">
@@ -7,6 +7,7 @@
                 </el-form-item>
             </el-form>
         </div>
+
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border>
@@ -41,17 +42,17 @@
 
 
         <!-- 展示请求权限的弹窗 -->
-        <DialogFound :dialog='dialog'  ></DialogFound>
+        <!-- <DialogFound :dialog='dialog'  ></DialogFound> -->
 
     </div>
 </template>
 
 <script>
 
-import DialogFound from "./dialog/board_manager_dialog";
+// import DialogFound from "./dialog/board_manager_dialog";
 
 export default {
-  name: "board_manager",
+  name: "board_List",
   data() {
     return {
       iframeSrc:"dialog/board_manager_html.html",
@@ -75,7 +76,7 @@ export default {
     };
   },
   components: {
-     DialogFound
+    //  DialogFound
   },
   created() {
     this.init();

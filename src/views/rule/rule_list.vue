@@ -1,9 +1,9 @@
 <template>
-    <div class="ListManager">
+    <div class="RuleList">
         <div>
             <el-form :inline="true" ref="add_data">
                  <el-form-item class="btnRight">
-                    <el-button>ListManager</el-button>
+                    <el-button  @click='addRule()'>添加规则</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -12,7 +12,6 @@
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="selection" width="55" ></el-table-column>
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-
             <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="规则标签"  width="150">
               <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
@@ -29,7 +28,6 @@
                     <br/>
                 </div>
             </template>
-
             </el-table-column>
             <el-table-column  align="center" class="parentNodeColumn" prop="scan" label="可发布产品数量"  width="150">
               <template slot-scope="scope"> {{scope.row.scan}}</template>
@@ -50,30 +48,18 @@
           </el-table>
         </div>
         <!-- 分页 -->
-        <div class="paging" style="text-align: right;  padding-right: 20px;padding-top: 20px;">
-          <el-pagination
-            :page-sizes="pagesizes"
-            :page-size="pagesize"
-            @current-change="current_change"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total=total
-          >
-          </el-pagination>
+        <div class="paging">
+          <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
-
-
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog='dialog'></DialogFound>
-
     </div>
 </template>
 
 <script>
-
-import DialogFound from "./dialog/board_manager_dialog";
-
+import DialogFound from "./rule_add";
 export default {
-  name: "ListManager",
+  name: "RuleList",
   data() {
     return {
         total:1,//默认数据总数
@@ -81,7 +67,7 @@ export default {
         pagesizes:[10, 20, 30, 40],//分组数量
         currentPage:1,//默认开始页面
 
-        index:"1",
+        index:"-1",
         tableHeight:"100",
         tableData: [],
         dialog: {
@@ -92,7 +78,7 @@ export default {
     };
   },
   components: {
-     DialogFound
+      DialogFound
   },
   created() {
     this.init();
@@ -104,15 +90,28 @@ export default {
   },
   methods: {
     init() {
-
       // 获取表格数据
         this.index = this.$route.query.index;
-      this.$axios(`/api/v1/rule/?account_id=${this.index}`).then(res => {
-          console.log(res.data)
-        this.tableData = res.data.data.results;
-        this.total = res.data.data.count;
-        
-      });
+        if(this.index == -1 || this.index == null || this.index == undefined){
+              this.$message({
+                message: "参数不全",
+                type: 'warning',
+                center: true
+              });
+        }else{
+          this.$axios(`/api/v1/rule/?page=${this.currentPage}&page_size=${this.pagesize}&account_id=${this.index}`).then(res => {
+            this.tableData = res.data.data.results;
+            this.total = res.data.data.count;
+          });
+        }
+    },
+    addRule() {
+      // 添加
+      this.dialog = {
+        show: true,
+        title: "添加规则",
+        option: "post"
+      };
     },
     handleEdit(row) {
       // 编辑
@@ -129,20 +128,19 @@ export default {
         this.getProfile();
       });
     },
-    handleAdd() {
-      // 添加
-      this.dialog = {
-        show: true,
-        title: "添加用户",
-        option: "post"
-      };
-    },
     ListManagerFun(row) {
       // 去规则详情页面
       this.$router.push({path:"/list_manager", query: { index: row.index }});
     },
-    current_change(currentPage){
-      this.currentPage = currentPage;
+    current_change(val){
+        //点击数字时触发
+        this.currentPage = val;
+        this.init();
+    },
+    handleSizeChange(val){
+        //修改每页显示多少条时触发
+        this.pagesize = val;
+        this.init();
     }
   }
 };

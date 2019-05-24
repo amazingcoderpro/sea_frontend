@@ -1,5 +1,5 @@
 <template>
-    <div class="account_manager">
+    <div class="account_List">
         <div>
             <el-form :inline="true" ref="add_data">
                  <el-form-item class="btnRight">
@@ -75,41 +75,24 @@
           </el-table>
         </div>
         <!-- 分页 -->
-        <div class="paging" style="text-align: right;  padding-right: 20px;padding-top: 20px;">
-          <el-pagination
-            :page-sizes="pagesizes"
-            :page-size="pagesize"
-            @current-change="current_change"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total=total
-          >
-          </el-pagination>
+        <div class="paging">
+          <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
-
-
         <!-- 展示请求权限的弹窗 -->
-        <DialogFound :dialog='dialog'  ></DialogFound>
-
+        <!-- <DialogFound :dialog='dialog'  ></DialogFound> -->
     </div>
 </template>
 
 <script>
-
-import DialogFound from "./dialog/board_manager_dialog";
-
+// import DialogFound from "./dialog/board_manager_dialog";
 export default {
-  name: "account_manager",
+  name: "account_List",
   data() {
     return {
-
-
       total:1,//默认数据总数
       pagesize:10,//每页的数据条数
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面
-
-
-
 
       tableHeight:"100",
       tableData: [],
@@ -129,7 +112,7 @@ export default {
     };
   },
   components: {
-     DialogFound
+    //  DialogFound
   },
   created() {
     this.init();
@@ -142,11 +125,9 @@ export default {
   methods: {
     init() {
       // 获取表格数据
-      this.$axios("/api/v1/account_list/").then(res => {
-          console.log(res.data)
+      this.$axios(`/api/v1/account_list/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
         this.tableData = res.data.data.results;
         this.total = res.data.data.count;
-        
       });
     },
     handleEdit(row) {
@@ -212,8 +193,15 @@ export default {
       // 去规则详情页面
       this.$router.push({path:"/list_manager", query: { index: row.index }});
     },
-    current_change(currentPage){
-      this.currentPage = currentPage;
+    current_change(val){
+        //点击数字时触发
+        this.currentPage = val;
+        this.init();
+    },
+    handleSizeChange(val){
+        //修改每页显示多少条时触发
+        this.pagesize = val;
+        this.init();
     }
   }
 };
