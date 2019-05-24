@@ -18,26 +18,12 @@
                       <el-input v-model="form.username" placeholder="Leslie"></el-input>
                     </el-form-item>
                     <!-- 部门 -->
-                    <el-form-item label="部门" prop="section">
-                      <el-select v-model="value" placeholder="请选择">
-                          <el-option
-                            v-for="item in options1"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                          </el-option>
-                      </el-select>
-                    </el-form-item>
+                    <!-- <el-form-item label="部门" prop="id">
+                        <el-input v-model="input" placeholder="请输入内容"></el-input>
+                    </el-form-item> -->
                     <!-- 角色配置 -->
-                    <el-form-item label="角色配置" prop="role">
-                      <el-select v-model="value" placeholder="请选择">
-                          <el-option
-                            v-for="item in options2"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                          </el-option>
-                      </el-select>
+                    <el-form-item label="角色配置" prop="rol">
+                      <el-input v-model="input10" placeholder="请输入内容"></el-input>
                     </el-form-item>
                     <!-- 邮箱 -->
                     <el-form-item label="邮箱" prop="email">
@@ -78,6 +64,8 @@ export default {
       }
     };
     return {
+          input: '',
+          input10: '',
       form_rules: {
           username: [
             { required: true, message: "用户名不能为空", trigger: "change" },
@@ -97,9 +85,6 @@ export default {
             },
             { validator: validatePass2, trigger: "blur" }
           ],
-          // last_name: [
-          //   { required: true, message: "用户名不能为空", trigger: "change" }
-          // ],
           email: [
             {
               type: "email",
@@ -111,29 +96,7 @@ export default {
       }
     };
   },
-  //  data() {
-  //     return {
-  //       options1: [{
-  //         value: '选项1',
-  //         label: '研发中心'
-  //       }, {
-  //         value: '选项2',
-  //         label: 'OP事业部'
-  //       }, {
-  //         value: '选项3',
-  //         label: '财务部'
-  //       }, {
-  //         value: '选项4',
-  //         label: '人事部'
-  //       }, {
-  //         value: '选项5',
-  //         label: 'BP'
-  //       }],
-  //       value: ''
-  //     }
-  //   },
   methods: {
-
     onSubmit(form) {
       this.$refs[form].validate(valid => {
         if (valid) {
@@ -163,8 +126,6 @@ export default {
         }
       });
     }
-
-
     // onSubmit(form) {
     //   this.$refs[form].validate(valid => {
     //     if (valid) {

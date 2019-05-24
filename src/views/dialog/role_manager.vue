@@ -57,24 +57,23 @@
                         format="yyyy 年 MM 月 dd 日">
                       </el-date-picker>
                      </el-form-item>
+                        <!-- 密码 -->
+                    <el-form-item label="密码" prop="password">
+                      <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
+                    </el-form-item>
+                    <!-- 确认密码 -->
+                    <el-form-item label="确认密码" prop="password2">
+                      <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
+                    </el-form-item>
                     <!-- 取消，提交 -->
                     <el-form-item  class="text_right">
                         <el-button @click="dialog.show = false">取 消</el-button>
                         <el-button type="primary" @click='onSubmit("form")'>提  交</el-button>
                     </el-form-item>
-
+                    
                 </el-form>
             </div>
         </el-dialog>
-        <el-tree
-          :data="data2"
-          show-checkbox
-          default-expand-all
-          node-key="id"
-          ref="tree"
-          highlight-current
-          :props="defaultProps">
-        </el-tree>
     </div>
   
 </template>
@@ -85,7 +84,20 @@ export default {
   props: {
     dialog: Object,
     form: Object,
-    department: [{
+    options1: [{
+          value: '选项1',
+          label: '站长'
+        }, {
+          value: '选项2',
+          label: '运营专员'
+        }, {
+          value: '选项3',
+          label: '用户名'
+        }, {
+          value: '选项4',
+          label: '创建时间'
+        }],
+        options2: [{
           value: '选项1',
           label: '站长'
         }, {
@@ -108,8 +120,8 @@ export default {
       }
     };
     return {
-        // value10: '',
-        // value11: '',
+        value10: '',
+        value11: '',
       form_rules: {
           username: [
             { required: true, message: "用户名不能为空", trigger: "change" },
@@ -129,22 +141,10 @@ export default {
             },
             { validator: validatePass2, trigger: "blur" }
           ],
-          // last_name: [
-          //   { required: true, message: "用户名不能为空", trigger: "change" }
-          // ],
-          email: [
-            {
-              type: "email",
-              required: true,
-              message: "邮箱格式不正确",
-              trigger: "blur"
-            }
-          ] 
       }
     };
   },
   methods: {
-
     onSubmit(form) {
       this.$refs[form].validate(valid => {
         if (valid) {
@@ -174,43 +174,6 @@ export default {
         }
       });
     }
-
-
-    // onSubmit(form) {
-    //   this.$refs[form].validate(valid => {
-    //     if (valid) {
-    //       //表单数据验证完成之后，提交数据;
-    //       this.$axios.post(`/api/account/users/`, this.form).then(res => {
-    //         // 操作成功
-    //         this.$message({
-    //           message: "保存成功！",
-    //           type: "success"
-    //         });
-    //         this.dialog.show = false;
-    //         this.$emit("update");
-    //       });
-    //     }
-    //   });
-    // }    
-
-    // onSubmit(form) {
-    //   this.$refs[form].validate(valid => {
-    //     if (valid) {
-    //       //表单数据验证完成之后，提交数据;
-    //       const url =
-    //         this.dialog.option == "add" ? "add" : `edit/${this.form.id}`;
-    //       this.$axios.post(`/api/account/${url}`, this.form).then(res => {
-    //         // 操作成功
-    //         this.$message({
-    //           message: "保存成功！",
-    //           type: "success"
-    //         });
-    //         this.dialog.show = true;
-    //         this.$emit("update");
-    //       });
-    //     }
-    //   });
-    // }
   }
 };
 </script>

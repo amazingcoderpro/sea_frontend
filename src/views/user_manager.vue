@@ -2,11 +2,11 @@
   <div class="fillcontain">
     <!-- 搜索框 -->
     <div class="btnLeft">
-      <el-input
-        placeholder="请输入用户名"
-        v-model="input10"
-        clearable>
-      </el-input>
+        <el-input
+          placeholder="请输入内容"
+          v-model="input10"
+          clearable>
+        </el-input>
       <el-button type="primary" icon="el-icon-search" class="seek">搜索</el-button>
     </div>
     <!-- 新增账户 -->
@@ -63,11 +63,8 @@
       </el-table>
     </div>
     <!-- 分页器 -->
-    <div class="block">
+     <div class="block">
       <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
         :page-sizes="[10, 20, 30, 40]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
@@ -113,13 +110,29 @@ export default {
     getProfile() {
       // 获取表格数据
       this.$axios("/api/v1/account/users/?page=1&page_size=10").then(res => {
-        this.tableData = res.data.results;
-        // this.filterTableData = res.data;
+        this.tableData =res.data.data.results;
+  
       });
     },
     handleEdit(row) {
       // 编辑
       this.dialog = {
+        show: true,
+        title: "修改资金信息",
+        option: "put"
+      };
+      this.form = {
+        id: row.id,
+        username: row.username,
+        password: row.password,
+        password2: row.password,
+        email: row.email,
+        last_name: row.last_name
+      };
+    },
+     handleDelete(row) {
+      // 删除
+      this.tree = {
         show: true,
         title: "修改资金信息",
         option: "put"
@@ -156,22 +169,22 @@ export default {
         last_name: ""
       };
     },
-    methods: {
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      }
-    },
-    data() {
-      return {
-        currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4
-      };
-    }
+    // methods: {
+    //   handleSizeChange(val) {
+    //     console.log(`每页 ${val} 条`);
+    //   },
+    //   handleCurrentChange(val) {
+    //     console.log(`当前页: ${val}`);
+    //   }
+    // },
+    // data() {
+    //   return {
+    //     currentPage1: 5,
+    //     currentPage2: 5,
+    //     currentPage3: 5,
+    //     currentPage4: 4
+    //   };
+    // }
   }
 };
 </script>
