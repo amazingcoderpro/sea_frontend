@@ -1,15 +1,154 @@
 <template>
-    <div class="pin_manager">
-        dashboard
+    <div class="ListManager">
+        <div>
+            <el-form :inline="true" ref="add_data">
+                 <el-form-item class="btnRight">
+                    <el-button>ListManager</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <!-- 表单部分 -->
+        <div class="table_right">
+          <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
+            <el-table-column align="center" type="selection" width="55" ></el-table-column>
+            <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
+
+            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="规则标签"  width="150">
+              <template slot-scope="scope"> {{scope.row.tag}}</template>
+            </el-table-column>
+            <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="规则创建时间"  width="300">
+              <template slot-scope="scope"> {{scope.row.create_time}}</template>
+            </el-table-column>
+            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="规则有效期"  width="300">
+              <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
+            </el-table-column>
+            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="时间区间"  width="500">
+            <template slot-scope="scope" >
+                <div  v-for="item in scope.row.schedule_rule" :key="item.id">
+                    周{{item.weekday}}|{{item.start_time}}|{{item.end_time}}|发布频率{{item.interval_time}}
+                    <br/>
+                </div>
+            </template>
+
+            </el-table-column>
+            <el-table-column  align="center" class="parentNodeColumn" prop="scan" label="可发布产品数量"  width="150">
+              <template slot-scope="scope"> {{scope.row.scan}}</template>
+            </el-table-column>
+            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="所属账户"  width="150">
+              <template slot-scope="scope"> {{scope.row.account_name}}</template>
+            </el-table-column>
+            <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="所属Board"  width="150">
+              <template slot-scope="scope"> {{scope.row.baord_name}}</template>
+            </el-table-column>
+            <el-table-column prop="operation" align="center" label="操作" width="300"  fixed="right">
+              <template slot-scope="scope">
+                <el-button icon="edit" size="small" @click="editFun(scope.row)">修改账户信息</el-button>
+                <el-button icon="edit" size="small" @click="stopFun(scope.row)">暂停</el-button>
+                <el-button icon="edit" size="small" @click="deteleFun(scope.row)">删除账户</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <!-- 分页 -->
+        <div class="paging" style="text-align: right;  padding-right: 20px;padding-top: 20px;">
+          <el-pagination
+            :page-sizes="pagesizes"
+            :page-size="pagesize"
+            @current-change="current_change"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total=total
+          >
+          </el-pagination>
+        </div>
+
+
+        <!-- 展示请求权限的弹窗 -->
+        <DialogFound :dialog='dialog'></DialogFound>
+
     </div>
 </template>
 
 <script>
+
+import DialogFound from "./dialog/board_manager_dialog";
+
 export default {
-    name: "pin_manager",
-    components:{
+  name: "ListManager",
+  data() {
+    return {
+        total:1,//默认数据总数
+        pagesize:10,//每页的数据条数
+        pagesizes:[10, 20, 30, 40],//分组数量
+        currentPage:1,//默认开始页面
+
+        index:"1",
+        tableHeight:"100",
+        tableData: [],
+        dialog: {
+            show: false,
+            title: "",
+            option: "edit"
+        }
+    };
+  },
+  components: {
+     DialogFound
+  },
+  created() {
+    this.init();
+  },
+  mounted() {
+      setTimeout(() => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      }, 50);
+  },
+  methods: {
+    init() {
+
+      // 获取表格数据
+        this.index = this.$route.query.index;
+      this.$axios(`/api/v1/rule/?account_id=${this.index}`).then(res => {
+          console.log(res.data)
+        this.tableData = res.data.data.results;
+        this.total = res.data.data.count;
+        
+      });
+    },
+    handleEdit(row) {
+      // 编辑
+      this.dialog = {
+        show: true,
+        title: "修改资金信息",
+        option: "put"
+      };
+    },
+    handleDelete(row, index) {
+      // 删除
+      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
+        this.$message("删除成功");
+        this.getProfile();
+      });
+    },
+    handleAdd() {
+      // 添加
+      this.dialog = {
+        show: true,
+        title: "添加用户",
+        option: "post"
+      };
+    },
+    ListManagerFun(row) {
+      // 去规则详情页面
+      this.$router.push({path:"/list_manager", query: { index: row.index }});
+    },
+    current_change(currentPage){
+      this.currentPage = currentPage;
     }
-}
+  }
+};
+
+
+
 </script>
 
 <style>
