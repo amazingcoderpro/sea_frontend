@@ -63,14 +63,14 @@
       </el-table>
     </div>
     <!-- 分页器 -->
-     <div class="block">
+    <!-- <div class="block">
       <el-pagination
         :page-sizes="[10, 20, 30, 40]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="100"
       ></el-pagination>
-    </div>
+    </div> -->
     <!-- 弹框页面 -->
     <DialogFound :dialog="dialog" :form="form" @update="getProfile"></DialogFound>
   </div>
@@ -111,7 +111,6 @@ export default {
       // 获取表格数据
       this.$axios("/api/v1/account/users/?page=1&page_size=10").then(res => {
         this.tableData =res.data.data.results;
-  
       });
     },
     handleEdit(row) {

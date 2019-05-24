@@ -43,14 +43,14 @@
       </el-table>
     </div>
     <!-- 分页 -->
-    <div class="block">
+    <!-- <div class="block">
       <el-pagination
         :page-sizes="[10, 20, 30, 40]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="100"
       ></el-pagination>
-    </div>
+    </div> -->
     <!-- 弹框页面 -->
     <DialogFound :dialog="dialog" :form="form" @update="getProfile"></DialogFound>
   </div>
@@ -71,19 +71,6 @@ export default {
         title: "",
         option: "edit"
       },
-      // RoleOptions: [{
-      //   value: '选项1',
-      //   label: '站长'
-      // }, {
-      //   value: '选项2',
-      //   label: '运营专员'
-      // }, {
-      //   value: '选项3',
-      //   label: '用户名'
-      // }, {
-      //   value: '选项4',
-      //   label: '创建时间'
-      // }],
       form: {
         id: "",
         name: "",
@@ -136,7 +123,7 @@ export default {
         last_name: row.last_name
       };
     },
-    onDeleteMoney(row, index) {
+    handleDelete(row, index) {
       // 删除
       this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
         this.$message("删除成功");

@@ -18,11 +18,11 @@
                       <el-input v-model="form.username" placeholder="Leslie"></el-input>
                     </el-form-item>
                     <!-- 部门 -->
-                    <!-- <el-form-item label="部门" prop="id">
+                    <el-form-item label="部门" prop="id">
                         <el-input v-model="input" placeholder="请输入内容"></el-input>
-                    </el-form-item> -->
+                    </el-form-item>
                     <!-- 角色配置 -->
-                    <el-form-item label="角色配置" prop="rol">
+                    <el-form-item label="角色配置" prop="role">
                       <el-input v-model="input10" placeholder="请输入内容"></el-input>
                     </el-form-item>
                     <!-- 邮箱 -->
@@ -91,8 +91,8 @@ export default {
               required: true,
               message: "邮箱格式不正确",
               trigger: "blur"
-            }
-          ] 
+            },
+          ]
       }
     };
   },
@@ -102,7 +102,7 @@ export default {
         if (valid) {
           //表单数据验证完成之后，提交数据;
           if (this.dialog.option == "post"){
-            this.$axios.post(`/api/account/users/`, this.form).then(res => {
+            this.$axios.post(`/api/v1/account/users/`, this.form).then(res => {
               // 操作成功
               this.$message({
                 message: "保存成功！",
@@ -113,7 +113,7 @@ export default {
             });
           }else{
             const id = this.form.id
-            this.$axios.put(`/api/account/users/${id}/`, this.form).then(res => {
+            this.$axios.put(`/api/v1/account/users/${id}/`, this.form).then(res => {
               // 操作成功
               this.$message({
                 message: "保存成功！",
