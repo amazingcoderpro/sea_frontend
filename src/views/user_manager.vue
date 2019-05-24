@@ -22,8 +22,10 @@
       <el-table
         v-if="tableData.length > 0"
         :data="tableData"
+       
         max-height="100%"
         border
+        ref="topictable"
         style="width: 100%"
       >
         <el-table-column prop="id" label="序号" align="center" width="70"></el-table-column>
@@ -63,14 +65,16 @@
       </el-table>
     </div>
     <!-- 分页器 -->
-    <!-- <div class="block">
-      <el-pagination
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="100"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="100"
-      ></el-pagination>
-    </div> -->
+      <div class="paging" style="text-align: right;  padding-right: 20px;padding-top: 20px;">
+          <el-pagination
+            :page-sizes="pagesizes"
+            :page-size="pagesize"
+            @current-change="current_change"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total=total
+          >
+          </el-pagination>
+      </div>
     <!-- 弹框页面 -->
     <DialogFound :dialog="dialog" :form="form" @update="getProfile"></DialogFound>
   </div>
@@ -82,7 +86,14 @@ import DialogFound from "./dialog/user_manager";
 export default {
   name: "userinfo",
   data() {
+
     return {
+      total:1,//默认数据总数
+      pagesize:10,//每页的数据条数
+      pagesizes:[10, 20, 30, 40],//分组数量
+      currentPage:1,//默认开始页面
+      tableHeight:"100",
+     
       input10: '',
       tableData: [],
       dialog: {
@@ -100,6 +111,11 @@ export default {
       }
     };
   },
+  // mounted() {
+  //     setTimeout(() => {
+  //       this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+  //     }, 50);
+  // },
   components: {
     DialogFound
   },
@@ -107,10 +123,14 @@ export default {
     this.getProfile();
   },
   methods: {
+      current_change(currentPage){
+      this.currentPage = currentPage;
+    },
     getProfile() {
       // 获取表格数据
       this.$axios("/api/v1/account/users/?page=1&page_size=10").then(res => {
         this.tableData =res.data.data.results;
+        this.total = res.data.data.count;
       });
     },
     handleEdit(row) {
@@ -156,7 +176,7 @@ export default {
       // 添加
       this.dialog = {
         show: true,
-        title: "添加用户",
+        title: "添加账户",
         option: "post"
       };
       this.form = {
@@ -168,22 +188,6 @@ export default {
         last_name: ""
       };
     },
-    // methods: {
-    //   handleSizeChange(val) {
-    //     console.log(`每页 ${val} 条`);
-    //   },
-    //   handleCurrentChange(val) {
-    //     console.log(`当前页: ${val}`);
-    //   }
-    // },
-    // data() {
-    //   return {
-    //     currentPage1: 5,
-    //     currentPage2: 5,
-    //     currentPage3: 5,
-    //     currentPage4: 4
-    //   };
-    // }
   }
 };
 </script>

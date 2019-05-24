@@ -43,14 +43,16 @@
       </el-table>
     </div>
     <!-- 分页 -->
-    <!-- <div class="block">
-      <el-pagination
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="100"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="100"
-      ></el-pagination>
-    </div> -->
+        <div class="paging" style="text-align: right;  padding-right: 20px;padding-top: 20px;">
+          <el-pagination
+            :page-sizes="pagesizes"
+            :page-size="pagesize"
+            @current-change="current_change"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total=total
+          >
+          </el-pagination>
+        </div>
     <!-- 弹框页面 -->
     <DialogFound :dialog="dialog" :form="form" @update="getProfile"></DialogFound>
   </div>
@@ -63,8 +65,13 @@ export default {
   name: "userinfo",
   data() {
     return {
+      total:1,//默认数据总数
+      pagesize:10,//每页的数据条数
+      pagesizes:[10, 20, 30, 40],//分组数量
+      currentPage:1,//默认开始页面
+      tableHeight:"100",
       input: '',
-      RoleOptionsVal:"",
+
       tableData: [],
       dialog: {
         show: false,
@@ -84,11 +91,16 @@ export default {
   created() {
     this.getProfile();
   },
+  
   methods: {
+     current_change(currentPage){
+      this.currentPage = currentPage;
+    },
     getProfile() {
       // 获取表格数据
       this.$axios("/api/v1/account/role/?page=1&page_size=10").then(res => {
         this.tableData = res.data.data.results;
+        this.total = res.data.data.count;
       });
     },
     handleDelete(row) {

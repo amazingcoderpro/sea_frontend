@@ -21,20 +21,16 @@
                     <el-form-item label="邮箱" prop="email">
                       <el-input v-model="form.email" placeholder="请输入email"></el-input>
                     </el-form-item>
-                    <!-- 部门 -->
-                    <!-- <el-form-item label="部门" prop="section">
-                      <el-select v-model="value" placeholder="请选择">
-                          <el-option
-                            v-for="item in options1"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                          </el-option>
-                      </el-select>
-                    </el-form-item> -->
                     <!-- 角色配置 -->
                     <el-form-item label="角色配置" prop="role">
-                      <el-input v-model="input10" placeholder="请输入内容"></el-input>
+                      <el-select v-model="roleArray" placeholder="请选择" class="role_name">
+                        <el-option
+                          v-for="item in userArray"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                      </el-select>
                     </el-form-item>
                     <!-- 密码 -->
                     <el-form-item label="密码" prop="password">
@@ -44,6 +40,17 @@
                     <el-form-item label="确认密码" prop="password2">
                       <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
                     </el-form-item>
+                    <!-- 节点 -->
+                    <!-- <el-form-item label="选择" prop="">
+                      <el-tree
+                        :data="data2"
+                        show-checkbox
+                        node-key="id"
+                        :default-expanded-keys="[2, 3]"
+                        :default-checked-keys="[5]"
+                        :props="defaultProps">
+                      </el-tree>
+                    </el-form-item> -->
                     <!-- 取消，提交 -->
                     <el-form-item  class="text_right">
                         <el-button @click="dialog.show = false">取 消</el-button>
@@ -72,6 +79,15 @@ export default {
       }
     };
     return {
+       roleArray:'',
+       userArray:[                           //下拉框数据
+            {"label":"区域三","value":'选项一'},
+            {"label":"区域二","value":'选项二'}
+          ],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
           input10: '',
       form_rules: {
           username: [
@@ -137,3 +153,8 @@ export default {
 
 };
 </script>
+<style scoped>
+.role_name{
+  width: 771px;
+}
+</style>

@@ -18,12 +18,19 @@
                       <el-input v-model="form.username" placeholder="Leslie"></el-input>
                     </el-form-item>
                     <!-- 部门 -->
-                    <el-form-item label="部门" prop="id">
+                    <!-- <el-form-item label="部门" prop="id">
                         <el-input v-model="input" placeholder="请输入内容"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <!-- 角色配置 -->
                     <el-form-item label="角色配置" prop="role">
-                      <el-input v-model="input10" placeholder="请输入内容"></el-input>
+                      <el-select v-model="roleArray"  @click='roleName("form")' placeholder="请选择" class="role_name">
+                        <el-option
+                          v-for="item in userArray"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                      </el-select>
                     </el-form-item>
                     <!-- 邮箱 -->
                     <el-form-item label="邮箱" prop="email">
@@ -49,6 +56,7 @@
 </template>
 
 <script>
+import role_managerVue from '../role_manager.vue';
 export default {
   name: "logfound",
   props: {
@@ -64,8 +72,12 @@ export default {
       }
     };
     return {
-          input: '',
-          input10: '',
+            roleArray:'',
+            input: '',
+            userArray:[                         //Pinterest下拉框数据
+            {"label":"区域三","value":"选项一"},
+            {"label":"区域二","value":"选项二"}
+          ],
       form_rules: {
           username: [
             { required: true, message: "用户名不能为空", trigger: "change" },
@@ -93,9 +105,9 @@ export default {
               trigger: "blur"
             },
           ]
-      }
-    };
-  },
+        }
+      };
+    },
   methods: {
     onSubmit(form) {
       this.$refs[form].validate(valid => {
@@ -125,42 +137,54 @@ export default {
           }
         }
       });
-    }
-    // onSubmit(form) {
-    //   this.$refs[form].validate(valid => {
-    //     if (valid) {
-    //       //表单数据验证完成之后，提交数据;
-    //       this.$axios.post(`/api/account/users/`, this.form).then(res => {
-    //         // 操作成功
-    //         this.$message({
-    //           message: "保存成功！",
-    //           type: "success"
-    //         });
-    //         this.dialog.show = false;
-    //         this.$emit("update");
-    //       });
-    //     }
+    },
+    //  roleName(form) {
+    //   // 获取角色配置
+    //   this.$axios.GET("/api/v1/role/").then(res => {
+       
     //   });
-    // }    
+    // },
+    onSubmit(form) {
+      this.$refs[form].validate(valid => {
+        if (valid) {
+          //表单数据验证完成之后，提交数据;
+          this.$axios.post(`/api/account/users/`, this.form).then(res => {
+            // 操作成功
+            this.$message({
+              message: "保存成功！",
+              type: "success"
+            });
+            this.dialog.show = false;
+            this.$emit("update");
+          });
+        }
+      });
+    },
 
-    // onSubmit(form) {
-    //   this.$refs[form].validate(valid => {
-    //     if (valid) {
-    //       //表单数据验证完成之后，提交数据;
-    //       const url =
-    //         this.dialog.option == "add" ? "add" : `edit/${this.form.id}`;
-    //       this.$axios.post(`/api/account/${url}`, this.form).then(res => {
-    //         // 操作成功
-    //         this.$message({
-    //           message: "保存成功！",
-    //           type: "success"
-    //         });
-    //         this.dialog.show = true;
-    //         this.$emit("update");
-    //       });
-    //     }
-    //   });
-    // }
+    onSubmit(form) {
+      this.$refs[form].validate(valid => {
+        if (valid) {
+          //表单数据验证完成之后，提交数据;
+          const url =
+            this.dialog.option == "add" ? "add" : `edit/${this.form.id}`;
+          this.$axios.post(`/api/account/${url}`, this.form).then(res => {
+            // 操作成功
+            this.$message({
+              message: "保存成功！",
+              type: "success"
+            });
+            this.dialog.show = true;
+            this.$emit("update");
+          });
+        }
+      });
+    }
   }
 };
 </script>
+<style scoped>
+.role_name{
+   width: 771px;
+}
+</style>
+
