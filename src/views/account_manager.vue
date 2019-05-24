@@ -9,26 +9,84 @@
         </div>
         <!-- 表单部分 -->
         <div class="table_right">
-          <el-table :data="tableData" border>
+          <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
+            <el-table-column type="selection" width="55" ></el-table-column>
             <el-table-column label="头像" width="100"></el-table-column>
             <el-table-column type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column prop="account_name" label="账户信息" align="center" width="150"></el-table-column>
-            <el-table-column prop="pins" label="Pin数据" align="center" width="150"></el-table-column>
-            <el-table-column prop="repin" label="RePin数据" align="center" width="150"></el-table-column>
-            <el-table-column prop="like" label="Like数据" align="center" width="150"></el-table-column>
-            <el-table-column prop="comment" label="Comment数据" align="center" width="150"></el-table-column>
-            <el-table-column prop="update_person" label="详细数据报告" align="center" width="150"></el-table-column>
-            <el-table-column prop="update_person" label="更新情况" align="center" width="150"></el-table-column>
-            <el-table-column prop="role_name" label="规则详情" align="center" width="150"></el-table-column>
-            <el-table-column prop="finished" label="发布记录" align="center" width="150"></el-table-column>
-
-            <el-table-column prop="operation" align="center" label="操作" fixed="right">
+            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="账户信息"  width="250">
+              <template slot-scope="scope"> 
+                用户名:{{scope.row.account_name}}<br/>
+                登陆邮箱:{{scope.row.account_email}}<br/> 
+                创建时间:{{scope.row.account_create_time}}<br/> 
+                账户类型:<span v-if='scope.row.account_type=0'>business</span><span v-else>individual</span>
+              </template>
+            </el-table-column>
+            <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" label="Pin数据"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.pins}}<br/>今日新增:{{scope.row.pins_increment}}</template>
+            </el-table-column>
+            <el-table-column  prop="repin,pins_increment" label="RePin数据"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.repin}}<br/>今日新增:{{scope.row.repin_increment}}</template>
+            </el-table-column>
+            <el-table-column  prop="like,like_increment" label="Like数据"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.like}}<br/>今日新增:{{scope.row.like_increment}}</template>
+            </el-table-column>
+            <el-table-column  prop="comment,comment_increment" label="Comment数据"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.comment}}<br/>今日新增:{{scope.row.comment_increment}}</template>
+            </el-table-column>
+            <el-table-column prop="update_person" label="详细数据报告(border)" align="center" width="200">
+               <template slot-scope="scope">
+                <el-button icon="edit" size="small" @click="ListManagerFun(scope.row)">规则详情</el-button>
+              </template>
+             
+            </el-table-column>
+            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="更新情况" align="center"  width="250">
               <template slot-scope="scope">
-                <el-button type="warning" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                 更新人:{{scope.row.update_person}}<br/>
+                 账户最新状态:<span v-if='scope.row.account_state=0'>normal</span><span v-else>forbidden</span><br/>
+                 最新发布时间:{{scope.row.account_publish_time}}<br/>
+                 最新抓取时间:{{scope.row.account_crawl_time}}
+              </template>
+            </el-table-column>
+
+            <el-table-column prop="role_name" label="规则详情" align="center" width="150" >
+              <template slot-scope="scope">
+                <el-button icon="edit" size="small" @click="ListManagerFun(scope.row)">规则详情</el-button>
+              </template>
+            </el-table-column>
+            <el-table-column  prop="finished,pending" align="center" label="发布记录"  width="250">
+              <template slot-scope="scope">
+                 今日已发布数:{{scope.row.finished}}<br/>
+                 今日未发布数:{{scope.row.pending}}<br/>
+              </template>
+            </el-table-column>
+            <el-table-column prop="account_authorized" align="center" label="授权" width="250">
+              <template slot-scope="scope">
+                <el-button v-if="scope.row.account_authorized == 1">已授权</el-button>
+                <el-button v-else icon="edit" size="small" @click="AutFun(scope.row)">授权</el-button>
+              </template>
+            </el-table-column>
+
+            <el-table-column prop="operation" align="center" label="操作" width="250" fixed="right" >
+              <template slot-scope="scope">
+                <el-button icon="edit" size="small" @click="EditFun(scope.row)">修改账户信息</el-button>
+                <el-button icon="edit" size="small" @click="handleEdit(scope.row)">删除账户</el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
+        <!-- 分页 -->
+        <div class="paging" style="text-align: right;  padding-right: 20px;padding-top: 20px;">
+          <el-pagination
+            :page-sizes="pagesizes"
+            :page-size="pagesize"
+            @current-change="current_change"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total=total
+          >
+          </el-pagination>
+        </div>
+
+
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog='dialog'  ></DialogFound>
 
@@ -43,6 +101,17 @@ export default {
   name: "account_manager",
   data() {
     return {
+
+
+      total:1,//默认数据总数
+      pagesize:10,//每页的数据条数
+      pagesizes:[10, 20, 30, 40],//分组数量
+      currentPage:1,//默认开始页面
+
+
+
+
+      tableHeight:"100",
       tableData: [],
       dialog: {
         show: false,
@@ -57,9 +126,6 @@ export default {
         email: "",
         nickname: "",
       }
-
-
-
     };
   },
   components: {
@@ -68,12 +134,19 @@ export default {
   created() {
     this.init();
   },
+  mounted() {
+      setTimeout(() => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      }, 50);
+  },
   methods: {
     init() {
       // 获取表格数据
       this.$axios("/api/v1/account_list/").then(res => {
           console.log(res.data)
         this.tableData = res.data.data.results;
+        this.total = res.data.data.count;
+        
       });
     },
     handleEdit(row) {
@@ -115,31 +188,33 @@ export default {
         last_name: "",
       };
     },
-    getPinFun(row) {
-        this.$axios.post(`/api/v1/pinterest_account_auth/2/`).then(res => {
-            console.log(res)
-            if(res.data.code == 1){
-              window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
-            }else{
-                this.$message({
-                  message: res.data.msg,
-                  type: 'warning',
-                  center: true
-                });
-            }
-        }).catch(error => {
-                this.$message({
-                  message: "接口超时!",
-                  type: 'warning',
-                  center: true
-                });
-            });
-
-
+    AutFun(row) {
+      // 获取授权
+      this.$axios.post(`/api/v1/pinterest_account_auth/${row.index}/`).then(res => {
+          if(res.data.code == 1){
+            window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
+          }else{
+              this.$message({
+                message: res.data.msg,
+                type: 'warning',
+                center: true
+              });
+          }
+      }).catch(error => {
+              this.$message({
+                message: "接口超时!",
+                type: 'warning',
+                center: true
+              });
+          });
+    },
+    ListManagerFun(row) {
+      // 去规则详情页面
+      this.$router.push({path:"/list_manager", query: { index: row.index }});
+    },
+    current_change(currentPage){
+      this.currentPage = currentPage;
     }
-
-
-
   }
 };
 

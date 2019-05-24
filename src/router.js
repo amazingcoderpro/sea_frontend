@@ -75,7 +75,7 @@ router.beforeEach((to,from,next) =>{
   else{
     //isLogin ? next() : next('/login');
     if(isLogin) {
-      
+      console.log(to.path)
       let refreshPath = window.localStorage.getItem('router_tree') ? JSON.parse(window.localStorage.getItem('router_tree')) : this.$store.getters.router_tree
       if(refreshPath.indexOf(to.path)>=0){
         next()
