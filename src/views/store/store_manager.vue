@@ -3,7 +3,7 @@
         <div>
             <el-form :inline="true" ref="add_data">
                  <el-form-item class="btnRight">
-                    <el-button @click='getPinFun()'>store_manager</el-button>
+                    <el-button @click='add()'>增加商户</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -71,15 +71,15 @@
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
 
-        <!-- 展示请求权限的弹窗 -->
-        <!-- <DialogFound :dialog='dialog'  ></DialogFound> -->
+        <!-- 弹窗 -->
+        <DialogFound :dialog='dialog' ></DialogFound>
 
     </div>
 </template>
 
 <script>
 
-// import DialogFound from "./dialog/board_manager_dialog";
+import DialogFound from "./store_add";
 
 export default {
   name: "store_manager",
@@ -90,10 +90,6 @@ export default {
       total:1,//默认数据总数
       pagesize:10,//每页的数据条数
       pagesizes:[10, 20, 30, 40],//分组数量
-
-
-
-
       tableHeight:"100",
       tableData: [],
       dialog: {
@@ -102,17 +98,14 @@ export default {
         option: "edit"
       },
       form: {
-        id: "",
-        username: "",
-        password: "",
-        password2: "",
-        email: "",
-        nickname: "",
+        name:'',
+        url:'',
+        eamil:'',
       }
     };
   },
   components: {
-    //  DialogFound
+      DialogFound
   },
   created() {
     this.init();
@@ -125,7 +118,8 @@ export default {
   methods: {
     init() {
       this.$axios(`/api/v1/store/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
-        this.tableData = res.data.data.results;
+         console.log("123")
+       this.tableData = res.data.data.results;
         this.total = res.data.data.count;
       });
     },
@@ -137,12 +131,9 @@ export default {
         option: "put"
       };
       this.form = {
-        id: row.id,
-        username: row.username,
-        password: row.password,
-        password2: row.password,
-        email: row.email,
-        last_name: row.last_name,
+        name:'',
+        url:'',
+        eamil:'',
       };
     },
     handleDelete(row, index) {
@@ -152,20 +143,17 @@ export default {
         this.getProfile();
       });
     },
-    handleAdd() {
+    add() {
       // 添加
       this.dialog = {
         show: true,
-        title: "添加用户",
+        title: "添加店铺",
         option: "post"
       };
       this.form = {
-        id: "",
-        username: "",
-        password: "",
-        password2: "",
-        email: "",
-        last_name: "",
+        name:'',
+        url:'',
+        eamil:'',
       };
     },
     AutFun(row) {
@@ -187,10 +175,6 @@ export default {
                 center: true
               });
           });
-    },
-    ListManagerFun(row) {
-        // 去规则详情页面
-        this.$router.push({path:"/list_manager", query: { index: row.index }});
     },
     current_change(val){
         //点击数字时触发
