@@ -18,11 +18,11 @@
                       <el-input v-model="form.username" placeholder="admin"></el-input>
                     </el-form-item>
                     <!-- 邮箱 -->
-                    <el-form-item label="邮箱" prop="email">
+                    <!-- <el-form-item label="邮箱" prop="email">
                       <el-input v-model="form.email" placeholder="请输入email"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <!-- 角色配置 -->
-                    <el-form-item label="角色配置" prop="role">
+                    <!-- <el-form-item label="角色配置" prop="role">
                       <el-select v-model="roleArray" placeholder="请选择" class="role_name">
                         <el-option
                           v-for="item in userArray"
@@ -31,17 +31,17 @@
                           :value="item.value">
                         </el-option>
                       </el-select>
-                    </el-form-item>
+                    </el-form-item> -->
                     <!-- 密码 -->
-                    <el-form-item label="密码" prop="password">
+                    <!-- <el-form-item label="密码" prop="password">
                       <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <!-- 确认密码 -->
-                    <el-form-item label="确认密码" prop="password2">
+                    <!-- <el-form-item label="确认密码" prop="password2">
                       <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <!-- 节点 -->
-                    <!-- <el-form-item label="选择" prop="">
+                    <el-form-item label="选择" prop="">
                       <el-tree
                         :data="data2"
                         show-checkbox
@@ -50,7 +50,7 @@
                         :default-checked-keys="[5]"
                         :props="defaultProps">
                       </el-tree>
-                    </el-form-item> -->
+                    </el-form-item>
                     <!-- 取消，提交 -->
                     <el-form-item  class="text_right">
                         <el-button @click="dialog.show = false">取 消</el-button>
@@ -79,6 +79,45 @@ export default {
       }
     };
     return {
+         data2: [{
+          id: 1,
+          label: '一级 1',
+          children: [{
+            id: 4,
+            label: '二级 1-1',
+            children: [{
+              id: 9,
+              label: '三级 1-1-1'
+            }, {
+              id: 10,
+              label: '三级 1-1-2'
+            }]
+          }]
+        }, {
+          id: 2,
+          label: '一级 2',
+          children: [{
+            id: 5,
+            label: '二级 2-1'
+          }, {
+            id: 6,
+            label: '二级 2-2'
+          }]
+        }, {
+          id: 3,
+          label: '一级 3',
+          children: [{
+            id: 7,
+            label: '二级 3-1'
+          }, {
+            id: 8,
+            label: '二级 3-2'
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
        roleArray:'',
        userArray:[                           //下拉框数据
             {"label":"区域三","value":'选项一'},

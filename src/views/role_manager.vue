@@ -9,14 +9,19 @@
     <div>
       <el-form :inline="true" ref="add_data">
         <el-form-item class="btnRight">
-          <el-button type="primary" size="small" icon="view" @click="onAddMoney()">新增账户</el-button>
+          <el-button type="primary" size="small" icon="view" @click="onAddMoney()">增加角色</el-button>
         </el-form-item>
       </el-form>
     </div>
     <!-- 表单部分 -->
     <div class="table_right">
-      <el-table :data="tableData" border>
-        <el-table-column prop="username" label="角色" align="center" width="400"></el-table-column>
+      <el-table
+        :data="tableData"
+        ref="topictable"
+        :height="tableHeight"
+        border
+        >
+        <el-table-column prop="name" label="角色" align="center" width="400"></el-table-column>
         <el-table-column prop="create_time" label="创建时间" align="center" width="400">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
@@ -85,6 +90,11 @@ export default {
       }
     };
   },
+   mounted() {
+      setTimeout(() => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      }, 50);
+  },
   components: {
     DialogFound
   },
@@ -137,7 +147,7 @@ export default {
     },
     handleDelete(row, index) {
       // 删除
-      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
+      this.$axios.delete(`/api/v1/role/8/${row.id}/`).then(res => {
         this.$message("删除成功");
         this.getProfile();
       });
@@ -146,7 +156,7 @@ export default {
       // 添加
       this.dialog = {
         show: true,
-        title: "添加用户",
+        title: "增加角色",
         option: "post"
       };
       this.form = {

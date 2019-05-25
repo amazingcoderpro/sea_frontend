@@ -2,6 +2,7 @@
   <div class="fillcontain">
     <!-- 搜索框 -->
     <div class="btnLeft">
+        <span>账户</span>
         <el-input
           placeholder="请输入内容"
           v-model="input10"
@@ -13,20 +14,17 @@
     <div>
       <el-form :inline="true" ref="add_data">
         <el-form-item class="btnRight">
-          <el-button type="primary" size="small" icon="view" @click="handleAdd()">新增账户</el-button>
+          <el-button type="primary" size="small" icon="view" @click="handleAdd()">增加用户</el-button>
         </el-form-item>
       </el-form>
     </div>
     <!-- 表单部分 -->
     <div class="table_container">
       <el-table
-        v-if="tableData.length > 0"
         :data="tableData"
-       
-        max-height="100%"
-        border
         ref="topictable"
-        style="width: 100%"
+        :height="tableHeight"
+        border
       >
         <el-table-column prop="id" label="序号" align="center" width="70"></el-table-column>
         <el-table-column prop="nickname" label="用户名" align="center" width="150">
@@ -37,20 +35,20 @@
         <el-table-column prop="username" label="角色" align="center" width="150"></el-table-column>
         <el-table-column prop="role" label="登录账号" align="center" width="180"></el-table-column>
         <el-table-column prop="email" label="邮箱" align="center" width="180"></el-table-column>
-        <el-table-column prop="section" label="部门" align="center" width="150"></el-table-column>
-        <el-table-column prop="create_time" label="创建时间" align="center" width="200">
+        <!-- <el-table-column prop="section" label="部门" align="center" width="150"></el-table-column> -->
+        <el-table-column prop="create_time" label="创建时间" align="center" width="250">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.create_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="update_time" label="更新时间" align="center" width="200">
+        <el-table-column prop="update_time" label="更新时间" align="center" width="250">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.update_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="角色管理" align="center" width="180"></el-table-column>
+        <el-table-column prop="username" label="账户名称" align="center" width="180"></el-table-column>
         <el-table-column prop="operation" align="center" label="操作" fixed="right" width="190">
           <template slot-scope="scope">
             <el-button type="warning" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
@@ -76,7 +74,7 @@
           </el-pagination>
       </div>
     <!-- 弹框页面 -->
-    <DialogFound :dialog="dialog" :form="form" @update="getProfile"></DialogFound>
+    <DialogFound :dialog="dialog" :form="form" @update="init" ref="dialog"></DialogFound>
   </div>
 </template>
 
@@ -111,22 +109,22 @@ export default {
       }
     };
   },
-  // mounted() {
-  //     setTimeout(() => {
-  //       this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
-  //     }, 50);
-  // },
+  mounted() {
+      setTimeout(() => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      }, 50);
+  },
   components: {
     DialogFound
   },
   created() {
-    this.getProfile();
+    this.init();
   },
   methods: {
       current_change(currentPage){
       this.currentPage = currentPage;
     },
-    getProfile() {
+    init() {
       // 获取表格数据
       this.$axios("/api/v1/account/users/?page=1&page_size=10").then(res => {
         this.tableData =res.data.data.results;
@@ -137,7 +135,7 @@ export default {
       // 编辑
       this.dialog = {
         show: true,
-        title: "修改资金信息",
+        title: "编辑信息",
         option: "put"
       };
       this.form = {
@@ -167,25 +165,26 @@ export default {
     },
     handleDelete(row, index) {
       // 删除
-      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
+      this.$axios.delete(`/api/v1/users/3/`).then(res => {
         this.$message("删除成功");
-        this.getProfile();
+        this.init();
       });
     },
     handleAdd() {
       // 添加
       this.dialog = {
         show: true,
-        title: "添加账户",
+        title: "增加用户",
         option: "post"
       };
       this.form = {
-        id: "",
-        username: "",
-        password: "",
-        password2: "",
-        email: "",
-        last_name: ""
+        nickname:"adminq",
+        role:"",
+        username: "leslieto",
+        password: "123456",
+        password2: "123456",
+        email: "654@qq.com",
+        role_name:"adminthree",
       };
     },
   }
@@ -201,6 +200,10 @@ export default {
 .btnLeft {
   float: left;
   display: flex;
+}
+.btnLeft span{
+  color: #909399;
+  padding-right: 5px;
 }
 .seek {
   margin-left: 5px;

@@ -17,25 +17,6 @@
                     <el-form-item label="用户名" prop="username">
                       <el-input v-model="form.username" placeholder="Leslie"></el-input>
                     </el-form-item>
-                    <!-- 部门 -->
-                    <!-- <el-form-item label="部门" prop="id">
-                        <el-input v-model="input" placeholder="请输入内容"></el-input>
-                    </el-form-item> -->
-                    <!-- 角色配置 -->
-                    <el-form-item label="角色配置" prop="role">
-                      <el-select v-model="roleArray"  @click='roleName("form")' placeholder="请选择" class="role_name">
-                        <el-option
-                          v-for="item in userArray"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
-                        </el-option>
-                      </el-select>
-                    </el-form-item>
-                    <!-- 邮箱 -->
-                    <el-form-item label="邮箱" prop="email">
-                      <el-input v-model="form.email" placeholder="请输入email"></el-input>
-                    </el-form-item>
                     <!-- 密码 -->
                     <el-form-item label="密码" prop="password">
                       <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
@@ -43,6 +24,30 @@
                     <!-- 确认密码 -->
                     <el-form-item label="确认密码" prop="password2">
                       <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
+                    </el-form-item>
+                    <!-- 邮箱 -->
+                    <el-form-item label="邮箱" prop="email">
+                      <el-input v-model="form.email" placeholder="请输入email"></el-input>
+                    </el-form-item>
+                    <!-- 登录账号 -->
+                    <!-- <el-form-item label="登录账号" prop="id">
+                        <el-input v-model="form.id" placeholder="请输入内容"></el-input>
+                    </el-form-item> -->
+                    <!-- 角色 -->
+                    <el-form-item label="角色" prop="role">
+                      <el-select v-model="form.role"  placeholder="请选择" class="role_name">
+                        <el-option
+                          v-for="item in userArray"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item.id"
+                          >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                    <!-- 角色管理 -->
+                    <el-form-item label="账户" prop="nickname">
+                      <el-input v-model="form.nickname" placeholder="admin999"></el-input>
                     </el-form-item>
                     <!-- 取消，提交 -->
                     <el-form-item  class="text_right">
@@ -63,6 +68,15 @@ export default {
     dialog: Object,
     form: Object
   },
+  watch:{
+    dialog(){
+        this.$axios.get("/api/v1/role/?show_more=1").then(res => {
+          //console.log(res)
+          this.userArray = res.data.data;
+          console.log(this.userArray)
+      });
+    }
+  },
   data() {
     var validatePass2 = (rule, value, callback) => {
       if (value !== this.form.password) {
@@ -74,14 +88,15 @@ export default {
     return {
             roleArray:'',
             input: '',
-            userArray:[                         //Pinterest下拉框数据
-            {"label":"区域三","value":"选项一"},
-            {"label":"区域二","value":"选项二"}
-          ],
-      form_rules: {
+            userArray:[],
+            form_rules: {
           username: [
             { required: true, message: "用户名不能为空", trigger: "change" },
             { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" }
+          ],
+          nickname: [
+            { required: true, message: "用户名不能为空", trigger: "change" },
+            { min: 5, max: 30, message: "长度在 5 到 30 个字符", trigger: "blur" }
           ],
           password: [
             { required: true, message: "密码不能为空", trigger: "blur" },
@@ -113,72 +128,24 @@ export default {
       this.$refs[form].validate(valid => {
         if (valid) {
           //表单数据验证完成之后，提交数据;
-          if (this.dialog.option == "post"){
-            this.$axios.post(`/api/v1/account/users/`, this.form).then(res => {
-              // 操作成功
-              this.$message({
-                message: "保存成功！",
-                type: "success"
-              });
-              this.dialog.show = false;
-              this.$emit("update");
-            });
-          }else{
-            const id = this.form.id
-            this.$axios.put(`/api/v1/account/users/${id}/`, this.form).then(res => {
-              // 操作成功
-              this.$message({
-                message: "保存成功！",
-                type: "success"
-              });
-              this.dialog.show = false;
-              this.$emit("update");
-            });
-          }
-        }
+          this.$axios.post(`/api/v1/users/`, this.form).then(res => {
+            console.log(res)
+               if(res.data.code == 1){
+                  this.dialog.show = false;
+                  this.$message({message: res.data.msg,type: 'success'});
+                  this.$parent.init();
+                }
+                else{
+                  this.dialog.show = false; 
+                  this.$message("添加失败!");
+                }
+          })
+          .catch(error => {
+            this.$message("接口超时123!");
+          });
+         }
       });
     },
-    //  roleName(form) {
-    //   // 获取角色配置
-    //   this.$axios.GET("/api/v1/role/").then(res => {
-       
-    //   });
-    // },
-    onSubmit(form) {
-      this.$refs[form].validate(valid => {
-        if (valid) {
-          //表单数据验证完成之后，提交数据;
-          this.$axios.post(`/api/account/users/`, this.form).then(res => {
-            // 操作成功
-            this.$message({
-              message: "保存成功！",
-              type: "success"
-            });
-            this.dialog.show = false;
-            this.$emit("update");
-          });
-        }
-      });
-    },
-
-    onSubmit(form) {
-      this.$refs[form].validate(valid => {
-        if (valid) {
-          //表单数据验证完成之后，提交数据;
-          const url =
-            this.dialog.option == "add" ? "add" : `edit/${this.form.id}`;
-          this.$axios.post(`/api/account/${url}`, this.form).then(res => {
-            // 操作成功
-            this.$message({
-              message: "保存成功！",
-              type: "success"
-            });
-            this.dialog.show = true;
-            this.$emit("update");
-          });
-        }
-      });
-    }
   }
 };
 </script>
