@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import DialogFound from "./dialog/role_manager";
+import DialogFound from "./role_add";
 
 export default {
   name: "userinfo",

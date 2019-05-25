@@ -15,8 +15,8 @@ import BoardList from './views/board/board_List'
 import PinManager from './views/pin/pin_manager'
 import RuleList from './views/rule/rule_list'
 import RecordManager from './views/record_manager'
-import UserManager from './views/user_manager'
-import RoleManager from './views/role_manager'
+import UserManager from './views/user/user_manager'
+import RoleManager from './views/role/role_manager'
 import StoreManager from './views/store/store_manager'
 
 

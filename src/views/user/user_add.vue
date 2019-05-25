@@ -14,8 +14,8 @@
                     label-width="120px" 
                     style="margin:10px;width:auto;">
                     <!-- 用户名 -->
-                    <el-form-item label="用户名" prop="username">
-                      <el-input v-model="form.username" placeholder="Leslie"></el-input>
+                    <el-form-item label="用户名" prop="nickname">
+                      <el-input v-model="form.nickname" placeholder="Leslie"></el-input>
                     </el-form-item>
                     <!-- 密码 -->
                     <el-form-item label="密码" prop="password">
@@ -29,10 +29,6 @@
                     <el-form-item label="邮箱" prop="email">
                       <el-input v-model="form.email" placeholder="请输入email"></el-input>
                     </el-form-item>
-                    <!-- 登录账号 -->
-                    <!-- <el-form-item label="登录账号" prop="id">
-                        <el-input v-model="form.id" placeholder="请输入内容"></el-input>
-                    </el-form-item> -->
                     <!-- 角色 -->
                     <el-form-item label="角色" prop="role">
                       <el-select v-model="form.role"  placeholder="请选择" class="role_name">
@@ -46,8 +42,8 @@
                       </el-select>
                     </el-form-item>
                     <!-- 角色管理 -->
-                    <el-form-item label="账户" prop="nickname">
-                      <el-input v-model="form.nickname" placeholder="admin999"></el-input>
+                    <el-form-item label="账户" prop="username">
+                      <el-input v-model="form.username" placeholder="admin999"></el-input>
                     </el-form-item>
                     <!-- 取消，提交 -->
                     <el-form-item  class="text_right">
@@ -61,7 +57,6 @@
 </template>
 
 <script>
-import role_managerVue from '../role_manager.vue';
 export default {
   name: "logfound",
   props: {
@@ -70,8 +65,8 @@ export default {
   },
   watch:{
     dialog(){
+        console.log(this.form)
         this.$axios.get("/api/v1/role/?show_more=1").then(res => {
-          //console.log(res)
           this.userArray = res.data.data;
           console.log(this.userArray)
       });
@@ -127,22 +122,42 @@ export default {
     onSubmit(form) {
       this.$refs[form].validate(valid => {
         if (valid) {
-          //表单数据验证完成之后，提交数据;
-          this.$axios.post(`/api/v1/users/`, this.form).then(res => {
-            console.log(res)
-               if(res.data.code == 1){
-                  this.dialog.show = false;
-                  this.$message({message: res.data.msg,type: 'success'});
-                  this.$parent.init();
-                }
-                else{
-                  this.dialog.show = false; 
-                  this.$message("添加失败!");
-                }
-          })
-          .catch(error => {
-            this.$message("接口超时123!");
-          });
+          if(this.dialog.state == 1){
+              //添加新数据;
+              this.$axios.post(`/api/v1/users/`, this.form).then(res => {
+                console.log(res)
+                  if(res.data.code == 1){
+                      this.dialog.show = false;
+                      this.$message({message: res.data.msg,type: 'success'});
+                      this.$parent.init();
+                    }
+                    else{
+                      this.dialog.show = false; 
+                      this.$message("添加失败!");
+                    }
+              })
+              .catch(error => {
+                this.$message("接口超时!");
+              });           
+          }else{
+              //添加新数据;
+              this.$axios.put(`/api/v1/users/${this.form.id}/`, this.form).then(res => {
+                console.log(res)
+                  if(res.data.code == 1){
+                      this.dialog.show = false;
+                      this.$message({message: res.data.msg,type: 'success'});
+                      this.$parent.init();
+                    }
+                    else{
+                      this.dialog.show = false; 
+                      this.$message("修改失败!");
+                    }
+              })
+              .catch(error => {
+                this.$message("接口超时!");
+              });           
+
+          }
          }
       });
     },
