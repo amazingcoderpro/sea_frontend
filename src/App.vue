@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 export default {
   name: "app",
   created() {
@@ -34,11 +35,12 @@ export default {
 <style>
 html,
 body,
-#app {
-  width: 100%;
-  height: 100%;
-}
-.paging{
-  text-align: right;  padding-right: 20px;padding-top: 20px;
-}
+#app {width: 100%;height: 100%;}
+.paging{text-align:right;padding-right:20px;padding-top:20px;}
+.el-form-item.btnRight{float:right;margin-bottom: 10px;}
+.tableTitle{margin-bottom: 10px;}
+.tableTitle span{background:#006699;width:175px;color:#fff;display:inline-block;padding:10px 40px 10px 10px;font-size:20px;font-weight:600;-webkit-box-shadow:0 0 5px #006699;box-shadow:0 0 5px #006699;}
+.el-table thead  tr th{background: #199ED8;color:#fff;border-color: #ccc;}
+.el-table tbody  tr td{border-color: #ccc;}
+.el-table--border{border-color: #ccc!important;border-bottom: 1px solid #ccc!important;}
 </style>

@@ -1,46 +1,61 @@
 <template>
     <div class="board_List ">
-        <div>
-            <el-form :inline="true" ref="add_data">
-                 <el-form-item class="btnRight">
-                    <el-button @click='getPinFun()'>账户添加</el-button>
-                </el-form-item>
-            </el-form>
+        <div class="tableTitle"><span>账户基础信息管理</span></div>
+        <div  class="massage">
+          <p>账户名称:{{account_data.account_name}}</p>
+          <p>登陆邮箱:{{account_data.account_email}}</p>
+          <p>管理员:{{account_data.update_person}}</p>
+          <p>账户描述:{{account_data.account_description}}</p>
+          <p>账户数据: Pin {{account_data.pins}} RePin {{account_data.repin}} Like {{account_data.like}} Comment {{account_data.comment}}</p>
         </div>
-
+        <div class="tableTitle"><span>Board List</span></div>
         <!-- 表单部分 -->
         <div class="table_right">
-          <el-table :data="tableData" border>
-            <el-table-column prop="role_name" label="角色" align="center" width="400"></el-table-column>
-            <el-table-column prop="create_time" label="创建时间" align="center" width="400">
+          <el-table :data="tableData" border  ref="topictable"  :height="tableHeight">
+            <el-table-column type="index"  label="ID" width="50"></el-table-column>
+            <el-table-column prop="board_description" label="Board描述" align="center" width="100"></el-table-column>
+            <el-table-column  class="parentNodeColumn" align="center" prop="pins,pins_increment" label="Pin"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.pins}}<br/>今日新增:{{scope.row.pins_increment}}</template>
+            </el-table-column>            
+            <el-table-column  class="parentNodeColumn" align="center" prop="repin,repin_increment" label="RePin"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.repin}}<br/>今日新增:{{scope.row.repin_increment}}</template>
+            </el-table-column>            
+            <el-table-column  class="parentNodeColumn" align="center" prop="like,like_increment" label="Like"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.like}}<br/>今日新增:{{scope.row.like_increment}}</template>
+            </el-table-column>           
+            <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comment"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.comment}}<br/>今日新增:{{scope.row.comment_increment}}</template>
+            </el-table-column>           
+            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="详细数据报告"  width="150" >
               <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.create_time }}</span>
+                <el-button icon="edit" size="small" @click="PinManagerFun(scope.row)">去pin列表</el-button>
+              </template>
+            </el-table-column>            
+            <el-table-column  prop="board_state" label="Board状态" align="center"  width="250">
+              <template slot-scope="scope">
+                <span v-if='scope.row.board_state=0'>Private</span><span v-else>Public</span>
               </template>
             </el-table-column>
-            <el-table-column prop="update_time" label="更新时间" align="center" width="400">
+            <el-table-column  prop="failed,finished,pending" label="发布记录" align="center"  width="250">
               <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.update_time }}</span>
+                 今日已发布数:{{scope.row.failed}}<br/>
+                 今日未发布数:{{scope.row.finished}}<br/>
+                 pending:{{scope.row.pending}}
               </template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="操作" fixed="right" width="400">
+            <el-table-column prop="operation" align="center" label="Manage Your Board" fixed="right" width="200">
               <template slot-scope="scope">
-                  <el-button
-                  type="danger"
-                  icon="delete"
-                  size="small"
-                  @click="handleDelete(scope.row,scope.$index)"
-                >权限范围配置</el-button>
-                <el-button type="warning" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                  <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
+                  <el-button type="warning" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
 
-
-
-
+        <!-- 分页 -->
+        <div class="paging">
+          <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
+        </div>
         <!-- 展示请求权限的弹窗 -->
         <!-- <DialogFound :dialog='dialog'  ></DialogFound> -->
 
@@ -55,25 +70,27 @@ export default {
   name: "board_List",
   data() {
     return {
-      iframeSrc:"dialog/board_manager_html.html",
+      total:1,//默认数据总数
+      pagesize:10,//每页的数据条数
+      pagesizes:[10, 20, 30, 40],//分组数量
+      currentPage:1,//默认开始页面
+      tableHeight:"100",
+
+      account_data:{},
+      thisId:'-1',
       tableData: [],
       dialog: {
         show: false,
         title: "",
         option: "edit"
-      },
-      form: {
-        id: "",
-        username: "",
-        password: "",
-        password2: "",
-        email: "",
-        nickname: "",
       }
 
-
-
     };
+  },
+  mounted() {
+      setTimeout(() => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      }, 50);
   },
   components: {
     //  DialogFound
@@ -84,9 +101,17 @@ export default {
   methods: {
     init() {
       // 获取表格数据
-      this.$axios("/api/v1/account/users/?page=1&page_size=10").then(res => {
-        this.tableData = res.data.data.results;
-      });
+        this.account_data =JSON.parse(localStorage.getItem("account_data"));
+        this.thisId = this.$route.query.thisId;
+        if( this.account_data.pinterest_account_id == null || this.account_data.pinterest_account_id == undefined){
+              this.$message({message: "参数不全",type: 'warning',center: true});
+        }else{
+          // this.$axios(`/api/v1/account_list/${this.account_data.pinterest_account_id}/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
+          this.$axios(`/api/v1/account_list/1/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
+            this.tableData = res.data.data.results;
+            this.total = res.data.data.count;
+          });
+        }
     },
     handleEdit(row) {
       // 编辑
@@ -94,14 +119,6 @@ export default {
         show: true,
         title: "修改资金信息",
         option: "put"
-      };
-      this.form = {
-        id: row.id,
-        username: row.username,
-        password: row.password,
-        password2: row.password,
-        email: row.email,
-        last_name: row.last_name,
       };
     },
     handleDelete(row, index) {
@@ -111,63 +128,30 @@ export default {
         this.getProfile();
       });
     },
-    handleAdd() {
-      // 添加
-      this.dialog = {
-        show: true,
-        title: "添加用户",
-        option: "post"
-      };
-      this.form = {
-        id: "",
-        username: "",
-        password: "",
-        password2: "",
-        email: "",
-        last_name: "",
-      };
+    PinManagerFun(row) {
+      // 去pin列表页面
+      localStorage.setItem("board_data",JSON.stringify(row) );
+      this.$router.push({path:"/pin_manager"});
     },
-    getPinFun(row) {
-        this.$axios.post(`/api/v1/pinterest_account_auth/2/`).then(res => {
-            console.log(res)
-            if(res.data.code == 1){
-              window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
-            }else{
-                this.$message({
-                  message: res.data.msg,
-                  type: 'warning',
-                  center: true
-                });
-            }
-        }).catch(error => {
-                //超时之后在这里捕抓错误信息.
-                if (error.response) {
-                    console.log('error.response')
-                    console.log(error.response);
-                } else if (error.request) {
-                    console.log(error.request)
-                    console.log('error.request')
-                    if(error.request.readyState == 4 && error.request.status == 0){
-                        //我在这里重新请求
-                    }
-                } else {
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
-            });
-
-
+    current_change(val){
+        //点击数字时触发
+        this.currentPage = val;
+        this.init();
+    },
+    handleSizeChange(val){
+        //修改每页显示多少条时触发
+        this.pagesize = val;
+        this.init();
     }
-
-
-
   }
 };
-
-
 
 </script>
 
 <style>
-
+.board_List .massage p{
+    margin: 5px 0;
+    padding-left: 5px;
+    font-size: 16px;
+}
 </style>

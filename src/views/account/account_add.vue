@@ -13,14 +13,18 @@
                 <el-input v-model="objForm.email"></el-input>
               </el-form-item>
               <el-form-item label="账号类型" prop="type">
-                <el-input v-model="objForm.type"></el-input>
-                <!-- (0, 'business'), (1, 'individual') -->
+                <el-radio v-model="objForm.type" label="0">business</el-radio>
+                <el-radio v-model="objForm.type" label="1">individual</el-radio>
               </el-form-item>
               <el-form-item label="账户描述" prop="description">
                 <el-input v-model="objForm.description"></el-input>
               </el-form-item>
               <el-form-item label="创建时间" prop="create_time">
-                <el-input v-model="objForm.create_time"></el-input>
+                    <el-date-picker
+                      v-model="objForm.create_time"
+                      type="datetime"
+                      placeholder="选择日期时间">
+                    </el-date-picker>
               </el-form-item>
 
               <el-form-item>
@@ -42,11 +46,11 @@
     data() {
       return {
         objForm:{
-          account_uri: "",  //PinterestAccount唯一标识码
-          nickname: "",     //账户名称
-          email: "",        //登陆邮箱
-          type: "",         //账号类型 (0, 'business'), (1, 'individual')
-          description: "",    //账户描述
+          account_uri: "123456-zjytest",  //PinterestAccount唯一标识码
+          nickname: "123456-zjytest",     //账户名称
+          email: "mark.zhang@orderplus.com",        //登陆邮箱
+          type: "0",         //账号类型 (0, 'business'), (1, 'individual')
+          description: "123456-zjytest",    //账户描述
           create_time: "",    //账号创建时间
         },
         rules: {
@@ -63,22 +67,27 @@
         }
       };
     },
+    watch: {
+        dialog: function() {
+            console.log(this.dialog) // 旧的值
+        }
+    },
+    mounted() {
+  //    this.$refs.dialog.open(); //方法
+    },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-                this.$axios.post(`/api/v1/store/`,this.objForm)
+                this.$axios.post(`/api/v1/pinterest_account/`,this.objForm)
                 .then(res => {
                     if(res.data.code == 1){
                       this.dialog.show = false;
-                      this.$message({
-                        message: res.data.msg,
-                        type: 'success'
-                      });
+                      this.$message({message: res.data.msg,type: 'success'});
                       this.$parent.init();
                     }else{
                       this.dialog.show = false; 
-                      this.$message(res.data.msg);
+                      this.$message("添加失败!");
                     }
                 })
                 .catch(error => {
@@ -95,10 +104,10 @@
 </script>
 <style>
 .account_add .el-form-item__label{
-  width:200px;
+  width:115px!important;
 }
 .account_add .el-form-item__content{
-  margin-left:200px;
+  margin-left:115px!important;
 }
 
 </style>

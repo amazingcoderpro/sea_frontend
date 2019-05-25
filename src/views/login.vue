@@ -13,7 +13,7 @@
                     </el-form-item>
 
                     <el-form-item>
-                      <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')">登录</el-button>
+                      <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')" >登录</el-button>
                     </el-form-item>
 
                     <div class="tiparea">
@@ -57,6 +57,7 @@ export default {
             this.$axios.post('/api/v1/account/login/',this.loginUser)
             .then(res => {
                 // token
+                document.onkeydown = undefined;
                 console.log(res.data)
                 if(res.data.code == 1){
                     const token=res.data.data.token;

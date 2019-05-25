@@ -1,12 +1,11 @@
 <template>
     <div class="RuleList">
-        <div>
-            <el-form :inline="true" ref="add_data">
-                 <el-form-item class="btnRight">
-                    <el-button  @click='addRule()'>添加规则</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
+        <div class="tableTitle"><span>规则列表</span></div>
+        <el-form :inline="true" ref="add_data">
+              <el-form-item class="btnRight">
+                <el-button  type="primary" @click='addFun()'>添加规则</el-button>
+            </el-form-item>
+        </el-form> 
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
@@ -105,7 +104,7 @@ export default {
           });
         }
     },
-    addRule() {
+    addFun() {
       // 添加
       this.dialog = {
         show: true,

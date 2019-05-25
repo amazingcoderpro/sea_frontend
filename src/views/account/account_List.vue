@@ -1,12 +1,11 @@
 <template>
     <div class="account_List">
-        <div>
-            <el-form :inline="true" ref="add_data">
-                 <el-form-item class="btnRight">
-                    <el-button @click='addFun()'>账户添加</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
+        <div class="tableTitle"><span>用户列表</span></div>
+        <el-form :inline="true" ref="add_data">
+              <el-form-item class="btnRight">
+                <el-button  type="primary" @click='addFun()'>添加账户</el-button>
+            </el-form-item>
+        </el-form>
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
@@ -24,7 +23,7 @@
             <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" label="Pin数据"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.pins}}<br/>今日新增:{{scope.row.pins_increment}}</template>
             </el-table-column>
-            <el-table-column  prop="repin,pins_increment" label="RePin数据"  width="150">
+            <el-table-column  prop="repin,repin_increment" label="RePin数据"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.repin}}<br/>今日新增:{{scope.row.repin_increment}}</template>
             </el-table-column>
             <el-table-column  prop="like,like_increment" label="Like数据"  width="150">
@@ -33,9 +32,9 @@
             <el-table-column  prop="comment,comment_increment" label="Comment数据"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.comment}}<br/>今日新增:{{scope.row.comment_increment}}</template>
             </el-table-column>
-            <el-table-column prop="update_person" label="详细数据报告(border)" align="center" width="200">
+            <el-table-column prop="update_person" label="详细数据报告" align="center" width="200">
                <template slot-scope="scope">
-                <el-button icon="edit" size="small" @click="ListManagerFun(scope.row)">规则详情</el-button>
+                <el-button icon="edit" size="small" @click="BoardManagerFun(scope.row)">border列表</el-button>
               </template>
              
             </el-table-column>
@@ -50,7 +49,7 @@
 
             <el-table-column prop="role_name" label="规则详情" align="center" width="150" >
               <template slot-scope="scope">
-                <el-button icon="edit" size="small" @click="ListManagerFun(scope.row)">规则详情</el-button>
+                <el-button icon="edit" size="small" @click="ListManagerFun(scope.row)">规则列表</el-button>
               </template>
             </el-table-column>
             <el-table-column  prop="finished,pending" align="center" label="发布记录"  width="250">
@@ -79,7 +78,7 @@
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
         <!-- 展示请求权限的弹窗 -->
-        <DialogFound :dialog='dialog'  ></DialogFound>
+        <DialogFound :dialog='dialog'  ref="dailog" ></DialogFound>
     </div>
 </template>
 
@@ -190,8 +189,13 @@ export default {
           });
     },
     ListManagerFun(row) {
-      // 去规则详情页面
+      // 去规则列表页面
       this.$router.push({path:"/list_manager", query: { index: row.index }});
+    },
+    BoardManagerFun(row) {
+      // 去board_manager页面
+      localStorage.setItem("account_data",JSON.stringify( row ) );
+      this.$router.push({path:"/board_manager"});
     },
     current_change(val){
         //点击数字时触发

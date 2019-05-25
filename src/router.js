@@ -12,7 +12,7 @@ import BoardReport from './views/board_report'
 import PinsReport from './views/pins_peport'
 import AccountList from './views/account/account_List'
 import BoardList from './views/board/board_List'
-import PinManager from './views/pin_manager'
+import PinManager from './views/pin/pin_manager'
 import RuleList from './views/rule/rule_list'
 import RecordManager from './views/record_manager'
 import UserManager from './views/user_manager'
@@ -71,19 +71,16 @@ router.beforeEach((to,from,next) =>{
   const isLogin = localStorage.eleToken ? true : false;
   if(to.path == "/login" || to.path == "/register"){
     next()
-  }
-  
-  
-  else{
+  }else{
     //isLogin ? next() : next('/login');
     if(isLogin) {
       console.log(to.path)
       let refreshPath = window.localStorage.getItem('router_tree') ? JSON.parse(window.localStorage.getItem('router_tree')) : this.$store.getters.router_tree
-      if(refreshPath.indexOf(to.path)>=0){
-        next()
-      }else{
-        next('/login')
-      }
+        if(refreshPath.indexOf(to.path)>=0){
+          next()
+        }else{
+          next('/login')
+        }
       }else{
         next('/login')
       }
