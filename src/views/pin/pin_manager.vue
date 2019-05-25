@@ -5,14 +5,14 @@
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="pinID"  placeholder="请输入PinID"></el-input>
-                <el-button  type="primary" @click='serchFun()'>搜索</el-button>
+                <el-button  type="primary" @click='init()'>搜索</el-button>
             </el-form-item>
         </el-form>
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
-            <el-table-column type="selection" label="批量操作" width="55" ></el-table-column>
-            <el-table-column type="index"  label="ID" width="50"></el-table-column>
+            <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
+            <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
             <el-table-column prop="pin_id" label="pin_id" align="center" width="100"></el-table-column>
             <el-table-column prop="pin_thumbnail" label="Pin图" align="center" width="100">
                 <template slot-scope="scope"> 
@@ -22,29 +22,26 @@
             <el-table-column prop="pin_description" label="Pin描述" align="center" width="100"></el-table-column>
             <el-table-column prop="pin_url" label="URL" align="center" width="100"></el-table-column>
             <el-table-column prop="product_sku" label="产品SKU" align="center" width="100"></el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View"  width="150">
+            <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.view}}<br/>今日新增:{{scope.row.view_increment}}</template>
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="repin,repin_increment" label="Repin"  width="150">
+            <el-table-column  class="parentNodeColumn" prop="repin,repin_increment" label="Repin" align="center"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.repin}}<br/>今日新增:{{scope.row.repin_increment}}</template>
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="like,like_increment" label="Like"  width="150">
+            <el-table-column  class="parentNodeColumn" prop="like,like_increment" label="Like" align="center"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.like}}<br/>今日新增:{{scope.row.like_increment}}</template>
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comment"  width="150">
+            <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comment" align="center"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.comment}}<br/>今日新增:{{scope.row.comment_increment}}</template>
             </el-table-column>
             <el-table-column prop="under_board_id" label="所属Board ID" align="center" width="100"></el-table-column>
-            <el-table-column prop="under_account_id" label="所属账户 ID" align="center" width="100"></el-table-column>
+            <el-table-column prop="under_account_id" label="所属账户ID" align="center" width="150"></el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Pin" fixed="right" width="200">
               <template slot-scope="scope">
+                  <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
-                  <el-button type="warning" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
               </template>
             </el-table-column>
-
-
-
           </el-table>
         </div>
         <!-- 分页 -->
@@ -70,6 +67,7 @@ export default {
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面
       tableHeight:"100",
+      pinIDInput:'',  
       pinID:'',  
       account_data:{},
       board_data:{},
@@ -99,13 +97,16 @@ export default {
       // 获取表格数据
         this.account_data =JSON.parse(localStorage.getItem("account_data"));
         this.board_data =JSON.parse(localStorage.getItem("board_data"));
-
-        //this.$axios(`/api/v1/account_list/${this.account_data.pinterest_account_id}/${this.board_data.board_id}/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
-        this.$axios(`/api/v1/account_list/1/3/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
+        //${this.account_data.pinterest_account_id} ${this.board_data.board_id} 
+        this.$axios(`/api/v1/account_list/1/3/?page=${this.currentPage}&page_size=${this.pagesize}&query_str=${this.pinID}`).then(res => {
             this.tableData = res.data.data.results;
             this.total = res.data.data.count;
             console.log(res)
         });      
+    },
+    serchFun(){
+        //this.pinID = this.pinIDInput;
+        this.init();
     },
     handleEdit(row) {
       // 编辑

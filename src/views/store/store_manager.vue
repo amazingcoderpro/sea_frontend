@@ -53,14 +53,14 @@
             </el-table-column>
             <el-table-column prop="account_authorized" align="center" label="授权" width="250">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.account_authorized == 1">已授权</el-button>
-                <el-button v-else icon="edit" size="small" @click="AutFun(scope.row)">授权</el-button>
+                <el-button v-if="scope.row.account_authorized == 1"  type="primary"  size="small">已授权</el-button>
+                <el-button v-else type="primary" icon="edit" size="small" @click="AutFun(scope.row)">授权</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="operation" align="center" label="操作" width="250" fixed="right" >
               <template slot-scope="scope">
-                <el-button icon="edit" size="small" @click="EditFun(scope.row)">修改账户信息</el-button>
-                <el-button icon="edit" size="small" @click="handleEdit(scope.row)">删除账户</el-button>
+                  <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                  <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>

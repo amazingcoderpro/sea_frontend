@@ -2,34 +2,34 @@
 <template>
     <div class="account_add">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
-          <el-form :model="objForm" :rules="rules" ref="objForm" label-width="100px" class="demo-ruleForm">
+          <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
               <el-form-item label="Pin唯一标识码" prop="account_uri">
-                <el-input v-model="objForm.account_uri"></el-input>
+                <el-input v-model="form.account_uri"></el-input>
               </el-form-item>
               <el-form-item label="账户名称" prop="nickname">
-                <el-input v-model="objForm.nickname"></el-input>
+                <el-input v-model="form.nickname"></el-input>
               </el-form-item>
               <el-form-item label="登陆邮箱" prop="email">
-                <el-input v-model="objForm.email"></el-input>
+                <el-input v-model="form.email"></el-input>
               </el-form-item>
               <el-form-item label="账号类型" prop="type">
-                <el-radio v-model="objForm.type" label="0">business</el-radio>
-                <el-radio v-model="objForm.type" label="1">individual</el-radio>
+                <el-radio v-model="form.type" label="0">business</el-radio>
+                <el-radio v-model="form.type" label="1">individual</el-radio>
               </el-form-item>
               <el-form-item label="账户描述" prop="description">
-                <el-input v-model="objForm.description"></el-input>
+                <el-input v-model="form.description"></el-input>
               </el-form-item>
               <el-form-item label="创建时间" prop="create_time">
                     <el-date-picker
-                      v-model="objForm.create_time"
+                      v-model="form.create_time"
                       type="datetime"
                       placeholder="选择日期时间">
                     </el-date-picker>
               </el-form-item>
 
               <el-form-item>
-              <el-button type="primary" @click="submitForm('objForm')">立即创建</el-button>
-              <el-button @click="resetForm('objForm')">重置</el-button>
+              <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+              <el-button @click="resetForm('form')">重置</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -45,14 +45,6 @@
     },
     data() {
       return {
-        objForm:{
-          account_uri: "123456-zjytest",  //PinterestAccount唯一标识码
-          nickname: "123456-zjytest",     //账户名称
-          email: "mark.zhang@orderplus.com",        //登陆邮箱
-          type: "0",         //账号类型 (0, 'business'), (1, 'individual')
-          description: "123456-zjytest",    //账户描述
-          create_time: "",    //账号创建时间
-        },
         rules: {
           account_uri: [{ required: true, message: '请输入PinterestAccount唯一标识码', trigger: 'blur' }],
           nickname: [{required: true, message: '账户名称不能为空', trigger: 'blur'}],
@@ -69,7 +61,7 @@
     },
     watch: {
         dialog: function() {
-            console.log(this.dialog) // 旧的值
+            console.log(this.form) // 旧的值
         }
     },
     mounted() {
@@ -79,7 +71,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-                this.$axios.post(`/api/v1/pinterest_account/`,this.objForm)
+                this.$axios.post(`/api/v1/pinterest_account/`,this.form)
                 .then(res => {
                     if(res.data.code == 1){
                       this.dialog.show = false;

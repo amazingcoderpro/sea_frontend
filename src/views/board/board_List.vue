@@ -20,15 +20,15 @@
             <el-table-column  class="parentNodeColumn" align="center" prop="repin,repin_increment" label="RePin"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.repin}}<br/>今日新增:{{scope.row.repin_increment}}</template>
             </el-table-column>            
-            <el-table-column  class="parentNodeColumn" align="center" prop="like,like_increment" label="Like"  width="150">
+            <el-table-column  class="parentNodeColumn" align="center" prop="like,like_increment" label="Like"  width="300">
               <template slot-scope="scope"> 总数:{{scope.row.like}}<br/>今日新增:{{scope.row.like_increment}}</template>
             </el-table-column>           
             <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comment"  width="150">
               <template slot-scope="scope"> 总数:{{scope.row.comment}}<br/>今日新增:{{scope.row.comment_increment}}</template>
             </el-table-column>           
-            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="详细数据报告"  width="150" >
+            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="详细数据报告"  width="200" >
               <template slot-scope="scope">
-                <el-button icon="edit" size="small" @click="PinManagerFun(scope.row)">去pin列表</el-button>
+                <el-button icon="edit" type="primary" size="small" @click="PinManagerFun(scope.row)">去pin列表</el-button>
               </template>
             </el-table-column>            
             <el-table-column  prop="board_state" label="Board状态" align="center"  width="250">
@@ -45,8 +45,8 @@
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Board" fixed="right" width="200">
               <template slot-scope="scope">
+                  <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
-                  <el-button type="warning" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
               </template>
             </el-table-column>
           </el-table>
