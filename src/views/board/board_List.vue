@@ -45,7 +45,7 @@
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Board" fixed="right" width="200">
               <template slot-scope="scope">
-                  <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">编辑</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
               </template>
             </el-table-column>
@@ -57,14 +57,14 @@
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
         <!-- 展示请求权限的弹窗 -->
-        <!-- <DialogFound :dialog='dialog'  ></DialogFound> -->
+        <DialogFound :dialog='dialog' :formData='formData' ></DialogFound>
 
     </div>
 </template>
 
 <script>
 
-// import DialogFound from "./dialog/board_manager_dialog";
+ import DialogFound from "./board_edit";
 
 export default {
   name: "board_List",
@@ -76,6 +76,7 @@ export default {
       currentPage:1,//默认开始页面
       tableHeight:"100",
 
+      formData:{}, // row data
       account_data:{},
       thisId:'-1',
       tableData: [],
@@ -93,7 +94,7 @@ export default {
       }, 50);
   },
   components: {
-    //  DialogFound
+      DialogFound
   },
   created() {
     this.init();
@@ -113,13 +114,14 @@ export default {
           });
         }
     },
-    handleEdit(row) {
+    editFun(row) {
       // 编辑
       this.dialog = {
         show: true,
-        title: "修改资金信息",
+        title: "修改board信息",
         option: "put"
       };
+      this.formData = row;
     },
     handleDelete(row, index) {
       // 删除

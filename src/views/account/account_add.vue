@@ -64,9 +64,6 @@
             console.log(this.form) // 旧的值
         }
     },
-    mounted() {
-  //    this.$refs.dialog.open(); //方法
-    },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
