@@ -3,7 +3,7 @@
         <div>
             <el-form :inline="true" ref="add_data">
                  <el-form-item class="btnRight">
-                    <el-button @click='add()'>增加商户</el-button>
+                    <el-button @click='addFun()'>增加商户</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -123,6 +123,19 @@ export default {
         this.total = res.data.data.count;
       });
     },
+    addFun() {
+      // 添加
+      this.dialog = {
+        show: true,
+        title: "添加店铺",
+        option: "post"
+      };
+      this.form = {
+        name:'',
+        url:'',
+        eamil:'',
+      };
+    },
     handleEdit(row) {
       // 编辑
       this.dialog = {
@@ -142,19 +155,6 @@ export default {
         this.$message("删除成功");
         this.getProfile();
       });
-    },
-    add() {
-      // 添加
-      this.dialog = {
-        show: true,
-        title: "添加店铺",
-        option: "post"
-      };
-      this.form = {
-        name:'',
-        url:'',
-        eamil:'',
-      };
     },
     AutFun(row) {
       // 获取授权

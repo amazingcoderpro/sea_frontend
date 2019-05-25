@@ -3,7 +3,7 @@
         <div>
             <el-form :inline="true" ref="add_data">
                  <el-form-item class="btnRight">
-                    <el-button @click='getPinFun()'>账户添加</el-button>
+                    <el-button @click='addFun()'>账户添加</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -79,12 +79,12 @@
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
         <!-- 展示请求权限的弹窗 -->
-        <!-- <DialogFound :dialog='dialog'  ></DialogFound> -->
+        <DialogFound :dialog='dialog'  ></DialogFound>
     </div>
 </template>
 
 <script>
-// import DialogFound from "./dialog/board_manager_dialog";
+ import DialogFound from "./account_add";
 export default {
   name: "account_List",
   data() {
@@ -102,17 +102,17 @@ export default {
         option: "edit"
       },
       form: {
-        id: "",
-        username: "",
-        password: "",
-        password2: "",
-        email: "",
-        nickname: "",
+        account_uri: "",  //PinterestAccount唯一标识码
+        nickname: "",     //账户名称
+        email: "",        //登陆邮箱
+        type: "",         //账号类型 (0, 'business'), (1, 'individual')
+        description: "",    //账户描述
+        create_time: "",    //账号创建时间
       }
     };
   },
   components: {
-    //  DialogFound
+      DialogFound
   },
   created() {
     this.init();
@@ -129,6 +129,22 @@ export default {
         this.tableData = res.data.data.results;
         this.total = res.data.data.count;
       });
+    },
+    addFun() {
+      // 添加
+      this.dialog = {
+        show: true,
+        title: "添加账户",
+        option: "post"
+      };
+      this.form = {
+        account_uri: "",  //PinterestAccount唯一标识码
+        nickname: "",     //账户名称
+        email: "",        //登陆邮箱
+        type: "",         //账号类型 (0, 'business'), (1, 'individual')
+        description: "",    //账户描述
+        create_time: "",    //账号创建时间
+      };
     },
     handleEdit(row) {
       // 编辑
@@ -152,22 +168,6 @@ export default {
         this.$message("删除成功");
         this.getProfile();
       });
-    },
-    handleAdd() {
-      // 添加
-      this.dialog = {
-        show: true,
-        title: "添加用户",
-        option: "post"
-      };
-      this.form = {
-        id: "",
-        username: "",
-        password: "",
-        password2: "",
-        email: "",
-        last_name: "",
-      };
     },
     AutFun(row) {
       // 获取授权
