@@ -1,5 +1,6 @@
 <template>
   <div class="user_manager">
+    <div class="tableTitle"><span>用户列表</span></div>
     <!-- 搜索框 -->
     <div class="btnLeft">
         <el-input
@@ -28,9 +29,9 @@
             <span style="color:#00d053">{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="role_name" label="角色" align="center" width="300"></el-table-column>
-        <el-table-column prop="username" label="登录账号" align="center" width="180"></el-table-column>
-        <el-table-column prop="email" label="邮箱" align="center" width="300"></el-table-column>
+        <el-table-column prop="role_name" label="角色" align="center" width="250"></el-table-column>
+        <el-table-column prop="username" label="登录账号" align="center" width="250"></el-table-column>
+        <el-table-column prop="email" label="邮箱" align="center" width="250"></el-table-column>
         <!-- <el-table-column prop="section" label="部门" align="center" width="150"></el-table-column> -->
         <el-table-column prop="create_time" label="创建时间" align="center" width="250">
           <template slot-scope="scope">
@@ -180,5 +181,7 @@ export default {
     margin-bottom: 10px;
     margin-right: 16px;
 }
-
+.tableTitle{
+  margin-bottom: 40px;
+}
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="fillcontain">
+      <div class="tableTitle"><span>角色列表</span></div>
     <!-- 搜索框 -->
     <div class="btnLeft">
       <el-input v-model="input" placeholder="请输入用户名"></el-input>
@@ -196,5 +197,8 @@ export default {
 .block {
   float: right;
   padding-top: 10px;
+}
+.tableTitle{
+  margin-bottom: 40px;
 }
 </style>
