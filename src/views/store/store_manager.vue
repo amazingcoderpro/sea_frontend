@@ -9,55 +9,55 @@
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
-            <el-table-column type="selection" width="55" ></el-table-column>
-            <el-table-column type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  prop="name" align="center" label="店铺名称"  width="250">
+            <el-table-column type="selection" align="center" width="55" ></el-table-column>
+            <el-table-column type="index" align="center" label="ID" width="50"></el-table-column>
+            <el-table-column  prop="name" align="center" label="店铺名称"  width="150">
               <template slot-scope="scope">
                  {{scope.row.name}}
               </template>
             </el-table-column>
-            <el-table-column  prop="user" align="center" label="管理员"  width="250">
+            <el-table-column  prop="user" align="center" label="管理员"  width="150">
               <template slot-scope="scope">
                  {{scope.row.user}}
               </template>
             </el-table-column>
-            <el-table-column  prop="email" align="center" label="注册邮箱"  width="250">
+            <el-table-column  prop="email" align="center" label="注册邮箱"  width="200">
               <template slot-scope="scope">
                  {{scope.row.email}}
               </template>
             </el-table-column>
-            <el-table-column  prop="visitors" align="center" label="访问量"  width="250">
+            <el-table-column  prop="visitors" align="center" label="访问量"  width="150">
               <template slot-scope="scope">
                  {{scope.row.visitors}}
               </template>
             </el-table-column>
-            <el-table-column  prop="scan" align="center" label="流量"  width="250">
+            <el-table-column  prop="scan" align="center" label="流量"  width="150">
               <template slot-scope="scope">
                  {{scope.row.scan}}
               </template>
             </el-table-column>
-            <el-table-column  prop="sale" align="center" label="营收($)"  width="250">
+            <el-table-column  prop="sale" align="center" label="营收($)"  width="150">
               <template slot-scope="scope">
                  {{scope.row.sale}}
               </template>
             </el-table-column>
-            <el-table-column  prop="authorized" align="center" label="是否认证"  width="250">
+            <el-table-column  prop="authorized" align="center" label="是否认证"  width="150">
               <template slot-scope="scope">
                  {{scope.row.authorized}}
               </template>
             </el-table-column>
-            <el-table-column  prop="create_time" align="center" label="创建时间"  width="250">
+            <el-table-column  prop="create_time" align="center" label="创建时间"  width="150">
               <template slot-scope="scope">
                  {{scope.row.create_time}}
               </template>
             </el-table-column>
-            <el-table-column prop="account_authorized" align="center" label="授权" width="250">
+            <el-table-column prop="account_authorized" align="center" label="授权" width="150">
               <template slot-scope="scope">
                 <el-button v-if="scope.row.account_authorized == 1"  type="primary"  size="small">已授权</el-button>
                 <el-button v-else type="primary" icon="edit" size="small" @click="AutFun(scope.row)">授权</el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="操作" width="250" fixed="right" >
+            <el-table-column prop="operation" align="center" label="操作" width="150" fixed="right" >
               <template slot-scope="scope">
                   <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>

@@ -11,16 +11,16 @@
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="selection" width="55" ></el-table-column>
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="规则标签"  width="150">
+            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="规则标签"  width="200">
               <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="规则创建时间"  width="300">
+            <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="规则创建时间"  width="200">
               <template slot-scope="scope"> {{scope.row.create_time}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="规则有效期"  width="300">
+            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="规则有效期"  width="200">
               <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="时间区间"  width="500">
+            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="时间区间"  width="200">
             <template slot-scope="scope" >
                 <div  v-for="item in scope.row.schedule_rule" :key="item.id">
                     周{{item.weekday}}|{{item.start_time}}|{{item.end_time}}|发布频率{{item.interval_time}}
@@ -28,16 +28,16 @@
                 </div>
             </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="scan" label="可发布产品数量"  width="150">
+            <el-table-column  align="center" class="parentNodeColumn" prop="scan" label="可发布产品数量"  width="200">
               <template slot-scope="scope"> {{scope.row.scan}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="所属账户"  width="150">
+            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="所属账户"  width="200">
               <template slot-scope="scope"> {{scope.row.account_name}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="所属Board"  width="150">
+            <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="所属Board"  width="200">
               <template slot-scope="scope"> {{scope.row.baord_name}}</template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="操作" width="300"  fixed="right">
+            <el-table-column prop="operation" align="center" label="操作" width="180"  fixed="right">
               <template slot-scope="scope">
                 <el-button icon="edit" size="small" @click="editFun(scope.row)">修改账户信息</el-button>
                 <el-button icon="edit" size="small" @click="stopFun(scope.row)">暂停</el-button>
