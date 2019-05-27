@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="regits">
         <section class="form_container">
                   <span class="title">Social Media管理系统</span>
                   <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
@@ -30,7 +30,7 @@
 import router from '../router'
 import Menufilter from '../components/menufilter.js'
 export default {
-    name: "login",
+    name: "regits",
     components:{},
     data(){    
       return {
@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style scoped>
-.login {
+.regits {
   position: relative;
   width: 100%;
   height: 100%;

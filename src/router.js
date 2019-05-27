@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Notfount from './components/404.vue'
 import Login from './views/login.vue'
+import Regist from './views/regits.vue'
+
 import Index from './views/index'
 import Dashboard from './views/dashboard'
 import SubAccountDailyReport from './views/sub_account_daily_report'
@@ -56,6 +58,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/regist',
+      name: 'regist',
+      component: Regist
     },
     {
       path: '*',
