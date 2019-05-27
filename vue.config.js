@@ -1,6 +1,7 @@
 ﻿const path = require('path')
 const debug = process.env.NODE_ENV !== 'production'
 
+//123
 module.exports = {
     baseUrl: '/', // 根域上下文目录
     outputDir: 'dist', // 构建输出目录
