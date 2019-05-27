@@ -1,6 +1,6 @@
 <template>
   <div class="user_manager">
-    <div class="tableTitle"><span>用户列表</span></div>
+    <div class="tableTitle"><span>用户管理</span></div>
     <!-- 搜索框 -->
     <div class="btnLeft">
         <el-input
@@ -11,7 +11,6 @@
       <el-button type="primary" icon="el-icon-search"  size="small" @click="init()">搜索</el-button>
     </div>
     <!-- 新增账户 -->
-    
     <div class="btnRight">
         <el-button type="primary" size="small" icon="view" @click="handleAdd()">增加用户</el-button>
     </div>
@@ -29,16 +28,9 @@
             <span style="color:#00d053">{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-<<<<<<< HEAD
         <el-table-column prop="role_name" label="角色" align="center" width="250"></el-table-column>
         <el-table-column prop="username" label="登录账号" align="center" width="250"></el-table-column>
         <el-table-column prop="email" label="邮箱" align="center" width="250"></el-table-column>
-=======
-        <el-table-column prop="role_name" label="角色" align="center" width="300"></el-table-column>
-        <el-table-column prop="username" label="登录账号" align="center" width="180"></el-table-column>
-        <el-table-column prop="email" label="邮箱" align="center" width="300"></el-table-column>
-        <!-- <el-table-column prop="section" label="部门" align="center" width="150"></el-table-column> -->
->>>>>>> 00603e6406a7ee3d28e37ad17a4b9ca66dd18c3c
         <el-table-column prop="create_time" label="创建时间" align="center" width="250">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>

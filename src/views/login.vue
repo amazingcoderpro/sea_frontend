@@ -17,7 +17,7 @@
                     </el-form-item>
 
                     <div class="tiparea">
-                        <p>还没有账号？现在<router-link to='/login'>注册</router-link> </p>
+                        <p>还没有账号？现在<router-link to='/regist'>注册</router-link> </p>
                     </div>
                   </el-form>
         </section>
@@ -111,16 +111,16 @@ export default {
   background-size: 100% 100%;
 }
 .form_container {
-    width: 370px;
-    height: 314px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    padding: 25px;
-    border-radius: 5px;
-    text-align: center;
-    margin-left: -210px;
-    margin-top: -200px;
+  width: 370px;
+  height: 314px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 25px;
+  border-radius: 5px;
+  text-align: center;
+  margin-left: -210px;
+  margin-top: -200px;
 }
 .form_container .manage_tip .title {
   font-family: "Microsoft YaHei";
