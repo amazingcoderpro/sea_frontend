@@ -11,9 +11,9 @@
                       <el-input type="password" v-model="form.password" class="password" placeholder="请输入密码"></el-input>
                     </el-form-item>
                     <!-- 确认密码 -->
-                     <el-form-item prop="password" >
+                     <!-- <el-form-item prop="password" >
                       <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <!-- 下拉框 -->
                     <el-select v-model="loginUser" placeholder="请选择" class="select">
                       <el-option

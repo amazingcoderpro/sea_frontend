@@ -62,7 +62,6 @@ export default {
                 if(res.data.code == 1){
                     const token=res.data.data.token;
                     localStorage.setItem("eleToken", token);
-                    
                     localStorage.setItem("user", JSON.stringify( res.data.data.user ));
                     localStorage.setItem("menu_tree", JSON.stringify( res.data.data.menu_tree ));
                     localStorage.setItem("router_tree", JSON.stringify( res.data.data.router_list ));
