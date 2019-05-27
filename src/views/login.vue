@@ -17,7 +17,7 @@
                     </el-form-item>
 
                     <div class="tiparea">
-                        <p>还没有账号？现在<router-link to='/regist'>注册</router-link> </p>
+                        <p>还没有账号？现在<router-link to='/login'>注册</router-link> </p>
                     </div>
                   </el-form>
         </section>
@@ -62,10 +62,9 @@ export default {
                 if(res.data.code == 1){
                     const token=res.data.data.token;
                     localStorage.setItem("eleToken", token);
-                    
                     localStorage.setItem("user", JSON.stringify( res.data.data.user ));
-                    localStorage.setItem("menu_tree", JSON.stringify( res.data.data.menu_tree ));
-                    localStorage.setItem("router_tree", JSON.stringify( res.data.data.router_list ));
+                    // localStorage.setItem("menu_tree", JSON.stringify( res.data.data.menu_tree ));
+                    // localStorage.setItem("router_tree", JSON.stringify( res.data.data.router_list ));
 
                     // // 解析token
                     // const decoded = jwt_decode(token)
@@ -74,9 +73,9 @@ export default {
                     // token 存储到vuex中
                     this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
                     this.$store.dispatch("setUser", res.data.data.user)
-                    this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
-                    this.$store.dispatch("setRouterTree", res.data.data.router_list)
-                    let routes = []
+                    // this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
+                    // this.$store.dispatch("setRouterTree", res.data.data.router_list)
+                    //let routes = []
                     // Menufilter(routes, res.data.data.router_list)
                     // router.addRoutes(routes)
                     router.push('/dashboard');
@@ -112,16 +111,16 @@ export default {
   background-size: 100% 100%;
 }
 .form_container {
-  width: 370px;
-  height: 314px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 25px;
-  border-radius: 5px;
-  text-align: center;
-  margin-left: -210px;
-  margin-top: -200px;
+    width: 370px;
+    height: 314px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 25px;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: -210px;
+    margin-top: -200px;
 }
 .form_container .manage_tip .title {
   font-family: "Microsoft YaHei";

@@ -4,156 +4,125 @@
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-            <el-form-item label="Website" prop="website">
-              <el-input v-model="ruleForm.website"  placeholder="后台提供的数据"></el-input>
+            <el-form-item label="Website">
+              <span style="color:red;font-size:16px;font-weight: 600;">{{website}}</span>
             </el-form-item>
-
-            <el-form-item label="选择Pinterest账户" prop="pinterest" >
+            <el-form-item label="选择Pinterest账户" >
               <el-select v-model="ruleForm.pinterest" placeholder="请选择Pinterest账户">
                 <el-option
-                  v-for="item in pinterestArray"
-                  :key="item.value"
+                  v-for="(item,index) in pinterestArray"
+                  :key="index"
                   :label="item.label"
                   :value="item.value">
                 </el-option>
               </el-select>
             </el-form-item>
-
             <el-form-item label="选择Board" >
               <el-select v-model="ruleForm.board" placeholder="请选择选择Board">
                 <el-option
-                  v-for="item in boardArray"
-                  :key="item.value"
+                  v-for="(item,index) in boardArray"
+                  :key="index"
                   :label="item.label"
                   :value="item.value">
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="规则有效期" prop="effectiveTime">
+            <el-form-item label="规则有效期" prop="ruleTime">
               <div class="block">
-                  <el-date-picker
-                    v-model="ruleForm.effectiveTime"
-                    type="datetimerange"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :default-time="['12:00:00']">
+                  <el-date-picker v-model="ruleTime" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
                   </el-date-picker>
               </div>
             </el-form-item>
-            <div class="timeSection">
-              <el-form-item label="时间区间">
-                <el-select :class="'weekClass'" v-model="ruleForm.week" placeholder="请选择时间">
-                  <el-option
-                    v-for="item in weekArray"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-                <el-input :class="'hourClass'" v-model="ruleForm.name"></el-input>
-                <el-input :class="'intervalTimeClass'" v-model="ruleForm.name"></el-input>
-              </el-form-item>
+            <el-form-item label="时间区间">
+              <el-select :class="'W20'" v-model="scheduleRule.weekday" placeholder="请选择日期">
+                <el-option v-for="item in weekArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+              </el-select>
+              <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="开始时间" end-placeholder="结束时间" placeholder="选择时间范围">
+              </el-time-picker>
+              <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="发布频率">
+                <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+              </el-select>
+
+
+              <el-button @click="scheduleRuleFun()">添加</el-button>
+            </el-form-item>
+            <!-- 时间区间的列表，没有数据是处于隐藏状态 -->
+            <div v-if="scheduleRuleArray.length>0">
+                <ul class="scheduleRuleList">
+                  <li v-for="(item,index) in scheduleRuleArray" :key="item.value">
+                    <span class="spanClass">第{{index+1}}条</span>
+                    <template>
+                        <span :class="'spanClass'" v-if="item.weekday == 0">星期一</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 1">星期二</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 2">星期三</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 3">星期四</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 4">星期五</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 5">星期六</span>
+                        <span :class="'spanClass'" v-else>星期天</span>
+                    </template>
+                    <span class="spanClass">开始时间:{{item.start_time}}</span>
+                    <span class="spanClass">结束时间:{{item.end_time}}</span>
+                    <span class="spanClass">发布频率:{{item.interval_time}}</span>
+                    <el-button size="mini"  type="danger" @click="deletschedule(index)">X</el-button>
+                  </li>
+                </ul>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <el-form-item label="发布频率" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
+            <el-form-item label="产品上架时间">
+                <el-date-picker type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
+                </el-date-picker>
             </el-form-item>
-
-
-
-
-
-            <el-form-item label="产品上架时间" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-            <el-form-item label="产品类目" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-            <el-form-item label="产品浏览量" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-            <el-form-item label="产品销量" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-            <el-form-item label="可发布产品数量" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-            <el-form-item label="规则标签" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-
-
-
-
-
-
-
-            
-            <el-form-item label="活动名称" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-
-
-
-
-
-
-            <el-form-item label="活动区域" prop="region">
-              <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+            <el-form-item label="产品类目">
+              <el-select :class="'W20'" v-model="stroVal.storOne" @change="firstStorChange">
+                <el-option v-for="(item,index) in storList" :index="index" :key="item.id" :label="item.name" :value="item.id"> </el-option>
+              </el-select>
+              <el-select :class="'W20'" v-model="stroVal.storTwo" @change="twoStorChange">
+                <template v-for="item in storList">
+                  <template v-if="item.id == stroVal.storOne">
+                     <el-option v-for="items in item.child" :key="items.id" :label="items.id" :value="items.id"> </el-option>
+                  </template>
+                </template>
+              </el-select>
+              <el-select :class="'W20'" v-model="stroVal.storThree">
+                <template v-for="item in storList">
+                  <template v-if="item.id == stroVal.storOne">
+                    <template v-for="items in item.child">
+                        <template v-if="items.id == stroVal.storTwo">
+                          <el-option v-for="itemss in items.child" :key="itemss.id" :label="itemss.id" :value="itemss.id"> </el-option>
+                        </template>
+                    </template>
+                  </template>
+                </template>
               </el-select>
             </el-form-item>
-            <el-form-item label="活动时间" required>
-              <el-col :span="11">
-                <el-form-item prop="date1">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col class="line" :span="2">-</el-col>
-              <el-col :span="11">
-                <el-form-item prop="date2">
-                  <el-time-picker type="fixed-time" placeholder="选择时间" v-model="ruleForm.date2" style="width: 100%;"></el-time-picker>
-                </el-form-item>
-              </el-col>
+
+
+
+            <el-form-item label="产品浏览量">
+              <el-select :class="'W20'" placeholder="请选择日期">
+                <el-option  :label="'大于'" :value="1"> </el-option>
+                <el-option  :label="'小于'" :value="2"> </el-option>
+              </el-select>
+              <el-input :class="'W20'"></el-input>
+              <el-date-picker :class="'W54'" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
+              </el-date-picker>
             </el-form-item>
-            <el-form-item label="即时配送" prop="delivery">
-              <el-switch v-model="ruleForm.delivery"></el-switch>
+            <el-form-item label="产品销量">
+              <el-select :class="'W20'" placeholder="请选择日期">
+                <el-option  :label="'大于'" :value="1"> </el-option>
+                <el-option  :label="'小于'" :value="2"> </el-option>
+              </el-select>
+              <el-input :class="'W20'" v-model="ruleForm.pinterest"></el-input>
+              <el-date-picker :class="'W54'" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
+              </el-date-picker>
             </el-form-item>
-            <el-form-item label="活动性质" prop="type">
-              <el-checkbox-group v-model="ruleForm.type">
-                <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-                <el-checkbox label="地推活动" name="type"></el-checkbox>
-                <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-                <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-              </el-checkbox-group>
+            <el-form-item label="可发布产品数量">
+              <span>1200</span>
             </el-form-item>
-            <el-form-item label="特殊资源" prop="resource">
-              <el-radio-group v-model="ruleForm.resource">
-                <el-radio label="线上品牌商赞助"></el-radio>
-                <el-radio label="线下场地免费"></el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="活动形式" prop="desc">
-              <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+            <el-form-item label="规则标签" prop="name">
+              <el-input v-model="ruleForm.pinterest"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">添加</el-button>
               <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
           </el-form>
@@ -162,6 +131,7 @@
 </template>
 
 <script>
+import * as base from '../../assets/js/base'
   export default {
     name: "ruleAdd",
     props: {
@@ -169,15 +139,25 @@
     },
     data() {
       return {
+          website:'Chicdb',    
           pinterestArray:[                           //Pinterest下拉框数据
-            {"label":"pinterestArray1","value":"123123"},
-            {"label":"pinterestArray2","value":"123123"}
+            {"label":"pinterestArray1","value":"11111"},
+            {"label":"pinterestArray2","value":"22222"}
           ],
           boardArray:[                           //Pinterest下拉框数据
             {"label":"boardArray1","value":"123123"},
             {"label":"boardArray2","value":"123123"}
           ],
-          weekArray:[                           //Pinterest下拉框数据
+          ruleTime:[new Date(2019, 1, 1, 0, 0), new Date(2019, 1, 1, 0, 0)],    //规则有效期的数据来源
+          scheduleRule:{//时间区间临时数据
+              weekday:"0",  
+              start_time:"",  
+              end_time:"",  
+              interval_time:"1.5", 
+              timeVal:[new Date(2016, 9, 10, 8, 0), new Date(2016, 9, 10, 16, 0)], //El的展示数据
+          }, 
+          scheduleRuleArray:[],
+          weekArray:[//时间区间的星期几
             {"label":"星期一","value":"0"},
             {"label":"星期二","value":"1"},
             {"label":"星期三","value":"2"},
@@ -186,102 +166,171 @@
             {"label":"星期六","value":"5"},
             {"label":"星期天","value":"6"},
           ],
-          ruleForm: {
-            website:'',    
-            pinterest:'',
+          publishTimeArray:[//发布频率的时间选择
+            {"label":"0.5H","value":"0.5"},
+            {"label":"1H","value":"1"},
+            {"label":"1.5H","value":"1.5"},
+            {"label":"2H","value":"2"},
+          ],
+          stroVal:{       //产品类目三级菜单
+              storOne:'1',
+              storTwo:'11',
+              storThree:'111'
+          },
+          storList:[    //商品列表
+            {
+              id:'1',
+              name:'一',
+              child:[
+                {
+                  id:'11',
+                  child:[
+                    {id:'111'},
+                    {id:'112'}
+                  ]
+                },
+                {
+                  id:'12',
+                  child:[
+                    {id:'111'},
+                    {id:'112'}
+                  ]
+                }
+              ]
+            },
+            {
+              id:'2',
+              name:'二',
+              child:[
+                {
+                  id:'21',
+                  child:[
+                    {id:'211'},
+                    {id:'212'}
+                  ]
+                },
+                {
+                  id:'22',
+                  child:[
+                    {id:'221'},
+                    {id:'222'}
+                  ]
+                }
+              ]
+            }
+          ],
+          ruleForm: {//最终提交过去的对象
+            pinterest:'22222',
             board:'',
-            effectiveTime:'',        //有效时间
-            schedule_rule:{          //时间区间
-              weekday:'',
-              start_time:'',
-              end_time:'',
-              interval_time:'',      //发布频率
-            },        
-
-
-            name: '',
-            region: '',
-            date1: '',
-            date2: '',
-            delivery: false,
-            type: [],
-            resource: '',
-            desc: ''
+            start_time:'',           //规则有效期开始时间
+            end_time:'',             //规则有效期结束时间
+            schedule_rule:[],         //时间区间最终数据    
+            product_list:[1,2]        //满足条件的商品列表  
           },
         rules: {
           pinterest: [
             { required: true, message: '请选择Pinterest账户', trigger: 'change' }
-          ],
-          effectiveTime: [
-            { type: 'date', required: true, message: '请选择有效日期', trigger: 'change' }
-          ],
-          name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
-          region: [
-            { required: true, message: '请选择活动区域', trigger: 'change' }
-          ],
-          date1: [
-            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-          ],
-          date2: [
-            { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-          ],
-          type: [
-            { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-          ],
-          resource: [
-            { required: true, message: '请选择活动资源', trigger: 'change' }
-          ],
-          desc: [
-            { required: true, message: '请填写活动形式', trigger: 'blur' }
           ]
         }
       };
     },
+    watch: {
+        // ruleTime: function(val) {
+        //   // 选择规则有效时间后，分配给真实的最终数据
+        //   this.ruleForm.start_time = val[0];
+        //   this.ruleForm.end_time = val[1];
+        // }
+    },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+          // 最终提交
+          this.ruleForm.start_time = base.dateFormat(this.ruleTime[0]);
+          this.ruleForm.end_time =  base.dateFormat(this.ruleTime[1]);
+          this.ruleForm.schedule_rule = this.scheduleRuleArray;
+
+          this.$axios.post(`/api/v1/rule/`, this.ruleForm).then(res => {
+            // 操作成功
+            this.$message({
+              message: "保存成功！",
+              type: "success"
+            });
+            this.dialog.show = false;
+            this.$emit("update");
+          });          
+
+
+        // this.$refs[formName].validate((valid) => {
+        //   if (valid) {
+        //     alert('submit!');
+        //   } else {
+        //     console.log('error submit!!');
+        //     return false;
+        //   }
+        // });
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      scheduleRuleFun(){
+        // 添加分区需要做的事 把输入框的值，扔进一个scheduleRuleArray 作为最后植入ruleForm.schedule_rule
+        this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],true);// 时间区间 中的时间数据 转成最终数据
+        this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],true);
+        var _thisObj = {
+              weekday:"0",  
+              start_time:"",  
+              end_time:"",  
+              interval_time:"1.5"
+          };
+        _thisObj.weekday = this.scheduleRule.weekday;
+        _thisObj.start_time = this.scheduleRule.start_time;
+        _thisObj.end_time = this.scheduleRule.end_time;
+        _thisObj.interval_time = this.scheduleRule.interval_time;
+        this.scheduleRuleArray.push(_thisObj);
+      },
+      deletschedule(index){
+        //删除指定分区
+        console.log(index)
+        this.scheduleRuleArray.splice(index,1);
+      },
+      firstStorChange(){
+        this.storList.map(e => {
+          if(e.id == this.stroVal.storOne){
+            this.stroVal.storTwo = e.child[0].id;
+            var _thisArray = e.child;
+                _thisArray.map(event => {
+                  if(event.id == this.stroVal.storTwo){
+                    this.stroVal.storThree = event.child[0].id;
+                  }
+                });
+          }
+        });
+      },
+      twoStorChange(){
+        this.storList.map(e => {
+          if(e.id == this.stroVal.storOne){
+            var _thisArray = e.child;
+                _thisArray.map(event => {
+                  if(event.id == this.stroVal.storTwo){
+                    this.stroVal.storThree = event.child[0].id;
+                  }
+                });
+          }
+        });
+
       }
     }
   }
 </script>
 <style>
-.ruleAdd .el-dialog{
-      width: 800px;
-    height: 600px;
-    overflow: auto;
-}
-.ruleAdd .el-form-item__label{
-    width:145px!important;
-}
-.ruleAdd .el-form-item__content {
-    margin-left: 145px!important;
-}
-
-
-.ruleAdd .weekClass {
-  width: 30%;
-}
-.ruleAdd .hourClass {
-  width: 30%;
-  margin-left: 3%;
-}
-.ruleAdd .intervalTimeClass {
-  width: 20%;
-  margin-left: 3%;
-}
-
-
+.ruleAdd .el-dialog{width:900px;height:600px;overflow:auto;}
+.ruleAdd .el-form-item__label{width:145px!important;}
+.ruleAdd .el-form-item__content{margin-left:145px!important;}
+.ruleAdd .W20{width:20%;margin-right:2%;}
+.ruleAdd .W36{width:36%;margin-right:2%;}
+.ruleAdd .W40{width:40%;margin-right:2%;}
+.ruleAdd .W54{width:54%;margin-right:2%;}
+.ruleAdd .W60{width:60%;margin-right:2%;}
+.ruleAdd .scheduleRuleList{margin-left:145px;padding:0;margin-bottom:22px;list-style:none;}
+.ruleAdd .scheduleRuleList li{font-size:14px;color:#606266;margin-bottom:5px;}
+.ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
 </style>
