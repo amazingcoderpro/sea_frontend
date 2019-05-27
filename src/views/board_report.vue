@@ -1,6 +1,6 @@
 <template>
     <div class="board_report">
-        dashboard
+        dashboardK
     </div>
 </template>
 
