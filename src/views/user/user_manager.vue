@@ -29,9 +29,16 @@
             <span style="color:#00d053">{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
+<<<<<<< HEAD
         <el-table-column prop="role_name" label="角色" align="center" width="250"></el-table-column>
         <el-table-column prop="username" label="登录账号" align="center" width="250"></el-table-column>
         <el-table-column prop="email" label="邮箱" align="center" width="250"></el-table-column>
+=======
+        <el-table-column prop="role_name" label="角色" align="center" width="300"></el-table-column>
+        <el-table-column prop="username" label="登录账号" align="center" width="180"></el-table-column>
+        <el-table-column prop="email" label="邮箱" align="center" width="300"></el-table-column>
+        <!-- <el-table-column prop="section" label="部门" align="center" width="150"></el-table-column> -->
+>>>>>>> 00603e6406a7ee3d28e37ad17a4b9ca66dd18c3c
         <el-table-column prop="create_time" label="创建时间" align="center" width="250">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
@@ -70,11 +77,13 @@
       </div>
     <!-- 弹框页面 -->
     <DialogFound :dialog="dialog" :form="form" @update="init" ref="dialog"></DialogFound>
+    <DialogFoundEdit :dialogEdit="dialogEdit" :form="form" @update="init" ref="dialog"></DialogFoundEdit>
   </div>
 </template>
 
 <script>
 import DialogFound from "./user_add";
+import DialogFoundEdit from "./user_edit";
 
 export default {
   name: "user_manager",
@@ -92,8 +101,12 @@ export default {
       dialog: {
         show: false,
         title: "",
-        option: "edit",
-        state:'1'   // 1添加 2修改
+        option: "edit"
+      },
+      dialogEdit: {
+        show: false,
+        title: "",
+        option: "edit"
       },
       form: {
         id: "",
@@ -111,7 +124,8 @@ export default {
       }, 50);
   },
   components: {
-    DialogFound
+    DialogFound,
+    DialogFoundEdit
   },
   created() {
     this.init();
@@ -122,18 +136,17 @@ export default {
     },
     init() {
       // 获取表格数据
-          this.$axios(`/api/v1/users/?nickname=${this.nickName}&page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
+          this.$axios(`/api/v1/users/?page=${this.currentPage}&page_size=${this.pagesize}&nickname=${this.nickName}&`).then(res => {
             this.tableData = res.data.data.results;
             this.total = res.data.data.count;
           });
     },
     editFun(row) {
       // 编辑
-      this.dialog = {
+      this.dialogEdit = {
         show: true,
         title: "编辑信息",
-        option: "put",
-        state:'2'
+        option: "put"
       };
       this.form = {
         id: row.id,
@@ -151,8 +164,7 @@ export default {
       this.dialog = {
         show: true,
         title: "增加用户",
-        option: "post",
-        state:'1'
+        option: "post"
       };
       this.form = {
         nickname:"",
@@ -180,7 +192,5 @@ export default {
     margin-bottom: 10px;
     margin-right: 16px;
 }
-.tableTitle{
-  margin-bottom: 40px;
-}
+
 </style>

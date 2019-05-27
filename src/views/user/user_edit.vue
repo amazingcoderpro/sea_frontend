@@ -1,8 +1,8 @@
 <template>
     <div class="logFund">
          <el-dialog 
-            :title="dialog.title" 
-            :visible.sync="dialog.show"
+            :title="dialogEdit.title" 
+            :visible.sync="dialogEdit.show"
             :close-on-click-modal='false'
             :close-on-press-escape='false'
             :modal-append-to-body="false">
@@ -15,23 +15,22 @@
                     style="margin:10px;width:auto;">
                     <!-- 用户名 -->
                     <el-form-item label="用户名" prop="nickname">
-                      <el-input v-model="form.nickname" placeholder="请输入用户名"></el-input>
+                      <el-input v-model="form.nickname" placeholder="Leslie"></el-input>
                     </el-form-item>
                     <!-- 密码 -->
-                    <el-form-item label="密码">
+                    <!-- <el-form-item label="密码" prop="password">
                       <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
                     </el-form-item>
-                    <!-- 确认密码 -->
-                    <el-form-item label="确认密码" >
+                    <el-form-item label="确认密码" prop="password2">
                       <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <!-- 邮箱 -->
                     <el-form-item label="邮箱" prop="email">
                       <el-input v-model="form.email" placeholder="请输入email"></el-input>
                     </el-form-item>
                     <!-- 角色 -->
-                    <el-form-item label="角色" prop="role" >
-                      <el-select v-model="form.role"  placeholder="请选择角色" class="role_name">
+                    <el-form-item label="角色" prop="role">
+                      <el-select v-model="form.role"  placeholder="请选择" class="role_name">
                         <el-option
                           v-for="item in userArray"
                           :key="item.id"
@@ -43,11 +42,11 @@
                     </el-form-item>
                     <!-- 角色管理 -->
                     <el-form-item label="账户" prop="username">
-                      <el-input v-model="form.username" placeholder="请输入账户"></el-input>
+                      <el-input v-model="form.username" placeholder="admin999"></el-input>
                     </el-form-item>
                     <!-- 取消，提交 -->
                     <el-form-item  class="text_right">
-                        <el-button @click="dialog.show = false">取 消</el-button>
+                        <el-button @click="dialogEdit.show = false">取 消</el-button>
                         <el-button type="primary" @click='onSubmit("form")'>提  交</el-button>
                     </el-form-item>
                 </el-form>
@@ -60,11 +59,11 @@
 export default {
   name: "logfound",
   props: {
-    dialog: Object,
+    dialogEdit: Object,
     form: Object
   },
   watch:{
-    dialog(){
+    dialogEdit(){
         console.log(this.form)
         this.$axios.get("/api/v1/role/?show_more=1").then(res => {
           this.userArray = res.data.data;
@@ -93,20 +92,20 @@ export default {
             { required: true, message: "用户名不能为空", trigger: "change" },
             { min: 5, max: 30, message: "长度在 5 到 30 个字符", trigger: "blur" }
           ],
-          password: [
-            { required: true, message: "密码不能为空", trigger: "blur" },
-            { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
-          ],
-          password2: [
-            { required: true, message: "确认密码不能为空", trigger: "blur" },
-            {
-              min: 6,
-              max: 30,
-              message: "长度在 6 到 30 个字符",
-              trigger: "blur"
-            },
-            { validator: validatePass2, trigger: "blur" }
-          ],
+          // password: [
+          //   { required: true, message: "密码不能为空", trigger: "blur" },
+          //   { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
+          // ],
+          // password2: [
+          //   { required: true, message: "确认密码不能为空", trigger: "blur" },
+          //   {
+          //     min: 6,
+          //     max: 30,
+          //     message: "长度在 6 到 30 个字符",
+          //     trigger: "blur"
+          //   },
+          //   { validator: validatePass2, trigger: "blur" }
+          // ],
           email: [
             {
               type: "email",
@@ -122,44 +121,21 @@ export default {
     onSubmit(form) {
       this.$refs[form].validate(valid => {
         if (valid) {
-              //添加新数据;
-              this.$axios.post(`/api/v1/users/`, this.form).then(res => {
-                console.log(res)
+              //修改用户数据;
+              this.$axios.put(`/api/v1/users/${this.form.id}/`, this.form).then(res => {
                   if(res.data.code == 1){
-                      this.dialog.show = false;
+                      this.dialogEdit.show = false;
                       this.$message({message: res.data.msg,type: 'success'});
                       this.$parent.init();
                     }
                     else{
-                      this.dialog.show = false; 
-                      this.$message("添加失败!");
+                      this.dialogEdit.show = false; 
+                      this.$message("修改失败!");
                     }
               })
               .catch(error => {
                 this.$message("接口超时!");
-              }); 
-
-
-          // if(this.dialog.state == 1){
-          
-          // }else{
-          //     //添加新数据;
-          //     this.$axios.put(`/api/v1/users/${this.form.id}/`, this.form).then(res => {
-          //       console.log(res)
-          //         if(res.data.code == 1){
-          //             this.dialog.show = false;
-          //             this.$message({message: res.data.msg,type: 'success'});
-          //             this.$parent.init();
-          //           }
-          //           else{
-          //             this.dialog.show = false; 
-          //             this.$message("修改失败!");
-          //           }
-          //     })
-          //     .catch(error => {
-          //       this.$message("接口超时!");
-          //     });           
-          // }
+              });   
          }
       });
     },
