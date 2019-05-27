@@ -1,5 +1,6 @@
 <template>
   <div class="user_manager">
+    <div class="tableTitle"><span>用户管理</span></div>
     <!-- 搜索框 -->
     <div class="btnLeft">
         <el-input
@@ -70,11 +71,13 @@
       </div>
     <!-- 弹框页面 -->
     <DialogFound :dialog="dialog" :form="form" @update="init" ref="dialog"></DialogFound>
+    <DialogFoundEdit :dialogEdit="dialogEdit" :form="form" @update="init" ref="dialog"></DialogFoundEdit>
   </div>
 </template>
 
 <script>
 import DialogFound from "./user_add";
+import DialogFoundEdit from "./user_edit";
 
 export default {
   name: "user_manager",
@@ -92,8 +95,12 @@ export default {
       dialog: {
         show: false,
         title: "",
-        option: "edit",
-        state:'1'   // 1添加 2修改
+        option: "edit"
+      },
+      dialogEdit: {
+        show: false,
+        title: "",
+        option: "edit"
       },
       form: {
         id: "",
@@ -111,7 +118,8 @@ export default {
       }, 50);
   },
   components: {
-    DialogFound
+    DialogFound,
+    DialogFoundEdit
   },
   created() {
     this.init();
@@ -122,18 +130,17 @@ export default {
     },
     init() {
       // 获取表格数据
-          this.$axios(`/api/v1/users/?nickname=${this.nickName}&page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
+          this.$axios(`/api/v1/users/?page=${this.currentPage}&page_size=${this.pagesize}&nickname=${this.nickName}&`).then(res => {
             this.tableData = res.data.data.results;
             this.total = res.data.data.count;
           });
     },
     editFun(row) {
       // 编辑
-      this.dialog = {
+      this.dialogEdit = {
         show: true,
         title: "编辑信息",
-        option: "put",
-        state:'2'
+        option: "put"
       };
       this.form = {
         id: row.id,
@@ -151,8 +158,7 @@ export default {
       this.dialog = {
         show: true,
         title: "增加用户",
-        option: "post",
-        state:'1'
+        option: "post"
       };
       this.form = {
         nickname:"",
