@@ -97,7 +97,7 @@
 
 
 
-            <el-form-item label="产品浏览量">
+            <!-- <el-form-item label="产品浏览量">
               <el-select :class="'W20'" placeholder="请选择日期">
                 <el-option  :label="'大于'" :value="1"> </el-option>
                 <el-option  :label="'小于'" :value="2"> </el-option>
@@ -114,7 +114,7 @@
               <el-input :class="'W20'" v-model="ruleForm.pinterest"></el-input>
               <el-date-picker :class="'W54'" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
               </el-date-picker>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="可发布产品数量">
               <span>1200</span>
             </el-form-item>
@@ -234,7 +234,16 @@ import * as base from '../../assets/js/base'
         }
       };
     },
-    watch: {
+    watch:{
+      dialog:function (){
+          this.$axios.get("/api/v1/pinterestaccount/").then(res => {
+            console.log(res)
+            // this.userArray = res.data.data;
+            // console.log(this.userArray)
+        });
+      }
+
+      ///api/v1//
         // ruleTime: function(val) {
         //   // 选择规则有效时间后，分配给真实的最终数据
         //   this.ruleForm.start_time = val[0];
