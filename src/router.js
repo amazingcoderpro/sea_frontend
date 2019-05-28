@@ -4,6 +4,7 @@ import Notfount from './components/404.vue'
 import Login from './views/login.vue'
 import Regist from './views/regist.vue'
 import Index from './views/index'
+import AutState from './views/aut_state'
 import Dashboard from './views/dashboard'
 import SubAccountDailyReport from './views/sub_account_daily_report'
 import BoardsDailyReport from './views/boards_daily_report'
@@ -62,6 +63,11 @@ const router = new Router({
       path: '/regist',
       name: 'regist',
       component: Regist
+    },
+    {
+      path: '/aut_state',
+      name: 'aut_state',
+      component: AutState
     },
     {
       path: '*',

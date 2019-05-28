@@ -104,10 +104,6 @@ export default {
             console.log(res)
         });      
     },
-    serchFun(){
-        //this.pinID = this.pinIDInput;
-        this.init();
-    },
     handleEdit(row) {
       // 编辑
       this.dialog = {
@@ -122,11 +118,6 @@ export default {
         this.$message("删除成功");
         this.getProfile();
       });
-    },
-    PinManagerFun(row) {
-      // 去pin列表页面
-      localStorage.setItem("board_data",JSON.stringify(row) );
-      this.$router.push({path:"/pin_manager"});
     },
     current_change(val){
         //点击数字时触发

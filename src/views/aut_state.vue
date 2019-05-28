@@ -1,0 +1,52 @@
+<template>
+    <div class="aut_state">
+        <span v-if="state == 1">授权成功!</span>
+        <span v-else>授权失败!</span>
+    </div>
+
+</template>
+
+
+<script>
+import * as base from '../assets/js/base'
+export default {
+    name: "aut_state",
+    components:{},
+    data(){    
+      return {
+        state:1,
+      }
+    },
+    created() {
+      this.init();
+    },
+    methods: {
+      init(){
+        this.state = base.getQueryString('state') == null?1:base.getQueryString('state');
+      }
+    }
+};
+</script>
+
+<style scoped>
+.aut_state {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url(../assets/bg.jpg) no-repeat center center;
+  background-size: 100% 100%;
+}
+.aut_state span{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: #fff;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-left: -65px;
+    margin-top: -33px;
+}
+
+</style>

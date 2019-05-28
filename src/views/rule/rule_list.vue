@@ -65,7 +65,7 @@ export default {
         pagesizes:[10, 20, 30, 40],//分组数量
         currentPage:1,//默认开始页面
 
-        index:"-1",
+        index:null,
         tableHeight:"100",
         tableData: [],
         dialog: {
@@ -90,18 +90,14 @@ export default {
     init() {
       // 获取表格数据
         this.index = this.$route.query.index;
-        if(this.index == -1 || this.index == null || this.index == undefined){
-              this.$message({
-                message: "参数不全",
-                type: 'warning',
-                center: true
-              });
-        }else{
-          this.$axios(`/api/v1/rule/?page=${this.currentPage}&page_size=${this.pagesize}&account_id=${this.index}`).then(res => {
-            this.tableData = res.data.data.results;
-            this.total = res.data.data.count;
-          });
+        var urlString = `/api/v1/rule/?page=${this.currentPage}&page_size=${this.pagesize}`;
+        if(this.index != null || this.index != undefined ){
+          urlString += `&account_id=${this.index}`;
         }
+        this.$axios(urlString).then(res => {
+          this.tableData = res.data.data.results;
+          this.total = res.data.data.count;
+        });
     },
     addFun() {
       // 添加
@@ -110,21 +106,6 @@ export default {
         title: "添加规则",
         option: "post"
       };
-    },
-    handleEdit(row) {
-      // 编辑
-      this.dialog = {
-        show: true,
-        title: "修改资金信息",
-        option: "put"
-      };
-    },
-    handleDelete(row, index) {
-      // 删除
-      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
-        this.$message("删除成功");
-        this.getProfile();
-      });
     },
     ListManagerFun(row) {
       // 去规则详情页面
