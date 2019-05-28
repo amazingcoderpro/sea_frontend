@@ -1,6 +1,6 @@
 <template>
     <div class="record_manager">
-        dashboard
+        record_manager
     </div>
 </template>
 
