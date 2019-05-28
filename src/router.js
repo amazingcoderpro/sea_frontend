@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Notfount from './components/404.vue'
 import Login from './views/login.vue'
-import Regist from './views/regits.vue'
+import Regist from './views/regist.vue'
 import Index from './views/index'
 import Dashboard from './views/dashboard'
 import SubAccountDailyReport from './views/sub_account_daily_report'
@@ -75,7 +75,7 @@ const router = new Router({
 
 router.beforeEach((to,from,next) =>{
   const isLogin = localStorage.eleToken ? true : false;
-  if(to.path == "/login" || to.path == "/register" ){
+  if(to.path == "/login" || to.path == "/regist" ){
     next()
   }else{
     //isLogin ? next() : next('/login');

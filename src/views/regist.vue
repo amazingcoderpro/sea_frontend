@@ -1,19 +1,19 @@
 <template>
     <div class="regist">
         <section class="form_container">
-                  <el-form :model="loginUser" :rules="rules" ref="loginForm" class="loginForm">
+                    <el-form :model="loginUser" :rules="rules" ref="loginForm" class="loginForm">
                       <!-- 账号 -->
                     <el-form-item prop="username">
                       <el-input v-model="loginUser.username" :height="55" placeholder="请输入账号"></el-input>
                     </el-form-item>
                       <!-- 密码 -->
                     <el-form-item prop="password">
-                      <el-input type="password" v-model="form.password" class="password" placeholder="请输入密码"></el-input>
+                      <el-input type="password" v-model="loginUser.password" placeholder="请输入密码"></el-input>
                     </el-form-item>
                     <!-- 确认密码 -->
-                     <!-- <el-form-item prop="password" >
-                      <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
-                    </el-form-item> -->
+                    <el-form-item prop="password2">
+                      <el-input type="password" v-model="loginUser.password2" placeholder="请确认密码"></el-input>
+                    </el-form-item>
                     <!-- 下拉框 -->
                     <el-select v-model="loginUser" placeholder="请选择" class="select">
                       <el-option
@@ -47,7 +47,15 @@ import Menufilter from '../components/menufilter.js'
 export default {
     name: "regist",
     components:{},
+    // 判断两次输入密码
     data(){   
+        var validatePass2 = (rule, value, callback) => {
+        if (value !== this.loginUser.password) {
+          callback(new Error("两次输入密码不一致!"));
+        } else {
+          callback();
+        }
+      };
       return {
           seleArray: [{
           value: '选项1',
@@ -71,7 +79,17 @@ export default {
           password: [
             { required: true, message: "密码不能为空", trigger: "blur" },
             { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
-          ]
+          ],
+          password2: [
+            { required: true, message: "确认密码不能为空", trigger: "blur" },
+            {
+              min: 6,
+              max: 30,
+              message: "长度在 6 到 30 个字符",
+              trigger: "blur"
+            },
+            { validator: validatePass2, trigger: "blur" }
+          ],
         }        
       }
     },
@@ -79,7 +97,7 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.post('/api/v1/account/login/',this.loginUser)
+            this.$axios.post('/api/v1/account/set_password/41/',this.loginUser)
             .then(res => {
                 // token
                 document.onkeydown = undefined;
@@ -144,7 +162,7 @@ export default {
   top: 50%;
   border-radius: 5px;
   margin-left: -220px;
-  margin-top: -250px;
+  margin-top: -280px;
 }
 .loginForm {
   margin-top: 20px;
