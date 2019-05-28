@@ -3,7 +3,6 @@
     <div class="ruleAdd">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-
             <el-form-item label="Website">
               <span style="color:red;font-size:16px;font-weight: 600;">{{website}}</span>
             </el-form-item>
@@ -42,8 +41,6 @@
               <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="发布频率">
                 <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
-
-
               <el-button @click="scheduleRuleFun()">添加</el-button>
             </el-form-item>
             <!-- 时间区间的列表，没有数据是处于隐藏状态 -->
@@ -94,32 +91,33 @@
                 </template>
               </el-select>
             </el-form-item>
-
-
-
-            <!-- <el-form-item label="产品浏览量">
-              <el-select :class="'W20'" placeholder="请选择日期">
-                <el-option  :label="'大于'" :value="1"> </el-option>
-                <el-option  :label="'小于'" :value="2"> </el-option>
+            <el-form-item label="产品浏览量">
+              <el-select :class="'W20'" v-model="ruleForm.scan_sign">
+                <el-option  :label="'>'" :value="'1'"> </el-option>
+                <el-option  :label="'<'" :value="'2'"> </el-option>
               </el-select>
-              <el-input :class="'W20'"></el-input>
-              <el-date-picker :class="'W54'" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
-              </el-date-picker>
+              <el-input :class="'W20'" v-model="ruleForm.scan"></el-input>
             </el-form-item>
             <el-form-item label="产品销量">
-              <el-select :class="'W20'" placeholder="请选择日期">
-                <el-option  :label="'大于'" :value="1"> </el-option>
-                <el-option  :label="'小于'" :value="2"> </el-option>
+              <el-select :class="'W20'"  v-model="ruleForm.sale_sign">
+                <el-option  :label="'>'" :value="'1'"> </el-option>
+                <el-option  :label="'<'" :value="'2'"> </el-option>
               </el-select>
-              <el-input :class="'W20'" v-model="ruleForm.pinterest"></el-input>
-              <el-date-picker :class="'W54'" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
-              </el-date-picker>
-            </el-form-item> -->
-            <el-form-item label="可发布产品数量">
-              <span>1200</span>
+              <el-input :class="'W20'" v-model="ruleForm.sale"></el-input>
             </el-form-item>
-            <el-form-item label="规则标签" prop="name">
-              <el-input v-model="ruleForm.pinterest"></el-input>
+            <el-form-item label="可发布产品数量">
+              <span>{{ruleForm.product_list.length}}个</span>
+            </el-form-item>
+            <!-- 查询出来的产品列表 -->
+            <div v-if="ruleForm.product_list.length>0">
+                <ul class="scheduleRuleList">
+                  <span v-for="item in ruleForm.product_list" :key="item">
+                    {{item}}
+                  </span>
+                </ul>
+            </div>
+            <el-form-item label="规则标签" prop="tag">
+              <el-input v-model="ruleForm.tag"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">添加</el-button>
@@ -145,8 +143,8 @@ import * as base from '../../assets/js/base'
             {"label":"pinterestArray2","value":"22222"}
           ],
           boardArray:[                           //Pinterest下拉框数据
-            {"label":"boardArray1","value":"123123"},
-            {"label":"boardArray2","value":"123123"}
+            {"label":"boardArray1","value":"1"},
+            {"label":"boardArray2","value":"2"}
           ],
           ruleTime:[new Date(2019, 1, 1, 0, 0), new Date(2019, 1, 1, 0, 0)],    //规则有效期的数据来源
           scheduleRule:{//时间区间临时数据
@@ -177,7 +175,7 @@ import * as base from '../../assets/js/base'
               storTwo:'11',
               storThree:'111'
           },
-          storList:[    //商品列表
+          storList:[    //商品分类列表
             {
               id:'1',
               name:'一',
@@ -219,52 +217,55 @@ import * as base from '../../assets/js/base'
               ]
             }
           ],
-          ruleForm: {//最终提交过去的对象
+          ruleForm: {//最终添加规则需要提交过去的对象
             pinterest:'22222',
-            board:'',
+            board:'1',
             start_time:'',           //规则有效期开始时间
             end_time:'',             //规则有效期结束时间
             schedule_rule:[],         //时间区间最终数据    
-            product_list:[1,2]        //满足条件的商品列表  
+            product_list:[1,2],        //满足条件的商品列表  
+            tag:'规则标签',      //规则标签
+            sale_sign:'1',           // 销量标识符
+            sale:'100',           //产品销量
+            scan_sign:'1',       //浏览量标识符
+            scan:'100',           // 浏览量
+            
           },
-        rules: {
-          pinterest: [
-            { required: true, message: '请选择Pinterest账户', trigger: 'change' }
-          ]
-        }
+          rules: {
+            pinterest: [
+              { required: true, message: '请选择Pinterest账户', trigger: 'change' }
+            ]
+          }
       };
     },
     watch:{
-      dialog:function (){
-          this.$axios.get("/api/v1/pinterestaccount/").then(res => {
-            console.log(res)
-            // this.userArray = res.data.data;
-            // console.log(this.userArray)
-        });
-      }
+      // dialog:function (){
+      //     this.$axios.get("/api/v1/pinterestaccount/").then(res => {
+      //       console.log(res)
+      //       // this.userArray = res.data.data;
+      //       // console.log(this.userArray)
+      //   });
+      // }
 
-      ///api/v1//
-        // ruleTime: function(val) {
-        //   // 选择规则有效时间后，分配给真实的最终数据
-        //   this.ruleForm.start_time = val[0];
-        //   this.ruleForm.end_time = val[1];
-        // }
     },
     methods: {
       submitForm(formName) {
           // 最终提交
           this.ruleForm.start_time = base.dateFormat(this.ruleTime[0]);
           this.ruleForm.end_time =  base.dateFormat(this.ruleTime[1]);
-          this.ruleForm.schedule_rule = this.scheduleRuleArray;
-
+          this.ruleForm.schedule_rule = JSON.stringify(this.scheduleRuleArray);
+          console.log(this.ruleForm)
           this.$axios.post(`/api/v1/rule/`, this.ruleForm).then(res => {
             // 操作成功
-            this.$message({
-              message: "保存成功！",
-              type: "success"
-            });
-            this.dialog.show = false;
-            this.$emit("update");
+            // this.$message({
+            //   message: "保存成功！",
+            //   type: "success"
+            // });
+            // this.dialog.show = false;
+            // this.$emit("update");
+          })
+          .catch(error => {
+            this.$message("接口超时!");
           });          
 
 
