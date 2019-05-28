@@ -1,5 +1,5 @@
 <template>
-  <div class="regist">
+  <div class="shopfy_regist">
     <section class="form_container">
       <el-form :model="registUser" :rules="rules" ref="loginForm" class="loginForm">
         <!-- 账号 -->
@@ -49,7 +49,7 @@ import router from "../router";
 import Menufilter from "../components/menufilter.js";
 //?shop=123&email=456&id=789
 export default {
-  name: "regist",
+  name: "shopfy_regist",
   components: {},
   // 判断两次输入密码
   data() {
@@ -168,7 +168,7 @@ export default {
 </script>
 
 <style scoped>
-.regist {
+.shopfy_regist {
   position: relative;
   width: 100%;
   height: 100%;

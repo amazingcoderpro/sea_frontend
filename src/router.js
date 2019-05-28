@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Notfount from './components/404.vue'
 import Login from './views/login.vue'
-import Regist from './views/regist.vue'
+import ShopfyRegist from './views/shopfy_regist.vue'
 import Index from './views/index'
 import AutState from './views/aut_state'
 import Dashboard from './views/dashboard'
@@ -60,9 +60,9 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/regist',
-      name: 'regist',
-      component: Regist
+      path: '/shopfy_regist',
+      name: 'shopfy_regist',
+      component: ShopfyRegist
     },
     {
       path: '/aut_state',
@@ -81,7 +81,7 @@ const router = new Router({
 
 router.beforeEach((to,from,next) =>{
   const isLogin = localStorage.eleToken ? true : false;
-  if(to.path == "/login" || to.path == "/regist" ){
+  if(to.path == "/login" || to.path == "/shopfy_regist" ){
     next()
   }else{
     //isLogin ? next() : next('/login');
