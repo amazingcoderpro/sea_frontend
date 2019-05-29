@@ -97,6 +97,9 @@ export default {
         this.$axios(urlString).then(res => {
           this.tableData = res.data.data.results;
           this.total = res.data.data.count;
+        })
+        .catch(error => {
+          this.$message("接口超时!");
         });
     },
     addFun() {
