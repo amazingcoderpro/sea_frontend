@@ -1,21 +1,21 @@
 <template>
   <div class="shopfy_regist">
     <section class="form_container">
-      <el-form :model="registUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
+      <el-form :model="registUser" :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
         <!-- 账号 -->
-        <el-form-item label="账号" prop="shopstr">
-          <el-input v-model="registUser.shopstr" disabled placeholder="请输入戶名"></el-input>
+        <el-form-item label="账号:" prop="username">
+          <el-input v-model="registUser.username" disabled placeholder="请输入戶名"></el-input>
         </el-form-item>
         <!-- 邮箱 -->
-        <el-form-item label="邮箱" prop="emailstr">
+        <el-form-item label="邮箱:" prop="emailstr">
           <el-input v-model="registUser.emailstr" disabled placeholder="请输入email"></el-input>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码:" prop="password">
           <el-input type="password" v-model="registUser.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <!-- 确认密码 -->
-        <el-form-item prop="password2">
+        <el-form-item label="确认密码:" prop="password2">
           <el-input type="password" v-model="registUser.password2" placeholder="请确认密码"></el-input>
         </el-form-item>
       </el-form>
@@ -40,10 +40,9 @@
 
 
 <script>
-// import jwt_decode from 'jwt-decode';
+import * as base from '../assets/js/base'
 import router from "../router";
 import Menufilter from "../components/menufilter.js";
-//?shop=123&email=456&id=789
 export default {
   name: "shopfy_regist",
   components: {},
@@ -59,14 +58,17 @@ export default {
     return {
       registUser: {
         password: "",
-        shopstr: "", //商铺名
-        emailstr: ""
+        username: "", //商铺名
+        emailstr: "",
+        id:'',
       },
       rules: {
-        // username: [
-        //   { required: true, message: "账号不能为空", trigger: "change" },
-        //   { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
-        // ],
+        username: [
+          { required: true, message: "账号不能为空", trigger: "change" },
+        ],
+        emailstr: [
+          { required: true, message: "账号不能为空", trigger: "change" },
+        ],
         password: [
           { required: true, message: "密码不能为空", trigger: "blur" },
           { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
@@ -89,74 +91,27 @@ export default {
   },
   methods: {
     init() {
-      this.registUser.shopstr = this.getQueryString("shop");
-      console.log(this.shopstr);
-      this.registUser.emailstr = this.getQueryString("email");
+      this.registUser.username = base.getQueryString("shop");
+      this.registUser.emailstr = base.getQueryString("email");
+      this.registUser.id = base.getQueryString("id");
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios
-            .put("/api/v1/account/set_password/1/", this.registUser)
+            .put(`/api/v1/account/set_password/${this.registUser.id}/`, this.registUser)
             .then(res => {
-              // token
-              document.onkeydown = undefined;
-              console.log(res.data);
               if (res.data.code == 1) {
-                const token = res.data.data.token;
-                localStorage.setItem("eleToken", token);
-                localStorage.setItem(
-                  "user",
-                  JSON.stringify(res.data.data.user)
-                );
-                localStorage.setItem(
-                  "menu_tree",
-                  JSON.stringify(res.data.data.menu_tree)
-                );
-                localStorage.setItem(
-                  "router_tree",
-                  JSON.stringify(res.data.data.router_list)
-                );
-
-                // // 解析token
-                // const decoded = jwt_decode(token)
-                // console.log(decoded)
-
-                // token 存储到vuex中
-                this.$store.dispatch("setAuthenticated", !this.isEmpty(token));
-                this.$store.dispatch("setUser", res.data.data.user);
-                this.$store.dispatch("setMenuTree", res.data.data.menu_tree);
-                this.$store.dispatch(
-                  "setRouterTree",
-                  res.data.data.router_list
-                );
-                let routes = [];
-                // Menufilter(routes, res.data.data.router_list)
-                // router.addRoutes(routes)
-                router.push("/login");
+                  router.push("/login");
               } else {
-                this.$message({
-                  message: res.data.msg.detail,
-                  type: "warning",
-                  center: true
-                });
+                this.$message("接口超时!");
               }
+            })
+            .catch(error => {
+              this.$message("接口超时!");
             });
         }
       });
-    },
-    isEmpty(value) {
-      return (
-        value === undefined ||
-        value === null ||
-        (typeof value === "object" && Object.keys(value).length === 0) ||
-        (typeof value === "string" && value.trim().length === 0)
-      );
-    },
-    getQueryString(key) {
-      var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-      var result = window.location.search.substr(1).match(reg);
-      return result ? decodeURIComponent(result[2]) : null;
     }
   }
 };

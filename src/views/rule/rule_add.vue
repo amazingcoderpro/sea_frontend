@@ -87,17 +87,23 @@
             </el-form-item>
             <el-form-item label="产品浏览量" prop="scan">
               <el-select :class="'W20'" v-model="serchProduct.scan_sign">
-                <el-option  :label="'>'" :value="'1'"> </el-option>
-                <el-option  :label="'<'" :value="'2'"> </el-option>
+                <el-option  :label="'='" :value="'=='"> </el-option>
+                <el-option  :label="'>'" :value="'>'"> </el-option>
+                <el-option  :label="'<'" :value="'<'"> </el-option>
+                <el-option  :label="'>='" :value="'>='"> </el-option>
+                <el-option  :label="'<='" :value="'<='"> </el-option>
               </el-select>
-              <el-input :class="'W20'" v-model="serchProduct.scan"></el-input>
+              <el-input :class="'W36'" v-model="serchProduct.scan" placeholder="请输入产品浏览量"></el-input>
             </el-form-item>
             <el-form-item label="产品销量" prop="sale">
               <el-select :class="'W20'"  v-model="serchProduct.sale_sign">
-                <el-option  :label="'>'" :value="'1'"> </el-option>
-                <el-option  :label="'<'" :value="'2'"> </el-option>
+                <el-option  :label="'='" :value="'=='"> </el-option>
+                <el-option  :label="'>'" :value="'>'"> </el-option>
+                <el-option  :label="'<'" :value="'<'"> </el-option>
+                <el-option  :label="'>='" :value="'>='"> </el-option>
+                <el-option  :label="'<='" :value="'<='"> </el-option>
               </el-select>
-              <el-input :class="'W20'" v-model="serchProduct.sale"></el-input>
+              <el-input :class="'W36'" v-model="serchProduct.sale" placeholder="请输入产品销量"></el-input>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -148,18 +154,18 @@ import * as base from '../../assets/js/base'
             {"label":"2H","value":"2"},
           ],
           serchProduct:{
-            data1:'',   //产品上架时间初始数据
-            data2:'',   //产品特殊时间初始数据
+            data1:[new Date(2019, 4, 1, 8, 0), new Date(2019, 8, 1, 16, 0)],   //产品上架时间初始数据
+            data2:[new Date(2019, 4, 1, 8, 0), new Date(2019, 8, 1, 16, 0)],   //产品特殊时间初始数据
             publish_begin_time:'',//产品上架时间最终数据
             publish_end_time:'',   
             begin_time:'',        //产品特殊时间最终数据
             end_time:'',
             store:'',
-            product__name:'',      
-            sale_sign:'1',           // 销量标识符
+            product__name:'男',      
+            sale_sign:'>',           // 销量标识符
             sale:'',           //产品销量
-            scan_sign:'1',       //浏览量标识符
-            scan:'',           // 浏览量
+            scan_sign:'>',       //浏览量标识符
+            scan:'1',           // 浏览量
           },
           ruleForm: {//最终添加规则需要提交过去的对象
             pinterest:'无数据',
@@ -167,7 +173,7 @@ import * as base from '../../assets/js/base'
             ruleTime:'',    //规则有效期的初始数据来源
             start_time:'',           //规则有效期开始时间
             end_time:'',             //规则有效期结束时间
-            schedule_rule:[],         //时间区间最终数据    
+            schedule_rule:[],         // 
             product_list:[],        //满足条件的商品列表  
             tag:'',      //规则标签
           
@@ -183,7 +189,7 @@ import * as base from '../../assets/js/base'
             product__name: [{ required: true, message: '请输入商品名', trigger: 'blur' },],
             data1:[{required: true, message: '请选择商品上架时间', trigger: 'change' }],
             data2:[{required: true, message: '请选择商品特殊时间', trigger: 'change' }],
-            sale: [{ required: true, message: '请输入产品销量', trigger: 'blur' },],
+            // sale: [{ required: true, message: '请输入产品销量', trigger: 'blur' },],
             scan: [{ required: true, message: '请输入产品浏览量', trigger: 'blur' },],
           },
 
@@ -217,20 +223,23 @@ import * as base from '../../assets/js/base'
                   this.ruleForm.start_time = base.dateFormat(this.ruleForm.ruleTime[0]);
                   this.ruleForm.end_time =  base.dateFormat(this.ruleForm.ruleTime[1]);
                   this.ruleForm.schedule_rule = JSON.stringify(this.ruleForm.schedule_rule);
+                  this.ruleForm.product_list = JSON.stringify(this.ruleForm.product_list);
                   console.log(this.ruleForm)
-        
-                  // this.$axios.post(`/api/v1/rule/`, this.ruleForm).then(res => {
-                  //   // 操作成功
-                  //   // this.$message({
-                  //   //   message: "保存成功！",
-                  //   //   type: "success"
-                  //   // });
-                  //   // this.dialog.show = false;
-                  //   // this.$emit("update");
-                  // })
-                  // .catch(error => {
-                  //   this.$message("接口超时!");
-                  // });  
+                  this.$axios.post(`/api/v1/rule/`, this.ruleForm).then(res => {
+                      if(res.data.code == 1){
+                          this.$message({
+                            message: "添加成功!",
+                            type: "success"
+                          });
+                          this.dialog.show = false;
+                          this.$parent.init();
+                      }else{
+                        this.$message("添加失败!");
+                      }
+                  })
+                  .catch(error => {
+                    this.$message("接口超时!");
+                  });  
               }
 
         
@@ -292,14 +301,16 @@ import * as base from '../../assets/js/base'
                   url += "&sale_sign="+this.serchProduct.sale_sign;
                   url += "&sale="+this.serchProduct.sale;
               }
-              if(this.serchProduct.sale != ""){
+              if(this.serchProduct.scan != ""){
                   url += "&scan_sign="+this.serchProduct.scan_sign;
                   url += "&scan="+this.serchProduct.scan;
               }
-
-
               this.$axios.get(url).then(res => {
-
+                  if(res.data.code == 1){
+                    this.ruleForm.product_list = res.data.data;
+                  }else{
+                    this.$message("获取商品列表失败!");
+                  }
               })
               .catch(error => {
                 this.$message("接口超时!");

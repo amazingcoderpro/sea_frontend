@@ -20,4 +20,12 @@ export function getQueryString(key){
   return result ? decodeURIComponent(result[2]) : null;
 }
 
+export function getLastTime(string){
+  console.log(string)
+  var yearArray = string.split("T");
+  var hourArray = yearArray[1].split(".");
+  var str = yearArray[0]+" "+hourArray[0];
+  return str;
+}
+
 
