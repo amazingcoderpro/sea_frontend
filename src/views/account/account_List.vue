@@ -1,6 +1,6 @@
 <template>
     <div class="account_List">
-        <div class="tableTitle"><span>用户列表</span></div>
+        <div class="tableTitle"><span>账户列表</span></div>
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
                 <el-button  type="primary" @click='addFun()'>添加账户</el-button>
@@ -88,7 +88,7 @@ export default {
   name: "account_List",
   data() {
     return {
-      total:1,//默认数据总数
+      total:0,//默认数据总数
       pagesize:10,//每页的数据条数
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面

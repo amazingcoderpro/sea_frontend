@@ -2,12 +2,12 @@
     <header class="head-nav">
         <el-row>
             <el-col :span="6" class='logo-container'>
-                <img src="../assets/aopenglogo.png" class='logo' alt="">
+                <img src="../assets/img/aopenglogo.png" class='logo' alt="">
                 <span class='title'>Social Media管理系统</span>
             </el-col>
             <el-col :span='6' class="user">
                 <div class="userinfo">
-                    <img src="../assets/none.png" class='avatar' alt="">
+                    <img src="../assets/img/none.png" class='avatar' alt="">
                      <div class='welcome'>
                         <p class='name comename'>欢迎</p>
                         <p class='name avatarname'>{{user.username}}</p>
