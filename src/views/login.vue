@@ -26,6 +26,7 @@
 
 
 <script>
+import * as base from '../assets/js/base'
 // import jwt_decode from 'jwt-decode';
 import router from '../router'
 import Menufilter from '../components/menufilter.js'
@@ -36,7 +37,8 @@ export default {
       return {
         loginUser:{
           username:"",
-          password:""
+          password:"",
+          id:''
         },
         rules: {
           username: [
@@ -52,40 +54,41 @@ export default {
     },
     methods: {
       submitForm(formName) {
+        this.loginUser.id = base.getQueryString("id") == null?'':base.getQueryString("id");
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios.post('/api/v1/account/login/',this.loginUser)
             .then(res => {
                 // token
-                document.onkeydown = undefined;
-                console.log(res.data)
-                if(res.data.code == 1){
-                    const token=res.data.data.token;
-                    localStorage.setItem("eleToken", token);
-                    localStorage.setItem("user", JSON.stringify( res.data.data.user ));
-                    // localStorage.setItem("menu_tree", JSON.stringify( res.data.data.menu_tree ));
-                    // localStorage.setItem("router_tree", JSON.stringify( res.data.data.router_list ));
+                // document.onkeydown = undefined;
+                // console.log(res.data)
+                // if(res.data.code == 1){
+                //     const token=res.data.data.token;
+                //     localStorage.setItem("eleToken", token);
+                //     localStorage.setItem("user", JSON.stringify( res.data.data.user ));
+                //     // localStorage.setItem("menu_tree", JSON.stringify( res.data.data.menu_tree ));
+                //     // localStorage.setItem("router_tree", JSON.stringify( res.data.data.router_list ));
 
-                    // // 解析token
-                    // const decoded = jwt_decode(token)
-                    // console.log(decoded)
+                //     // // 解析token
+                //     // const decoded = jwt_decode(token)
+                //     // console.log(decoded)
 
-                    // token 存储到vuex中
-                    this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
-                    this.$store.dispatch("setUser", res.data.data.user)
-                    // this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
-                    // this.$store.dispatch("setRouterTree", res.data.data.router_list)
-                    //let routes = []
-                    // Menufilter(routes, res.data.data.router_list)
-                    // router.addRoutes(routes)
-                    router.push('/dashboard');
-                }else{
-                  this.$message({
-                    message: res.data.msg.detail,
-                    type: 'warning',
-                    center: true
-                  });
-                }
+                //     // token 存储到vuex中
+                //     this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
+                //     this.$store.dispatch("setUser", res.data.data.user)
+                //     // this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
+                //     // this.$store.dispatch("setRouterTree", res.data.data.router_list)
+                //     //let routes = []
+                //     // Menufilter(routes, res.data.data.router_list)
+                //     // router.addRoutes(routes)
+                //     router.push('/dashboard');
+                // }else{
+                //   this.$message({
+                //     message: res.data.msg.detail,
+                //     type: 'warning',
+                //     center: true
+                //   });
+                // }
               });
           }
         });
