@@ -7,23 +7,17 @@
               <span style="color:red;font-size:16px;font-weight: 600;">{{website}}</span>
             </el-form-item>
             <el-form-item label="选择Pinterest账户" >
-              <el-select v-model="ruleForm.pinterest" placeholder="请选择Pinterest账户">
-                <el-option
-                  v-for="(item,index) in pinterestArray"
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
+              <el-select v-model="ruleForm.pinterest" placeholder="请选择Pinterest账户"  @change="pinterestChange">
+                <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account_uri" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="选择Board" >
               <el-select v-model="ruleForm.board" placeholder="请选择选择Board">
-                <el-option
-                  v-for="(item,index) in boardArray"
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
+                <template v-for="item in pinterestArray">
+                  <template v-if="item.id == ruleForm.pinterest">
+                     <el-option v-for="(items,index) in item.board_pinterest_account" :key="index" :label="items.name" :value="items.id"> </el-option>
+                  </template>
+                </template>
               </el-select>
             </el-form-item>
             <el-form-item label="规则有效期" prop="ruleTime">
@@ -41,7 +35,7 @@
               <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="发布频率">
                 <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
-              <el-button @click="scheduleRuleFun()">添加</el-button>
+              <el-button type="primary"  @click="scheduleRuleFun()">添加时区</el-button>
             </el-form-item>
             <!-- 时间区间的列表，没有数据是处于隐藏状态 -->
             <div v-if="scheduleRuleArray.length>0">
@@ -64,10 +58,6 @@
                   </li>
                 </ul>
             </div>
-            <el-form-item label="产品上架时间">
-                <el-date-picker type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
-                </el-date-picker>
-            </el-form-item>
             <el-form-item label="产品类目">
               <el-select :class="'W20'" v-model="stroVal.storOne" @change="firstStorChange">
                 <el-option v-for="(item,index) in storList" :index="index" :key="item.id" :label="item.name" :value="item.id"> </el-option>
@@ -91,31 +81,29 @@
                 </template>
               </el-select>
             </el-form-item>
+            <el-form-item label="产品上架时间">
+                <el-date-picker type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
+                </el-date-picker>
+            </el-form-item>
             <el-form-item label="产品浏览量">
-              <el-select :class="'W20'" v-model="ruleForm.scan_sign">
+              <el-select :class="'W20'" v-model="serchProduct.scan_sign">
                 <el-option  :label="'>'" :value="'1'"> </el-option>
                 <el-option  :label="'<'" :value="'2'"> </el-option>
               </el-select>
-              <el-input :class="'W20'" v-model="ruleForm.scan"></el-input>
+              <el-input :class="'W20'" v-model="serchProduct.scan"></el-input>
             </el-form-item>
             <el-form-item label="产品销量">
-              <el-select :class="'W20'"  v-model="ruleForm.sale_sign">
+              <el-select :class="'W20'"  v-model="serchProduct.sale_sign">
                 <el-option  :label="'>'" :value="'1'"> </el-option>
                 <el-option  :label="'<'" :value="'2'"> </el-option>
               </el-select>
-              <el-input :class="'W20'" v-model="ruleForm.sale"></el-input>
+              <el-input :class="'W20'" v-model="serchProduct.sale"></el-input>
             </el-form-item>
             <el-form-item label="可发布产品数量">
               <span>{{ruleForm.product_list.length}}个</span>
+              <el-button type="primary"  @click="serchProduct()">查询可用商品</el-button>
+      
             </el-form-item>
-            <!-- 查询出来的产品列表 -->
-            <div v-if="ruleForm.product_list.length>0">
-                <ul class="scheduleRuleList">
-                  <span v-for="item in ruleForm.product_list" :key="item">
-                    {{item}}
-                  </span>
-                </ul>
-            </div>
             <el-form-item label="规则标签" prop="tag">
               <el-input v-model="ruleForm.tag"></el-input>
             </el-form-item>
@@ -138,14 +126,8 @@ import * as base from '../../assets/js/base'
     data() {
       return {
           website:'Chicdb',    
-          pinterestArray:[                           //Pinterest下拉框数据
-            {"label":"pinterestArray1","value":"11111"},
-            {"label":"pinterestArray2","value":"22222"}
-          ],
-          boardArray:[                           //Pinterest下拉框数据
-            {"label":"boardArray1","value":"1"},
-            {"label":"boardArray2","value":"2"}
-          ],
+          pinterestArray:[],//Pinterest下拉框数据
+          boardArray:[],     //board下拉框数据
           ruleTime:[new Date(2019, 1, 1, 0, 0), new Date(2019, 1, 1, 0, 0)],    //规则有效期的数据来源
           scheduleRule:{//时间区间临时数据
               weekday:"0",  
@@ -217,18 +199,28 @@ import * as base from '../../assets/js/base'
               ]
             }
           ],
-          ruleForm: {//最终添加规则需要提交过去的对象
-            pinterest:'22222',
-            board:'1',
-            start_time:'',           //规则有效期开始时间
-            end_time:'',             //规则有效期结束时间
-            schedule_rule:[],         //时间区间最终数据    
-            product_list:[1,2],        //满足条件的商品列表  
-            tag:'规则标签',      //规则标签
+          serchProduct:{
+publish_begin_time:'',
+publish_end_time:''.
+            begin_time:'',
+            end_time:'',
+            store:'',
+            product__name:'',
             sale_sign:'1',           // 销量标识符
             sale:'100',           //产品销量
             scan_sign:'1',       //浏览量标识符
             scan:'100',           // 浏览量
+          },
+          ruleForm: {//最终添加规则需要提交过去的对象
+            pinterest:'无数据',
+            board:'无数据',
+            start_time:'',           //规则有效期开始时间
+            end_time:'',             //规则有效期结束时间
+            schedule_rule:[],         //时间区间最终数据    
+            product_list:[],        //满足条件的商品列表  
+            tag:'规则标签',      //规则标签
+
+
             
           },
           rules: {
@@ -239,13 +231,19 @@ import * as base from '../../assets/js/base'
       };
     },
     watch:{
-      // dialog:function (){
-      //     this.$axios.get("/api/v1/pinterestaccount/").then(res => {
-      //       console.log(res)
-      //       // this.userArray = res.data.data;
-      //       // console.log(this.userArray)
-      //   });
-      // }
+      dialog:function (){
+        this.$axios.get("/api/v1/pinterest_account_board/")
+        .then(res => {
+            if(res.data.code == 1){
+              this.pinterestArray = res.data.data;
+              this.ruleForm.pinterest = res.data.data[0].id;
+              this.pinterestChange();
+            }
+        })
+        .catch(error => {
+          this.$message("接口超时!");
+        });   
+      }
 
     },
     methods: {
@@ -254,7 +252,6 @@ import * as base from '../../assets/js/base'
           this.ruleForm.start_time = base.dateFormat(this.ruleTime[0]);
           this.ruleForm.end_time =  base.dateFormat(this.ruleTime[1]);
           this.ruleForm.schedule_rule = JSON.stringify(this.scheduleRuleArray);
-          console.log(this.ruleForm)
           this.$axios.post(`/api/v1/rule/`, this.ruleForm).then(res => {
             // 操作成功
             // this.$message({
@@ -302,7 +299,15 @@ import * as base from '../../assets/js/base'
         console.log(index)
         this.scheduleRuleArray.splice(index,1);
       },
+      serchProduct(){
+          this.$axios.get(`/api/v1/product_count/`, this.serchProduct).then(res => {
+          })
+          .catch(error => {
+            this.$message("接口超时!");
+          }); 
+      },
       firstStorChange(){
+        // 商品分类一级菜单触发时间
         this.storList.map(e => {
           if(e.id == this.stroVal.storOne){
             this.stroVal.storTwo = e.child[0].id;
@@ -316,6 +321,7 @@ import * as base from '../../assets/js/base'
         });
       },
       twoStorChange(){
+        // 商品分类二级菜单触发时间
         this.storList.map(e => {
           if(e.id == this.stroVal.storOne){
             var _thisArray = e.child;
@@ -326,7 +332,14 @@ import * as base from '../../assets/js/base'
                 });
           }
         });
-
+      },
+      pinterestChange(){
+        //pinterest账户变更触发的事件
+        this.pinterestArray.map(e => {
+          if(e.id == this.ruleForm.pinterest){
+            this.ruleForm.board = e.board_pinterest_account[0].id;
+          }
+        });   
       }
     }
   }

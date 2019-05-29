@@ -60,7 +60,7 @@ export default {
   name: "RuleList",
   data() {
     return {
-        total:1,//默认数据总数
+        total:0,//默认数据总数
         pagesize:10,//每页的数据条数
         pagesizes:[10, 20, 30, 40],//分组数量
         currentPage:1,//默认开始页面

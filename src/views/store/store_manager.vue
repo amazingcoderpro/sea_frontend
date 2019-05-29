@@ -1,6 +1,6 @@
 <template>
     <div class="store_manager">
-        <div class="tableTitle"><span>商户列表</span></div>
+        <div class="tableTitle"><span>产品列表</span></div>
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
                 <el-button  type="primary" @click='addFun()'>增加商户</el-button>
