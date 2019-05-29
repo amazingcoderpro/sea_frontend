@@ -26,6 +26,7 @@
 
 
 <script>
+import * as base from '../assets/js/base'
 // import jwt_decode from 'jwt-decode';
 import router from '../router'
 import Menufilter from '../components/menufilter.js'
@@ -36,7 +37,8 @@ export default {
       return {
         loginUser:{
           username:"",
-          password:""
+          password:"",
+          code:''
         },
         rules: {
           username: [
@@ -52,11 +54,11 @@ export default {
     },
     methods: {
       submitForm(formName) {
+        this.loginUser.code = base.getQueryString("code") == null?'':base.getQueryString("code");
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios.post('/api/v1/account/login/',this.loginUser)
             .then(res => {
-                // token
                 document.onkeydown = undefined;
                 console.log(res.data)
                 if(res.data.code == 1){

@@ -6,6 +6,7 @@
 npm install
 npm install
 cnpm i element-ui -S
+cnpm i echarts -S
 cnpm install axios
 cnpm install jwt-decode
 ```
