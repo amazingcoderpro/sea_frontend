@@ -1,21 +1,17 @@
 <template>
   <div class="shopfy_regist">
     <section class="form_container">
-      <el-form :model="registUser" :rules="rules" ref="loginForm" class="loginForm">
+      <el-form :model="registUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
         <!-- 账号 -->
-        <el-form-item>
+        <el-form-item label="账号" prop="shopstr">
           <el-input v-model="registUser.shopstr" disabled placeholder="请输入戶名"></el-input>
         </el-form-item>
         <!-- 邮箱 -->
-        <el-form-item>
+        <el-form-item label="邮箱" prop="emailstr">
           <el-input v-model="registUser.emailstr" disabled placeholder="请输入email"></el-input>
         </el-form-item>
-        <!-- username -->
-        <el-form-item>
-          <el-input v-model="registUser.username" placeholder="请输入账户"></el-input>
-        </el-form-item>
         <!-- 密码 -->
-        <el-form-item prop="password">
+        <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="registUser.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <!-- 确认密码 -->
@@ -62,16 +58,15 @@ export default {
     };
     return {
       registUser: {
-        username: "",
         password: "",
         shopstr: "", //商铺名
         emailstr: ""
       },
       rules: {
-        username: [
-          { required: true, message: "账号不能为空", trigger: "change" },
-          { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
-        ],
+        // username: [
+        //   { required: true, message: "账号不能为空", trigger: "change" },
+        //   { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
+        // ],
         password: [
           { required: true, message: "密码不能为空", trigger: "blur" },
           { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }

@@ -127,7 +127,7 @@ export default {
         this.account_data =JSON.parse(localStorage.getItem("account_data"));
         this.board_data =JSON.parse(localStorage.getItem("board_data"));
         //${this.account_data.pinterest_account_id} ${this.board_data.board_id} 
-        this.$axios(`/api/v1/report/?page=${this.currentPage}&page_size=${this.pagesize}&query_str=${this.recordID}`).then(res => {
+        this.$axios.get(`/api/v1/report/?page=${this.currentPage}&page_size=${this.pagesize}&query_str=${this.recordID}`).then(res => {
             this.tableData = res.data.data.results;
             this.total = res.data.data.count;
             console.log(res)

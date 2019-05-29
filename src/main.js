@@ -6,10 +6,13 @@ import axios from './http'
 
 import router from './router' 
 import store from './store'
+import echarts from 'echarts'
 
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.prototype.$axios = axios
+
 
 new Vue({
   router,

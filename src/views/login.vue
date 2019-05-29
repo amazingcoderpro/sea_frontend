@@ -17,7 +17,7 @@
                     </el-form-item>
 
                     <div class="tiparea">
-                        <p>还没有账号？现在<router-link to='/regist'>注册</router-link> </p>
+                        <p>还没有账号？现在<router-link to='/shopfy_regist'>注册</router-link> </p>
                     </div>
                   </el-form>
         </section>
