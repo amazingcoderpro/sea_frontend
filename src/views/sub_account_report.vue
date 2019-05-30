@@ -6,18 +6,18 @@
       <div class="Options">
         <span>Options</span>
       </div>
-        <el-form :inline="true" ref="add_data">
+        <el-form :inline="true">
             <!-- 日期下拉框 -->
-           <el-form-item label="Date Range">
-                <el-select v-model="week" placeholder="Yesterday" class="week_name" >
-                    <el-option
-                    v-for="item in weekArray"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                    </el-option>
-                </el-select>
-           </el-form-item>
+          <el-form-item label="Date Range">
+            <el-select v-model="week" placeholder="Yesterday" class="week_name" >
+                <el-option
+                v-for="item in weekArray"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
+          </el-form-item>
             <!-- 日期时间范围 -->
           <div class="block">
             <el-date-picker
@@ -29,35 +29,32 @@
                >
             </el-date-picker>
           </div>
-            <!-- Filter -->
+                <!-- Filter -->
           <div class="Filter">
-            <el-form-item label="Filter">
-                  <el-select v-model="Account" placeholder="Yesterday" class="Filter_week">
+            <el-form-item label="Filter" prop="dep">
+                <!-- Pinterest -->
+                <el-select v-model="reportData" placeholder="Pinterest Account 1" class="Filter_week">
+                   <el-option v-for="item in formAccount" :key="item.id" :label="item.name" :value="item.name"></el-option>
+                </el-select>
+                <!-- Boards -->
+                  <el-select v-model="reportBoards" placeholder="All Boards" class="Filter_week">
+                    <el-option
+                    v-for="item in formBoards"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.name">
+                    </el-option>
+                  </el-select>
+                <!-- All Pins -->
+                   <el-select v-model="reportPins" placeholder="All Pins" class="Filter_week">
                       <el-option
-                      v-for="item in formAccount"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
+                      v-for="item in formPins"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.name">
                       </el-option>
                   </el-select>
 
-                   <el-select v-model="week" placeholder="Yesterday" class="Filter_week">
-                      <el-option
-                      v-for="item in weekArray"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                      </el-option>
-                  </el-select>
-
-                   <el-select v-model="week" placeholder="Yesterday" class="Filter_week">
-                      <el-option
-                      v-for="item in weekArray"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                      </el-option>
-                  </el-select>
                 <div class="input_id">
                   <el-input v-model="search"  placeholder="请输入内容"></el-input>
                      <i class="iconfont el-icon-search"></i>
@@ -67,9 +64,9 @@
         </el-form>  
 
           <!-- echarts -->
-          <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div> 
+          <div style="width:1600px;height:400px;" ref="myEchart"></div> 
            <div class="table_right">
-          <el-table :data="tableData" border ref="topictable" :height="tableHeight">
+            <el-table border ref="topictable">
                 <!-- 账户ID -->
             <el-table-column type="index" label="账户ID" align="center"  width="100" ></el-table-column>
                 <!-- 账户名称 -->
@@ -130,27 +127,16 @@
 import echarts from 'echarts'
 export default {
   props: {
-    className: {
-      type: String,
-      default: 'yourClassName'
-    },
-    id: {
-      type: String,
-      default: 'yourID'
-    },
-    width: {
-      type: String,
-      default: '1600px'
-    },
-    height: {
-      type: String,
-      default: '400px'
-    }
+    
   },
   data() {
     return {
-      Account:"",
+      reportData:'',
       formAccount:[],
+      reportBoards:'',
+      formBoards:[],
+      reportPins:'',
+      formPins:[],
       chart: null,
       orgOptions: {},
       search:"",
@@ -176,6 +162,9 @@ export default {
   },
   mounted() {
     this.initChart();
+    this.getDep();
+    this.getBod();
+    this.pins();
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -218,8 +207,50 @@ export default {
          
         }]
       })
+    },
+    getDep:function(){
+      let data={};
+      this.$axios.get("/api/v1/select/account/",data)
+      .then(res=> {
+        if(res.data.code == 1){
+          this.formAccount = res.data.data;
+          console.log(this.formAccount);
+        }else{
+          console.log(1);
+        }
+      }).catch(function(errof){
+         that.$message.errof('系统出错');
+      })
+    },
+    getBod:function(){
+      let data={};
+      this.$axios.get("/api/v1/select/board/",data)
+      .then(res=> {
+        if(res.data.code == 1){
+          this.formBoards = res.data.data;
+          console.log(this.formBoards);
+        }else{
+          console.log(1);
+        }
+      }).catch(function(errof){
+         that.$message.errof('系统出错');
+      })
+    },
+     pins:function(){
+      let data={};
+      this.$axios.get("/api/v1/select/pin/",data)
+      .then(res=> {
+        if(res.data.code == 1){
+          this.formPins = res.data.data;
+          console.log(this.formPins);
+        }else{
+          console.log(1);
+        }
+      }).catch(function(errof){
+         that.$message.errof('系统出错');
+      })
     }
-  }
+  },
 }
 </script>
 
