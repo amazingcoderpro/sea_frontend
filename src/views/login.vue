@@ -52,6 +52,19 @@ export default {
         }        
       }
     },
+    created(){            // 回车事件
+        var _self = this;
+        document.onkeydown = function(e){
+          if(window.event == undefined){
+            var key = e.keyCode;
+          }else{
+            var key = window.event.keyCode;
+          }
+          if(key == 13){
+            _self.submitForm('loginForm');
+          }
+        }
+      },
     methods: {
       submitForm(formName) {
         this.loginUser.code = base.getQueryString("code") == null?'':base.getQueryString("code");
@@ -65,21 +78,8 @@ export default {
                     const token=res.data.data.token;
                     localStorage.setItem("eleToken", token);
                     localStorage.setItem("user", JSON.stringify( res.data.data.user ));
-                    // localStorage.setItem("menu_tree", JSON.stringify( res.data.data.menu_tree ));
-                    // localStorage.setItem("router_tree", JSON.stringify( res.data.data.router_list ));
-
-                    // // 解析token
-                    // const decoded = jwt_decode(token)
-                    // console.log(decoded)
-
-                    // token 存储到vuex中
                     this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
                     this.$store.dispatch("setUser", res.data.data.user)
-                    // this.$store.dispatch("setMenuTree", res.data.data.menu_tree)
-                    // this.$store.dispatch("setRouterTree", res.data.data.router_list)
-                    //let routes = []
-                    // Menufilter(routes, res.data.data.router_list)
-                    // router.addRoutes(routes)
                     router.push('/dashboard');
                 }else{
                   this.$message({

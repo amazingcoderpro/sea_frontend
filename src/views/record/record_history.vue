@@ -22,11 +22,11 @@
                 <!-- 批量操作 -->
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
                 <!-- ID -->
-            <el-table-column type="results.id"  label="ID" align="center"  width="50"></el-table-column>
+            <el-table-column type="id"  label="ID" align="center"  width="50"></el-table-column>
                 <!-- 产品SKU -->
-            <el-table-column prop="results.product.sku" label="产品SKU" align="center" width="100"></el-table-column>
+            <el-table-column prop="sku" label="产品SKU" align="center" width="100"></el-table-column>
                 <!-- Pin图 -->
-            <el-table-column prop="results.pin.thumbnail" label="Pin图" align="center" width="110">
+            <el-table-column prop="thumbnail" label="Pin图" align="center" width="110">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
                 </template>
@@ -34,15 +34,15 @@
                 <!-- Pin描述 -->
             <el-table-column prop="description" label="Pin描述" align="center" width="110"></el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="pin_uri" label="Pin URL" align="center" width="110"></el-table-column>
+            <el-table-column prop="url" label="Pin URL" align="center" width="110"></el-table-column>
                 <!-- 产品浏览量 -->
             <el-table-column  class="parentNodeColumn" prop="results.rule.scan" label="产品浏览量" align="center"  width="120">
             </el-table-column>
                 <!-- 产品销量 -->
-            <el-table-column  class="parentNodeColumn" prop="results.rule.sale_sign" label="产品销量" align="center"  width="120">
+            <el-table-column  class="parentNodeColumn" prop="sale" label="产品销量" align="center"  width="120">
             </el-table-column>
                 <!-- 产品类目 -->
-            <el-table-column  class="parentNodeColumn" prop="category " label="产品类目" align="center"  width="120">
+            <el-table-column  class="parentNodeColumn" prop="product_list" label="产品类目" align="center"  width="120">
             </el-table-column>  
                 <!-- 价格 -->
             <el-table-column  class="parentNodeColumn" prop="price" label="价格" align="center"  width="120">
@@ -56,7 +56,7 @@
                 <!-- 所属账户ID -->
             <el-table-column prop="under_account_id" label="所属账户ID" align="center" width="120"></el-table-column>
                 <!-- 发布状态 --> 
-            <el-table-column prop="results.state" label="发布状态" align="center" width="120"></el-table-column>
+            <el-table-column prop="results.state" label="发布记录" align="center" width="120"></el-table-column>
             <el-table-column prop="operation" align="center" label="编辑" fixed="right" width="150">
               <template slot-scope="scope">
                   <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
