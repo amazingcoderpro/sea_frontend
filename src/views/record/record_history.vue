@@ -63,18 +63,15 @@
                 <!-- 所属账户ID -->
             <el-table-column prop="board.pinterest_account" label="所属账户ID" align="center" width="120"></el-table-column>
                 <!-- 发布状态 --> 
-            <el-table-column prop="state" label="状态" align="center" width="200">
+            <el-table-column prop="state" label="发布记录" align="center" width="150">
               <template  slot-scope="scope">
                 <span v-if="scope.row.state == 1">finished</span>
                 <span v-else>failed</span>
               </template>
 
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="编辑" fixed="right" width="150">
-              <template slot-scope="scope">
-                  <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                  <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
-              </template>
+            <el-table-column prop="remark" align="center" label="备注" fixed="right" width="180">
+
             </el-table-column>
           </el-table>
         </div>
@@ -115,7 +112,7 @@ export default {
         },
         {
           value: '[2]',
-          label: '未发布'
+          label: '发布失败'
         }
       ],
       search:{

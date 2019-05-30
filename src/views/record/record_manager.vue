@@ -4,11 +4,11 @@
         <div class="tableTitle"><span>发布列表管理</span></div> 
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
-                <el-input v-model="recordID"  placeholder="请输入SKU"></el-input>
+                <el-input v-model="search.product__sku"  placeholder="请输入SKU"></el-input>
                 <el-button  type="primary" @click='init()'>搜索</el-button>
             </el-form-item>
         </el-form>
-        <el-select v-model="value" filterable placeholder="请选择" class="btnLeft">
+        <el-select v-model="search.state" filterable placeholder="请选择" class="btnLeft">
             <el-option
             v-for="item in options"
             :key="item.value"
@@ -22,46 +22,56 @@
                 <!-- 批量操作 -->
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
                 <!-- ID -->
-            <el-table-column type="results.id"  label="ID" align="center"  width="50"></el-table-column>
+            <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
                 <!-- 产品SKU -->
-            <el-table-column prop="results.product.sku" label="产品SKU" align="center" width="100"></el-table-column>
+            <el-table-column prop="product.sku" label="产品SKU" align="center" width="200"></el-table-column>
                 <!-- Pin图 -->
-            <el-table-column prop="results.pin.thumbnail" label="Pin图" align="center" width="110">
+            <el-table-column prop="thumbnail" label="Pin图" align="center" width="110">
                 <template slot-scope="scope"> 
-                    <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
+                    <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
                 <!-- Pin描述 -->
-            <el-table-column prop="description" label="Pin描述" align="center" width="110"></el-table-column>
+            <el-table-column prop="pin.note"  label="Pin描述" align="center" width="110">
+            </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="pin_uri" label="Pin URL" align="center" width="110"></el-table-column>
+            <el-table-column prop="pin.url" label="Pin URL" align="center" width="110"></el-table-column>
                 <!-- 产品浏览量 -->
-            <el-table-column  class="parentNodeColumn" prop="results.rule.scan" label="产品浏览量" align="center"  width="120">
+            <el-table-column  class="parentNodeColumn" prop="rule.scan" label="产品浏览量" align="center"  width="120">
+              <template slot-scope="scope">
+                {{scope.row.rule.scan_sign}} == {{scope.row.rule.scan}}
+              </template>
             </el-table-column>
                 <!-- 产品销量 -->
-            <el-table-column  class="parentNodeColumn" prop="results.rule.sale_sign" label="产品销量" align="center"  width="120">
+            <el-table-column  class="parentNodeColumn" prop="sale" label="产品销量" align="center"  width="120">
+              <template slot-scope="scope">
+                {{scope.row.rule.sale_sign}} == {{scope.row.rule.sale}}
+              </template>
             </el-table-column>
                 <!-- 产品类目 -->
-            <el-table-column  class="parentNodeColumn" prop="category " label="产品类目" align="center"  width="120">
-            </el-table-column>  
+            <!-- <el-table-column  class="parentNodeColumn" prop="product_list" label="产品类目" align="center"  width="120">
+            </el-table-column>   -->
                 <!-- 价格 -->
-            <el-table-column  class="parentNodeColumn" prop="price" label="价格" align="center"  width="120">
+            <el-table-column  class="parentNodeColumn" prop="product.price" label="价格" align="center"  width="120">
             </el-table-column>
                 <!-- 所属规则标签 -->
-            <el-table-column prop="tag" label="所属规则标签" align="center" width="120">
+            <el-table-column prop="product.tag" label="所属规则标签" align="center" width="120">
                 <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
                 <!-- 所属Board ID -->
-            <el-table-column prop="under_board_id" label="所属Board ID" align="center" width="120"></el-table-column>
+            <el-table-column prop="board.id" label="所属Board ID" align="center" width="120"></el-table-column>
                 <!-- 所属账户ID -->
-            <el-table-column prop="under_account_id" label="所属账户ID" align="center" width="120"></el-table-column>
+            <el-table-column prop="board.pinterest_account" label="所属账户ID" align="center" width="120"></el-table-column>
                 <!-- 发布状态 --> 
-            <el-table-column prop="results.state" label="发布状态" align="center" width="120"></el-table-column>
-            <el-table-column prop="operation" align="center" label="编辑" fixed="right" width="150">
-              <template slot-scope="scope">
-                  <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                  <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
+            <el-table-column prop="state" label="发布记录" align="center" width="150">
+              <template  slot-scope="scope">
+                <span v-if="scope.row.state == 1">finished</span>
+                <span v-else>failed</span>
               </template>
+
+            </el-table-column>
+            <el-table-column prop="remark" align="center" label="备注" fixed="right" width="180">
+
             </el-table-column>
           </el-table>
         </div>
@@ -83,20 +93,33 @@ export default {
   name: "record_manager",
   data() {
     return {
-         options: [{
-          value: '选项1',
-          label: '待发布'
-        }, {
-          value: '选项2',
-          label: '未发布'
-        }],
-        value:"",
+
       total:0,//默认数据总数
       pagesize:10,//每页的数据条数
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面
       tableHeight:"100",
-      pinIDInput:'',  
+
+
+      options: [
+        {
+          value: '[0,2]', 
+          label: '全部'
+        },
+        {
+          value: '[0]', 
+          label: '待发布'
+        },
+        {
+          value: '[2]',
+          label: '未发布'
+        }
+      ],
+      search:{
+        state:'[0,2]',
+        product__sku:'',
+      },
+
       recordID:'',  
       account_data:{},
       board_data:{},
@@ -126,15 +149,23 @@ export default {
       // 获取表格数据
         this.account_data =JSON.parse(localStorage.getItem("account_data"));
         this.board_data =JSON.parse(localStorage.getItem("board_data"));
-        //${this.account_data.pinterest_account_id} ${this.board_data.board_id} 
-        this.$axios.get(`/api/v1/rule/report/?page=${this.currentPage}&page_size=${this.pagesize}&query_str=${this.recordID}`).then(res => {
+        var url = `/api/v1/rule/report/?page=${this.currentPage}&page_size=${this.pagesize}`;
+            url +=`&state=${this.search.state}`;
+        if(this.search.product__sku !=''){
+            url +=`&product__sku=${this.search.product__sku}`;
+        }
+        this.$axios.get(url).then(res => {
+          if(res.data.code == 1){
             this.tableData = res.data.data.results;
             this.total = res.data.data.count;
-            console.log(res)
-        });      
+          }
+        })
+        .catch(error => {
+          this.$message("接口超时!");
+        });   
+           
     },
     serchFun(){
-        //this.pinID = this.pinIDInput;
         this.init();
     },
     handleEdit(row) {
