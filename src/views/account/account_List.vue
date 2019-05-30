@@ -73,7 +73,7 @@
             <el-table-column prop="operation" align="center" label="操作" width="100" fixed="right" >
               <template slot-scope="scope">
                 <!-- <el-button icon="edit" type="primary" size="small" @click="EditFun(scope.row)">编辑</el-button> -->
-                <el-button icon="edit" type="danger" size="small" @click="handleEdit(scope.row)">删除</el-button>
+                <el-button icon="edit" type="danger" size="small" @click="deteleFun(scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -174,16 +174,31 @@ export default {
       };
       this.form = row;
     },
-    handleDelete(row, index) {
-      // 删除
-      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
-        this.$message("删除成功");
-        this.getProfile();
-      });
+    deteleFun(row){
+        var statedata = {
+            state :'1'   //(0, '待执行'), (1, '删除'), (2, '过期'), (3, '运行'), (4, '暂停'), (5,"已完成")
+        }
+        this.$confirm('确定要删除?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
+                  .then(res => {
+                    if(res.data.code == 1){
+                      this.$message({type: 'success',message: '删除成功!'});
+                    }else{
+                      this.$message.error('删除失败!');
+                    }
+                  })
+                  .catch(error => {
+                     this.$message.error('接口超时!');
+                  }); 
+            }) 
     },
     AutFun(row) {
       // 获取授权
-      this.$axios.post(`/api/v1/pinterest_account_auth/${row.index}/`).then(res => {
+      this.$axios.post(`/api/v1/pinterest_account_auth/${row.pinterest_account_id}/`).then(res => {
           if(res.data.code == 1){
             window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
           }else{

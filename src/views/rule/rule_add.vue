@@ -157,14 +157,14 @@ import * as base from '../../assets/js/base'
             {"label":"2H","value":"7200"},
           ],
           serchProduct:{
-            data1:[new Date(2019, 4, 1, 8, 0), new Date(2019, 8, 1, 16, 0)],   //产品上架时间初始数据
-            data2:[new Date(2019, 4, 1, 8, 0), new Date(2019, 8, 1, 16, 0)],   //产品特殊时间初始数据
+            data1:[new Date(2019, 3, 1, 8, 0), new Date(2019, 5, 1, 16, 0)],   //产品上架时间初始数据
+            data2:[new Date(2019, 3, 1, 8, 0), new Date(2019, 5, 1, 16, 0)],   //产品特殊时间初始数据
             publish_begin_time:'',//产品上架时间最终数据
             publish_end_time:'',   
             begin_time:'',        //产品特殊时间最终数据
             end_time:'',
             store:'',
-            product__name:'男',      
+            product__name:'短',      
             sale_sign:'>',           // 销量标识符
             sale:'',           //产品销量
             scan_sign:'>',       //浏览量标识符

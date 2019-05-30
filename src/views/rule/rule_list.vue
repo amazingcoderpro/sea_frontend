@@ -29,6 +29,12 @@
             <el-button type="primary" @click="addFun">添加</el-button>
           </el-form-item>
         </el-form>
+        <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id != null">
+          <el-form-item :class="'FR'">
+            <el-button type="primary" @click="addFun">添加</el-button>
+          </el-form-item>
+        </el-form>
+      
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">

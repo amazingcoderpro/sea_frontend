@@ -7,10 +7,9 @@
             </el-col>
             <el-col :span='6' class="user">
                 <div class="userinfo">
-                    <img src="../assets/img/none.png" class='avatar' alt="">
-                     <div class='welcome'>
-                        <p class='name comename'>欢迎</p>
-                        <p class='name avatarname'>{{user.username}}</p>
+                     <img src="../assets/img/none.png" class='avatar' alt="">
+                    <div class='welcome'>
+                      <p class='name comename'>欢迎您 , <span class="avatarname">{{user.username}}</span></p>
                     </div>
                     <span class='username'>
                         <el-dropdown trigger="click" @command='setDialogInfo'>

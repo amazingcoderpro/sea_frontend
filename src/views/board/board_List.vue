@@ -18,13 +18,13 @@
               <template slot-scope="scope"> 总数:{{scope.row.pins}}<br/>今日新增:{{scope.row.pins_increment}}</template>
             </el-table-column>            
             <el-table-column  class="parentNodeColumn" align="center" prop="repin,repin_increment" label="RePin"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.repin}}<br/>今日新增:{{scope.row.repin_increment}}</template>
+              <template slot-scope="scope"> 总数:{{scope.row.saves}}<br/>今日新增:{{scope.row.saves_increment}}</template>
             </el-table-column>            
             <el-table-column  class="parentNodeColumn" align="center" prop="like,like_increment" label="Like"  width="300">
-              <template slot-scope="scope"> 总数:{{scope.row.like}}<br/>今日新增:{{scope.row.like_increment}}</template>
+              <template slot-scope="scope"> 总数:{{scope.row.likes}}<br/>今日新增:{{scope.row.likes_increment}}</template>
             </el-table-column>           
             <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comment"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.comment}}<br/>今日新增:{{scope.row.comment_increment}}</template>
+              <template slot-scope="scope"> 总数:{{scope.row.comments}}<br/>今日新增:{{scope.row.comments_increment}}</template>
             </el-table-column>           
             <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="详细数据报告"  width="200" >
               <template slot-scope="scope">
@@ -85,7 +85,6 @@ export default {
         title: "",
         option: "edit"
       }
-
     };
   },
   mounted() {
@@ -107,8 +106,7 @@ export default {
         if( this.account_data.pinterest_account_id == null || this.account_data.pinterest_account_id == undefined){
               this.$message({message: "参数不全",type: 'warning',center: true});
         }else{
-          // this.$axios(`/api/v1/account_list/${this.account_data.pinterest_account_id}/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
-          this.$axios(`/api/v1/account_list/1/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
+          this.$axios(`/api/v1/account_list/${this.account_data.pinterest_account_id}/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
             this.tableData = res.data.data.results;
             this.total = res.data.data.count;
           });

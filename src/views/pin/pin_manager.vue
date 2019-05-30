@@ -19,20 +19,20 @@
                     <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
-            <el-table-column prop="pin_description" label="Pin描述" align="center" width="100"></el-table-column>
+            <el-table-column prop="pin_note" label="Pin描述" align="center" width="100"></el-table-column>
             <el-table-column prop="pin_url" label="URL" align="center" width="100"></el-table-column>
             <el-table-column prop="product_sku" label="产品SKU" align="center" width="100"></el-table-column>
             <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.view}}<br/>今日新增:{{scope.row.view_increment}}</template>
+              <template slot-scope="scope"> 总数:{{scope.row.views}}<br/>今日新增:{{scope.row.views_increment}}</template>
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="repin,repin_increment" label="Repin" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.repin}}<br/>今日新增:{{scope.row.repin_increment}}</template>
+            <el-table-column  class="parentNodeColumn" prop="saves,saves_increment" label="Saves" align="center"  width="150">
+              <template slot-scope="scope"> 总数:{{scope.row.saves}}<br/>今日新增:{{scope.row.saves_increment}}</template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="like,like_increment" label="Like" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.like}}<br/>今日新增:{{scope.row.like_increment}}</template>
+              <template slot-scope="scope"> 总数:{{scope.row.likes}}<br/>今日新增:{{scope.row.likes_increment}}</template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comment" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.comment}}<br/>今日新增:{{scope.row.comment_increment}}</template>
+              <template slot-scope="scope"> 总数:{{scope.row.comments}}<br/>今日新增:{{scope.row.comments_increment}}</template>
             </el-table-column>
             <el-table-column prop="under_board_id" label="所属Board ID" align="center" width="100"></el-table-column>
             <el-table-column prop="under_account_id" label="所属账户ID" align="center" width="150"></el-table-column>
@@ -97,11 +97,14 @@ export default {
       // 获取表格数据
         this.account_data =JSON.parse(localStorage.getItem("account_data"));
         this.board_data =JSON.parse(localStorage.getItem("board_data"));
-        //${this.account_data.pinterest_account_id} ${this.board_data.board_id} 
-        this.$axios(`/api/v1/account_list/1/3/?page=${this.currentPage}&page_size=${this.pagesize}&query_str=${this.pinID}`).then(res => {
+        var url = `/api/v1/account_list/${this.account_data.pinterest_account_id}/${this.board_data.board_id}/`;
+            url +=`?page=${this.currentPage}&page_size=${this.pagesize}`;
+            if(this.pinID!=''){
+              url += `&query_str=${this.pinID}`;
+            }
+        this.$axios(url).then(res => {
             this.tableData = res.data.data.results;
             this.total = res.data.data.count;
-            console.log(res)
         });      
     },
     handleEdit(row) {
