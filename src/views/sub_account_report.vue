@@ -68,7 +68,61 @@
 
           <!-- echarts -->
           <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div> 
-  
+           <div class="table_right">
+          <el-table :data="tableData" border ref="topictable" :height="tableHeight">
+                <!-- 账户ID -->
+            <el-table-column type="index" label="账户ID" align="center"  width="100" ></el-table-column>
+                <!-- 账户名称 -->
+            <el-table-column type="index"  label="账户名称" align="center"  width="80"></el-table-column>
+                <!-- Board数 -->
+            <el-table-column prop="product.sku" label="Board数" align="center" width="100"></el-table-column>
+                <!-- Following数 -->
+            <el-table-column prop="thumbnail" label="Following数" align="center" width="110">
+                <template slot-scope="scope"> 
+                    <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
+                </template>
+            </el-table-column>
+                <!-- Follower数 -->
+            <el-table-column prop="pin.note"  label="Pin描述" align="center" width="110">
+            </el-table-column>
+                <!-- Pin数 -->
+            <el-table-column prop="pin.url" label="Pin数" align="center" width="110"></el-table-column>
+                <!-- Repin数 -->
+            <el-table-column  class="parentNodeColumn" prop="rule.scan" label="Repin数" align="center"  width="120">
+              <template slot-scope="scope">
+                {{scope.row.rule.scan_sign}} == {{scope.row.rule.scan}}
+              </template>
+            </el-table-column>
+                <!-- 产品销量 -->
+            <el-table-column  class="parentNodeColumn" prop="sale" label="产品销量" align="center"  width="120">
+              <template slot-scope="scope">
+                {{scope.row.rule.sale_sign}} == {{scope.row.rule.sale}}
+              </template>
+            </el-table-column>
+                <!-- 价格 -->
+            <el-table-column  class="parentNodeColumn" prop="product.price" label="价格" align="center"  width="120">
+            </el-table-column>
+                <!-- 所属规则标签 -->
+            <el-table-column prop="product.tag" label="所属规则标签" align="center" width="120">
+                <template slot-scope="scope"> {{scope.row.tag}}</template>
+            </el-table-column>
+                <!-- 所属Board ID -->
+            <el-table-column prop="board.id" label="所属Board ID" align="center" width="120"></el-table-column>
+                <!-- 所属账户ID -->
+            <el-table-column prop="board.pinterest_account" label="所属账户ID" align="center" width="120"></el-table-column>
+                <!-- 发布状态 --> 
+            <el-table-column prop="state" label="发布记录" align="center" width="150">
+              <template  slot-scope="scope">
+                <span v-if="scope.row.state == 1">finished</span>
+                <span v-else>failed</span>
+              </template>
+
+            </el-table-column>
+            <el-table-column prop="remark" align="center" label="备注" fixed="right" width="180">
+
+            </el-table-column>
+          </el-table>
+      </div>
   </div>
 </template>
 
