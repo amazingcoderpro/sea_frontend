@@ -22,17 +22,22 @@
                 <!-- 批量操作 -->
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
                 <!-- ID -->
-            <el-table-column type="id"  label="ID" align="center"  width="50"></el-table-column>
+            <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
                 <!-- 产品SKU -->
-            <el-table-column prop="sku" label="产品SKU" align="center" width="100"></el-table-column>
+            <el-table-column prop="product.sku" label="产品SKU" align="center" width="100"></el-table-column>
                 <!-- Pin图 -->
             <el-table-column prop="thumbnail" label="Pin图" align="center" width="110">
                 <template slot-scope="scope"> 
-                    <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
+                    <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
                 <!-- Pin描述 -->
-            <el-table-column prop="description" label="Pin描述" align="center" width="110"></el-table-column>
+            <el-table-column label="Pin描述" align="center" width="110">
+              <template  slot-scope="scope">
+                <span v-if="scope.row.product.pin==null">--</span>
+                <span v-else>{{scope.row.product.pin.description}}</span>
+              </template>
+            </el-table-column>
                 <!-- pin URL -->
             <el-table-column prop="url" label="Pin URL" align="center" width="110"></el-table-column>
                 <!-- 产品浏览量 -->
