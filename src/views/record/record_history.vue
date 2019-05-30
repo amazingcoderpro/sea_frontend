@@ -48,9 +48,6 @@
                 {{scope.row.rule.sale_sign}} == {{scope.row.rule.sale}}
               </template>
             </el-table-column>
-                <!-- 产品类目 -->
-            <!-- <el-table-column  class="parentNodeColumn" prop="product_list" label="产品类目" align="center"  width="120">
-            </el-table-column>   -->
                 <!-- 价格 -->
             <el-table-column  class="parentNodeColumn" prop="product.price" label="价格" align="center"  width="120">
             </el-table-column>

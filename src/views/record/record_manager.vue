@@ -48,9 +48,6 @@
                 {{scope.row.rule.sale_sign}} == {{scope.row.rule.sale}}
               </template>
             </el-table-column>
-                <!-- 产品类目 -->
-            <!-- <el-table-column  class="parentNodeColumn" prop="product_list" label="产品类目" align="center"  width="120">
-            </el-table-column>   -->
                 <!-- 价格 -->
             <el-table-column  class="parentNodeColumn" prop="product.price" label="价格" align="center"  width="120">
             </el-table-column>
@@ -63,7 +60,7 @@
                 <!-- 所属账户ID -->
             <el-table-column prop="board.pinterest_account" label="所属账户ID" align="center" width="120"></el-table-column>
                 <!-- 发布状态 --> 
-            <el-table-column prop="state" label="发布记录" align="center" width="150">
+            <el-table-column prop="state" label="发布状态" align="center" width="150">
               <template  slot-scope="scope">
                 <span v-if="scope.row.state == 1">finished</span>
                 <span v-else>failed</span>
