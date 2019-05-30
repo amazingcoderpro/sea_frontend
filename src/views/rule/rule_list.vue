@@ -221,6 +221,7 @@ export default {
             }) 
     },
     deteleFun(row){
+      console.log(row)
         var statedata = {
             state :'1'   //(0, '待执行'), (1, '删除'), (2, '过期'), (3, '运行'), (4, '暂停'), (5,"已完成")
         }
@@ -229,10 +230,11 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-                this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
+                this.$axios.put(`/api/v1/rule/state/${row.id}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: '删除成功!'});
+                      this.init();
                     }else{
                       this.$message.error('删除失败!');
                     }
