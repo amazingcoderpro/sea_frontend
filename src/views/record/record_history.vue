@@ -165,7 +165,8 @@ export default {
         })
         .catch(error => {
           this.$message("接口超时!");
-        });      
+        });   
+           
     },
     serchFun(){
         this.init();

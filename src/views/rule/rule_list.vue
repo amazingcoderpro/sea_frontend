@@ -220,6 +220,7 @@ export default {
                   }); 
             }) 
     },
+    
     deteleFun(row){
       console.log(row)
         var statedata = {
