@@ -53,11 +53,6 @@
         }
       };
     },
-    watch: {
-        dialog: function() {
-            console.log(this.form) // 旧的值
-        }
-    },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -86,11 +81,6 @@
   }
 </script>
 <style>
-.account_add .el-form-item__label{
-  width:115px!important;
-}
-.account_add .el-form-item__content{
-  margin-left:115px!important;
-}
-
+.account_add .el-form-item__label{width:115px!important;}
+.account_add .el-form-item__content{margin-left:115px!important;}
 </style>

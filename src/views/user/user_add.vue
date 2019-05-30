@@ -138,28 +138,6 @@ export default {
               .catch(error => {
                 this.$message("接口超时!");
               }); 
-
-
-          // if(this.dialog.state == 1){
-          
-          // }else{
-          //     //添加新数据;
-          //     this.$axios.put(`/api/v1/users/${this.form.id}/`, this.form).then(res => {
-          //       console.log(res)
-          //         if(res.data.code == 1){
-          //             this.dialog.show = false;
-          //             this.$message({message: res.data.msg,type: 'success'});
-          //             this.$parent.init();
-          //           }
-          //           else{
-          //             this.dialog.show = false; 
-          //             this.$message("修改失败!");
-          //           }
-          //     })
-          //     .catch(error => {
-          //       this.$message("接口超时!");
-          //     });           
-          // }
          }
       });
     },

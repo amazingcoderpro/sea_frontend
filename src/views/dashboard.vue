@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard">
-        dashboard
+        <img src="../assets/img/index.jpg" style="width:100%;"/>
     </div>
 </template>
 
@@ -13,5 +13,8 @@ export default {
 </script>
 
 <style>
-
+/* .rightContainer{
+    left: 215px;
+    width: calc(100% - 198px);
+} */
 </style>

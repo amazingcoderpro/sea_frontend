@@ -177,7 +177,7 @@ export default {
         });
     },
     searchInit(){
-        this.$axios.get("/api/v1/rule/pinterest_account_board/")
+        this.$axios.get("/api/v1/rule/pinterest_account_board/?authorized=[0,1]")
         .then(res => {
             if(res.data.code == 1){
               this.pinterestArray = res.data.data;

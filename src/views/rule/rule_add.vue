@@ -200,7 +200,7 @@ import * as base from '../../assets/js/base'
     },
     watch:{
       dialog:function (){
-        this.$axios.get("/api/v1/rule/pinterest_account_board/")
+        this.$axios.get("/api/v1/rule/pinterest_account_board/?authorized=[1]")
         .then(res => {
             if(res.data.code == 1){
               this.pinterestArray = res.data.data;

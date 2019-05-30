@@ -65,8 +65,12 @@
                 <!-- 发布状态 --> 
             <el-table-column prop="state" label="发布记录" align="center" width="150">
               <template  slot-scope="scope">
-                <span v-if="scope.row.state == 1">finished</span>
-                <span v-else>failed</span>
+                <template v-if="scope.row.state == 1">
+                    finished
+                </template>
+                <template v-else>
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >手动发布</el-button>
+                </template>
               </template>
 
             </el-table-column>
@@ -163,10 +167,7 @@ export default {
         .catch(error => {
           this.$message("接口超时!");
         });   
-           
-    },
-    serchFun(){
-        this.init();
+
     },
     handleEdit(row) {
       // 编辑
@@ -176,17 +177,25 @@ export default {
         option: "put"
       };
     },
-    handleDelete(row, index) {
-      // 删除
-      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
-        this.$message("删除成功");
-        this.getProfile();
-      });
-    },
-    PinManagerFun(row) {
-      // 去发布列表页面
-      localStorage.setItem("board_data",JSON.stringify(row) );
-      this.$router.push({path:"/record_manager"});
+    recordHead(row){
+        this.$confirm('是否要手动发布?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              
+                this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
+                  .then(res => {
+                    if(res.data.code == 1){
+                      this.$message({type: 'success',message: '发布成功!'});
+                    }else{
+                      this.$message.error( res.data.msg.detail);
+                    }
+                  })
+                  .catch(error => {
+                     this.$message.error('接口超时!');
+                  }); 
+            }) 
     },
     current_change(val){
         //点击数字时触发
