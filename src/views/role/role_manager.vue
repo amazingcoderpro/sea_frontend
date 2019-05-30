@@ -179,7 +179,7 @@ export default {
   padding: 16px;
   box-sizing: border-box;
 }
-.btnLeft {
+.role_manager .btnLeft {
   float: left;
   display: flex;
 }

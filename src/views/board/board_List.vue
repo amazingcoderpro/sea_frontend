@@ -46,7 +46,7 @@
             <el-table-column prop="operation" align="center" label="Manage Your Board" fixed="right" width="200">
               <template slot-scope="scope">
                   <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">编辑</el-button>
-                  <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
+                  <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -123,12 +123,25 @@ export default {
       };
       this.formData = row;
     },
-    handleDelete(row, index) {
+    deteleFun(row, index) {
       // 删除
-      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
-        this.$message("删除成功");
-        this.getProfile();
-      });
+        this.$confirm('确定要删除?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
+                  .then(res => {
+                    if(res.data.code == 1){
+                      this.$message({type: 'success',message: '删除成功!'});
+                    }else{
+                      this.$message.error('删除失败!');
+                    }
+                  })
+                  .catch(error => {
+                     this.$message.error('接口超时!');
+                  }); 
+            }) 
     },
     PinManagerFun(row) {
       // 去pin列表页面

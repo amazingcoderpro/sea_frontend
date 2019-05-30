@@ -1,7 +1,7 @@
 
 <template>
     <div class="record_manager">
-        <div class="tableTitle"><span>发布列表管理</span></div> 
+        <div class="tableTitle"><span>发布记录管理</span></div> 
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="recordID"  placeholder="请输入SKU"></el-input>

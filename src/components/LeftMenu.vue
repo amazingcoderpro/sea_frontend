@@ -77,8 +77,10 @@ export default {
                 // {"id":14,"menu_name":"PinManager","menu_url":"/pin_manager","parent_id":11,"icon":null,"childs":[]}
               ]},
               {"id":15,"menu_name":"RuleManager","menu_url":"3-1","parent_id":null,"icon":"el-icon-lx-warn",
-                "childs":[{"id":16,"menu_name":"ListManager","menu_url":"/list_manager","parent_id":15,"icon":null,
-                  "childs":[]},{"id":17,"menu_name":"RecordManager","menu_url":"/record_manager","parent_id":15,"icon":null,"childs":[]}]
+                "childs":[{"id":16,"menu_name":"ListManager","menu_url":"/list_manager","parent_id":15,"icon":null,"childs":[]},
+                {"id":17,"menu_name":"RecordManager","menu_url":"/record_manager","parent_id":15,"icon":null,"childs":[]},
+                {"id":17,"menu_name":"RecordHistory","menu_url":"/record_history","parent_id":15,"icon":null,"childs":[]}]
+
               },
               {"id":18,"menu_name":"PersonalCenter","menu_url":"4","parent_id":null,"icon":"el-icon-lx-home",
                 "childs":[

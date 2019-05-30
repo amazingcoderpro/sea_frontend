@@ -11,7 +11,7 @@
                 <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account_uri" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="选择Board">
+            <el-form-item label="选择Board" prop="board">
               <el-select v-model="ruleForm.board" placeholder="请选择选择Board">
                 <template v-for="item in pinterestArray">
                   <template v-if="item.id == ruleForm.pinterest">
@@ -32,6 +32,8 @@
               </el-select>
               <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="开始时间" end-placeholder="结束时间" placeholder="选择时间范围">
               </el-time-picker>
+              <div class="el-form-item__error" :style="'margin-left:154px;'" v-if="timeValState == 2">时间区间必须大于2小时</div>
+
               <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="发布频率">
                 <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
@@ -53,7 +55,7 @@
                     </template>
                     <span class="spanClass">开始时间:{{item.start_time}}</span>
                     <span class="spanClass">结束时间:{{item.end_time}}</span>
-                    <span class="spanClass">发布频率:{{item.interval_time}}</span>
+                    <span class="spanClass">发布频率:{{item.interval_time/3600}}H</span>
                     <el-button size="mini"  type="danger" @click="deletschedule(index)">X</el-button>
                   </li>
                 </ul>
@@ -131,11 +133,12 @@ import * as base from '../../assets/js/base'
           pinterestArray:[],//Pinterest下拉框数据
           boardArray:[],     //board下拉框数据
           productListState:1,      //商品列表错误提示是否展示  1隐藏 2展示
+          timeValState:1,          //时间区间错误提示是否展示  1隐藏 2展示
           scheduleRule:{//时间区间临时数据
               weekday:"0",  
               start_time:"",  
               end_time:"",  
-              interval_time:"1.5", 
+              interval_time:"1800", 
               timeVal:[new Date(2016, 9, 10, 8, 0), new Date(2016, 9, 10, 16, 0)], //El的展示数据
           }, 
           weekArray:[//时间区间的星期几
@@ -148,10 +151,10 @@ import * as base from '../../assets/js/base'
             {"label":"星期天","value":"6"},
           ],
           publishTimeArray:[//发布频率的时间选择
-            {"label":"0.5H","value":"0.5"},
-            {"label":"1H","value":"1"},
-            {"label":"1.5H","value":"1.5"},
-            {"label":"2H","value":"2"},
+            {"label":"0.5H","value":"1800"},
+            {"label":"1H","value":"3600"},
+            {"label":"1.5H","value":"5400"},
+            {"label":"2H","value":"7200"},
           ],
           serchProduct:{
             data1:[new Date(2019, 4, 1, 8, 0), new Date(2019, 8, 1, 16, 0)],   //产品上架时间初始数据
@@ -168,8 +171,8 @@ import * as base from '../../assets/js/base'
             scan:'1',           // 浏览量
           },
           ruleForm: {//最终添加规则需要提交过去的对象
-            pinterest:'无数据',
-            board:'无数据',
+            pinterest:'',
+            board:'',
             ruleTime:'',    //规则有效期的初始数据来源
             start_time:'',           //规则有效期开始时间
             end_time:'',             //规则有效期结束时间
@@ -197,7 +200,7 @@ import * as base from '../../assets/js/base'
     },
     watch:{
       dialog:function (){
-        this.$axios.get("/api/v1/pinterest_account_board/")
+        this.$axios.get("/api/v1/rule/pinterest_account_board/")
         .then(res => {
             if(res.data.code == 1){
               this.pinterestArray = res.data.data;
@@ -257,23 +260,32 @@ import * as base from '../../assets/js/base'
       },
       scheduleRuleFun(){
         // 添加分区需要做的事 把输入框的值，扔进一个scheduleRuleArray 作为最后植入ruleForm.schedule_rule
-        this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],true);// 时间区间 中的时间数据 转成最终数据
-        this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],true);
-        var _thisObj = {
-              weekday:"0",  
-              start_time:"",  
-              end_time:"",  
-              interval_time:"1.5"
-          };
-        _thisObj.weekday = this.scheduleRule.weekday;
-        _thisObj.start_time = this.scheduleRule.start_time;
-        _thisObj.end_time = this.scheduleRule.end_time;
-        _thisObj.interval_time = this.scheduleRule.interval_time;
-        this.ruleForm.schedule_rule.push(_thisObj);
+        var sTime = new Date(this.scheduleRule.timeVal[0]).getTime();
+        var eTime = new Date(this.scheduleRule.timeVal[1]).getTime();
+        var ctime = eTime - sTime;
+        console.log(ctime)
+        if(ctime>=7200000){
+              this.timeValState = 1;
+              //判断选择的时段是否大于两小时 ，不大于两小时不给添加
+              this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],true);// 时间区间 中的时间数据 转成最终数据
+              this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],true);
+              var _thisObj = {
+                    weekday:"0",  
+                    start_time:"",  
+                    end_time:"",  
+                    interval_time:"1800"
+                };
+              _thisObj.weekday = this.scheduleRule.weekday;
+              _thisObj.start_time = this.scheduleRule.start_time;
+              _thisObj.end_time = this.scheduleRule.end_time;
+              _thisObj.interval_time = this.scheduleRule.interval_time;
+              this.ruleForm.schedule_rule.push(_thisObj);
+        }else{
+            this.timeValState = 2;
+        }
       },
       deletschedule(index){
         //删除指定分区
-        console.log(index)
         this.ruleForm.schedule_rule.splice(index,1);
       },
       serchProductFun(formName){
@@ -285,7 +297,7 @@ import * as base from '../../assets/js/base'
               this.serchProduct.end_time =  base.dateFormat(this.serchProduct.data2[1]);
         console.log(this.serchProduct)
 
-              var url = "/api/v1/product_count/?index=1";
+              var url = "/api/v1/rule/search_product/?index=1";
               if(this.serchProduct.data1.length == 2){
                   url += "&publish_begin_time="+this.serchProduct.publish_begin_time;
                   url += "&publish_end_time="+this.serchProduct.publish_end_time;
@@ -335,7 +347,7 @@ import * as base from '../../assets/js/base'
   }
 </script>
 <style>
-.ruleAdd .el-dialog{width:900px;height:600px;overflow:auto;}
+.ruleAdd .el-dialog{width: 70%;height: 86%;overflow: auto;margin: 0;left: 15%;top: -10%;}
 .ruleAdd .el-form-item__label{width:145px!important;}
 .ruleAdd .el-form-item__content{margin-left:145px!important;}
 .ruleAdd .W20{width:20%;margin-right:2%;}

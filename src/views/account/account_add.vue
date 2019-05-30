@@ -3,11 +3,8 @@
     <div class="account_add">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
           <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="Pin唯一标识码" prop="account_uri">
+              <el-form-item label="账号" prop="account_uri">
                 <el-input v-model="form.account_uri"></el-input>
-              </el-form-item>
-              <el-form-item label="账户名称" prop="nickname">
-                <el-input v-model="form.nickname"></el-input>
               </el-form-item>
               <el-form-item label="登陆邮箱" prop="email">
                 <el-input v-model="form.email"></el-input>
@@ -16,9 +13,6 @@
                 <el-radio v-model="form.type" label="0">business</el-radio>
                 <el-radio v-model="form.type" label="1">individual</el-radio>
               </el-form-item>
-              <el-form-item label="账户描述" prop="description">
-                <el-input v-model="form.description"></el-input>
-              </el-form-item>
               <el-form-item label="创建时间" prop="create_time">
                     <el-date-picker
                       v-model="form.create_time"
@@ -26,10 +20,12 @@
                       placeholder="选择日期时间">
                     </el-date-picker>
               </el-form-item>
-
+              <el-form-item label="账户描述">
+                <el-input v-model="form.description"></el-input>
+              </el-form-item>
               <el-form-item>
-              <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
-              <el-button @click="resetForm('form')">重置</el-button>
+                <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+                <el-button @click="resetForm('form')">重置</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -46,13 +42,11 @@
     data() {
       return {
         rules: {
-          account_uri: [{ required: true, message: '请输入PinterestAccount唯一标识码', trigger: 'blur' }],
-          nickname: [{required: true, message: '账户名称不能为空', trigger: 'blur'}],
+          account_uri: [{ required: true, message: '请输入账号', trigger: 'blur' }],
           email:[
             { required: true, message: '请输入邮箱地址', trigger: 'blur' },
             { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
           ],
-          description: [{required: true, message: '账户描述', trigger: 'blur'}],
           create_time: [
             { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
           ]

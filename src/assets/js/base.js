@@ -21,7 +21,6 @@ export function getQueryString(key){
 }
 
 export function getLastTime(string){
-  console.log(string)
   var yearArray = string.split("T");
   var hourArray = yearArray[1].split(".");
   var str = yearArray[0]+" "+hourArray[0];

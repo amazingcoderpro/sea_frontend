@@ -10,9 +10,13 @@
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column type="selection" align="center" width="55" ></el-table-column>
-            <el-table-column label="头像" align="center" width="100"></el-table-column>
             <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="账户信息" align="center"  width="120">
+            <el-table-column label="头像" align="center" width="100">
+              <template slot-scope="scope">
+                <img src="../../assets/img/none.png" min-width="70" height="70" />
+              </template> 
+            </el-table-column>
+            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="账户信息" align="center"  width="350">
               <template slot-scope="scope"> 
                 用户名:{{scope.row.account_name}}<br/>
                 登陆邮箱:{{scope.row.account_email}}<br/> 
@@ -23,14 +27,14 @@
             <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" align="center" label="Pin数据"  width="120">
               <template slot-scope="scope"> 总数:{{scope.row.pins}}<br/>今日新增:{{scope.row.pins_increment}}</template>
             </el-table-column>
-            <el-table-column  prop="repin,repin_increment" label="RePin数据" align="center"  width="120">
-              <template slot-scope="scope"> 总数:{{scope.row.repin}}<br/>今日新增:{{scope.row.repin_increment}}</template>
+            <el-table-column  prop="repin,repin_increment" label="Save数据" align="center"  width="120">
+              <template slot-scope="scope"> 总数:{{scope.row.saves}}<br/>今日新增:{{scope.row.saves_increment}}</template>
             </el-table-column>
             <el-table-column  prop="like,like_increment" label="Like数据" align="center"  width="120">
-              <template slot-scope="scope"> 总数:{{scope.row.like}}<br/>今日新增:{{scope.row.like_increment}}</template>
+              <template slot-scope="scope"> 总数:{{scope.row.likes}}<br/>今日新增:{{scope.row.likes_increment}}</template>
             </el-table-column>
             <el-table-column  prop="comment,comment_increment" label="Comment数据" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.comment}}<br/>今日新增:{{scope.row.comment_increment}}</template>
+              <template slot-scope="scope"> 总数:{{scope.row.comments}}<br/>今日新增:{{scope.row.comments_increment}}</template>
             </el-table-column>
             <el-table-column prop="update_person" label="详细数据报告" align="center" width="150">
                <template slot-scope="scope">
@@ -38,7 +42,7 @@
               </template>
              
             </el-table-column>
-            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="更新情况" align="center"  width="150">
+            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="更新情况" align="center"  width="300">
               <template slot-scope="scope">
                  更新人:{{scope.row.update_person}}<br/>
                  账户最新状态:<span v-if='scope.row.account_state=0'>normal</span><span v-else>forbidden</span><br/>
@@ -60,8 +64,9 @@
             </el-table-column>
             <el-table-column prop="account_authorized" align="center" label="授权" width="150">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.account_authorized == 1">已授权</el-button>
-                <el-button v-else icon="edit"  type="primary"  size="small" @click="AutFun(scope.row)">授权</el-button>
+                <!-- <el-button v-if="scope.row.account_authorized == 1"  type="primary" size="small" disabled="">已授权</el-button> -->
+                <span v-if="scope.row.account_authorized == 1">已授权</span>
+                <el-button v-else type="primary"  size="small" @click="AutFun(scope.row)">授权</el-button>
               </template>
             </el-table-column>
 
@@ -125,8 +130,23 @@ export default {
     init() {
       // 获取表格数据
       this.$axios(`/api/v1/account_list/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
-        this.tableData = res.data.data.results;
-        this.total = res.data.data.count;
+          if(res.data.code == 1){
+            this.tableData = res.data.data.results;
+            this.total = res.data.data.count;
+          }else{
+              this.$message({
+                message: "code 异常!",
+                type: 'warning',
+                center: true
+              });
+          }
+      })
+      .catch(error => {
+          this.$message({
+            message: "接口超时!",
+            type: 'warning',
+            center: true
+          });
       });
     },
     addFun() {
@@ -183,7 +203,7 @@ export default {
     },
     ListManagerFun(row) {
       // 去规则列表页面
-      this.$router.push({path:"/list_manager", query: { index: row.index }});
+      this.$router.push({path:"/list_manager", query: { account_id: row.index }});
     },
     BoardManagerFun(row) {
       // 去board_manager页面

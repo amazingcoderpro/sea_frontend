@@ -17,6 +17,7 @@ import BoardList from './views/board/board_List'
 import PinManager from './views/pin/pin_manager'
 import RuleList from './views/rule/rule_list'
 import RecordManager from './views/record/record_manager'
+import RecordHistory from './views/record/record_history'
 import UserManager from './views/user/user_manager'
 import RoleManager from './views/role/role_manager'
 import StoreManager from './views/store/store_manager'
@@ -49,6 +50,7 @@ const router = new Router({
         { path: '/pin_manager', name: 'pin_manager', component: PinManager },
         { path: '/list_manager', name: 'rule_list', component: RuleList },
         { path: '/record_manager', name: 'record_manager', component: RecordManager },
+        { path: '/record_history', name: 'record_history', component: RecordHistory },
         { path: '/user_manager', name: 'user_manager', component: UserManager },
         { path: '/role_manager', name: 'role_manager', component: RoleManager },
         { path: '/store_manager', name: 'store_manager', component: StoreManager },
