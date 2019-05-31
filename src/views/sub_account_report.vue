@@ -34,19 +34,19 @@
             <el-form-item label="Filter" prop="dep">
                 <!-- Pinterest -->
                 <el-select v-model="reportData" placeholder="Pinterest Account 1" class="Filter_week">
-                   <el-option v-for="item in formAccount" :key="item.id" :label="item.name" :value="item.name"></el-option>
+                   <el-option v-for="item in formAccount" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
                 </el-select>
                 <!-- Boards -->
                   <el-select v-model="reportBoards" placeholder="All Boards" class="Filter_week">
                     <el-option
                     v-for="item in formBoards"
-                    :key="item.id"
+                    :key="item.name"
                     :label="item.name"
-                    :value="item.name">
+                    :value="item.id">
                     </el-option>
                   </el-select>
                 <!-- All Pins -->
-                   <el-select v-model="reportPins" placeholder="All Pins" class="Filter_week">
+                  <el-select v-model="reportPins" placeholder="All Pins" class="Filter_week">
                       <el-option
                       v-for="item in formPins"
                       :key="item.id"
