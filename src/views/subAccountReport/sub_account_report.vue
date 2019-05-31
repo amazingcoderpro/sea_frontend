@@ -7,7 +7,7 @@
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" class="Filter_week W10" @change="getBodFun">
                    <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
                 </el-select>
-                <el-select v-model="searchData.board_id" placeholder="All Boards" class="Filter_week W10">
+                <el-select v-model="searchData.board_id" placeholder="All Boards" class="Filter_week W10" @change="getPinFun">
                         <el-option
                         v-for="item in searchData.BoardArray"
                         :key="item.id"
