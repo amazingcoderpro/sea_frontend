@@ -40,11 +40,11 @@
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  align="center"  prop="subaccount_id" label="账户ID"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="account_name" label="账户名称"  width="100"></el-table-column>
+
+            <el-table-column  align="center"  prop="board_id" label="board ID"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="board_name" label="board 名称"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="boards" label="Board数"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="account_followings" label="Following数"  width="200"></el-table-column>
-            <el-table-column  align="center"  prop="account_followers" label="Follower数"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="board_followers" label="Follower数"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pins" label="Pin数"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_saves" label="Saves数"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_likes" label="Like"  width="100"></el-table-column>
