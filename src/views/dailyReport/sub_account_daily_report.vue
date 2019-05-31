@@ -238,12 +238,25 @@ export default {
       })
     },
     dataSelect(){
-      
-      var Yesterday =base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day") ;
-      var Yesterday_star = new Date(Yesterday + " 00:00:00");
-      var Yesterday_end = new Date(Yesterday + " 23:59:59");
-      this.searchData.timeArray = [Yesterday_star,Yesterday_end]
-
+      console.log(this.searchData.dataType)
+      if(this.searchData.dataType == 1){
+          var Yesterday = base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day");
+          var Yesterday_star = new Date(Yesterday + " 00:00:00");
+          var Yesterday_end = new Date(Yesterday + " 23:59:59");
+          this.searchData.timeArray = [Yesterday_star,Yesterday_end]
+      }
+      else if(this.searchData.dataType == 2){
+          var Today = base.dateFormat(new Date().getTime(),"day");
+          var Today_star = new Date(Today + " 00:00:00");
+          var Today_end = new Date(Today + " 23:59:59");
+          this.searchData.timeArray = [Today_star,Today_end]
+      }
+        else if(this.searchData.dataType == 3){
+          var Today = base.dateFormat(new Date(new Date().getTime()-1000*108*60*60),"day");
+          var Today_star = new Date(Today + " 00:00:00");
+          var Today_end = new Date(Today + " 23:59:59");
+          this.searchData.timeArray = [Today_star,Today]
+        }
     },
     initChart() {
       this.chart = echarts.init(this.$refs.myEchart);
