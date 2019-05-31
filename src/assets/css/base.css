@@ -6,9 +6,22 @@ body,
 .FL{float: left!important;}
 .FR{float: right!important;}
 
+
+.W10{width:10%!important;margin-right:2%!important;}
+.W20{width:20%!important;margin-right:2%!important;}
+.W36{width:36%!important;margin-right:2%!important;}
+.W40{width:40%!important;margin-right:2%!important;}
+.W54{width:54%!important;margin-right:2%!important;}
+.W60{width:60%!important;margin-right:2%!important;}
+
+
+
 .tableTitle{margin-bottom: 10px;}
 .tableTitle span{background:#006699;width:175px;color:#fff;display:inline-block;padding:10px 40px 10px 10px;font-size:20px;font-weight:600;-webkit-box-shadow:0 0 5px #006699;box-shadow:0 0 5px #006699;}
 .el-table thead  tr th{background: #199ED8;color:#fff;border-color: #ccc;}
 .el-table tbody  tr td{border-color: #ccc;}
 .el-table--border{border-color: #ccc!important;border-bottom: 1px solid #ccc!important;}
 .el-loading-mask{z-index: 3000!important;}
+
+
+

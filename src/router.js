@@ -7,9 +7,6 @@ import Index from './views/index'
 import AutState from './views/aut_state'
 import Dashboard from './views/dashboard'
 import BoardsDailyReport from './views/boards_daily_report'
-import SubAccountReport from './views/sub_account_report'
-import BoardReport from './views/board_report'
-import PinsReport from './views/pins_peport'
 import AccountList from './views/account/account_List'
 import BoardList from './views/board/board_List'
 import PinManager from './views/pin/pin_manager'
@@ -23,6 +20,10 @@ import StoreManager from './views/store/store_manager'
 
 import SubAccountDailyReport from './views/dailyReport/sub_account_daily_report'
 import PinsDailyReport from './views/dailyReport/pins_daily_report'
+
+import SubAccountReport from './views/subAccountReport/sub_account_report'
+import BoardReport from './views/subAccountReport/board_report'
+import PinsReport from './views/subAccountReport/pins_report'
 
 
 
