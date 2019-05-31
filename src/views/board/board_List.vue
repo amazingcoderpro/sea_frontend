@@ -123,15 +123,18 @@ export default {
     },
     deteleFun(row, index) {
       // 删除
+      console.log(row)
         this.$confirm('确定要删除?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-                this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
+                this.$axios.delete(`/api/v1/board_manage/${row.board_id}/`)
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: '删除成功!'});
+                      this.dialog.show = false;
+                      this.$parent.init();
                     }else{
                       this.$message.error('删除失败!');
                     }

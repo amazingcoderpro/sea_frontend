@@ -38,8 +38,8 @@
             <el-table-column prop="under_account_id" label="所属账户ID" align="center" width="150"></el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Pin" fixed="right" width="200">
               <template slot-scope="scope">
-                  <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                  <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
+                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">编辑</el-button>
+                  <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -49,14 +49,14 @@
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
         <!-- 展示请求权限的弹窗 -->
-        <!-- <DialogFound :dialog='dialog'  ref="dailog" ></DialogFound> -->
+        <DialogFound :dialog='dialog' :editData='editData'  ref="dailog" ></DialogFound>
     </div>
 
 </template>
 
 <script>
 
-// import DialogFound from "./dialog/board_manager_dialog";
+import DialogFound from "./pin_edit";
 
 export default {
   name: "pin_manager",
@@ -67,6 +67,7 @@ export default {
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面
       tableHeight:"100",
+      editData:{},
       pinIDInput:'',  
       pinID:'',  
       account_data:{},
@@ -87,7 +88,7 @@ export default {
       }, 50);
   },
   components: {
-    //  DialogFound
+      DialogFound
   },
   created() {
     this.init();
@@ -107,20 +108,45 @@ export default {
             this.total = res.data.data.count;
         });      
     },
-    handleEdit(row) {
+    editFun(row) {
+      console.log(row)
       // 编辑
+      this.editData = {
+        pin_id:row.pin_id,
+        pin_uri:row.pin_uri,
+        board:this.board_data.board_id,
+        url:row.pin_url,
+        note:row.pin_note
+      }
+
       this.dialog = {
         show: true,
         title: "修改资金信息",
         option: "put"
       };
     },
-    handleDelete(row, index) {
+    deteleFun(row, index) {
       // 删除
-      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
-        this.$message("删除成功");
-        this.getProfile();
-      });
+      console.log(row)
+        this.$confirm('确定要删除?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                this.$axios.DELETE(`/api/v1/pin_manage/${row.pin_id}/`)
+                  .then(res => {
+                    if(res.data.code == 1){
+                      this.$message({type: 'success',message: '删除成功!'});
+                      this.dialog.show = false;
+                      this.$parent.init();
+                    }else{
+                      this.$message.error('删除失败!');
+                    }
+                  })
+                  .catch(error => {
+                     this.$message.error('接口超时!');
+                  }); 
+            }) 
     },
     current_change(val){
         //点击数字时触发

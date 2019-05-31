@@ -83,7 +83,7 @@ export default {
                     router.push('/dashboard');
                 }else{
                   this.$message({
-                    message: res.data.msg.detail,
+                    message: res.data.msg,
                     type: 'warning',
                     center: true
                   });
