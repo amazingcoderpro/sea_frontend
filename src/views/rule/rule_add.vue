@@ -267,8 +267,8 @@ import * as base from '../../assets/js/base'
         if(ctime>=7200000){
               this.timeValState = 1;
               //判断选择的时段是否大于两小时 ，不大于两小时不给添加
-              this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],true);// 时间区间 中的时间数据 转成最终数据
-              this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],true);
+              this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],"hour");// 时间区间 中的时间数据 转成最终数据
+              this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],"hour");
               var _thisObj = {
                     weekday:"0",  
                     start_time:"",  

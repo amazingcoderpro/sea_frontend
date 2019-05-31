@@ -1,4 +1,4 @@
-export function dateFormat(timeDate,Hour){
+export function dateFormat(timeDate,type){
   function add0(m){return m<10?'0'+m:m }
   var time = new Date(timeDate);
   var y = time.getFullYear();
@@ -7,8 +7,10 @@ export function dateFormat(timeDate,Hour){
   var h = time.getHours();
   var mm = time.getMinutes();
   var s = time.getSeconds();
-  if(Hour){
+  if(type == 'hour'){
     return add0(h)+':'+add0(mm)+':'+add0(s); 
+  }else if( type == 'day'){
+    return y+'-'+add0(m)+'-'+add0(d)
   }else{
     return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
   }

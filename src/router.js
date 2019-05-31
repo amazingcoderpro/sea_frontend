@@ -6,9 +6,7 @@ import ShopfyRegist from './views/shopfy_regist.vue'
 import Index from './views/index'
 import AutState from './views/aut_state'
 import Dashboard from './views/dashboard'
-import SubAccountDailyReport from './views/sub_account_daily_report'
 import BoardsDailyReport from './views/boards_daily_report'
-import PinsDailyReport from './views/sub_account_daily_report'
 import SubAccountReport from './views/sub_account_report'
 import BoardReport from './views/board_report'
 import PinsReport from './views/pins_peport'
@@ -21,6 +19,11 @@ import RecordHistory from './views/record/record_history'
 import UserManager from './views/user/user_manager'
 import RoleManager from './views/role/role_manager'
 import StoreManager from './views/store/store_manager'
+
+
+import SubAccountDailyReport from './views/dailyReport/sub_account_daily_report'
+import PinsDailyReport from './views/dailyReport/pins_daily_report'
+
 
 
 Vue.use(Router)
