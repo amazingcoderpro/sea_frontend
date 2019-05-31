@@ -32,10 +32,10 @@
                 </template>
             </el-table-column>
                 <!-- Pin描述 -->
-            <el-table-column prop="pin.note"  label="Pin描述" align="center" width="110">
+            <el-table-column prop="board.description"  label="Pin描述" align="center" width="110">
             </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="pin.url" label="Pin URL" align="center" width="110"></el-table-column>
+            <el-table-column prop="product.url" label="Pin URL" align="center" width="110"></el-table-column>
                 <!-- 产品浏览量 -->
             <el-table-column  class="parentNodeColumn" prop="rule.scan" label="产品浏览量" align="center"  width="120">
               <template slot-scope="scope">

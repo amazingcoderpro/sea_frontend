@@ -9,7 +9,7 @@
         <el-form :inline="true">
             <!-- 日期下拉框 -->
           <el-form-item label="Date Range">
-            <el-select v-model="searchData.dataType" placeholder="Yesterday" class="week_name" >
+            <el-select v-model="searchData.dataType" placeholder="Yesterday" class="week_name" @change="dataSelect">
                 <el-option
                 v-for="item in dataArray"
                 :key="item.value"
@@ -29,32 +29,22 @@
                >
             </el-date-picker>
           </div>
-                <!-- Filter -->
+          
           <div class="Filter">
             <el-form-item label="Filter" prop="dep">
                 <!-- Pinterest -->
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" class="Filter_week" @change="getBodFun">
-                   <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
+                    <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
                 </el-select>
                 <!-- Boards -->
-                <el-select v-model="searchData.board_id" placeholder="All Boards" class="Filter_week">
-                        <el-option
-                        v-for="item in searchData.BoardArray"
-                        :key="item.id"
-                        :label="item.name "
-                        :value="item.id ">
-                        </el-option>
+                <el-select v-model="searchData.board_id" placeholder="All Boards" class="Filter_week" @change="getPinFun">
+                    <el-option  v-for="item in searchData.BoardArray" :key="item.id" :label="item.name" :value="item.id"></el-option>    
                 </el-select>
                 <!-- All Pins -->
                 <el-select v-model="searchData.pin_id" placeholder="All Pins" class="Filter_week">
-                        <el-option
-                        v-for="item in searchData.PinsArray"
-                        :key="item.id"
-                        :label="item.pin_uri"
-                        :value="item.id">
-                        </el-option>
+                    <el-option v-for="item in searchData.PinsArray" :key="item.id" :label="item.pin_uri" :value="item.id"></el-option>
                 </el-select>
-
+                <!-- 搜索框 -->
                 <div class="input_id">
                   <el-input v-model="searchData.search" @keyup.enter.native="init()"></el-input>
                   <el-button type="primary" size="small" icon="view" @click="init()">查询</el-button>
@@ -62,8 +52,9 @@
             </el-form-item>
           </div>
         </el-form>  
-
+                <!-- echarts图表 -->
         <div style="width:1600px;height:400px;" ref="myEchart"></div> 
+                <!-- 选择按钮 -->
         <div class="menu">
             <el-button type="primary" size="small" icon="view" @click="tableInit(0)">Revenue</el-button>
             <el-button type="primary" size="small" icon="view" @click="tableInit(1)">Sales</el-button>
@@ -73,45 +64,25 @@
             <el-button type="primary" size="small" icon="view" @click="tableInit(5)">Likes</el-button>
             <el-button type="primary" size="small" icon="view" @click="tableInit(6)">Comments</el-button>
         </div>
-        <!-- <div class="table_right">
+               <!-- 日报表格 --> 
+        <div class="table_right">
             <el-table border ref="topictable" :data="bigReport">
-              <el-table-column type="index" label="账户ID" align="center"  width="100" ></el-table-column>
-              <el-table-column type="index"  label="账户名称" align="center"  width="80"></el-table-column>
-              <el-table-column prop="product.sku" label="Board数" align="center" width="100"></el-table-column>
-              <el-table-column prop="thumbnail" label="Following数" align="center" width="110">
-                  <template slot-scope="scope"> 
-                      <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
-                  </template>
-              </el-table-column>
-              <el-table-column prop="pin.note"  label="Pin描述" align="center" width="110">
-              </el-table-column>
-              <el-table-column prop="pin.url" label="Pin数" align="center" width="110"></el-table-column>
-              <el-table-column  class="parentNodeColumn" prop="rule.scan" label="Repin数" align="center"  width="120">
-                <template slot-scope="scope">
-                  {{scope.row.rule.scan_sign}} == {{scope.row.rule.scan}}
-                </template>
-              </el-table-column>
-              <el-table-column  class="parentNodeColumn" prop="sale" label="产品销量" align="center"  width="120">
-                <template slot-scope="scope">
-                  {{scope.row.rule.sale_sign}} == {{scope.row.rule.sale}}
-                </template>
-              </el-table-column>
-              <el-table-column  class="parentNodeColumn" prop="product.price" label="价格" align="center"  width="120">
-              </el-table-column>
-              <el-table-column prop="product.tag" label="所属规则标签" align="center" width="120">
-                  <template slot-scope="scope"> {{scope.row.tag}}</template>
-              </el-table-column>
-              <el-table-column prop="board.id" label="所属Board ID" align="center" width="120"></el-table-column>
-              <el-table-column prop="board.pinterest_account" label="所属账户ID" align="center" width="120"></el-table-column>
-              <el-table-column prop="state" label="发布记录" align="center" width="150">
-                <template  slot-scope="scope">
-                  <span v-if="scope.row.state == 1">finished</span>
-                  <span v-else>failed</span>
-                </template>
-              </el-table-column>
-              <el-table-column prop="remark" align="center" label="备注" fixed="right" width="180"></el-table-column>
+              <el-table-column prop="date" label="Data" align="center"  width="110" ></el-table-column>
+              <el-table-column prop="boards" label="Board数" align="center"  width="120"></el-table-column>
+              <el-table-column prop="account_followings" label="Following数" align="center" width="120"></el-table-column>
+              <el-table-column prop="account_followers" label="Follower数" align="center" width="120"></el-table-column>
+              <el-table-column prop="pins" label="Pin数" align="center" width="120"></el-table-column>
+              <el-table-column prop="pin_comments" label="Repin数" align="center" width="120"></el-table-column>
+              <el-table-column prop="pin_likes" label="Like" align="center"  width="120"></el-table-column>
+              <el-table-column prop="pin_comments" label="Comments" align="center"  width="120"></el-table-column>
+              <el-table-column prop="product_visitors" label="Visitors" align="center"  width="120"></el-table-column>
+              <el-table-column prop="product_new_visitors" label="New Vistors" align="center" width="120"></el-table-column>
+              <el-table-column prop="account_views" label="View" align="center" width="120"></el-table-column>
+              <el-table-column prop="product_clicks" label="Clicks" align="center" width="120"></el-table-column>
+              <el-table-column prop="product_sales" label="Sales" align="center" width="120"> </el-table-column>   
+              <el-table-column prop="product_revenue" align="center" label="Revenue" fixed="right" width="120"></el-table-column>
             </el-table>
-        </div> -->
+        </div>
   </div>
 </template>
 
@@ -266,6 +237,14 @@ export default {
           this.$message("接口超时!");
       })
     },
+    dataSelect(){
+      
+      var Yesterday =base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day") ;
+      var Yesterday_star = new Date(Yesterday + " 00:00:00");
+      var Yesterday_end = new Date(Yesterday + " 23:59:59");
+      this.searchData.timeArray = [Yesterday_star,Yesterday_end]
+
+    },
     initChart() {
       this.chart = echarts.init(this.$refs.myEchart);
       // 把配置和数据放这里
@@ -343,7 +322,8 @@ export default {
   padding-top: 7px;
   cursor: pointer;
 }
-#main{
-  background: #ccc;
+.table_right{
+  margin-top: 50px;
 }
+
 </style>
