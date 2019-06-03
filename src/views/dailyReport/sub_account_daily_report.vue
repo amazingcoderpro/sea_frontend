@@ -241,32 +241,38 @@ export default {
       })
     },
     dataSelect(){
-      console.log(this.searchData.dataType)
-      if(this.searchData.dataType == 1){
-          var Yesterday = base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day");
-          var Yesterday_star = new Date(Yesterday + " 00:00:00");
-          var Yesterday_end = new Date(Yesterday + " 23:59:59");
-          this.searchData.timeArray = [Yesterday_star,Yesterday_end]
-      }
-      else if(this.searchData.dataType == 2){
-          var Today = base.dateFormat(new Date().getTime(),"day");
-          var Today_star = new Date(Today + " 00:00:00");
-          var Today = base.dateFormat(new Date().getTime());
-          this.searchData.timeArray = [Today_star,Today]
-      }
-      else if(this.searchData.dataType == 3){
-          var Today = base.dateFormat(new Date(new Date().getTime()-1000*168*60*60),"day");
-          var Today_star = new Date(Today + " 00:00:00");
-          var Today = base.dateFormat(new Date().getTime());
-          this.searchData.timeArray = [Today_star,Today]
-      }
-      else if(this.searchData.dataType == 4){
-          var getMonth = start.setTime(new Date(new Date().getFullYear(),));
-          var getMonth_star = new Date(getMonth);
-          var getMonth = start.setTime(new Date().getMonth());
-          this.searchData.timeArray = [getMonth_star,getMonth]
-      } 
-    },
+            if(this.searchData.dataType == 0){
+                this.disabledType = 0;
+            }else{
+                this.disabledType = 1;
+                var _star;
+                var _end;
+                if(this.searchData.dataType == 1){
+                    // 昨天
+                     _star = new Date(base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+                }else if(this.searchData.dataType == 2){
+                    // 今天
+                     _star = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                }else if(this.searchData.dataType == 3){
+                    // 近七天
+                     _star = new Date(base.dateFormat(new Date(new Date().getTime()-7*1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+                }else if(this.searchData.dataType == 4){
+                    // 本月
+                    var time = new Date();
+                     _star = new Date(base.dateFormat(time.getFullYear()+"-"+ (time.getMonth()+1) +"-1"+ " 00:00:00"));
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                }else if(this.searchData.dataType == 5){
+                    //本年度
+                    var time = new Date();
+                     _star = new Date(base.dateFormat(time.getFullYear()+"-1-1"+ " 00:00:00"));
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                }
+                this.searchData.timeArray = [_star,_end]
+            }
+        },
     initChart() {
       this.chart = echarts.init(this.$refs.myEchart);
       // 把配置和数据放这里

@@ -66,8 +66,8 @@ export default {
       // items: JSON.parse(window.localStorage.getItem('menu_tree'))
 
       items:[
-              {"id":1,"menu_name":"Dashboard","menu_url":"/dashboard","parent_id":null,"icon":"el-icon-lx-home","childs":[]},
-              {"id":2,"menu_name":"Report","menu_url":"1","parent_id":null,"icon":"el-icon-lx-calendar",
+              {"id":1,"menu_name":"Dashboard","menu_url":"/dashboard","parent_id":null,"icon":"iconfont icon-zhuye1","childs":[]},
+              {"id":2,"menu_name":"Report","menu_url":"1","parent_id":null,"icon":"iconfont icon-report1",
                 "childs":[
                   {"id":3,"menu_name":"DailyReport","menu_url":"2","parent_id":2,"icon":null,"childs":[
                     {"id":4,"menu_name":"SubAccountDailyReport","menu_url":"/sub_account_daily_report","parent_id":3,"icon":null,"childs":[]},
@@ -78,19 +78,19 @@ export default {
                     {"id":9,"menu_name":"BoardReport","menu_url":"/board_report","parent_id":7,"icon":null,"childs":[]},
                     {"id":10,"menu_name":"PinsReport","menu_url":"/pins_peport","parent_id":7,"icon":null,"childs":[]}]}
               ]},
-              {"id":11,"menu_name":"AccountManager","menu_url":"3","parent_id":null,"icon":"el-icon-lx-warn",
+              {"id":11,"menu_name":"AccountManager","menu_url":"3","parent_id":null,"icon":"iconfont icon-report",
               "childs":[
                 {"id":12,"menu_name":"AccountManager","menu_url":"/account_manager","parent_id":11,"icon":null,"childs":[]},
                 // {"id":13,"menu_name":"BoardManager","menu_url":"/board_manager","parent_id":11,"icon":null,"childs":[]},
                 // {"id":14,"menu_name":"PinManager","menu_url":"/pin_manager","parent_id":11,"icon":null,"childs":[]}
               ]},
-              {"id":15,"menu_name":"RuleManager","menu_url":"3-1","parent_id":null,"icon":"el-icon-lx-warn",
+              {"id":15,"menu_name":"RuleManager","menu_url":"3-1","parent_id":null,"icon":"iconfont icon-touruguize",
                 "childs":[{"id":16,"menu_name":"ListManager","menu_url":"/list_manager","parent_id":15,"icon":null,"childs":[]},
                 {"id":17,"menu_name":"RecordManager","menu_url":"/record_manager","parent_id":15,"icon":null,"childs":[]},
                 {"id":17,"menu_name":"RecordHistory","menu_url":"/record_history","parent_id":15,"icon":null,"childs":[]}]
 
               },
-              {"id":18,"menu_name":"PersonalCenter","menu_url":"4","parent_id":null,"icon":"el-icon-lx-home",
+              {"id":18,"menu_name":"PersonalCenter","menu_url":"4","parent_id":null,"icon":"iconfont icon-icon_pc",
                 "childs":[
                   {"id":19,"menu_name":"PermissionManager","menu_url":"4-1","parent_id":18,"icon":null,"childs":[
                     {"id":20,"menu_name":"UserManager","menu_url":"/user_manager","parent_id":19,"icon":null,"childs":[]},
@@ -137,5 +137,9 @@ export default {
 }
 a {
   text-decoration: none;
+}
+.iconfont{
+  padding-right: 10px;
+  font-size: 25px;
 }
 </style>
