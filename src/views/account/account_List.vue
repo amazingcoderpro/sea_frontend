@@ -198,7 +198,7 @@ export default {
     },
     AutFun(row) {
       // 获取授权
-      this.$axios.post(`/api/v1/pinterest_account_auth/${row.pinterest_account_id}/`).then(res => {
+      this.$axios.post(`/api/v1/auth/pinterest_account/${row.pinterest_account_id}/`).then(res => {
           if(res.data.code == 1){
             window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
           }else{
