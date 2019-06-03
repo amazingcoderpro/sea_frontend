@@ -1,27 +1,32 @@
 <template>
     <div class="personal">
         <section class="form_container">
-                  <span class="title">Profile Settings</span>
-                  <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
-                    
-                    <el-form-item label="First name" prop="surname">
-                      <el-input v-model="loginUser.username" placeholder=""></el-input>
+                  <div class="tableTitle"><span>Profile Settings</span></div>
+                  <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="60px" class="personalForm">
+                    <!-- 名 -->
+                    <el-form-item label="FirstName" prop="surname">
+                      <el-input v-model="personalUser.surname" placeholder="Daisy"></el-input>
                     </el-form-item>
-
-                    <el-form-item label="Last name" prop="name">
-                      <el-input v-model="loginUser.username" placeholder=""></el-input>
+                    <!-- 姓 -->
+                    <el-form-item label="LastName" prop="name">
+                      <el-input v-model="personalUser.name" placeholder="zhang"></el-input>
                     </el-form-item>
-
-                    <el-form-item label="Email Address" prop="emailstr">
-                      <el-input v-model="registUser.emailstr" disabled placeholder="请输入email"></el-input>
+                    <!-- 邮箱 -->
+                    <el-form-item label="EmailAddress" prop="emailstr">
+                      <el-input v-model="personalUser.emailstr" placeholder="请输入email"></el-input>
                     </el-form-item>
-
+                    <!-- 密码 -->
                     <el-form-item label="Psaaword" prop="password">
-                      <el-input type="password" v-model="loginUser.password" placeholder="请输入密码"></el-input>
+                      <el-input type="password" v-model="personalUser.password" placeholder="请输入新密码"></el-input> 
+                      <span class="newpass">Change Password</span>
                     </el-form-item>
-
+                    <!-- 确认密码 -->
+                    <el-form-item label="confirm" prop="password2">
+                      <el-input type="password" v-model="personalUser.password2" placeholder="请确认密码"></el-input> 
+                    </el-form-item>
+                    <!-- 点击 -->
                     <el-form-item>
-                      <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')" >Update</el-button>
+                      <el-button type="primary" class="submit_btn" @click="submitForm('personalForm')" >Update</el-button>
                     </el-form-item>
                   </el-form>
         </section>
@@ -33,11 +38,18 @@ import * as base from '../assets/js/base'
 import router from '../router'
 import Menufilter from '../components/menufilter.js'
 export default {
-    name: "login",
+    name: "personal",
     components:{},
     data(){    
+     var validatePass2 = (rule, value, callback) => {
+        if (value !== this.personalUser.password) {
+            callback(new Error("两次输入密码不一致!"));
+        } else {
+            callback();
+        }
+    };
       return {
-        loginUser:{
+        personalUser:{
           surname:"",
           name:"",
           emailstr:"",
@@ -46,7 +58,7 @@ export default {
         rules: {
           surname: [
             { required: true, message: "用户名不能为空", trigger: "change" },
-            { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur" }  
+            { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur",left:"100px"}  
         ],
           name: [
             { required: true, message: "用户名不能为空", trigger: "change" },
@@ -59,10 +71,20 @@ export default {
             { required: true, message: "密码不能为空", trigger: "blur" },
             { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
         ],
+          password2: [
+          { required: true, message: "确认密码不能为空", trigger: "blur" },
+          {
+            min: 6,
+            max: 30,
+            message: "长度在 6 到 30 个字符",
+            trigger: "blur"
+          },
+          { validator: validatePass2, trigger: "blur" }
+         ]
         }        
       }
     },
-    created(){            // 回车事件
+    created(){   // 回车事件     
         var _self = this;
         document.onkeydown = function(e){
           if(window.event == undefined){
@@ -71,49 +93,65 @@ export default {
             var key = window.event.keyCode;
           }
           if(key == 13){
-            _self.submitForm('loginForm');
+            _self.submitForm('personalForm');
           }
         }
       },
     methods: {
-      submitForm(formName) {
-        this.loginUser.code = base.getQueryString("code") == null?'':base.getQueryString("code");
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$axios.post('/api/v1/account/login/',this.loginUser)
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$axios
+            .put(`/api/v1/account/set_password/${this.registUser.id}/`, this.registUser)
             .then(res => {
-                document.onkeydown = undefined;
-                console.log(res.data)
-                if(res.data.code == 1){
-                    const token=res.data.data.token;
-                    localStorage.setItem("eleToken", token);
-                    localStorage.setItem("user", JSON.stringify( res.data.data.user ));
-                    this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
-                    this.$store.dispatch("setUser", res.data.data.user)
-                    router.push('/dashboard');
-                }else{
-                  this.$message({
-                    message: res.data.msg,
-                    type: 'warning',
-                    center: true
-                  });
-                }
-              });
-          }
-        });
-      },
-      isEmpty(value) {
-        return (
-          value === undefined ||
-          value === null || 
-          (typeof value === "object" && Object.keys(value).length === 0) ||
-          (typeof value === "string" && value.trim().length === 0)
-        );
-      }
+              if (res.data.code == 1) {
+                  router.push("/login");
+              } else {
+                this.$message("接口超时!");
+              }
+            })
+            .catch(error => {
+              this.$message("接口超时!");
+            });
+        }
+      });
     }
+  }
 };
 </script>
 
 <style scoped>
-
+.personal{
+  width: 100%;
+  height: 100%;
+}
+.form_container {
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+}
+.el-input{
+    width: 500px;
+}
+.tableTitle{
+    margin-bottom:50px;
+}
+.el-input{
+    margin-left: 100px;
+}
+.submit_btn{
+    background: #0f8fcf;
+    color: #fff;
+    padding: 15px 55px;
+    font-size: 16px;
+    margin-left: -50px;
+    margin-top: 10px;
+}
+.newpass{
+    padding-left: 17px;
+    color: #0f8fcf;
+}
+.el-form-item__error{
+    left: 100px!important;
+}
 </style>

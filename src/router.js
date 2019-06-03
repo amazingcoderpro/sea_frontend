@@ -4,6 +4,8 @@ import Notfount from './components/404.vue'
 import Login from './views/login.vue'
 import ShopfyRegist from './views/shopfy_regist.vue'
 import Personal from './views/personal.vue'
+import StoreSettings from './views/storeSettings.vue'
+
 import Index from './views/index'
 import AutState from './views/aut_state'
 import Dashboard from './views/dashboard'
@@ -75,6 +77,11 @@ const router = new Router({
       path: '/personal',
       name: 'personal',
       component:Personal
+    },
+    {
+      path: '/storeSettings',
+      name: 'storeSettings',
+      component:StoreSettings
     },
     {
       path: '/aut_state',
