@@ -21,23 +21,30 @@
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-                :disabled="disabledType=='1'"
-            >
+                :disabled="disabledType=='1'">
             </el-date-picker>
             <el-button type="primary" icon="view" @click="init()">查询</el-button>
         </el-form>
         <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
+        <div class="menu MB10">
+            <el-button :type="[ tableType == 0 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(0)">board_num</el-button>
+            <el-button :type="[ tableType == 1 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(1)">click_num</el-button>
+            <el-button :type="[ tableType == 2 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(2)">board_followers</el-button>
+            <el-button :type="[ tableType == 3 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(3)">pin_num</el-button>
+            <el-button :type="[ tableType == 4 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(4)">pin_saves</el-button>
+            <el-button :type="[ tableType == 5 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(5)">revenue_num</el-button>
+        </div>
         <!-- 表单部分 -->
-        <div class="table_right">
+        <div class="table_right MB10">
           <el-table :data="tableData" border ref="topictable">
-            <el-table-column  align="center"  class="parentNodeColumn" prop="xxxx" label="站点总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="xxxx" label="账号总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="xxxx" label="Board总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="xxxx" label="Pin总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="xxxx" label="Visitor总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="xxxx" label="Click 总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="xxxx" label="Sales 总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="xxxx" label="Revenue 总数"  ></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="site_num" label="站点总数"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="subaccount_num" label="账号总数"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="board_num" label="Board总数"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="pin_num" label="Pin总数"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="visitor_num" label="Visitor总数"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="click_num" label="Click 总数"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Sales 总数"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenue 总数"  ></el-table-column>
           </el-table>
         </div>
         <div class="bottomBox">
@@ -46,18 +53,18 @@
                     <div class="indexTitle">Latest Updates</div>
                     <div class="TC">
                         <div class="LTTime">
-                            <p>2019/04/17 00:00 AM</p>
+                            <p>{{updatesData.datetime}}</p>
                             <p>Latest Update Time</p>
                         </div>
-                        <div class="bigNum">99999</div>
-                        <div class="smText">New Repins</div>
-                        <div class="bigNum">99999</div>
+                        <div class="bigNum">{{updatesData.new_saves}}</div>
+                        <div class="smText">New Saves</div>
+                        <div class="bigNum">{{updatesData.new_followers}}</div>
                         <div class="smText">New Followers</div>
-                        <div class="bigNum">99999</div>
+                        <div class="bigNum">{{updatesData.new_pins}}</div>
                         <div class="smText">New Pins</div>
-                        <div class="bigNum">99999</div>
+                        <div class="bigNum">{{updatesData.new_board}}</div>
                         <div class="smText">New Board</div>
-                        <div class="bigNum">99999</div>
+                        <div class="bigNum">{{updatesData.new_accounts}}</div>
                         <div class="smText">New Accounts</div>
                     </div>
                 </div>
@@ -65,7 +72,7 @@
                     <div class="indexTitle">Activity Log</div>
                     <div>
                         <div class="LBTable">
-                            <table>
+                            <table cellspacing="0">
                                 <thead>
                                     <tr>
                                         <td>User</td>
@@ -74,20 +81,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
+                                    <tr v-for="(item,index) in ActivityArray" :key="index">
+                                        <td>{{item.username}}</td>
+                                        <td>{{item.action}}</td>
+                                        <td>{{item.operation_time}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -99,96 +96,59 @@
                 <div class="RTBox">
                     <div class="indexTitle">Top Pins</div>
                     <div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <td>Pin ID</td>
-                                        <td>SKU</td>
-                                        <td>Image</td>
-                                        <td>Pin Date</td>
-                                        <td>Repins</td>
-                                        <td>Trends</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
+                        <table cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <td>Pin ID</td>
+                                    <td>SKU</td>
+                                    <td>Image</td>
+                                    <td>Pin Date</td>
+                                    <td>Saves</td>
+                                    <td>Trends</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item,index) in pinsArray" :key="index">
+                                    <td>{{item.pin_uri}}</td>
+                                    <td>{{item.SKU}}</td>
+                                    <td>{{item.image}}</td>
+                                    <td>{{item.pin_date}}</td>
+                                    <td>{{item.saves}}</td>
+                                    <td>{{item.trends}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="RBBox">
                     <div class="indexTitle">Top Board</div>
                     <div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <td>Board Name</td>
-                                        <td>Pins</td>
-                                        <td>Repins</td>
-                                        <td>Create Date</td>
-                                        <td>Followers</td>
-                                        <td>Trends</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
+                        <table cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <td>Board Name</td>
+                                    <td>Pins</td>
+                                    <td>saves</td>
+                                    <td>Create Date</td>
+                                    <td>Followers</td>
+                                    <td>Trends</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item,index) in BoardArray" :key="index">
+                                    <td>{{item.board_name}}</td>
+                                    <td>{{item.pins}}</td>
+                                    <td>{{item.saves}}</td>
+                                    <td>{{item.create_date}}</td>
+                                    <td>{{item.followers}}</td>
+                                    <td>{{item.trends}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
             </div>
         </div>
-
-
     </div>
 </template>
 
@@ -218,6 +178,23 @@ export default {
     data() {
         return {
             chart: null,
+            bigReport:null,      //最大数据
+            tableType:0,       
+            tableValue:{
+                XValue:[], 
+                YValue:[], 
+            },
+            updatesData:{
+                datetime:"2019-1-1 12:00:00",
+                new_accounts:"99999",
+                new_board:"",
+                new_followers:"99999",
+                new_pins:"99999",
+                new_saves:"99999"
+            },
+            pinsArray:[],
+            BoardArray:[],
+            ActivityArray:[],
             disabledType:'0',   //是否可自定义事件框  0 不可以   1 可以
             tableData:[],
             dataArray:[//时间区间的星期几
@@ -233,7 +210,7 @@ export default {
                 start_time:'',
                 end_time:'',
                 store_id:'1',
-                timeArray:[new Date(2019, 3, 1, 8, 0), new Date(2019, 5, 1, 16, 0)],             //日期数据源
+                timeArray:[new Date(2019, 4, 28, 8, 0), new Date(2019, 5, 6, 16, 0)],             //日期数据源
             }
         }
     },
@@ -241,7 +218,6 @@ export default {
     },
     mounted() {
         this.init();
-        this.initChart();
     },
     methods:{
         init() {
@@ -251,7 +227,11 @@ export default {
             var urlString = `/api/v1/dashboard/1/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
-
+                    this.bigReport = res.data.data.overview_list;
+                    this.tableData = [];
+                    this.tableData.push(res.data.data.total_data);
+                    this.tableInit(0);
+                    this.updates();
                 }else{
                     this.$message("获取失败!");
                 }
@@ -260,6 +240,93 @@ export default {
                 this.$message("接口超时!");
             });
         },
+        updates() {
+        // 获取表格数据
+            this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0],'day');
+            this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
+            var urlString = `/api/v1/dashboard/2/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
+            this.$axios.get(urlString).then(res => {
+                if(res.data.code==1){
+                    this.updatesData = res.data.data;
+                    this.pins();
+                }else{
+                    this.$message("获取失败!");
+                }
+            })
+            .catch(error => {
+                this.$message("接口超时!");
+            });
+        },
+        pins(){
+            var urlString = `/api/v1/dashboard/3/`;
+            this.$axios.get(urlString).then(res => {
+                if(res.data.code==1){
+                    this.pinsArray = res.data.data;
+                    this.Board();
+                }else{
+                    this.$message("获取失败!");
+                }
+            })
+            .catch(error => {
+                this.$message("接口超时!");
+            });
+        },
+        Board(){
+            var urlString = `/api/v1/dashboard/4/`;
+            this.$axios.get(urlString).then(res => {
+                if(res.data.code==1){
+                    this.BoardArray = res.data.data;
+                    this.activity();
+                }else{
+                    this.$message("获取失败!");
+                }
+            })
+            .catch(error => {
+                this.$message("接口超时!");
+            });
+        },
+        activity(){
+            this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0],'day');
+            this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
+            var urlString = `/api/v1/dashboard/5/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
+            this.$axios.get(urlString).then(res => {
+                if(res.data.code==1){
+                   this.ActivityArray = res.data.data;
+                }else{
+                    this.$message("获取失败!");
+                }
+            })
+            .catch(error => {
+                this.$message("接口超时!");
+            });
+        },
+        tableInit(num){
+            this.tableType=num;
+            this.tableValue.YValue=[];
+            this.tableValue.XValue=[];
+            this.bigReport.map(e => {
+                    this.tableValue.XValue.push(base.dateFormat(e.date,"day"))
+                if(this.tableType == 0){
+                    this.tableValue.YValue.push(parseFloat(e.board_num));
+                }
+                else if(this.tableType == 1){
+                    this.tableValue.YValue.push(parseFloat(e.click_num));
+                }
+                else if(this.tableType == 2){
+                    this.tableValue.YValue.push(parseFloat(e.board_followers));
+                }
+                else if(this.tableType == 3){
+                    this.tableValue.YValue.push(parseFloat(e.pin_num));
+                }
+                else if(this.tableType == 4){
+                    this.tableValue.YValue.push(parseFloat(e.pin_saves));
+                }
+                else if(this.tableType == 5){
+                    this.tableValue.YValue.push(parseFloat(e.revenue_num));
+                }
+                this.initChart();
+            });    
+        },
         initChart() {
             this.chart = echarts.init(this.$refs.myEchart);
             // 把配置和数据放这里
@@ -267,7 +334,7 @@ export default {
                     xAxis: {
                         type: 'category',
                         boundaryGap: false,
-                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        data: this.tableValue.XValue
                         },
                     grid:{               
                         top:"50px",
@@ -284,7 +351,7 @@ export default {
                         min: 0,
                     },
                     series: [{
-                        data:  [10, 52, 200, 334, 390, 330, 220],
+                        data:  this.tableValue.YValue,
                         type: 'line',
                         areaStyle: {},
                         color:['#0065a3'], //设置折线图内容颜色
@@ -343,10 +410,11 @@ export default {
 .dashboard{width:calc(100% - 20px)}
 .dashboard .table_right{margin-bottom:10px;}
 .dashboard .leftBox{width:400px;float:left;}
-.dashboard .rightBox{width:calc(100% - 420px);float:left;margin-left:10px;}
+.dashboard .rightBox{width:calc(100% - 420px);float:left;margin-left:20px;}
 .dashboard .LTBox,.dashboard .LBBox,.dashboard .RTBox,.dashboard .RBBox{padding-bottom:10px;box-shadow:5px 4px 6px #ccc;margin-bottom:20px;}
 .dashboard .bigNum{width:100%;font-size:38px;padding:5px 0;font-weight:600;}
 .dashboard .smText{width:100%;font-size:14px;}
-.dashboard table{width:100%;}
+.dashboard table{width:100%;text-align: center;}
+.dashboard table tbody tr td{border-top:1px solid #ccc;padding:5px 0;}
 .dashboard .indexTitle{background:#006699;width:calc(100% - 50px);color:#fff;display:inline-block;padding:10px 40px 10px 10px;font-size:20px;font-weight:600;-webkit-box-shadow:0 0 5px #006699;box-shadow:0 0 5px #006699;}
 </style>

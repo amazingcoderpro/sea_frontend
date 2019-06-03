@@ -166,7 +166,6 @@ export default {
       })
     },
     tableInit(num){
-
       this.tableType=num;
       this.tableValue.YValue=[];
       this.tableValue.XValue=[];
