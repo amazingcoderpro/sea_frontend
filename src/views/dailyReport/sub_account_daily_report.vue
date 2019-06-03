@@ -248,15 +248,21 @@ export default {
       else if(this.searchData.dataType == 2){
           var Today = base.dateFormat(new Date().getTime(),"day");
           var Today_star = new Date(Today + " 00:00:00");
-          var Today_end = new Date(Today + " 23:59:59");
-          this.searchData.timeArray = [Today_star,Today_end]
-      }
-        else if(this.searchData.dataType == 3){
-          var Today = base.dateFormat(new Date(new Date().getTime()-1000*108*60*60),"day");
-          var Today_star = new Date(Today + " 00:00:00");
-          var Today_end = new Date(Today + " 23:59:59");
+          var Today = base.dateFormat(new Date().getTime());
           this.searchData.timeArray = [Today_star,Today]
-        }
+      }
+      else if(this.searchData.dataType == 3){
+          var Today = base.dateFormat(new Date(new Date().getTime()-1000*168*60*60),"day");
+          var Today_star = new Date(Today + " 00:00:00");
+          var Today = base.dateFormat(new Date().getTime());
+          this.searchData.timeArray = [Today_star,Today]
+      }
+      else if(this.searchData.dataType == 4){
+          var getMonth = start.setTime(new Date(new Date().getFullYear(),));
+          var getMonth_star = new Date(getMonth);
+          var getMonth = start.setTime(new Date().getMonth());
+          this.searchData.timeArray = [getMonth_star,getMonth]
+      } 
     },
     initChart() {
       this.chart = echarts.init(this.$refs.myEchart);

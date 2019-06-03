@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Notfount from './components/404.vue'
 import Login from './views/login.vue'
 import ShopfyRegist from './views/shopfy_regist.vue'
+import Personal from './views/personal.vue'
 import Index from './views/index'
 import AutState from './views/aut_state'
 import Dashboard from './views/dashboard'
@@ -69,6 +70,11 @@ const router = new Router({
       path: '/shopfy_regist',
       name: 'shopfy_regist',
       component: ShopfyRegist
+    },
+    {
+      path: '/personal',
+      name: 'personal',
+      component:Personal
     },
     {
       path: '/aut_state',
