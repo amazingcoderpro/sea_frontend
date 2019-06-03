@@ -4,7 +4,7 @@
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null">
           <el-form-item label="Pinterest账户筛选:">
             <el-select v-model="searchData.pinterest" placeholder="请选择Pinterest账户"  @change="pinterestChange">
-              <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account_uri" :value="item.id"></el-option>
+              <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
             </el-select>
             <el-select v-model="searchData.board" placeholder="请选择选择Board">
               <el-option :label="'全选'" :value="''"> </el-option>
@@ -249,7 +249,11 @@ export default {
       //pinterest账户变更触发的事件
       this.pinterestArray.map(e => {
         if(e.id == this.searchData.pinterest){
-          this.searchData.board = e.board_pinterest_account[0].id;
+          if(e.board_pinterest_account.length>0){
+            this.searchData.board = e.board_pinterest_account[0].id;
+          }else{
+            this.searchData.board = '';
+          }
         }
       });   
     },
