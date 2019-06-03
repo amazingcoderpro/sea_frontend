@@ -111,7 +111,10 @@
                                 <tr v-for="(item,index) in pinsArray" :key="index">
                                     <td>{{item.pin_uri}}</td>
                                     <td>{{item.SKU}}</td>
-                                    <td>{{item.image}}</td>
+                                    <td>
+                                        <img src="../assets/img/none.png" min-width="70" height="70" />
+                                        <!-- {{item.image}} -->
+                                    </td>
                                     <td>{{item.pin_date}}</td>
                                     <td>{{item.saves}}</td>
                                     <td>{{item.trends}}</td>
