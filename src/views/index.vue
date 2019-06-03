@@ -30,7 +30,7 @@ html, body {margin: 0;padding: 0;}
 .rightContainer {
   position: relative;
   top: 0;
-  left: 230px;
+  left: 250px;
   width: calc(100% - 230px);
   height: calc(100% - 71px);
   overflow: auto;

@@ -158,7 +158,7 @@ export default {
           url +=`&end_time=${this.searchData.end_time}`;
       }
 
-      this.$axios.get(url)
+    this.$axios.get(url)
       .then(res=> {
         console.log(res)
           if(res.data.code == 1){

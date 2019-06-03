@@ -5,7 +5,7 @@
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="search.product__sku"  placeholder="请输入SKU"></el-input>
-                <el-button  type="primary" @click='init()'>搜索</el-button>
+                <el-button  type="primary" @click='init()'>search</el-button>
             </el-form-item>
         </el-form>
         <el-select v-model="search.state" filterable placeholder="请选择" class="btnLeft">

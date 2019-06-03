@@ -1,9 +1,9 @@
 <template>
     <div class="account_List">
-        <div class="tableTitle"><span>账户列表</span></div>
+        <div class="tableTitle"><span>Account list</span></div>
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
-                <el-button  type="primary" @click='addFun()'>添加账户</el-button>
+                <el-button  type="primary" @click='addFun()'>Add account</el-button>
             </el-form-item>
         </el-form>
         <!-- 表单部分 -->
@@ -243,5 +243,7 @@ export default {
 </script>
 
 <style>
-
+.btnRight{
+  margin-right: 30px!important;
+}
 </style>

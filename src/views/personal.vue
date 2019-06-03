@@ -36,7 +36,6 @@
 <script>
 import * as base from '../assets/js/base'
 import router from '../router'
-import Menufilter from '../components/menufilter.js'
 export default {
     name: "personal",
     components:{},
@@ -65,7 +64,7 @@ export default {
             { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur" }  
         ],
           emailstr: [
-            { required: true, message: "账号不能为空", trigger: "change" },
+            { required: true, message: "邮箱格式不正确", trigger: "change",type:"email"},
         ],
           password: [
             { required: true, message: "密码不能为空", trigger: "blur" },
@@ -147,8 +146,5 @@ export default {
 .personal .newpass{
     padding-left: 17px;
     color: #0f8fcf;
-}
-.el-form-item__error{
-  left: 100px!important;
 }
 </style>
