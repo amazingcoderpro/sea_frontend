@@ -248,7 +248,7 @@ export default {
         // 获取表格数据
             this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0],'day');
             this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
-            var urlString = `/api/v1/dashboard/3/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
+            var urlString = `/api/v1/dashboard/1/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
 
@@ -299,34 +299,32 @@ export default {
                 this.disabledType = 0;
             }else{
                 this.disabledType = 1;
+                var _star;
+                var _end;
                 if(this.searchData.dataType == 1){
                     // 昨天
-                    var _star = new Date(base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day") + " 00:00:00");
-                    var _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
-                    this.searchData.timeArray = [_star,_end]
+                     _star = new Date(base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 2){
                     // 今天
-                    var _star = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
-                    var _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
-                    this.searchData.timeArray = [_star,_end]
+                     _star = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 3){
                     // 近七天
-                    var _star = new Date(base.dateFormat(new Date(new Date().getTime()-7*1000*24*60*60),"day") + " 00:00:00");
-                    var _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
-                    this.searchData.timeArray = [_star,_end]
+                     _star = new Date(base.dateFormat(new Date(new Date().getTime()-7*1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 4){
                     // 本月
                     var time = new Date();
-                    var _star = new Date(base.dateFormat(time.getFullYear()+"-"+ (time.getMonth()+1) +"-1"+ " 00:00:00"));
-                    var _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
-                    this.searchData.timeArray = [_star,_end]
+                     _star = new Date(base.dateFormat(time.getFullYear()+"-"+ (time.getMonth()+1) +"-1"+ " 00:00:00"));
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 5){
                     //本年度
                     var time = new Date();
-                    var _star = new Date(base.dateFormat(time.getFullYear()+"-1-1"+ " 00:00:00"));
-                    var _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
-                    this.searchData.timeArray = [_star,_end]
+                     _star = new Date(base.dateFormat(time.getFullYear()+"-1-1"+ " 00:00:00"));
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
                 }
+                this.searchData.timeArray = [_star,_end]
             }
         }
     },
