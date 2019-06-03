@@ -204,7 +204,11 @@ import * as base from '../../assets/js/base'
         .then(res => {
             if(res.data.code == 1){
               this.pinterestArray = res.data.data;
-              this.ruleForm.pinterest = res.data.data[0].id;
+              if(res.data.data.length>0){
+                this.ruleForm.pinterest = res.data.data[0].id;
+              }else{
+                this.ruleForm.pinterest = '';
+              }
               this.pinterestChange();
             }
         })
@@ -339,7 +343,11 @@ import * as base from '../../assets/js/base'
         //pinterest账户变更触发的事件
         this.pinterestArray.map(e => {
           if(e.id == this.ruleForm.pinterest){
-            this.ruleForm.board = e.board_pinterest_account[0].id;
+            if(e.board_pinterest_account.length>0){
+              this.ruleForm.board = e.board_pinterest_account[0].id;
+            }else{
+              this.ruleForm.board = '';
+            }
           }
         });   
       }
