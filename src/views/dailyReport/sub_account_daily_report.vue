@@ -1,7 +1,7 @@
 <template>
-  <div class="sub_account_report">
+  <div class="sub_account_daily_report">
       <div class="tableTitle">
-        <span class="report_title">sub_account_daily_report</span>
+        <span class="report_title">SubAccountDailyReport</span>
       </div>
       <div class="Options">
         <span>Options</span>
@@ -144,8 +144,12 @@ export default {
       this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
       var url = `/api/v1/select/daily_report/?index=1`;
           url +=`&pinterest_account_id=${this.searchData.pinterest_account_id}`;
+      if(this.searchData.board_id != ''){
           url +=`&board_id=${this.searchData.board_id}`;
+      }
+      if(this.searchData.pin_id != ''){
           url +=`&pin_id=${this.searchData.pin_id}`;
+      }
       if(this.searchData.search != ''){
           url +=`&search=${this.searchData.search}`;
       }
@@ -310,38 +314,13 @@ export default {
 
 
 <style scoped>
-.report_title {
-  width: 305px;
-}
-.Options span {
-  display: block;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-.week_name{
-  width: 120px;
-}
-.block{
-  display: inline;
-  padding-left: 20px;
-}
-.Filter_week{
-  padding-left: 44px;
-}
-.input_id{
-  float: right;
-  display: flex;
-  padding-left: 40px;
-  width: 170px;
-  }
-.iconfont{
-  font-size: 25px;
-  padding-left: 15px;
-  padding-top: 7px;
-  cursor: pointer;
-}
-.table_right{
-  margin-top: 50px;
-}
+.sub_account_daily_report .report_title{width:305px;}
+.sub_account_daily_report .Options span{display:block;margin-top:30px;margin-bottom:20px;}
+.sub_account_daily_report .week_name{width:120px;}
+.sub_account_daily_report .block{display:inline;padding-left:20px;}
+.sub_account_daily_report .Filter_week{padding-left:44px;}
+.sub_account_daily_report .input_id{float:right;display:flex;padding-left:40px;width:170px;}
+.sub_account_daily_report .iconfont{font-size:25px;padding-left:15px;padding-top:7px;cursor:pointer;}
+.sub_account_daily_report .table_right{margin-top:50px;}
 
 </style>
