@@ -2,7 +2,7 @@
     <div class="personal">
         <section class="form_container">
                   <div class="tableTitle"><span>Profile Settings</span></div>
-                  <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="60px" class="personalForm">
+                  <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="110px" class="personalForm">
                     <!-- 名 -->
                     <el-form-item label="FirstName" prop="surname">
                       <el-input v-model="personalUser.surname" placeholder="Daisy"></el-input>
@@ -102,7 +102,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios
-            .put(`/api/v1/account/set_password/${this.registUser.id}/`, this.registUser)
+            .put(`/api/v1/account/set_password/${this.personalUser}/`, this.personalUser)
             .then(res => {
               if (res.data.code == 1) {
                   router.push("/login");
@@ -136,20 +136,19 @@ export default {
 .personal .tableTitle{
     margin-bottom:50px;
 }
-.personal .el-input{
-    margin-left: 100px;
-}
 .personal .submit_btn{
     background: #0f8fcf;
     color: #fff;
     padding: 15px 55px;
     font-size: 16px;
-    margin-left: -50px;
     margin-top: 10px;
+    margin-left: -100px;
 }
 .personal .newpass{
     padding-left: 17px;
     color: #0f8fcf;
 }
-
+.el-form-item__error{
+  left: 100px!important;
+}
 </style>

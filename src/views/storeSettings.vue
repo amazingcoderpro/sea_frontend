@@ -2,7 +2,7 @@
     <div class="storeSetting">
         <section class="form_container">
                   <div class="tableTitle"><span>Store Settings</span></div>
-                  <el-form :model="storeUser" :rules="rules" ref="personalForm" label-width="60px" class="personalForm">
+                  <el-form :model="storeUser" :rules="rules" ref="personalForm" label-width="180px" class="personalForm">
                   <!-- Store Name -->
                    <div class="storename">
                      <span>Store Name</span>
@@ -110,7 +110,7 @@ export default {
         this.$refs[formName].validate(valid => {
           if (valid) {
             this.$axios
-              .put(`/api/v1/account/set_password/${this.registUser.id}/`, this.registUser)
+              .put(`/api/v1/account/set_password/${this.storeUser}/`, this.storeUser)
               .then(res => {
                 if (res.data.code == 1) {
                     router.push("/login");

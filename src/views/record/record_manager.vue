@@ -67,7 +67,7 @@
               </template>
 
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="备注" fixed="right" width="180">
+            <el-table-column prop="remark" align="center" label="备注" fixed="right" width="150">
 
             </el-table-column>
           </el-table>

@@ -7,6 +7,7 @@ import axios from './http'
 import router from './router' 
 import store from './store'
 import echarts from 'echarts'
+import './assets/icon/iconfont.css'
 
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
