@@ -1,5 +1,7 @@
 <template>
-    <el-row class="menu_page">
+    <el-row class="menu_page" ref="topictable" 
+           :style="'height:'+ tableHeight"
+           >
          <el-col>
            <el-menu 
             mode="vertical"
@@ -52,8 +54,14 @@ export default {
     //   return window.localStorage.getItem('menu_tree') ? JSON.parse(window.localStorage.getItem('menu_tree')) : this.$store.getters.menu_tree
     // }
   },
+  mounted() {
+      setTimeout(() => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop +"px";
+      }, 50);
+  },
   data() {
     return {
+      tableHeight:'800px',
       // items: this.$store.getters.menu_tree
       // items: JSON.parse(window.localStorage.getItem('menu_tree'))
 
@@ -102,9 +110,9 @@ export default {
   position: fixed;
   top: 71px;
   left: 0;
-  min-height: 100%;
   background-color: #324057;
   z-index: 99;
+  overflow-y: auto;
 }
 .el-menu {
   border: none;

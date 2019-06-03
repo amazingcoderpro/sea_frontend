@@ -27,12 +27,12 @@
         </el-form>
         <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
         <div class="menu MB10">
-            <el-button :type="[ tableType == 0 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(0)">board_num</el-button>
-            <el-button :type="[ tableType == 1 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(1)">click_num</el-button>
-            <el-button :type="[ tableType == 2 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(2)">board_followers</el-button>
-            <el-button :type="[ tableType == 3 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(3)">pin_num</el-button>
-            <el-button :type="[ tableType == 4 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(4)">pin_saves</el-button>
-            <el-button :type="[ tableType == 5 ? 'success' : 'primary' ]" size="small" icon="view" @click="tableInit(5)">revenue_num</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(0)">board_num</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(1)">click_num</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(2)">board_followers</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(3)">pin_num</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(4)">pin_saves</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(5)">revenue_num</el-button>
         </div>
         <!-- 表单部分 -->
         <div class="table_right MB10">
