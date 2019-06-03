@@ -144,25 +144,25 @@ export default {
 
 
 <style scope>
-.personal{
+.storeSetting{
   width: 100%;
   height: 100%;
 }
-.form_container {
+.storeSetting .form_container {
     width: 100%;
     height: 100%;
     padding-left: 10px;
 }
-.el-input{
+.storeSetting .el-input{
   width: 400px;
   display: block;
   margin-top: 10px;
 }
-.el-select{
+.storeSetting .el-select{
   display: block;
   width: 400px;
 }
-.submit_btn{
+.storeSetting .submit_btn{
     background: #0f8fcf;
     color: #fff;
     padding: 15px 55px;
@@ -170,20 +170,18 @@ export default {
     margin-left: -60px;
     margin-top: 30px;
 }
-.newpass{
+.storeSetting .newpass{
     padding-left: 17px;
     color: #0f8fcf;
 }
-.el-form-item__error{
-    left: 100px!important;
-}
-.storename{
+
+.storeSetting .storename{
   margin-top: 30px;
 }
-.storeurl{
+.storeSetting .storeurl{
   margin-top: 15px;
 }
-.Parameter{
+.storeSetting .Parameter{
   width: 1500px;
 }
 

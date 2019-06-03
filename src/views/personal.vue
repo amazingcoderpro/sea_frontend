@@ -125,21 +125,21 @@ export default {
   width: 100%;
   height: 100%;
 }
-.form_container {
+.personal .form_container {
     width: 100%;
     height: 100%;
     padding-left: 10px;
 }
-.el-input{
+.personal .el-input{
     width: 500px;
 }
-.tableTitle{
+.personal .tableTitle{
     margin-bottom:50px;
 }
-.el-input{
+.personal .el-input{
     margin-left: 100px;
 }
-.submit_btn{
+.personal .submit_btn{
     background: #0f8fcf;
     color: #fff;
     padding: 15px 55px;
@@ -147,11 +147,9 @@ export default {
     margin-left: -50px;
     margin-top: 10px;
 }
-.newpass{
+.personal .newpass{
     padding-left: 17px;
     color: #0f8fcf;
 }
-.el-form-item__error{
-    left: 100px!important;
-}
+
 </style>
