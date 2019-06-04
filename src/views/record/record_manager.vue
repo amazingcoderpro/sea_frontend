@@ -201,11 +201,8 @@ export default {
 </script>
 
 <style>
-.record_manager .btnRight{
-  margin-right: 30px;
-}
 .record_manager .btnRight .el-form-item__content{
-   width: 280px; 
+   width: 300px; 
 }
 .record_manager .btnRight .el-form-item__content .el-input{
    width: 200px; 
