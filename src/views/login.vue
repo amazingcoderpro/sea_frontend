@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <section class="form_container">
-                  <span class="title">Social Media管理系统</span>
+                  <span class="title">Pinboosters</span>
                   <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
                     
                     <el-form-item label="账号" prop="username">

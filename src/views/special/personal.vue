@@ -15,11 +15,6 @@
                     <el-form-item label="EmailAddress" prop="email">
                       <el-input v-model="personalUser.email" placeholder="请输入email"></el-input>
                     </el-form-item>
-                    <!-- 密码 -->
-                    <el-form-item label="Psaaword" prop="password">
-                      <el-input type="password" v-model="personalUser.password" placeholder="请输入新密码"></el-input> 
-                      <span class="newpass">Change Password</span>
-                    </el-form-item>
                     <!-- 点击 -->
                     <el-form-item>
                       <el-button type="primary" class="submit_btn" @click="submitForm('personalForm')" >Update</el-button>
@@ -58,10 +53,6 @@ export default {
         ],
           email: [
             { required: true, message: "邮箱格式不正确", trigger: "change",type:"email"},
-        ],
-          password: [
-            { required: true, message: "密码不能为空", trigger: "blur" },
-            { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
         ],
         }        
       }

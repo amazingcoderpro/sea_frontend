@@ -23,6 +23,11 @@
                      <span>Store Timezone</span>
                       <el-input v-model="storeUser.timezone" disabled placeholder="请输入内容"></el-input>
                    </div>
+                   <!-- store_view_id -->
+                   <div class="storeurl">
+                     <span>Store view ID</span>
+                      <el-input v-model="storeUser.store_view_id" placeholder="请输入内容"></el-input>
+                   </div>
                     <!-- 点击 -->
                     <el-form-item>
                       <el-button type="primary" class="submit_btn" @click="submitForm()">Save Changes</el-button>

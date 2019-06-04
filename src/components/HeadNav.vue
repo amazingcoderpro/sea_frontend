@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="6" class='logo-container'>
                 <img src="../assets/img/PinBooster-logo-1.jpg" class='logo' alt="">
-                <span class='title'>Pinboosters</span>
+                <span class='title'>Pinbooster</span>
             </el-col>
             <el-col :span='6' class="user">
                 <div class="userinfo">

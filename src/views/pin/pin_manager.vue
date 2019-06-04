@@ -1,11 +1,11 @@
 
 <template>
     <div class="pin_manager">
-        <div class="tableTitle"><span>Pin列表管理</span></div>
+        <div class="tableTitle"><span>Pin List management</span></div>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="pinID"  placeholder="请输入PinID"></el-input>
-                <el-button  type="primary" @click='init()'>搜索</el-button>
+                <el-button  type="primary" @click='init()'>Search</el-button>
             </el-form-item>
         </el-form>
         <!-- 表单部分 -->
@@ -14,32 +14,32 @@
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
             <el-table-column prop="pin_id" label="pin_id" align="center" width="100"></el-table-column>
-            <el-table-column prop="pin_thumbnail" label="Pin图" align="center" width="100">
+            <el-table-column prop="pin_thumbnail" label="Pin Map" align="center" width="100">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
-            <el-table-column prop="pin_note" label="Pin描述" align="center" width="100"></el-table-column>
+            <el-table-column prop="pin_note" label="Pin Description" align="center" width="100"></el-table-column>
             <el-table-column prop="pin_url" label="URL" align="center" width="100"></el-table-column>
             <el-table-column prop="product_sku" label="产品SKU" align="center" width="100"></el-table-column>
             <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.views}}<br/>今日新增:{{scope.row.views_increment}}</template>
+              <template slot-scope="scope"> Total:{{scope.row.views}}<br/>Todays new:{{scope.row.views_increment}}</template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="saves,saves_increment" label="Saves" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.saves}}<br/>今日新增:{{scope.row.saves_increment}}</template>
+              <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>Todays new:{{scope.row.saves_increment}}</template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="like,like_increment" label="Like" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.likes}}<br/>今日新增:{{scope.row.likes_increment}}</template>
+              <template slot-scope="scope"> Total:{{scope.row.likes}}<br/>Todays new:{{scope.row.likes_increment}}</template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comment" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.comments}}<br/>今日新增:{{scope.row.comments_increment}}</template>
+              <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>Todays new:{{scope.row.comments_increment}}</template>
             </el-table-column>
-            <el-table-column prop="under_board_id" label="所属Board ID" align="center" width="100"></el-table-column>
-            <el-table-column prop="under_account_id" label="所属账户ID" align="center" width="150"></el-table-column>
+            <el-table-column prop="under_board_id" label="Thei Board ID" align="center" width="100"></el-table-column>
+            <el-table-column prop="under_account_id" label="Thei Account ID" align="center" width="150"></el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Pin" fixed="right" width="200">
               <template slot-scope="scope">
-                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">编辑</el-button>
-                  <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">删除</el-button>
+                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">edit</el-button>
+                  <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">Delete</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -121,7 +121,7 @@ export default {
 
       this.dialog = {
         show: true,
-        title: "修改资金信息",
+        title: "Modify fund information",
         option: "put"
       };
     },
