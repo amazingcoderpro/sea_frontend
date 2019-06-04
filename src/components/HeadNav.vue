@@ -84,7 +84,7 @@ export default {
     changeMsg(){
       this.dialog = {
         show: true,
-        title: "修改密码",
+        title: "Modify Password",
         option: "put"
       };
 

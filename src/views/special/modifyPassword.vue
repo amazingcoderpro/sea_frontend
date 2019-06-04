@@ -12,21 +12,17 @@
                     ref="form" 
                     :model="form"
                     :rules="form_rules"
-                    label-width="90px" >
+                    label-width="100px" >
 
-                    <el-form-item label="密码:" prop="password">
-                      <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
+                    <el-form-item label="password:" prop="password">
+                      <el-input type="password" v-model="form.password"></el-input>
                     </el-form-item>
-                    <!-- 确认密码 -->
-                    <el-form-item label="确认密码:" prop="password2">
-                      <el-input type="password" v-model="form.password2" placeholder="请确认密码"></el-input>
+                    <el-form-item label="password2:" prop="password2">
+                      <el-input type="password" v-model="form.password2"></el-input>
                     </el-form-item>
-
-
-                    <!-- 取消，提交 -->
                     <el-form-item  class="text_right">
-                        <el-button @click="dialog.show = false">取 消</el-button>
-                        <el-button type="primary" @click='submitForm("form")'>提  交</el-button>
+                        <el-button @click="dialog.show = false">Cancel</el-button>
+                        <el-button type="primary" @click='submitForm("form")'>Submit</el-button>
                     </el-form-item>
                 </el-form>
             </div>

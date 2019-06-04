@@ -12,7 +12,7 @@
                 <el-input v-model="editData.description"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="submitForm('form')">修改</el-button>
+                <el-button type="primary" @click="submitForm('form')">Submit</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -74,7 +74,7 @@
                       this.$parent.init();
                     }else{
                       this.dialog.show = false; 
-                      this.$message("添加失败!");
+                      this.$message("修改失败!");
                     }
                 })
                 .catch(error => {
