@@ -61,12 +61,14 @@ export default {
     methods: {
       init() {
         this.storeUser.storeID = JSON.parse(window.localStorage.getItem('store')).id;
+        this.storeUser.store_view_id = JSON.parse(window.localStorage.getItem('store')).store_view_id;
         this.$axios(`/api/v1/store/${this.storeUser.storeID}/`).then(res => {
             if(res.data.code == 1){
               this.storeUser.name = res.data.data.name;
               this.storeUser.url = res.data.data.url;
               this.storeUser.timezone = res.data.data.timezone;
               this.storeUser.url_format = res.data.data.url_format;
+              this.storeUser.store_view_id = res.data.data.store_view_id;
             }else{
                 this.$message({
                   message: "code 异常!",
@@ -77,7 +79,6 @@ export default {
         })
       },
       submitForm() {
-        this.storeUser.store_view_id = JSON.parse(window.localStorage.getItem('store')).store_view_id;
         this.$axios
           .put(`/api/v1/store/${this.storeUser.storeID}/`, this.storeUser)
           .then(res => {

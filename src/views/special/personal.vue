@@ -13,7 +13,7 @@
                     </el-form-item>
                     <!-- 邮箱 -->
                     <el-form-item label="EmailAddress" prop="email">
-                      <el-input v-model="personalUser.email" placeholder="请输入email"></el-input>
+                      <el-input v-model="personalUser.email" disabled placeholder="请输入email"></el-input>
                     </el-form-item>
                     <!-- 点击 -->
                     <el-form-item>
