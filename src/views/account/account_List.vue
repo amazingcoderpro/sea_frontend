@@ -11,12 +11,12 @@
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column type="selection" align="center" width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
-            <el-table-column label="Head Portrait" align="center" width="150">
+            <el-table-column label="Photo" align="center" width="150">
               <template slot-scope="scope">
                 <img src="../../assets/img/none.png" min-width="70" height="70" />
               </template> 
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account" align="center"  width="350">
+            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="center"  width="350">
               <template slot-scope="scope"> 
                 account_name:{{scope.row.account_name}}<br/>
                 account_email:{{scope.row.account_email}}<br/> 
@@ -42,7 +42,7 @@
               </template>
              
             </el-table-column>
-            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="update" align="center"  width="350">
+            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="Updates" align="center"  width="350">
               <template slot-scope="scope">
                  update_person:{{scope.row.update_person}}<br/>
                  account_state:<span v-if='scope.row.account_state=0'>normal</span><span v-else>forbidden</span><br/>
@@ -51,7 +51,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="role_name" label="Rule List" align="center" width="150" >
+            <el-table-column prop="role_name" label="Rules" align="center" width="150" >
               <template slot-scope="scope">
                 <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">rule list</el-button>
               </template>
@@ -70,7 +70,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="operation" align="center" label="operation" width="100" fixed="right" >
+            <el-table-column prop="operation" align="center" label="Edit" width="100" fixed="right" >
               <template slot-scope="scope">
                 <!-- <el-button icon="edit" type="primary" size="small" @click="EditFun(scope.row)">编辑</el-button> -->
                 <el-button icon="edit" type="danger" size="small" @click="deteleFun(scope.row)">delete</el-button>
@@ -187,22 +187,22 @@ export default {
         var statedata = {
             state :'1'   //(0, '待执行'), (1, '删除'), (2, '过期'), (3, '运行'), (4, '暂停'), (5,"已完成")
         }
-        this.$confirm('确定要删除?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+        this.$confirm('Make sure to delete?', 'Hint', {
+              confirmButtonText: 'Confirm',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
                 this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
-                      this.$message({type: 'success',message: '删除成功!'});
+                      this.$message({type: 'success',message: 'Deleted successfully!'});
                       this.init();
                     }else{
-                      this.$message.error('删除失败!');
+                      this.$message.error('Delete failed!');
                     }
                   })
                   .catch(error => {
-                     this.$message.error('接口超时!');
+                     this.$message.error('Interface timeout!');
                   }); 
             }) 
     },

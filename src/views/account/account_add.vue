@@ -3,23 +3,23 @@
     <div class="account_add">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
           <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="account" prop="account">
+              <el-form-item label="User Name" prop="account">
                 <el-input v-model="form.account"></el-input>
               </el-form-item>
-              <el-form-item label="email" prop="email">
+              <el-form-item label="Email Addres" prop="email">
                 <el-input v-model="form.email"></el-input>
               </el-form-item>
               <el-form-item label="type" prop="type">
                 <el-radio v-model="form.type" label="0">business</el-radio>
                 <el-radio v-model="form.type" label="1">individual</el-radio>
               </el-form-item>
-              <el-form-item label="create_time" prop="create_time">
+              <el-form-item label="Create Time" prop="create_time">
                     <el-date-picker
                       v-model="form.create_time"
                       type="datetime">
                     </el-date-picker>
               </el-form-item>
-              <el-form-item label="description">
+              <el-form-item label="Account Type">
                 <el-input v-model="form.description"></el-input>
               </el-form-item>
               <el-form-item>
