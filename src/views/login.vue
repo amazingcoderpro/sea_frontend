@@ -81,7 +81,7 @@ export default {
                     localStorage.setItem("store", JSON.stringify( res.data.data.store ));
                     this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
                     this.$store.dispatch("setUser", res.data.data.user)
-                   // router.push('/dashboard');
+                    router.push('/dashboard');
                 }else{
                   this.$message({
                     message: res.data.msg,
