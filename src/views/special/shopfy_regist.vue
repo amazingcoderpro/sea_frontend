@@ -3,20 +3,20 @@
     <section class="form_container">
       <el-form :model="registUser" :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
         <!-- 账号 -->
-        <el-form-item label="账号:" prop="username">
-          <el-input v-model="registUser.username" disabled placeholder="请输入戶名"></el-input>
+        <el-form-item label="username:" prop="username">
+          <el-input v-model="registUser.username" disabled></el-input>
         </el-form-item>
         <!-- 邮箱 -->
-        <el-form-item label="邮箱:" prop="emailstr">
-          <el-input v-model="registUser.emailstr" disabled placeholder="请输入email"></el-input>
+        <el-form-item label="emailstr:" prop="emailstr">
+          <el-input v-model="registUser.emailstr" disabled></el-input>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item label="密码:" prop="password">
-          <el-input type="password" v-model="registUser.password" placeholder="请输入密码"></el-input>
+        <el-form-item label="password:" prop="password">
+          <el-input type="password" v-model="registUser.password"></el-input>
         </el-form-item>
         <!-- 确认密码 -->
-        <el-form-item label="确认密码:" prop="password2">
-          <el-input type="password" v-model="registUser.password2" placeholder="请确认密码"></el-input>
+        <el-form-item label="password2:" prop="password2">
+          <el-input type="password" v-model="registUser.password2"></el-input>
         </el-form-item>
       </el-form>
       <div class="text">
@@ -24,7 +24,7 @@
           <span>My store is not in English</span>
         </div>
         <div class="button">
-          <el-button type="primary" @click="submitForm('loginForm')">Next</el-button>
+          <el-button type="primary" @click="submitForm('loginForm')">Regist</el-button>
         </div>
         <div class="clause">
           <p>

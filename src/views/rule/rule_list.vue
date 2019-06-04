@@ -45,10 +45,10 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="Create Time"  width="250">
               <template slot-scope="scope"> {{scope.row.create_time}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Time Of Validity"  width="300">
+            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Date Of Validity"  width="300">
               <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="时间区间"  width="400">
+            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="400">
             <template slot-scope="scope" >
                 <div  v-for="item in scope.row.schedule_rule" :key="item.id">
                     <template>

@@ -9,6 +9,7 @@
 
 <script>
 import * as base from '../../assets/js/base'
+import router from '../../router'
 export default {
     name: "aut_state",
     components:{},
@@ -23,6 +24,9 @@ export default {
     methods: {
       init(){
         this.state = base.getQueryString('state') == null?1:base.getQueryString('state');
+        setTimeout(() => {
+              router.push('/dashboard');
+        }, 3000);
       }
     }
 };

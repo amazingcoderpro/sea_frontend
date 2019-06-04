@@ -10,7 +10,9 @@
                     v-for="item in dataArray"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value">
+                    :value="item.value"
+                    class="W200"
+                    >
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -21,7 +23,9 @@
                 range-separator="--"
                 start-placeholder="start time"
                 end-placeholder="End time"
-                :disabled="disabledType=='1'">
+                :disabled="disabledType=='1'"
+                class="W400"
+                >
             </el-date-picker>
             <el-button type="primary" icon="view" @click="init()">Search</el-button>
         </el-form>
@@ -221,6 +225,9 @@ export default {
     },
     mounted() {
         this.init();
+        this.updates();
+        this.pins();
+        this.activity();
     },
     methods:{
         init() {
@@ -234,7 +241,6 @@ export default {
                     this.tableData = [];
                     this.tableData.push(res.data.data.total_data);
                     this.tableInit(0);
-                    this.updates();
                 }else{
                     this.$message("获取失败!");
                 }
@@ -251,7 +257,6 @@ export default {
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
                     this.updatesData = res.data.data;
-                    this.pins();
                 }else{
                     this.$message("获取失败!");
                 }
@@ -279,7 +284,6 @@ export default {
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
                     this.BoardArray = res.data.data;
-                    this.activity();
                 }else{
                     this.$message("获取失败!");
                 }
@@ -409,7 +413,9 @@ export default {
 
 </script>
 
+
 <style>
+/* .el-loading-mask.is-fullscreen{display: none!important;} */
 .dashboard{width:calc(100% - 20px)}
 .dashboard .table_right{margin-bottom:10px;}
 .dashboard .leftBox{width:400px;float:left;}
@@ -420,4 +426,7 @@ export default {
 .dashboard table{width:100%;text-align: center;}
 .dashboard table tbody tr td{border-top:1px solid #ccc;padding:5px 0;}
 .dashboard .indexTitle{background:#006699;width:calc(100% - 50px);color:#fff;display:inline-block;padding:10px 40px 10px 10px;font-size:20px;font-weight:600;-webkit-box-shadow:0 0 5px #006699;box-shadow:0 0 5px #006699;}
+.dashboard .RTBox{min-height:400px;}
+.dashboard .RBBox{min-height:400px;}
+.dashboard .LBBox{min-height:269px;}
 </style>

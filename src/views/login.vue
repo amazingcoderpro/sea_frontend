@@ -53,6 +53,7 @@ export default {
       }
     },
     created(){            // 回车事件
+        this.loginUser.username = base.getQueryString('username') == null?'':base.getQueryString('username');
         var _self = this;
         document.onkeydown = function(e){
           if(window.event == undefined){

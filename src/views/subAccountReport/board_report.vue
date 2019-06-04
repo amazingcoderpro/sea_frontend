@@ -8,6 +8,7 @@
                    <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
                 </el-select>
                 <el-select v-model="searchData.board_id" placeholder="All Boards" class="Filter_week W200" @change="getPinFun">
+                    <el-option   :label="'All'" :value="''"></el-option>    
                         <el-option
                         v-for="item in searchData.BoardArray"
                         :key="item.id"
@@ -16,6 +17,7 @@
                         </el-option>
                 </el-select>
                 <el-select v-model="searchData.pin_id" placeholder="All Pins" class="Filter_week W200">
+                    <el-option   :label="'All'" :value="''"></el-option>    
                         <el-option
                         v-for="item in searchData.PinsArray"
                         :key="item.id"
@@ -141,6 +143,8 @@ export default {
                 this.getBodFun();
               }else{
                 this.searchData.pinterest_account_id = '';
+                this.searchData.board_id = '';
+                this.searchData.pin_id = '';
                 this.init();
               }
             }else{
@@ -160,6 +164,7 @@ export default {
                 this.getPinFun();
               }else{
                 this.searchData.board_id = '';
+                this.searchData.pin_id = '';
                 this.init();
               }
           }else{

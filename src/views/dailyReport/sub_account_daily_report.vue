@@ -12,9 +12,11 @@
                     <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
                 </el-select>
                 <el-select v-model="searchData.board_id" placeholder="All Boards" @change="getPinFun" :class="'W200'">
+                    <el-option   :label="'All'" :value="''"></el-option>    
                     <el-option  v-for="item in searchData.BoardArray" :key="item.id" :label="item.name" :value="item.id"></el-option>    
                 </el-select>
                 <el-select v-model="searchData.pin_id" placeholder="All Pins" :class="'W200'">
+                    <el-option   :label="'All'" :value="''"></el-option>    
                     <el-option v-for="item in searchData.PinsArray" :key="item.id" :label="item.pin_uri" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
@@ -133,7 +135,6 @@ export default {
 
     this.$axios.get(url)
       .then(res=> {
-        console.log(res)
           if(res.data.code == 1){
             if(res.data.data.results.length>0){
               this.bigReport = res.data.data.results;
@@ -187,6 +188,8 @@ export default {
                 this.getBodFun();
              }else{
                 this.searchData.pinterest_account_id = '';
+                this.searchData.board_id = '';
+                this.searchData.pin_id = '';
                 this.init();
               }
             }else{
@@ -206,6 +209,7 @@ export default {
               this.getPinFun();
             }else{
               this.searchData.board_id = '';
+              this.searchData.pin_id = '';
               this.init();
             }
           }else{

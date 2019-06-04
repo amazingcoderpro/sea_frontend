@@ -6,7 +6,7 @@
               <el-form-item label="User Name" prop="account">
                 <el-input v-model="form.account"></el-input>
               </el-form-item>
-              <el-form-item label="Email Addres" prop="email">
+              <el-form-item label="Email" prop="email">
                 <el-input v-model="form.email"></el-input>
               </el-form-item>
               <el-form-item label="type" prop="type">
@@ -19,7 +19,7 @@
                       type="datetime">
                     </el-date-picker>
               </el-form-item>
-              <el-form-item label="Account Type">
+              <el-form-item label="Description">
                 <el-input v-model="form.description"></el-input>
               </el-form-item>
               <el-form-item>

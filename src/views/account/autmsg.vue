@@ -34,7 +34,6 @@
   }
 </script>
 <style>
-.autmsg .el-button.el-button--primary{background: #fff;color: #ccc;padding: 0;border: 0;}
 .autmsg p{width: 60%;margin-left: 20%;color: #000;text-indent: 2em;}
 .autmsg p.title{font-size: 20px;font-weight: 600;text-align: center;text-indent: 0;}
 </style>
