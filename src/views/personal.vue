@@ -2,7 +2,7 @@
     <div class="personal">
         <section class="form_container">
                   <div class="tableTitle"><span>Profile Settings</span></div>
-                  <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="110px" class="personalForm">
+                  <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="110px">
                     <!-- 名 -->
                     <el-form-item label="FirstName" prop="first_name">
                       <el-input v-model="personalUser.first_name" placeholder="Daisy"></el-input>
@@ -35,6 +35,9 @@ import router from '../router'
 export default {
     name: "personal",
     components:{},
+    created(){  
+          this.init();
+      },
     data(){    
       return {
         personalUser:{
@@ -42,7 +45,7 @@ export default {
           last_name:"",
           email:"",
           password:"",
-          id:'',
+          personalID:"",
         },
         rules: {
           first_name: [
@@ -63,46 +66,47 @@ export default {
         }        
       }
     },
-    created(){   // 回车事件     
-        var _self = this;
-        document.onkeydown = function(e){
-          if(window.event == undefined){
-            var key = e.keyCode;
-          }else{
-            var key = window.event.keyCode;
-          }
-          if(key == 13){
-            _self.submitForm('personalForm');
-          }
-        }
-      },
-    methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$axios
-            .put(`/api/v1/account/users/1/`, this.personalUser)
-            .then(res => {
-              if (res.data.code == 1) {
-                 // router.push("/login");
-              } else {
-                this.$message("接口超时!");
-              }
-            })
-            .catch(error => {
-              this.$message("接口超时!");
-            });
-        }
-      });
-    }
+     
+      methods: {
+          init() {
+          this.personalUser.personalID = JSON.parse(window.localStorage.getItem('user')).id;
+          this.$axios(`/api/v1/account/users/${this.personalUser.personalID}/`).then(res => {
+              if(res.data.code == 1){
+                this.personalUser.first_name = res.data.data.first_name;
+                this.personalUser.last_name = res.data.data.last_name;
+                this.personalUser.email = res.data.data.email;
+              }else{
+                  this.$message({
+                    message: "code 异常!",
+                    type: 'warning',
+                    center: true
+                  });
+              }                                                   
+          })
+        },
+      submitForm(formName) {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            this.$axios
+              .put(`/api/v1/account/users/${this.personalUser.personalID}/`, this.personalUser)
+              .then(res => {
+                if (res.data.code == 1) {
+                } else {
+                  this.$message("修改成功!");
+                }
+              })
+            
+            }
+        });
+      }
   }
 };
 </script>
 
 <style scoped>
 .personal{
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 .personal .form_container {
     width: 100%;

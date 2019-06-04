@@ -18,18 +18,6 @@
                      <span>Link Parameter</span>
                      <el-input v-model="storeUser.url_format" disabled placeholder="Berrylook" class="Parameter"></el-input>
                    </div>
-                  <!-- Your Store Industry -->
-                   <!-- <div class="storeurl">
-                     <span>Your Store Industry</span>
-                     <el-select v-model="storeUser.Industry" placeholder="请选择">
-                      <el-option
-                        v-for="item in storeUser.IndustryArray"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id">
-                      </el-option>
-                    </el-select>
-                   </div> -->
                   <!-- Store Timezone -->
                    <div class="storeurl">
                      <span>Store Timezone</span>
@@ -99,7 +87,7 @@ export default {
           })
           .catch(error => {
             this.$message("接口超时!");
-          });
+       });
     },
   },
 };
