@@ -71,8 +71,10 @@ export default {
                 "childs":[
                   {"id":3,"menu_name":"Daily Report","menu_url":"2","parent_id":2,"icon":null,"childs":[
                     {"id":4,"menu_name":"Sub-Account Daily Report","menu_url":"/sub_account_daily_report","parent_id":3,"icon":null,"childs":[]},
-                    {"id":5,"menu_name":"Boards Daily Report","menu_url":"/boards_daily_report","parent_id":3,"icon":null,"childs":[]},
-                    {"id":6,"menu_name":"Pins Daily Report","menu_url":"/pins_daily_report","parent_id":3,"icon":null,"childs":[]}]},
+                    // {"id":5,"menu_name":"Boards Daily Report","menu_url":"/boards_daily_report","parent_id":3,"icon":null,"childs":[]},
+                    // {"id":6,"menu_name":"Pins Daily Report","menu_url":"/pins_daily_report","parent_id":3,"icon":null,"childs":[]}
+                    ]
+                    },
                   {"id":7,"menu_name":"Sub AccountReport","menu_url":"2-1","parent_id":2,"icon":null,"childs":[
                     {"id":8,"menu_name":"Sub-Account Report","menu_url":"/sub_account_report","parent_id":7,"icon":null,"childs":[]},
                     {"id":9,"menu_name":"Board Report","menu_url":"/board_report","parent_id":7,"icon":null,"childs":[]},

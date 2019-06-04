@@ -7,7 +7,6 @@
         <span>Options</span>
       </div>
         <el-form :inline="true" label-width="120px" >
-
             <el-form-item label="Filter">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" @change="getBodFun" :class="'W200'">
                     <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
@@ -324,8 +323,11 @@ export default {
 
 <style scoped>
  .sub_account_daily_report .report_title{width:305px;}
- .searchBox .el-input{
+  .sub_account_daily_report .searchBox .el-input{
  width: 20%;
     margin-right: 2%;  
  }
+  .sub_account_daily_report .menu{
+    margin-bottom:10px;
+  }
 </style>
