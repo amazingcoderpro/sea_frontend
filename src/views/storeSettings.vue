@@ -2,7 +2,7 @@
     <div class="storeSetting">
         <section class="form_container">
                   <div class="tableTitle"><span>Store Settings</span></div>
-                  <el-form :model="storeUser" :rules="rules" ref="personalForm" label-width="180px" class="personalForm">
+                  <el-form :model="storeUser" ref="personalForm" label-width="180px" class="personalForm">
                   <!-- Store Name -->
                    <div class="storename">
                      <span>Store Name</span>
@@ -16,10 +16,10 @@
                   <!-- Link Parameter -->
                    <div class="storeurl">
                      <span>Link Parameter</span>
-                     <el-input v-model="storeUser.email" disabled placeholder="Berrylook" class="Parameter"></el-input>
+                     <el-input v-model="storeUser.url_format" disabled placeholder="Berrylook" class="Parameter"></el-input>
                    </div>
                   <!-- Your Store Industry -->
-                   <div class="storeurl">
+                   <!-- <div class="storeurl">
                      <span>Your Store Industry</span>
                      <el-select v-model="storeUser.Industry" placeholder="请选择">
                       <el-option
@@ -29,34 +29,15 @@
                         :value="item.id">
                       </el-option>
                     </el-select>
-                   </div>
+                   </div> -->
                   <!-- Store Timezone -->
                    <div class="storeurl">
                      <span>Store Timezone</span>
-                     <el-select v-model="storeUser.Timezone" disabled placeholder="请选择">
-                      <el-option
-                        v-for="item in storeUser.TimezoneArray"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                      </el-option>
-                    </el-select>
+                      <el-input v-model="storeUser.timezone" disabled placeholder="请输入内容"></el-input>
                    </div>
-                  <!-- GC view ID -->
-                  <div class="storeurl">
-                     <span>Language</span>
-                     <el-select v-model="storeUser.Language" placeholder="请选择">
-                      <el-option
-                        v-for="item in storeUser.LanguageArray"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id">
-                      </el-option>
-                    </el-select>
-                  </div>
                     <!-- 点击 -->
                     <el-form-item>
-                      <el-button type="primary" class="submit_btn" @click="submitForm('personalForm')">Save Changes</el-button>
+                      <el-button type="primary" class="submit_btn" @click="submitForm()">Save Changes</el-button>
                     </el-form-item>
                   </el-form>
         </section>
@@ -74,90 +55,52 @@ export default {
         storeUser:{
           url:"",
           name:"",
-          link:"",
-          Industry:"",
-          Timezone:"",
-          Language:"",
-
-          IndustryArray:[],
-          TimezoneArray:[],
-          LanguageArray:[],
-        },
-        rules: {
-         
-        }        
+          timezone:"",
+          url_format:"",
+          storeID:"",
+          store_view_id:"",
+        }       
       }
     },
     created(){  
         this.init();
-
-        // 回车事件     
-        var _self = this;
-        document.onkeydown = function(e){
-          if(window.event == undefined){
-            var key = e.keyCode;
-          }else{
-            var key = window.event.keyCode;
-          }
-          if(key == 13){
-            _self.submitForm('personalForm');
-          }
-        }
-      },
-    mounted(){
-        this.getIndustry();
-        this.getLanguage();
     },
     methods: {
       init() {
-        this.storeUser.name = base.getQueryString("name");
-        this.storeUser.url = base.getQueryString("url");
-        this.storeUser.email = base.getQueryString("email");
+        this.storeUser.storeID = JSON.parse(window.localStorage.getItem('store')).id;
+        this.$axios(`/api/v1/store/${this.storeUser.storeID}/`).then(res => {
+            if(res.data.code == 1){
+              this.storeUser.name = res.data.data.name;
+              this.storeUser.url = res.data.data.url;
+              this.storeUser.timezone = res.data.data.timezone;
+              this.storeUser.url_format = res.data.data.url_format;
+            }else{
+                this.$message({
+                  message: "code 异常!",
+                  type: 'warning',
+                  center: true
+                });
+            }
+        })
       },
-      submitForm(formName) {
-        this.$refs[formName].validate(valid => {
-          if (valid) {
-            this.$axios
-              .put('/api/v1/store/1/', this.storeUser)
-              .then(res => {
-                if (res.data.code == 1) {
-                   // router.push("/login");
-                } else {
-                  this.$message("接口超时!");
-                }
-              })
-              .catch(error => {
-                this.$message("接口超时!");
+      submitForm() {
+        this.storeUser.store_view_id = JSON.parse(window.localStorage.getItem('store')).store_view_id;
+        this.$axios
+          .put(`/api/v1/store/${this.storeUser.storeID}/`, this.storeUser)
+          .then(res => {
+            if (res.data.code == 1) {
+              this.$message({
+                message: "修改成功!",
+                type: "success"
               });
-          }
-      });
+            } else {
+              this.$message("接口超时!");
+            }
+          })
+          .catch(error => {
+            this.$message("接口超时!");
+          });
     },
-      getIndustry:function(){
-          this.$axios.put("/api/v1/store/1/")
-          .then(res=> {
-              if(res.data.code == 1){
-                this.storeUser.IndustryArray = res.data.data;
-                this.storeUser.Industry = res.data.data[0].id;
-              }else{
-                this.$message("获取失败!");
-              }
-          }).catch(function(errof){
-            this.$message("接口超时!");
-          });
-      },
-      getLanguage:function(){
-          this.$axios.put(`/api/v1/store/${this.storeUser.id}/`)
-          .then(res=> {
-              if(res.data.code == 1){
-                this.storeUser.LanguageArray = res.data.data;
-                this.storeUser.Language = res.data.data[0].id;
-              }else{
-                this.$message("获取失败!");
-              }
-          }).catch(function(errof){
-            this.$message("接口超时!");
-          });
-      },
   },
 };
 </script>

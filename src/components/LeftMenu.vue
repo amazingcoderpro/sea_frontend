@@ -95,7 +95,10 @@ export default {
                   {"id":19,"menu_name":"Permission Manager","menu_url":"4-1","parent_id":18,"icon":null,"childs":[
                     {"id":20,"menu_name":"User Manager","menu_url":"/user_manager","parent_id":19,"icon":null,"childs":[]},
                     {"id":21,"menu_name":"Role Manager","menu_url":"/role_manager","parent_id":19,"icon":null,"childs":[]}]},
-                  {"id":22,"menu_name":"Store Manager","menu_url":"/store_manager","parent_id":18,"icon":null,"childs":[]}
+                  {"id":22,"menu_name":"Store Manager","menu_url":"/store_manager","parent_id":18,"icon":null,"childs":[]},
+                  {"id":23,"menu_name":"storeSettings","menu_url":"/storeSettings","parent_id":18,"icon":null,"childs":[]}
+
+                  
               ]}
             ]  
     };

@@ -81,7 +81,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios
-            .put(`/api/v1/account/users/${this.personalUser.id}/`, this.personalUser)
+            .put(`/api/v1/account/users/1/`, this.personalUser)
             .then(res => {
               if (res.data.code == 1) {
                  // router.push("/login");

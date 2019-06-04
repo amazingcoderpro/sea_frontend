@@ -61,6 +61,8 @@ const router = new Router({
         { path: '/user_manager', name: 'user_manager', component: UserManager },
         { path: '/role_manager', name: 'role_manager', component: RoleManager },
         { path: '/store_manager', name: 'store_manager', component: StoreManager },
+        { path: '/storeSettings', name: 'storeSettings', component: StoreSettings },
+        
       ]
     },
     {
@@ -77,11 +79,6 @@ const router = new Router({
       path: '/personal',
       name: 'personal',
       component:Personal
-    },
-    {
-      path: '/storeSettings',
-      name: 'storeSettings',
-      component:StoreSettings
     },
     {
       path: '/aut_state',
