@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard">
         <div class="tableTitle">
-            <span>账户总览</span>
+            <span style="width: 200px;">Account Dashboard</span>
         </div>
         <el-form :inline="true">
             <el-form-item label="Date Range">
@@ -18,12 +18,12 @@
             <el-date-picker
                 v-model="searchData.timeArray"
                 type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                range-separator="--"
+                start-placeholder="start time"
+                end-placeholder="End time"
                 :disabled="disabledType=='1'">
             </el-date-picker>
-            <el-button type="primary" icon="view" @click="init()">查询</el-button>
+            <el-button type="primary" icon="view" @click="init()">Search</el-button>
         </el-form>
         <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
         <div class="menu MB10">
@@ -37,14 +37,14 @@
         <!-- 表单部分 -->
         <div class="table_right MB10">
           <el-table :data="tableData" border ref="topictable">
-            <el-table-column  align="center"  class="parentNodeColumn" prop="site_num" label="站点总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="subaccount_num" label="账号总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="board_num" label="Board总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="pin_num" label="Pin总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="visitor_num" label="Visitor总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="click_num" label="Click 总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Sales 总数"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenue 总数"  ></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="site_num" label="Site Num"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="subaccount_num" label="Subaccount Num"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="board_num" label="Boards"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="pin_num" label="Pins"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="visitor_num" label="Visitors"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="click_num" label="Clicks"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Sales"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenues"  ></el-table-column>
           </el-table>
         </div>
         <div class="bottomBox">
@@ -204,9 +204,9 @@ export default {
                 {"label":"Custom","value":"0"},
                 {"label":"Yesterday","value":"1"},
                 {"label":"Today","value":"2"},
-                {"label":"近7天","value":"3"},
-                {"label":"本月","value":"4"},
-                {"label":"本年","value":"5"},
+                {"label":"Sevenday","value":"3"},
+                {"label":"The Months","value":"4"},
+                {"label":"The Years","value":"5"},
             ],
             searchData:{
                 dataType:'0',    //显示几天            

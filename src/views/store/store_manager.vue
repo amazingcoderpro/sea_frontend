@@ -57,7 +57,7 @@
                 <el-button v-else type="primary" icon="edit" size="small" @click="AutFun(scope.row)">授权</el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="操作" width="150" fixed="right" >
+            <el-table-column prop="operation" align="center" label="operation" width="150" fixed="right" >
               <template slot-scope="scope">
                   <el-button type="primary" icon="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="handleDelete(scope.row,scope.$index)">删除</el-button>

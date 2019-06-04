@@ -2,17 +2,17 @@
 <template>
     <div class="ruleAdd">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false">
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
             <el-form-item label="Website">
               <span style="color:red;font-size:16px;font-weight: 600;">{{website}}</span>
             </el-form-item>
-            <el-form-item label="选择Pinterest账户">
-              <el-select v-model="ruleForm.pinterest" placeholder="请选择Pinterest账户"  @change="pinterestChange">
-                <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account_uri" :value="item.id"></el-option>
+            <el-form-item label="Pinterest">
+              <el-select v-model="ruleForm.pinterest" placeholder="Pinterest"  @change="pinterestChange">
+                <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="选择Board" prop="board">
-              <el-select v-model="ruleForm.board" placeholder="请选择选择Board">
+            <el-form-item label="Board" prop="board">
+              <el-select v-model="ruleForm.board" placeholder="Board">
                 <template v-for="item in pinterestArray">
                   <template v-if="item.id == ruleForm.pinterest">
                      <el-option v-for="(items,index) in item.board_pinterest_account" :key="index" :label="items.name" :value="items.id"> </el-option>
@@ -20,24 +20,24 @@
                 </template>
               </el-select>
             </el-form-item>
-            <el-form-item label="规则有效期" prop="ruleTime">
+            <el-form-item label="ruleTime" prop="ruleTime">
               <div class="block">
-                  <el-date-picker v-model="ruleForm.ruleTime" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
+                  <el-date-picker v-model="ruleForm.ruleTime" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                   </el-date-picker>
               </div>
             </el-form-item>
-            <el-form-item label="时间区间" prop="schedule_rule">
-              <el-select :class="'W20'" v-model="scheduleRule.weekday" placeholder="请选择日期">
+            <el-form-item label="schedule_rule" prop="schedule_rule">
+              <el-select :class="'W20'" v-model="scheduleRule.weekday" placeholder="schedule_rule">
                 <el-option v-for="item in weekArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
-              <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="开始时间" end-placeholder="结束时间" placeholder="选择时间范围">
+              <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="start time" end-placeholder="End time" placeholder="选择时间范围">
               </el-time-picker>
-              <div class="el-form-item__error" :style="'margin-left:154px;'" v-if="timeValState == 2">时间区间必须大于2小时</div>
+              <div class="el-form-item__error" :style="'margin-left:154px;'" v-if="timeValState == 2">Must be more than 2 hours</div>
 
-              <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="发布频率">
+              <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="interval_time">
                 <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
-              <el-button type="primary"  @click="scheduleRuleFun()">添加时区</el-button>
+              <el-button type="primary"  @click="scheduleRuleFun()">Add</el-button>
             </el-form-item>
             <!-- 时间区间的列表，没有数据是处于隐藏状态 -->
             <div v-if="ruleForm.schedule_rule.length>0">
@@ -45,49 +45,49 @@
                   <li v-for="(item,index) in ruleForm.schedule_rule" :key="item.value">
                     <span class="spanClass">第{{index+1}}条</span>
                     <template>
-                        <span :class="'spanClass'" v-if="item.weekday == 0">星期一</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 1">星期二</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 2">星期三</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 3">星期四</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 4">星期五</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 5">星期六</span>
-                        <span :class="'spanClass'" v-else>星期天</span>
+                        <span :class="'spanClass'" v-if="item.weekday == 0">Monday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 1">Tuesday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 2">Wednesday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 3">Thursday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 4">Friday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 5">Saturday</span>
+                        <span :class="'spanClass'" v-else>Sunday</span>
                     </template>
-                    <span class="spanClass">开始时间:{{item.start_time}}</span>
-                    <span class="spanClass">结束时间:{{item.end_time}}</span>
-                    <span class="spanClass">发布频率:{{item.interval_time/3600}}H</span>
+                    <span class="spanClass">Start:{{item.start_time}}</span>
+                    <span class="spanClass">End:{{item.end_time}}</span>
+                    <span class="spanClass">interval_time:{{item.interval_time/3600}}H</span>
                     <el-button size="mini"  type="danger" @click="deletschedule(index)">X</el-button>
                   </li>
                 </ul>
             </div>
-            <el-form-item label="规则标签" prop="tag">
+            <el-form-item label="Tag" prop="tag">
               <el-input v-model="ruleForm.tag"></el-input>
             </el-form-item>
             <el-form-item label=" " :class="'contentBg'">
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">添加</el-button>
-              <el-button @click="resetForm('ruleForm')">重置</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">Add</el-button>
+              <el-button @click="resetForm('ruleForm')">Reset</el-button>
             </el-form-item>
           </el-form>
           <el-form :model="serchProduct" :rules="searchRules" ref="serchProduct" label-width="100px" class="demo-serchProduct searchContent">
-            <el-form-item label="可发布产品数量">
+            <el-form-item label="Number of Products">
               <span>{{ruleForm.product_list.length}}个</span>
-              <el-button type="primary"  @click="serchProductFun('serchProduct')" :style="'margin-left:20px;'">查询</el-button>
+              <el-button type="primary"  @click="serchProductFun('serchProduct')" :style="'margin-left:20px;'">Search</el-button>
               <div class="el-form-item__error" v-if="productListState == 2">请查询出满足以下条件的商品</div>
             </el-form-item>
-            <el-form-item label="产品名称" prop="product__name">
+            <el-form-item label="Product Name" prop="product__name">
                 <el-input v-model="serchProduct.product__name" :style="'width: 400px;'"></el-input>
             </el-form-item>
-            <el-form-item label="产品上架时间" prop="data1">
-                <el-date-picker v-model="serchProduct.data1" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
+            <el-form-item label="Product Time" prop="data1">
+                <el-date-picker v-model="serchProduct.data1" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="产品时间" prop="data2" :class="'specialTime'">
-                <el-date-picker v-model="serchProduct.data2" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
+            <el-form-item label="Time" prop="data2" :class="'specialTime'">
+                <el-date-picker v-model="serchProduct.data2" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="产品浏览量" prop="scan">
+            <el-form-item label="Scan" prop="scan">
               <el-select :class="'W20'" v-model="serchProduct.scan_sign">
                 <el-option  :label="'='" :value="'=='"> </el-option>
                 <el-option  :label="'>'" :value="'>'"> </el-option>
@@ -95,9 +95,9 @@
                 <el-option  :label="'>='" :value="'>='"> </el-option>
                 <el-option  :label="'<='" :value="'<='"> </el-option>
               </el-select>
-              <el-input :class="'W36'" v-model="serchProduct.scan" type="number" placeholder="请输入产品浏览量"></el-input>
+              <el-input :class="'W36'" v-model="serchProduct.scan" type="number" placeholder="Scan"></el-input>
             </el-form-item>
-            <el-form-item label="产品销量" prop="sale">
+            <el-form-item label="Sale" prop="sale">
               <el-select :class="'W20'"  v-model="serchProduct.sale_sign">
                 <el-option  :label="'='" :value="'=='"> </el-option>
                 <el-option  :label="'>'" :value="'>'"> </el-option>
@@ -105,7 +105,7 @@
                 <el-option  :label="'>='" :value="'>='"> </el-option>
                 <el-option  :label="'<='" :value="'<='"> </el-option>
               </el-select>
-              <el-input :class="'W36'" v-model="serchProduct.sale" type="number"  placeholder="请输入产品销量"></el-input>
+              <el-input :class="'W36'" v-model="serchProduct.sale" type="number"  placeholder="Sale"></el-input>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -142,13 +142,13 @@ import * as base from '../../assets/js/base'
               timeVal:[new Date(2016, 9, 10, 8, 0), new Date(2016, 9, 10, 16, 0)], //El的展示数据
           }, 
           weekArray:[//时间区间的星期几
-            {"label":"星期一","value":"0"},
-            {"label":"星期二","value":"1"},
-            {"label":"星期三","value":"2"},
-            {"label":"星期四","value":"3"},
-            {"label":"星期五","value":"4"},
-            {"label":"星期六","value":"5"},
-            {"label":"星期天","value":"6"},
+            {"label":"Monday","value":"0"},
+            {"label":"Tuesday","value":"1"},
+            {"label":"Wednesday","value":"2"},
+            {"label":"Thursday","value":"3"},
+            {"label":"Friday","value":"4"},
+            {"label":"Saturday","value":"5"},
+            {"label":"Sunday","value":"6"},
           ],
           publishTimeArray:[//发布频率的时间选择
             {"label":"0.5H","value":"1800"},
@@ -340,8 +340,8 @@ import * as base from '../../assets/js/base'
 </script>
 <style>
 .ruleAdd .el-dialog{width: 70%;height: 86%;overflow: auto;margin: 0;left: 15%;top: -10%;}
-.ruleAdd .el-form-item__label{width:145px!important;}
-.ruleAdd .el-form-item__content{margin-left:145px!important;}
+.ruleAdd .el-form-item__label{width:155px!important;}
+.ruleAdd .el-form-item__content{margin-left:155px!important;}
 .ruleAdd .W20{width:20%;margin-right:2%;}
 .ruleAdd .W36{width:36%;margin-right:2%;}
 .ruleAdd .W40{width:40%;margin-right:2%;}

@@ -43,7 +43,7 @@
             <span style="margin-left: 10px">{{ scope.row.update_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="operation" align="center" label="操作" fixed="right" width="190">
+        <el-table-column prop="operation" align="center" label="operation" fixed="right" width="190">
           <template slot-scope="scope">
             <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">编辑</el-button>
             <el-button

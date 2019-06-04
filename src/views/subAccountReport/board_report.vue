@@ -26,27 +26,26 @@
                 <el-date-picker
                     v-model="searchData.timeArray"
                     type="datetimerange"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
+                    range-separator="--"
+                    start-placeholder="start time"
+                    end-placeholder="End time"
                     class="W400"
                   >
                 </el-date-picker>
                 <el-input v-model="searchData.search" @keyup.enter.native="init()"  class="W10"></el-input>
-                <el-button type="primary" size="small" icon="view" @click="init()">查询</el-button>
+                <el-button type="primary" size="small" icon="view" @click="init()">Search</el-button>
             </el-form-item>
         </el-form>  
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-
             <el-table-column  align="center"  prop="board_id" label="board ID"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="board_name" label="board 名称"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="boards" label="Board数"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="board_followers" label="Follower数"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="pins" label="Pin数"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="pin_saves" label="Saves数"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="board_name" label="Board Name"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="board_followers" label="Followers"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_likes" label="Like"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="100"></el-table-column>

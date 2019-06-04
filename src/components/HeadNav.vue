@@ -9,7 +9,7 @@
                 <div class="userinfo">
                      <img src="../assets/img/none.png" class='avatar' alt="">
                     <div class='welcome'>
-                      <p class='name comename'>欢迎您 , <span class="avatarname">{{user.username}}</span></p>
+                      <p class='name comename'>Welcome , <span class="avatarname">{{user.username}}</span></p>
                     </div>
                     <span class='username'>
                         <el-dropdown trigger="click" @command='setDialogInfo'>
@@ -18,8 +18,8 @@
                             </span>
                             <el-dropdown-menu slot="dropdown">
                                 <!-- <el-dropdown-item command='info'>个人信息</el-dropdown-item> -->
-                                <el-dropdown-item  command='modify_password'>修改密码</el-dropdown-item>
-                                <el-dropdown-item  command='logout'>退出</el-dropdown-item>
+                                <el-dropdown-item  command='modify_password'>Modify Password</el-dropdown-item>
+                                <el-dropdown-item  command='logout'>Logout</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                      </span>

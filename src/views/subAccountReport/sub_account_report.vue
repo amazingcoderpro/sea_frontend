@@ -26,27 +26,27 @@
                 <el-date-picker
                     v-model="searchData.timeArray"
                     type="datetimerange"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
+                    range-separator="--"
+                    start-placeholder="start time"
+                    end-placeholder="End time"
                     class="W400"
                   >
                 </el-date-picker>
                 <el-input v-model="searchData.search" @keyup.enter.native="init()"  class="W200"></el-input>
-                <el-button type="primary" size="small" icon="view" @click="init()">查询</el-button>
+                <el-button type="primary" size="small" icon="view" @click="init()">Search</el-button>
             </el-form-item>
         </el-form>  
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  align="center"  prop="subaccount_id" label="账户ID"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="account_name" label="账户名称"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="boards" label="Board数"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="account_followings" label="Following数"  width="200"></el-table-column>
-            <el-table-column  align="center"  prop="account_followers" label="Follower数"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="pins" label="Pin数"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="pin_saves" label="Saves数"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="subaccount_id" label="Subaccount ID"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="account_name" label="Account Name"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="account_followings" label="Followings"  width="200"></el-table-column>
+            <el-table-column  align="center"  prop="account_followers" label="Followers"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="pin_saves" label="Savess"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_likes" label="Like"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="100"></el-table-column>
@@ -54,7 +54,7 @@
             <el-table-column  align="center"  prop="account_views" label="View"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_sales" label="Sales"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="product_revenue" label="Revenue" ></el-table-column>
+            <el-table-column  align="center"  prop="product_revenue" label="Revenue"  width="100" ></el-table-column>
           </el-table>
         </div>
         <!-- 分页 -->

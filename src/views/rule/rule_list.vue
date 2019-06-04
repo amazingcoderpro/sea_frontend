@@ -1,13 +1,13 @@
 <template>
     <div class="RuleList">
-        <div class="tableTitle"><span>规则列表</span></div>
+        <div class="tableTitle"><span>Rule List</span></div>
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null">
-          <el-form-item label="Pinterest账户筛选:">
-            <el-select v-model="searchData.pinterest" placeholder="请选择Pinterest账户"  @change="pinterestChange" :class="'W200'">
+          <el-form-item label="Pinterest:">
+            <el-select v-model="searchData.pinterest" placeholder="Pinterest"  @change="pinterestChange" :class="'W200'">
               <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
             </el-select>
-            <el-select v-model="searchData.board" placeholder="请选择选择Board" :class="'W200'">
-              <el-option :label="'全选'" :value="'-1'"> </el-option>
+            <el-select v-model="searchData.board" placeholder="Board" :class="'W200'">
+              <el-option :label="'All'" :value="'-1'"> </el-option>
               <template v-for="item in pinterestArray">
                 <template v-if="item.id == searchData.pinterest">
                     <el-option v-for="(items,index) in item.board_pinterest_account" :key="index" :label="items.name" :value="items.id"> </el-option>
@@ -15,23 +15,23 @@
               </template>
             </el-select>
           </el-form-item>
-          <el-form-item label="规则标签:">
-            <el-input placeholder="请输入规则标签" v-model="searchData.tag" :class="'W200'"></el-input>
+          <el-form-item label="Rule Tag:">
+            <el-input placeholder="Tag" v-model="searchData.tag" :class="'W200'"></el-input>
           </el-form-item>
-          <el-form-item label="产品创建时间:">
-              <el-date-picker type="datetimerange" v-model="searchData.creatTime" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']" :class="'W400'">
+          <el-form-item label="CreatTime:">
+              <el-date-picker type="datetimerange" v-model="searchData.creatTime" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W400'">
               </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="init">查询</el-button>
+            <el-button type="primary" @click="init">Search</el-button>
           </el-form-item>
           <el-form-item :class="'FR'">
-            <el-button type="primary" @click="addFun">添加</el-button>
+            <el-button type="primary" @click="addFun">Add</el-button>
           </el-form-item>
         </el-form>
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id != null">
           <el-form-item :class="'FR'">
-            <el-button type="primary" @click="addFun">添加</el-button>
+            <el-button type="primary" @click="addFun">Add</el-button>
           </el-form-item>
         </el-form>
       
@@ -39,45 +39,45 @@
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="规则标签"  width="200">
+            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="Tag"  width="200">
               <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="规则创建时间"  width="250">
+            <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="Create Time"  width="250">
               <template slot-scope="scope"> {{scope.row.create_time}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="规则有效期"  width="300">
+            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Time Of Validity"  width="300">
               <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
             </el-table-column>
             <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="时间区间"  width="400">
             <template slot-scope="scope" >
                 <div  v-for="item in scope.row.schedule_rule" :key="item.id">
                     <template>
-                        <span :class="'spanClass'" v-if="item.weekday == 0">星期一</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 1">星期二</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 2">星期三</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 3">星期四</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 4">星期五</span>
-                        <span :class="'spanClass'" v-else-if="item.weekday == 5">星期六</span>
-                        <span :class="'spanClass'" v-else>星期天</span>
+                        <span :class="'spanClass'" v-if="item.weekday == 0">Monday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 1">Tuesday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 2">Wednesday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 3">Thursday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 4">Friday</span>
+                        <span :class="'spanClass'" v-else-if="item.weekday == 5">Saturday </span>
+                        <span :class="'spanClass'" v-else>Sunday</span>
                     </template>
                     |{{item.start_time}}|{{item.end_time}}|发布频率{{item.interval_time}}
                     <br/>
                 </div>
             </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="可发布产品数量"  width="200">
+            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="200">
               <template slot-scope="scope"> {{JSON.parse(scope.row.product_list).length }}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="所属账户"  width="200">
+            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="200">
               <template slot-scope="scope"> {{scope.row.account_name}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="所属Board"  width="200">
+            <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="Board Name"  width="200">
               <template slot-scope="scope"> {{scope.row.baord_name}}</template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="操作" width="180"  fixed="right">
+            <el-table-column prop="operation" align="center" label="operation" width="180"  fixed="right">
               <template slot-scope="scope">
-                <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">暂停</el-button>
-                <el-button type="danger" icon="edit" size="small" @click="deteleFun(scope.row)">删除</el-button>
+                <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>
+                <el-button type="danger" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
               </template>
             </el-table-column>
           </el-table>

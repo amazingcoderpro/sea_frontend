@@ -14,7 +14,7 @@
               </el-form-item>
               <el-form-item>
               <el-button type="primary" @click="submitForm('objForm')">立即创建</el-button>
-              <el-button @click="resetForm('objForm')">重置</el-button>
+              <el-button @click="resetForm('objForm')">Reset</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>

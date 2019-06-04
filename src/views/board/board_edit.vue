@@ -51,7 +51,9 @@
           this.$axios(`/api/v1/board_manage/${this.formData.board_id}/`)
           .then(res => {
             if(res.data.code == 1){
-              this.editData = res.data.data;
+              this.editData.board_uri = res.data.data.uuid;
+              this.editData.name = res.data.data.name;
+              this.editData.description = res.data.data.description;
             }else{
               this.$message({
                 message: "获取数据失败",

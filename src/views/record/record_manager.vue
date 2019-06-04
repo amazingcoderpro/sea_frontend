@@ -1,14 +1,14 @@
 
 <template>
     <div class="record_manager">
-        <div class="tableTitle"><span>发布列表管理</span></div> 
+        <div class="tableTitle"><span>Record Manager</span></div> 
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
-                <el-input v-model="search.product__sku"  placeholder="请输入SKU"></el-input>
+                <el-input v-model="search.product__sku"  placeholder="SKU"></el-input>
                 <el-button  type="primary" @click='init()'>search</el-button>
             </el-form-item>
         </el-form>
-        <el-select v-model="search.state" filterable placeholder="请选择" class="btnLeft">
+        <el-select v-model="search.state" filterable class="btnLeft">
             <el-option
             v-for="item in options"
             :key="item.value"
@@ -19,57 +19,47 @@
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" :height="tableHeight">
-                <!-- 批量操作 -->
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
-                <!-- ID -->
             <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
-                <!-- 产品SKU -->
-            <el-table-column prop="product.sku" label="产品SKU" align="center" width="200"></el-table-column>
-                <!-- Pin图 -->
-            <el-table-column prop="thumbnail" label="Pin图" align="center" width="110">
+            <el-table-column prop="product.sku" label="SKU" align="center" width="200"></el-table-column>
+            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="110">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
-                <!-- Pin描述 -->
-            <el-table-column prop="board.description"  label="Pin描述" align="center" width="110">
+            <el-table-column prop="board.description"  label="Description" align="center" width="110">
             </el-table-column>
-                <!-- pin URL -->
-            <el-table-column prop="product.url" label="Pin URL" align="center" width="110"></el-table-column>
-                <!-- 产品浏览量 -->
-            <el-table-column  class="parentNodeColumn" prop="rule.scan" label="产品浏览量" align="center"  width="120">
+            <el-table-column prop="product.url" label="Pin URL" align="center" width="200"></el-table-column>
+            <el-table-column  class="parentNodeColumn" prop="rule.scan" label="Scan" align="center"  width="120">
               <template slot-scope="scope">
                 {{scope.row.rule.scan_sign}} == {{scope.row.rule.scan}}
               </template>
             </el-table-column>
-                <!-- 产品销量 -->
-            <el-table-column  class="parentNodeColumn" prop="sale" label="产品销量" align="center"  width="120">
+            <el-table-column  class="parentNodeColumn" prop="sale" label="Sale" align="center"  width="120">
               <template slot-scope="scope">
                 {{scope.row.rule.sale_sign}} == {{scope.row.rule.sale}}
               </template>
             </el-table-column>
-                <!-- 价格 -->
-            <el-table-column  class="parentNodeColumn" prop="product.price" label="价格" align="center"  width="120">
+            <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">
             </el-table-column>
-                <!-- 所属规则标签 -->
-            <el-table-column prop="product.tag" label="所属规则标签" align="center" width="120">
+            <el-table-column prop="product.tag" label="Tag" align="center" width="120">
                 <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
-                <!-- 所属Board ID -->
-            <el-table-column prop="board.id" label="所属Board ID" align="center" width="120"></el-table-column>
-                <!-- 所属账户ID -->
-            <el-table-column prop="board.pinterest_account" label="所属账户ID" align="center" width="120"></el-table-column>
-                <!-- 发布状态 --> 
-            <el-table-column prop="state" label="发布状态" align="center" width="200">
+            <el-table-column prop="board.id" label="Board ID" align="center" width="120"></el-table-column>
+            <el-table-column prop="board.pinterest_account" label="Pinterest Account ID" align="center" width="200"></el-table-column>
+            <el-table-column prop="state" label="State" align="center" width="200">
               <template  slot-scope="scope">
-                <span v-if="scope.row.state == 1">finished</span>
-                <span v-else>failed</span>
+                <template v-if="scope.row.state == 0">
+                    <el-button type="primary" icon="edit" size="small" disabled="">待发布</el-button>
+                </template>
+                <template v-else>
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">发布失败</el-button>
+                </template>
               </template>
-
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="备注" width="150">
+            <el-table-column prop="remark" align="center" label="Remark" width="150">
             </el-table-column>
-            <el-table-column align="center" label="操作" fixed="right" width="150">
+            <el-table-column align="center" label="operation" fixed="right" width="150">
                 <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >取消</el-button>
             </el-table-column>
 
@@ -103,20 +93,20 @@ export default {
 
       options: [
         {
-          value: '[0,2]', 
-          label: '全部'
+          value: '[0,3]', 
+          label: 'All'
         },
         {
           value: '[0]', 
-          label: '待发布'
+          label: '待发布0'
         },
         {
-          value: '[2]',
-          label: '未发布'
+          value: '[3]',
+          label: '发布失败3'
         }
       ],
       search:{
-        state:'[0,2]',
+        state:'[0,3]',
         product__sku:'',
       },
 
@@ -183,6 +173,26 @@ export default {
                       this.$message.error('取消失败!');
                     }
                   })
+            }) 
+    },
+    recordHead(row){
+        this.$confirm('是否要手动发布?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              
+                this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
+                  .then(res => {
+                    if(res.data.code == 1){
+                      this.$message({type: 'success',message: '发布成功!'});
+                    }else{
+                      this.$message.error( res.data.msg.detail);
+                    }
+                  })
+                  .catch(error => {
+                     this.$message.error('接口超时!');
+                  }); 
             }) 
     },
     current_change(val){

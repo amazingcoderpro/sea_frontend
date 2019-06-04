@@ -27,10 +27,10 @@
                   :value="item.value">
                   </el-option>
               </el-select>
-              <el-date-picker v-model="searchData.timeArray" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :class="'W410'">
+              <el-date-picker v-model="searchData.timeArray" type="datetimerange" range-separator="--" start-placeholder="start time" end-placeholder="End time" :class="'W410'">
               </el-date-picker>
               <el-input v-model="searchData.search" @keyup.enter.native="init()" :class="'W200'"></el-input>
-              <el-button type="primary" icon="view" @click="init()">查询</el-button>
+              <el-button type="primary" icon="view" @click="init()">Search</el-button>
             </el-form-item>
         </el-form>  
                 <!-- echarts图表 -->
@@ -50,10 +50,10 @@
             <el-table border ref="topictable" :data="bigReport">
               <el-table-column prop="date" label="Data" align="center"  width="110" ></el-table-column>
               <el-table-column prop="boards" label="Board数" align="center"  width="120"></el-table-column>
-              <el-table-column prop="account_followings" label="Following数" align="center" width="120"></el-table-column>
-              <el-table-column prop="account_followers" label="Follower数" align="center" width="120"></el-table-column>
-              <el-table-column prop="pins" label="Pin数" align="center" width="120"></el-table-column>
-              <el-table-column prop="pin_comments" label="Repin数" align="center" width="120"></el-table-column>
+              <el-table-column prop="account_followings" label="Followings" align="center" width="120"></el-table-column>
+              <el-table-column prop="account_followers" label="Followers" align="center" width="120"></el-table-column>
+              <el-table-column prop="pins" label="Pins" align="center" width="120"></el-table-column>
+              <el-table-column prop="pin_comments" label="Repins" align="center" width="120"></el-table-column>
               <el-table-column prop="pin_likes" label="Like" align="center"  width="120"></el-table-column>
               <el-table-column prop="pin_comments" label="Comments" align="center"  width="120"></el-table-column>
               <el-table-column prop="product_visitors" label="Visitors" align="center"  width="120"></el-table-column>
@@ -76,26 +76,18 @@ export default {
     return {
       chart: null,
       bigReport:null,      //最大数据
-      tableType:0,        //
-//tableType 对应的参数表 
-//0  Revenue  Revenue
-//1 Sales product_sales
-//2 Followers account_followers
-//3 pins pins
-//4 Repins 
-//5 Likes pin_likes
-//6 Comments pin_comments
+      tableType:0,     
       tableValue:{
-         XValue:['没有数据'], 
+         XValue:['no value'], 
          YValue:[0], 
       },
       dataArray:[//时间区间的星期几
         {"label":"Custom","value":"0"},
         {"label":"Yesterday","value":"1"},
         {"label":"Today","value":"2"},
-        {"label":"近7天","value":"3"},
-        {"label":"本月","value":"4"},
-        {"label":"本年","value":"5"},
+        {"label":"Sevenday","value":"3"},
+        {"label":"The Months","value":"4"},
+        {"label":"The Years","value":"5"},
       ],
       searchData:{
           dataType:'0',    //显示几天 

@@ -1,6 +1,6 @@
 <template>
     <div class="account_List">
-        <div class="tableTitle"><span>Account list</span></div>
+        <div class="tableTitle"><span>Account List</span></div>
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
                 <el-button  type="primary" @click='addFun()'>Add account</el-button>
@@ -11,69 +11,69 @@
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column type="selection" align="center" width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
-            <el-table-column label="头像" align="center" width="100">
+            <el-table-column label="Head Portrait" align="center" width="150">
               <template slot-scope="scope">
                 <img src="../../assets/img/none.png" min-width="70" height="70" />
               </template> 
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="账户信息" align="center"  width="350">
+            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account" align="center"  width="350">
               <template slot-scope="scope"> 
-                用户名:{{scope.row.account_name}}<br/>
-                登陆邮箱:{{scope.row.account_email}}<br/> 
-                创建时间:{{scope.row.account_create_time}}<br/> 
-                账户类型:<span v-if='scope.row.account_type=0'>business</span><span v-else>individual</span>
+                account_name:{{scope.row.account_name}}<br/>
+                account_email:{{scope.row.account_email}}<br/> 
+                account_create_time:{{scope.row.account_create_time}}<br/> 
+                account_type:<span v-if='scope.row.account_type=0'>business</span><span v-else>individual</span>
               </template>
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" align="center" label="Pin数据"  width="120">
-              <template slot-scope="scope"> 总数:{{scope.row.pins}}<br/>今日新增:{{scope.row.pins_increment}}</template>
+            <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" align="center" label="Pins"  width="120">
+              <template slot-scope="scope"> All:{{scope.row.pins}}<br/>Today:{{scope.row.pins_increment}}</template>
             </el-table-column>
-            <el-table-column  prop="repin,repin_increment" label="Save数据" align="center"  width="120">
-              <template slot-scope="scope"> 总数:{{scope.row.saves}}<br/>今日新增:{{scope.row.saves_increment}}</template>
+            <el-table-column  prop="repin,repin_increment" label="Saves" align="center"  width="120">
+              <template slot-scope="scope"> All:{{scope.row.saves}}<br/>Today:{{scope.row.saves_increment}}</template>
             </el-table-column>
-            <el-table-column  prop="like,like_increment" label="Like数据" align="center"  width="120">
-              <template slot-scope="scope"> 总数:{{scope.row.likes}}<br/>今日新增:{{scope.row.likes_increment}}</template>
+            <el-table-column  prop="like,like_increment" label="Likes" align="center"  width="120">
+              <template slot-scope="scope"> All:{{scope.row.likes}}<br/>Today:{{scope.row.likes_increment}}</template>
             </el-table-column>
-            <el-table-column  prop="comment,comment_increment" label="Comment数据" align="center"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.comments}}<br/>今日新增:{{scope.row.comments_increment}}</template>
+            <el-table-column  prop="comment,comment_increment" label="Comments" align="center"  width="150">
+              <template slot-scope="scope"> All:{{scope.row.comments}}<br/>Today:{{scope.row.comments_increment}}</template>
             </el-table-column>
             <el-table-column prop="update_person" label="详细数据报告" align="center" width="150">
                <template slot-scope="scope">
-                <el-button icon="edit"  type="primary"  size="small" @click="BoardManagerFun(scope.row)">border列表</el-button>
+                <el-button icon="edit"  type="primary"  size="small" @click="BoardManagerFun(scope.row)">border list</el-button>
               </template>
              
             </el-table-column>
-            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="更新情况" align="center"  width="300">
+            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="update" align="center"  width="350">
               <template slot-scope="scope">
-                 更新人:{{scope.row.update_person}}<br/>
-                 账户最新状态:<span v-if='scope.row.account_state=0'>normal</span><span v-else>forbidden</span><br/>
-                 最新发布时间:{{scope.row.account_publish_time}}<br/>
-                 最新抓取时间:{{scope.row.account_crawl_time}}
+                 update_person:{{scope.row.update_person}}<br/>
+                 account_state:<span v-if='scope.row.account_state=0'>normal</span><span v-else>forbidden</span><br/>
+                 account_publish_time:{{scope.row.account_publish_time}}<br/>
+                 account_crawl_time:{{scope.row.account_crawl_time}}
               </template>
             </el-table-column>
 
-            <el-table-column prop="role_name" label="规则详情" align="center" width="150" >
+            <el-table-column prop="role_name" label="Rule List" align="center" width="150" >
               <template slot-scope="scope">
-                <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">规则列表</el-button>
+                <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">rule list</el-button>
               </template>
             </el-table-column>
             <el-table-column  prop="finished,pending" align="center" label="发布记录"  width="150">
               <template slot-scope="scope">
-                 今日已发布数:{{scope.row.finished}}<br/>
-                 今日未发布数:{{scope.row.pending}}<br/>
+                 today_finished:{{scope.row.finished}}<br/>
+                 today_pending:{{scope.row.pending}}<br/>
               </template>
             </el-table-column>
-            <el-table-column prop="account_authorized" align="center" label="授权" width="150">
+            <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
               <template slot-scope="scope">
                 <!-- <el-button v-if="scope.row.account_authorized == 1"  type="primary" size="small" disabled="">已授权</el-button> -->
-                <span v-if="scope.row.account_authorized == 1">已授权</span>
-                <el-button v-else type="primary"  size="small" @click="confirmFun(scope.row)">授权</el-button>
+                <span v-if="scope.row.account_authorized == 1">great</span>
+                <el-button v-else type="primary"  size="small" @click="confirmFun(scope.row)">authorization</el-button>
               </template>
             </el-table-column>
 
-            <el-table-column prop="operation" align="center" label="操作" width="100" fixed="right" >
+            <el-table-column prop="operation" align="center" label="operation" width="100" fixed="right" >
               <template slot-scope="scope">
                 <!-- <el-button icon="edit" type="primary" size="small" @click="EditFun(scope.row)">编辑</el-button> -->
-                <el-button icon="edit" type="danger" size="small" @click="deteleFun(scope.row)">删除</el-button>
+                <el-button icon="edit" type="danger" size="small" @click="deteleFun(scope.row)">delete</el-button>
               </template>
             </el-table-column>
           </el-table>
