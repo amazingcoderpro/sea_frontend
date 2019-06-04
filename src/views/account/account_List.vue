@@ -187,6 +187,7 @@ export default {
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: '删除成功!'});
+                      this.init();
                     }else{
                       this.$message.error('删除失败!');
                     }

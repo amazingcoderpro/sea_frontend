@@ -77,13 +77,13 @@
               <div class="el-form-item__error" v-if="productListState == 2">请查询出满足以下条件的商品</div>
             </el-form-item>
             <el-form-item label="产品名称" prop="product__name">
-                <el-input v-model="serchProduct.product__name"></el-input>
+                <el-input v-model="serchProduct.product__name" :style="'width: 400px;'"></el-input>
             </el-form-item>
             <el-form-item label="产品上架时间" prop="data1">
                 <el-date-picker v-model="serchProduct.data1" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="产品时间" prop="data2">
+            <el-form-item label="产品时间" prop="data2" :class="'specialTime'">
                 <el-date-picker v-model="serchProduct.data2" type="datetimerange" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
                 </el-date-picker>
             </el-form-item>
@@ -95,7 +95,7 @@
                 <el-option  :label="'>='" :value="'>='"> </el-option>
                 <el-option  :label="'<='" :value="'<='"> </el-option>
               </el-select>
-              <el-input :class="'W36'" v-model="serchProduct.scan" placeholder="请输入产品浏览量"></el-input>
+              <el-input :class="'W36'" v-model="serchProduct.scan" type="number" placeholder="请输入产品浏览量"></el-input>
             </el-form-item>
             <el-form-item label="产品销量" prop="sale">
               <el-select :class="'W20'"  v-model="serchProduct.sale_sign">
@@ -105,7 +105,7 @@
                 <el-option  :label="'>='" :value="'>='"> </el-option>
                 <el-option  :label="'<='" :value="'<='"> </el-option>
               </el-select>
-              <el-input :class="'W36'" v-model="serchProduct.sale" placeholder="请输入产品销量"></el-input>
+              <el-input :class="'W36'" v-model="serchProduct.sale" type="number"  placeholder="请输入产品销量"></el-input>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -157,14 +157,14 @@ import * as base from '../../assets/js/base'
             {"label":"2H","value":"7200"},
           ],
           serchProduct:{
-            data1:[new Date(2019, 3, 1, 8, 0), new Date(2019, 5, 1, 16, 0)],   //产品上架时间初始数据
-            data2:[new Date(2019, 3, 1, 8, 0), new Date(2019, 5, 1, 16, 0)],   //产品特殊时间初始数据
+            data1:[],   //产品上架时间初始数据
+            data2:[],   //产品特殊时间初始数据
             publish_begin_time:'',//产品上架时间最终数据
             publish_end_time:'',   
             begin_time:'',        //产品特殊时间最终数据
             end_time:'',
             store:'',
-            product__name:'短',      
+            product__name:'',      
             sale_sign:'>',           // 销量标识符
             sale:'',           //产品销量
             scan_sign:'>',       //浏览量标识符
@@ -191,9 +191,9 @@ import * as base from '../../assets/js/base'
           searchRules:{
             product__name: [{ required: true, message: '请输入商品名', trigger: 'blur' },],
             data1:[{required: true, message: '请选择商品上架时间', trigger: 'change' }],
-            data2:[{required: true, message: '请选择商品特殊时间', trigger: 'change' }],
+            data2:[{required: true, message: '请选择商品浏览量、销量时间', trigger: 'change' }],
             // sale: [{ required: true, message: '请输入产品销量', trigger: 'blur' },],
-            scan: [{ required: true, message: '请输入产品浏览量', trigger: 'blur' },],
+            scan: [{ required: true, message: '请输入产品浏览量', trigger: 'blur'}],
           },
 
       };
@@ -211,10 +211,7 @@ import * as base from '../../assets/js/base'
               }
               this.pinterestChange();
             }
-        })
-        .catch(error => {
-          this.$message("接口超时!");
-        });   
+        })  
       }
     },
     methods: {
@@ -243,21 +240,13 @@ import * as base from '../../assets/js/base'
                       }else{
                         this.$message("添加失败!");
                       }
-                  })
-                  .catch(error => {
-                    this.$message("接口超时!");
-                  });  
+                  })  
               }
-
-        
           } else {
             console.log('error submit!!');
             return false;
           }
         });
-
-
-
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -299,8 +288,6 @@ import * as base from '../../assets/js/base'
               this.serchProduct.publish_end_time =  base.dateFormat(this.serchProduct.data1[1]);
               this.serchProduct.begin_time = base.dateFormat(this.serchProduct.data2[0]);
               this.serchProduct.end_time =  base.dateFormat(this.serchProduct.data2[1]);
-        console.log(this.serchProduct)
-
               var url = "/api/v1/rule/search_product/?index=1";
               if(this.serchProduct.data1.length == 2){
                   url += "&publish_begin_time="+this.serchProduct.publish_begin_time;
@@ -327,10 +314,7 @@ import * as base from '../../assets/js/base'
                   }else{
                     this.$message("获取商品列表失败!");
                   }
-              })
-              .catch(error => {
-                this.$message("接口超时!");
-              });          
+              })        
           } else {
             console.log('error submit!!');
             return false;
@@ -367,6 +351,17 @@ import * as base from '../../assets/js/base'
 .ruleAdd .scheduleRuleList li{font-size:14px;color:#606266;margin-bottom:5px;}
 .ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
 .ruleAdd .el-dialog__body{position: relative;}
-.ruleAdd .contentBg{height:358px;}
+.ruleAdd .contentBg{height:300px;}
 .ruleAdd .searchContent{position: absolute;bottom:100px;}
+.ruleAdd .specialTime{
+    position: absolute;
+    left: 346px;
+}
+.ruleAdd input::-webkit-outer-spin-button,
+.ruleAdd input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.ruleAdd input[type="number"]{
+  -moz-appearance: textfield;
+}
 </style>

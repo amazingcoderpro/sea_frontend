@@ -65,6 +65,9 @@
                 <template v-if="scope.row.state == 1">
                     finished
                 </template>
+                <template v-else-if="scope.row.state == 3">
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >重发</el-button>
+                </template>
                 <template v-else>
                     <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >手动发布</el-button>
                 </template>

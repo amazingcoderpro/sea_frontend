@@ -74,7 +74,7 @@ export default {
         pagesize:10,//每页的数据条数
         pagesizes:[10, 20, 30, 40],//分组数量
         currentPage:1,//默认开始页面
-        tableHeight:'',
+        tableHeight:'100',
         searchData:{
           start_time:'',
           end_time:'',
@@ -106,15 +106,19 @@ export default {
         this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
         var urlString = `/api/v1/subaccount_report/pins/?index=1`;
           urlString +=`&pinterest_account_id=${this.searchData.pinterest_account_id}`;
-          urlString +=`&board_id=${this.searchData.board_id}`;
-          urlString +=`&pin_id=${this.searchData.pin_id}`;
-        if(this.searchData.search != ''){
-            urlString +=`&search=${this.searchData.search}`;
-        }
-        if(this.searchData.timeArray.length == 2){
-            urlString +=`&start_time=${this.searchData.start_time}`;
-            urlString +=`&end_time=${this.searchData.end_time}`;
-        }
+          if(this.searchData.board_id != ''){
+              urlString +=`&board_id=${this.searchData.board_id}`;
+          }
+          if(this.searchData.pin_id != ''){
+              urlString +=`&pin_id=${this.searchData.pin_id}`;
+          }
+          if(this.searchData.search != ''){
+              urlString +=`&search=${this.searchData.search}`;
+          }
+          if(this.searchData.timeArray.length == 2){
+              urlString +=`&start_time=${this.searchData.start_time}`;
+              urlString +=`&end_time=${this.searchData.end_time}`;
+          }
 
         this.$axios.get(urlString).then(res => {
           if(res.data.code==1){ 
@@ -133,8 +137,13 @@ export default {
         .then(res=> {
             if(res.data.code == 1){
               this.searchData.PinterestArray = res.data.data;
-              this.searchData.pinterest_account_id = res.data.data[0].id;
-              this.getBodFun();
+              if(res.data.data.length>0){
+                this.searchData.pinterest_account_id = res.data.data[0].id;
+                this.getBodFun();
+              }else{
+                this.searchData.pinterest_account_id = '';
+                this.init();
+              }
             }else{
               this.$message("获取失败!");
             }
@@ -147,8 +156,13 @@ export default {
       .then(res=> {
           if(res.data.code == 1){
             this.searchData.BoardArray = res.data.data;
-            this.searchData.board_id = res.data.data[0].id; 
-            this.getPinFun();
+              if(res.data.data.length>0){
+                this.searchData.board_id = res.data.data[0].id;
+                this.getPinFun();
+              }else{
+                this.searchData.board_id = '';
+                this.init();
+              }
           }else{
             this.$message("获取失败!");
           }
@@ -161,8 +175,12 @@ export default {
       .then(res=> {
           if(res.data.code == 1){
             this.searchData.PinsArray = res.data.data;
-            this.searchData.pin_id = res.data.data[0].id;
-            this.init();
+              if(res.data.data.length>0){
+                this.searchData.pin_id = res.data.data[0].id;
+              }else{
+                this.searchData.pin_id = '';
+              }
+              this.init();
           }else{
             this.$message("获取失败!");
           }

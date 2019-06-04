@@ -60,16 +60,19 @@
                 <!-- 所属账户ID -->
             <el-table-column prop="board.pinterest_account" label="所属账户ID" align="center" width="120"></el-table-column>
                 <!-- 发布状态 --> 
-            <el-table-column prop="state" label="发布状态" align="center" width="150">
+            <el-table-column prop="state" label="发布状态" align="center" width="200">
               <template  slot-scope="scope">
                 <span v-if="scope.row.state == 1">finished</span>
                 <span v-else>failed</span>
               </template>
 
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="备注" fixed="right" width="150">
-
+            <el-table-column prop="remark" align="center" label="备注" width="150">
             </el-table-column>
+            <el-table-column align="center" label="操作" fixed="right" width="150">
+                <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >取消</el-button>
+            </el-table-column>
+
           </el-table>
         </div>
         <!-- 分页 -->
@@ -162,28 +165,25 @@ export default {
         });   
            
     },
-    serchFun(){
-        this.init();
-    },
-    handleEdit(row) {
-      // 编辑
-      this.dialog = {
-        show: true,
-        title: "修改资金信息",
-        option: "put"
-      };
-    },
-    handleDelete(row, index) {
-      // 删除
-      this.$axios.delete(`/api/v1/account/users/${row.id}/`).then(res => {
-        this.$message("删除成功");
-        this.getProfile();
-      });
-    },
-    PinManagerFun(row) {
-      // 去发布列表页面
-      localStorage.setItem("board_data",JSON.stringify(row) );
-      this.$router.push({path:"/record_manager"});
+    cancelFun(row){
+        var statedata = {
+            state :'4'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
+        }
+        this.$confirm('确定要取消?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
+                  .then(res => {
+                    if(res.data.code == 1){
+                      this.$message({type: 'success',message: '取消成功!'});
+                      this.init();
+                    }else{
+                      this.$message.error('取消失败!');
+                    }
+                  })
+            }) 
     },
     current_change(val){
         //点击数字时触发

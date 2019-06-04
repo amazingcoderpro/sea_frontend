@@ -1,6 +1,6 @@
 <template>
-    <el-row class="menu_page" ref="topictable" 
-           :style="'height:'+ tableHeight"
+    <el-row class="menu_page" ref="leftMenu" 
+           :style="'height:'+ leftHeight"
            >
          <el-col>
            <el-menu 
@@ -56,12 +56,12 @@ export default {
   },
   mounted() {
       setTimeout(() => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop +"px";
+        this.leftHeight = window.innerHeight - this.$refs.leftMenu.$el.offsetTop +"px";
       }, 50);
   },
   data() {
     return {
-      tableHeight:'800px',
+      leftHeight:'800px',
       // items: this.$store.getters.menu_tree
       // items: JSON.parse(window.localStorage.getItem('menu_tree'))
 

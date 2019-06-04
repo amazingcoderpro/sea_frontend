@@ -7,7 +7,7 @@
               <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
             </el-select>
             <el-select v-model="searchData.board" placeholder="请选择选择Board">
-              <el-option :label="'全选'" :value="''"> </el-option>
+              <el-option :label="'全选'" :value="'-1'"> </el-option>
               <template v-for="item in pinterestArray">
                 <template v-if="item.id == searchData.pinterest">
                     <el-option v-for="(items,index) in item.board_pinterest_account" :key="index" :label="items.name" :value="items.id"> </el-option>
@@ -110,7 +110,7 @@ export default {
           board:''
         },
         pinterestArray:[],
-
+        boardArray:[],
         account_id:null,
         tableHeight:"100",
         tableData: [],
@@ -155,7 +155,12 @@ export default {
         }
         if(this.searchData.board != ''){
           var _thisboardlist = new Array();
-              _thisboardlist.push(this.searchData.board);
+
+              if(this.searchData.board == -1){
+                _thisboardlist = this.boardArray;
+              }else{
+                _thisboardlist.push(this.searchData.board);
+              }
               _thisboardlist = JSON.stringify(_thisboardlist)
           urlString += `&board_list=`+_thisboardlist;
         }
@@ -172,9 +177,6 @@ export default {
             this.$message("获取失败!");
           }
         })
-        .catch(error => {
-          this.$message("接口超时!");
-        });
     },
     searchInit(){
         this.$axios.get("/api/v1/rule/pinterest_account_board/?authorized=[0,1]")
@@ -186,9 +188,6 @@ export default {
               this.init();
             }
         })
-        .catch(error => {
-          this.$message("接口超时!");
-        }); 
     },
     addFun() {
       // 添加
@@ -199,32 +198,30 @@ export default {
       };
     },
     stopFun(row){
+      console.log(row)
         var statedata = {
-            state :'4'   //(0, '待执行'), (1, '删除'), (2, '过期'), (3, '运行'), (4, '暂停'), (5,"已完成")
+            state :'2'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
         }
         this.$confirm('确定要暂停?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-                this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
+                this.$axios.put(`/api/v1/rule/state/${row.id}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: '暂停成功!'});
+                      this.init();
                     }else{
                       this.$message.error('暂停失败!');
                     }
                   })
-                  .catch(error => {
-                     this.$message.error('接口超时!');
-                  }); 
             }) 
     },
     
     deteleFun(row){
-      console.log(row)
         var statedata = {
-            state :'1'   //(0, '待执行'), (1, '删除'), (2, '过期'), (3, '运行'), (4, '暂停'), (5,"已完成")
+            state :'5'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
         }
         this.$confirm('确定要删除?', '提示', {
               confirmButtonText: '确定',
@@ -240,9 +237,6 @@ export default {
                       this.$message.error('删除失败!');
                     }
                   })
-                  .catch(error => {
-                     this.$message.error('接口超时!');
-                  }); 
             }) 
     },
     pinterestChange(){
@@ -251,6 +245,9 @@ export default {
         if(e.id == this.searchData.pinterest){
           if(e.board_pinterest_account.length>0){
             this.searchData.board = e.board_pinterest_account[0].id;
+            e.board_pinterest_account.map(s => {
+              this.boardArray.push(s.id);
+            });
           }else{
             this.searchData.board = '';
           }

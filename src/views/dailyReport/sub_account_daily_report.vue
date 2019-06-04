@@ -203,8 +203,13 @@ export default {
         .then(res=> {
             if(res.data.code == 1){
               this.searchData.PinterestArray = res.data.data;
-              this.searchData.pinterest_account_id = res.data.data[0].id;
-              this.getBodFun();
+              if(res.data.data.length>0){
+                this.searchData.pinterest_account_id = res.data.data[0].id;
+                this.getBodFun();
+             }else{
+                this.searchData.pinterest_account_id = '';
+                this.init();
+              }
             }else{
               this.$message("获取失败!");
             }
@@ -217,8 +222,13 @@ export default {
       .then(res=> {
           if(res.data.code == 1){
             this.searchData.BoardArray = res.data.data;
-            this.searchData.board_id = res.data.data[0].id; 
-            this.getPinFun();
+            if(res.data.data.length>0){
+              this.searchData.board_id = res.data.data[0].id;
+              this.getPinFun();
+            }else{
+              this.searchData.board_id = '';
+              this.init();
+            }
           }else{
             this.$message("获取失败!");
           }
@@ -231,8 +241,13 @@ export default {
       .then(res=> {
           if(res.data.code == 1){
             this.searchData.PinsArray = res.data.data;
-            this.searchData.pin_id = res.data.data[0].id;
-            this.init();
+            if(res.data.data.length>0){
+              this.searchData.pin_id = res.data.data[0].id;
+              this.init();
+            }else{
+              this.searchData.pin_id = '';
+              this.init();
+            }
           }else{
             this.$message("获取失败!");
           }
