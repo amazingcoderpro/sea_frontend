@@ -9,10 +9,17 @@ body,
 
 .W10{width:10%!important;margin-right:2%!important;}
 .W20{width:20%!important;margin-right:2%!important;}
+.W30{width:30%!important;margin-right:2%!important;}
+.W34{width:34%!important;margin-right:2%!important;}
 .W36{width:36%!important;margin-right:2%!important;}
 .W40{width:40%!important;margin-right:2%!important;}
+.W50{width:50%!important;margin-right:2%!important;}
 .W54{width:54%!important;margin-right:2%!important;}
 .W60{width:60%!important;margin-right:2%!important;}
+.W200{width:200px!important;margin-right:10px!important;}
+.W400{width:400px!important;margin-right:10px!important;}
+.W410{width:410px!important;margin-right:10px!important;}
+
 .MB10{margin-bottom:10px;}
 
 

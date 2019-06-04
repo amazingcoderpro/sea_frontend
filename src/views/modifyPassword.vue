@@ -53,6 +53,7 @@ export default {
       form:{
         password:'',
         password2:'',
+        userID:'',
       },
       form_rules: {
         password: [
@@ -74,20 +75,22 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      this.form.userID = JSON.parse(window.localStorage.getItem('user')).id;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // this.$axios
-          //   .put(`/api/v1/account/set_password/${this.registUser.id}/`, this.registUser)
-          //   .then(res => {
-          //     if (res.data.code == 1) {
-
-          //     } else {
-          //       this.$message("接口超时!");
-          //     }
-          //   })
-          //   .catch(error => {
-          //     this.$message("接口超时!");
-          //   });
+          this.$axios
+            .put(`/api/v1/account/set_passwords/${this.form.userID}/`, this.form)
+            .then(res => {
+              if (res.data.code == 1) {
+                this.$message({message: "修改成功",type: "success"});
+                this.dialog.show = false;
+              } else {
+                this.$message("接口超时!");
+              }
+            })
+            .catch(error => {
+              this.$message("接口超时!");
+            });
         }
       });
     }

@@ -6,49 +6,33 @@
       <div class="Options">
         <span>Options</span>
       </div>
-        <el-form :inline="true">
-            <!-- 日期下拉框 -->
-          <el-form-item label="Date Range">
-            <el-select v-model="searchData.dataType" placeholder="Yesterday" class="week_name" @change="dataSelect">
-                <el-option
-                v-for="item in dataArray"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-                </el-option>
-            </el-select>
-          </el-form-item>
-            <!-- 日期时间范围 -->
-          <div class="block">
-            <el-date-picker
-                v-model="searchData.timeArray"
-                type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-               >
-            </el-date-picker>
-          </div>
-          
-          <div class="Filter">
-            <el-form-item label="Filter" prop="dep">
-                <!-- Pinterest -->
-                <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" class="Filter_week" @change="getBodFun">
+        <el-form :inline="true" label-width="120px" >
+
+            <el-form-item label="Filter">
+                <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" @change="getBodFun" :class="'W200'">
                     <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
                 </el-select>
-                <!-- Boards -->
-                <el-select v-model="searchData.board_id" placeholder="All Boards" class="Filter_week" @change="getPinFun">
+                <el-select v-model="searchData.board_id" placeholder="All Boards" @change="getPinFun" :class="'W200'">
                     <el-option  v-for="item in searchData.BoardArray" :key="item.id" :label="item.name" :value="item.id"></el-option>    
                 </el-select>
-                <!-- All Pins -->
-                <el-select v-model="searchData.pin_id" placeholder="All Pins" class="Filter_week">
+                <el-select v-model="searchData.pin_id" placeholder="All Pins" :class="'W200'">
                     <el-option v-for="item in searchData.PinsArray" :key="item.id" :label="item.pin_uri" :value="item.id"></el-option>
                 </el-select>
-                <!-- 搜索框 -->
-                <el-input v-model="searchData.search" @keyup.enter.native="init()" :class="'W20'"></el-input>
-                <el-button type="primary" size="small" icon="view" @click="init()">查询</el-button>
             </el-form-item>
-          </div>
+            <el-form-item label="Date Range" class="searchBox">
+              <el-select v-model="searchData.dataType" placeholder="Yesterday" @change="dataSelect" :class="'W200'">
+                  <el-option
+                  v-for="item in dataArray"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                  </el-option>
+              </el-select>
+              <el-date-picker v-model="searchData.timeArray" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :class="'W410'">
+              </el-date-picker>
+              <el-input v-model="searchData.search" @keyup.enter.native="init()" :class="'W200'"></el-input>
+              <el-button type="primary" icon="view" @click="init()">查询</el-button>
+            </el-form-item>
         </el-form>  
                 <!-- echarts图表 -->
         <div style="width:1600px;height:400px;" ref="myEchart"></div> 
@@ -339,13 +323,9 @@ export default {
 
 
 <style scoped>
-.sub_account_daily_report .report_title{width:305px;}
-.sub_account_daily_report .Options span{display:block;margin-top:30px;margin-bottom:20px;}
-.sub_account_daily_report .week_name{width:120px;}
-.sub_account_daily_report .block{display:inline;padding-left:20px;}
-.sub_account_daily_report .Filter_week{padding-right:2%;}
-.sub_account_daily_report .input_id{float:right;display:flex;padding-left:40px;margin-right: 5px;}
-.sub_account_daily_report .iconfont{font-size:25px;padding-left:15px;padding-top:7px;cursor:pointer;}
-.sub_account_daily_report .table_right{margin-top:50px;}
-
+ .sub_account_daily_report .report_title{width:305px;}
+ .searchBox .el-input{
+ width: 20%;
+    margin-right: 2%;  
+ }
 </style>

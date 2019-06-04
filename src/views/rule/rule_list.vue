@@ -3,10 +3,10 @@
         <div class="tableTitle"><span>规则列表</span></div>
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null">
           <el-form-item label="Pinterest账户筛选:">
-            <el-select v-model="searchData.pinterest" placeholder="请选择Pinterest账户"  @change="pinterestChange">
+            <el-select v-model="searchData.pinterest" placeholder="请选择Pinterest账户"  @change="pinterestChange" :class="'W200'">
               <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
             </el-select>
-            <el-select v-model="searchData.board" placeholder="请选择选择Board">
+            <el-select v-model="searchData.board" placeholder="请选择选择Board" :class="'W200'">
               <el-option :label="'全选'" :value="'-1'"> </el-option>
               <template v-for="item in pinterestArray">
                 <template v-if="item.id == searchData.pinterest">
@@ -16,10 +16,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="规则标签:">
-            <el-input placeholder="请输入规则标签" v-model="searchData.tag"></el-input>
+            <el-input placeholder="请输入规则标签" v-model="searchData.tag" :class="'W200'"></el-input>
           </el-form-item>
           <el-form-item label="产品创建时间:">
-              <el-date-picker type="datetimerange" v-model="searchData.creatTime" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']">
+              <el-date-picker type="datetimerange" v-model="searchData.creatTime" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['12:00:00']" :class="'W400'">
               </el-date-picker>
           </el-form-item>
           <el-form-item>
