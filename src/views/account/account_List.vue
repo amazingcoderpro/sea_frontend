@@ -36,7 +36,7 @@
             <el-table-column  prop="comment,comment_increment" label="Comments" align="center"  width="150">
               <template slot-scope="scope"> All:{{scope.row.comments}}<br/>Today:{{scope.row.comments_increment}}</template>
             </el-table-column>
-            <el-table-column prop="update_person" label="详细数据报告" align="center" width="150">
+            <el-table-column prop="update_person" label="Report Details" align="center" width="150">
                <template slot-scope="scope">
                 <el-button icon="edit"  type="primary"  size="small" @click="BoardManagerFun(scope.row)">border list</el-button>
               </template>
@@ -56,7 +56,7 @@
                 <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">rule list</el-button>
               </template>
             </el-table-column>
-            <el-table-column  prop="finished,pending" align="center" label="发布记录"  width="150">
+            <el-table-column  prop="finished,pending" align="center" label="Publish History"  width="150">
               <template slot-scope="scope">
                  today_finished:{{scope.row.finished}}<br/>
                  today_pending:{{scope.row.pending}}<br/>

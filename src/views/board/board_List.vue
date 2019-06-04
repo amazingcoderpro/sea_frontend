@@ -1,52 +1,52 @@
 <template>
     <div class="board_List ">
-        <div class="tableTitle"><span>账户基础信息管理</span></div>
+        <div class="tableTitle"><span>Account Basic information</span></div>
         <div  class="massage">
-          <p>账户名称:{{account_data.account_name}}</p>
-          <p>登陆邮箱:{{account_data.account_email}}</p>
-          <p>管理员:{{account_data.update_person}}</p>
-          <p>账户描述:{{account_data.account_description}}</p>
-          <p>账户数据: Pin {{account_data.pins}} RePin {{account_data.repin}} Like {{account_data.like}} Comment {{account_data.comment}}</p>
+          <p>Username: {{account_data.account_name}}</p>
+          <p>Email Address: {{account_data.account_email}}</p>
+          <p>Admin: {{account_data.update_person}}</p>
+          <p>About Your Profile: {{account_data.account_description}}</p>
+          <p>Account Data: Pin {{account_data.pins}} RePin {{account_data.repin}} Like {{account_data.like}} Comment {{account_data.comment}}</p>
         </div>
         <div class="tableTitle"><span>Board List</span></div>
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border  ref="topictable"  :height="tableHeight">
-            <el-table-column type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column prop="board_description" label="Board描述" align="center" width="100"></el-table-column>
+            <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
+            <el-table-column prop="board_description" label="Board Description" align="center" width="100"></el-table-column>
             <el-table-column  class="parentNodeColumn" align="center" prop="pins,pins_increment" label="Pin"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.pins}}<br/>今日新增:{{scope.row.pins_increment}}</template>
+              <template slot-scope="scope"> Total:{{scope.row.pins}}<br/>New:{{scope.row.pins_increment}}</template>
             </el-table-column>            
             <el-table-column  class="parentNodeColumn" align="center" prop="repin,repin_increment" label="RePin"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.saves}}<br/>今日新增:{{scope.row.saves_increment}}</template>
+              <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>New:{{scope.row.saves_increment}}</template>
             </el-table-column>            
             <el-table-column  class="parentNodeColumn" align="center" prop="like,like_increment" label="Like"  width="300">
-              <template slot-scope="scope"> 总数:{{scope.row.likes}}<br/>今日新增:{{scope.row.likes_increment}}</template>
+              <template slot-scope="scope"> Total:{{scope.row.likes}}<br/>New:{{scope.row.likes_increment}}</template>
             </el-table-column>           
             <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comment"  width="150">
-              <template slot-scope="scope"> 总数:{{scope.row.comments}}<br/>今日新增:{{scope.row.comments_increment}}</template>
+              <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>New:{{scope.row.comments_increment}}</template>
             </el-table-column>           
-            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="详细数据报告"  width="200" >
+            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="Report Details"  width="200" >
               <template slot-scope="scope">
-                <el-button icon="edit" type="primary" size="small" @click="PinManagerFun(scope.row)">去pin列表</el-button>
+                <el-button icon="edit" type="primary" size="small" @click="PinManagerFun(scope.row)">View Pin List</el-button>
               </template>
             </el-table-column>            
-            <el-table-column  prop="board_state" label="Board状态" align="center"  width="250">
+            <el-table-column  prop="board_state" label="Board Status" align="center"  width="250">
               <template slot-scope="scope">
                 <span v-if='scope.row.board_state=0'>Private</span><span v-else>Public</span>
               </template>
             </el-table-column>
-            <el-table-column  prop="failed,finished,pending" label="发布记录" align="center"  width="250">
+            <el-table-column  prop="failed,finished,pending" label="Publish History" align="center"  width="250">
               <template slot-scope="scope">
-                 今日已发布数:{{scope.row.failed}}<br/>
-                 今日未发布数:{{scope.row.finished}}<br/>
+                 Published Today:{{scope.row.failed}}<br/>
+                 Unpublished Today:{{scope.row.finished}}<br/>
                  pending:{{scope.row.pending}}
               </template>
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Board" fixed="right" width="200">
               <template slot-scope="scope">
-                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">编辑</el-button>
-                  <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">删除</el-button>
+                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">edit</el-button>
+                  <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">Delete</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -169,5 +169,8 @@ export default {
     margin: 5px 0;
     padding-left: 5px;
     font-size: 16px;
+}
+.board_List .tableTitle span{
+        width: 268px;
 }
 </style>

@@ -8,7 +8,7 @@
                <el-form-item label="board名称" prop="name">
                 <el-input v-model="editData.name"></el-input>
               </el-form-item>
-               <el-form-item label="board描述" prop="description">
+               <el-form-item label="Board Description" prop="description">
                 <el-input v-model="editData.description"></el-input>
               </el-form-item>
               <el-form-item>
