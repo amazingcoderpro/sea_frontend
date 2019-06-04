@@ -78,9 +78,10 @@ export default {
                     const token=res.data.data.token;
                     localStorage.setItem("eleToken", token);
                     localStorage.setItem("user", JSON.stringify( res.data.data.user ));
+                    localStorage.setItem("store", JSON.stringify( res.data.data.store ));
                     this.$store.dispatch("setAuthenticated", !this.isEmpty(token))
                     this.$store.dispatch("setUser", res.data.data.user)
-                    router.push('/dashboard');
+                   // router.push('/dashboard');
                 }else{
                   this.$message({
                     message: res.data.msg,

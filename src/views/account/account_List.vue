@@ -66,7 +66,7 @@
               <template slot-scope="scope">
                 <!-- <el-button v-if="scope.row.account_authorized == 1"  type="primary" size="small" disabled="">已授权</el-button> -->
                 <span v-if="scope.row.account_authorized == 1">已授权</span>
-                <el-button v-else type="primary"  size="small" @click="AutFun(scope.row)">授权</el-button>
+                <el-button v-else type="primary"  size="small" @click="confirmFun(scope.row)">授权</el-button>
               </template>
             </el-table-column>
 
@@ -84,11 +84,13 @@
         </div>
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog='dialog' :form='form'  ref="dailog" ></DialogFound>
+        <DialogFound2 :dialog='dialog2'  ref="dailog2" ></DialogFound2>
     </div>
 </template>
 
 <script>
  import DialogFound from "./account_add";
+ import DialogFound2 from "./autmsg";
 export default {
   name: "account_List",
   data() {
@@ -105,6 +107,12 @@ export default {
         title: "",
         option: "edit"
       },
+      dialog2: {
+        show: false,
+        title: "",
+        option: "edit"
+      },
+      pinterest_account_id:'',  //授权专用的
       form: {
         account: "",  //PinterestAccount唯一标识码
         nickname: "",     //账户名称
@@ -116,7 +124,8 @@ export default {
     };
   },
   components: {
-      DialogFound
+      DialogFound,
+      DialogFound2
   },
   created() {
     this.init();
@@ -197,9 +206,9 @@ export default {
                   }); 
             }) 
     },
-    AutFun(row) {
+    AutFun() {
       // 获取授权
-      this.$axios.post(`/api/v1/auth/pinterest_account/${row.pinterest_account_id}/`).then(res => {
+      this.$axios.post(`/api/v1/auth/pinterest_account/${this.pinterest_account_id}/`).then(res => {
           if(res.data.code == 1){
             window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
           }else{
@@ -216,6 +225,15 @@ export default {
                 center: true
               });
           });
+    },
+    confirmFun(row){
+      this.pinterest_account_id = row.pinterest_account_id;
+      // 添加
+      this.dialog2 = {
+        show: true,
+        title: "",
+        option: "post"
+      };
     },
     ListManagerFun(row) {
       // 去规则列表页面
