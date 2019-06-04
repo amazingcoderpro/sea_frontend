@@ -4,25 +4,21 @@
                   <div class="tableTitle"><span>Profile Settings</span></div>
                   <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="110px" class="personalForm">
                     <!-- 名 -->
-                    <el-form-item label="FirstName" prop="surname">
-                      <el-input v-model="personalUser.surname" placeholder="Daisy"></el-input>
+                    <el-form-item label="FirstName" prop="first_name">
+                      <el-input v-model="personalUser.first_name" placeholder="Daisy"></el-input>
                     </el-form-item>
                     <!-- 姓 -->
-                    <el-form-item label="LastName" prop="name">
-                      <el-input v-model="personalUser.name" placeholder="zhang"></el-input>
+                    <el-form-item label="LastName" prop="last_name">
+                      <el-input v-model="personalUser.last_name" placeholder="zhang"></el-input>
                     </el-form-item>
                     <!-- 邮箱 -->
-                    <el-form-item label="EmailAddress" prop="emailstr">
-                      <el-input v-model="personalUser.emailstr" placeholder="请输入email"></el-input>
+                    <el-form-item label="EmailAddress" prop="email">
+                      <el-input v-model="personalUser.email" placeholder="请输入email"></el-input>
                     </el-form-item>
                     <!-- 密码 -->
                     <el-form-item label="Psaaword" prop="password">
                       <el-input type="password" v-model="personalUser.password" placeholder="请输入新密码"></el-input> 
                       <span class="newpass">Change Password</span>
-                    </el-form-item>
-                    <!-- 确认密码 -->
-                    <el-form-item label="confirm" prop="password2">
-                      <el-input type="password" v-model="personalUser.password2" placeholder="请确认密码"></el-input> 
                     </el-form-item>
                     <!-- 点击 -->
                     <el-form-item>
@@ -40,46 +36,30 @@ export default {
     name: "personal",
     components:{},
     data(){    
-     var validatePass2 = (rule, value, callback) => {
-        if (value !== this.personalUser.password) {
-            callback(new Error("两次输入密码不一致!"));
-        } else {
-            callback();
-        }
-    };
       return {
         personalUser:{
-          surname:"",
-          name:"",
-          emailstr:"",
+          first_name:"",
+          last_name:"",
+          email:"",
           password:"",
+          id:'',
         },
         rules: {
-          surname: [
+          first_name: [
             { required: true, message: "用户名不能为空", trigger: "change" },
             { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur",left:"100px"}  
         ],
-          name: [
+          last_name: [
             { required: true, message: "用户名不能为空", trigger: "change" },
             { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur" }  
         ],
-          emailstr: [
+          email: [
             { required: true, message: "邮箱格式不正确", trigger: "change",type:"email"},
         ],
           password: [
             { required: true, message: "密码不能为空", trigger: "blur" },
             { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
         ],
-          password2: [
-          { required: true, message: "确认密码不能为空", trigger: "blur" },
-          {
-            min: 6,
-            max: 30,
-            message: "长度在 6 到 30 个字符",
-            trigger: "blur"
-          },
-          { validator: validatePass2, trigger: "blur" }
-         ]
         }        
       }
     },
@@ -101,10 +81,10 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios
-            .put(`/api/v1/account/set_password/${this.personalUser}/`, this.personalUser)
+            .put(`/api/v1/account/users/${this.personalUser.id}/`, this.personalUser)
             .then(res => {
               if (res.data.code == 1) {
-                  router.push("/login");
+                 // router.push("/login");
               } else {
                 this.$message("接口超时!");
               }
