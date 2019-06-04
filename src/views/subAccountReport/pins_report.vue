@@ -45,8 +45,8 @@
             <el-table-column  align="center"  prop="subaccount_id" label="Subaccount ID"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="account_name" label="Account Name"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="account_followings" label="Following数"  width="200"></el-table-column>
-            <el-table-column  align="center"  prop="account_followers" label="Follower数"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="account_followings" label="Followings"  width="200"></el-table-column>
+            <el-table-column  align="center"  prop="account_followers" label="Followers"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_saves" label="Savess"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_likes" label="Like"  width="100"></el-table-column>
