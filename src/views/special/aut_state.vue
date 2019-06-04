@@ -8,7 +8,7 @@
 
 
 <script>
-import * as base from '../assets/js/base'
+import * as base from '../../assets/js/base'
 export default {
     name: "aut_state",
     components:{},
@@ -33,7 +33,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background: url(../assets/img/bg.jpg) no-repeat center center;
+  background: url(../../assets/img/bg.jpg) no-repeat center center;
   background-size: 100% 100%;
 }
 .aut_state span{

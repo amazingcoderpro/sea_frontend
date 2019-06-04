@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import * as base from '../assets/js/base'
-import router from '../router'
+import * as base from '../../assets/js/base'
+import router from '../../router'
 export default {
     name: "personal",
     components:{},
@@ -72,9 +72,9 @@ export default {
           this.personalUser.personalID = JSON.parse(window.localStorage.getItem('user')).id;
           this.$axios(`/api/v1/account/users/${this.personalUser.personalID}/`).then(res => {
               if(res.data.code == 1){
-                this.personalUser.first_name = res.data.data.first_name;
-                this.personalUser.last_name = res.data.data.last_name;
-                this.personalUser.email = res.data.data.email;
+                  this.personalUser.first_name = res.data.data.first_name;
+                  this.personalUser.last_name = res.data.data.last_name;
+                  this.personalUser.email = res.data.data.email;
               }else{
                   this.$message({
                     message: "code 异常!",
@@ -91,6 +91,7 @@ export default {
               .put(`/api/v1/account/users/${this.personalUser.personalID}/`, this.personalUser)
               .then(res => {
                 if (res.data.code == 1) {
+                  this.$message({message: res.data.msg,type: 'success'});
                 } else {
                   this.$message("修改成功!");
                 }

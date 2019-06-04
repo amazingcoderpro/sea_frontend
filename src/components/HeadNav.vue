@@ -32,7 +32,7 @@
     </header>
 </template>
 <script>
-import DialogFound from "../views/modifyPassword";
+import DialogFound from "../views/special/modifyPassword";
 
 export default {
   name: "head_nav",

@@ -3,7 +3,7 @@
         <div class="tableTitle"><span>Account List</span></div>
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
-                <el-button  type="primary" @click='addFun()'>Add account</el-button>
+                <el-button  type="primary" @click='addFun()'>Add</el-button>
             </el-form-item>
         </el-form>
         <!-- 表单部分 -->
@@ -162,7 +162,7 @@ export default {
       // 添加
       this.dialog = {
         show: true,
-        title: "添加账户",
+        title: "Add Account",
         option: "post"
       };
       this.form = {

@@ -3,28 +3,27 @@
     <div class="account_add">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
           <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="账号" prop="account">
+              <el-form-item label="account" prop="account">
                 <el-input v-model="form.account"></el-input>
               </el-form-item>
-              <el-form-item label="登陆邮箱" prop="email">
+              <el-form-item label="email" prop="email">
                 <el-input v-model="form.email"></el-input>
               </el-form-item>
-              <el-form-item label="账号类型" prop="type">
+              <el-form-item label="type" prop="type">
                 <el-radio v-model="form.type" label="0">business</el-radio>
                 <el-radio v-model="form.type" label="1">individual</el-radio>
               </el-form-item>
-              <el-form-item label="创建时间" prop="create_time">
+              <el-form-item label="create_time" prop="create_time">
                     <el-date-picker
                       v-model="form.create_time"
-                      type="datetime"
-                      placeholder="选择日期时间">
+                      type="datetime">
                     </el-date-picker>
               </el-form-item>
-              <el-form-item label="账户描述">
+              <el-form-item label="description">
                 <el-input v-model="form.description"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+                <el-button type="primary" @click="submitForm('form')">Add</el-button>
                 <el-button @click="resetForm('form')">Reset</el-button>
             </el-form-item>
           </el-form>

@@ -50,10 +50,10 @@
             <el-table-column prop="state" label="State" align="center" width="200">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 0">
-                    <el-button type="primary" icon="edit" size="small" disabled="">待发布</el-button>
+                    <el-button type="primary" icon="edit" size="small" disabled="">发布成功</el-button>
                 </template>
                 <template v-else>
-                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">发布失败</el-button>
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">手动发布</el-button>
                 </template>
               </template>
             </el-table-column>
@@ -98,11 +98,11 @@ export default {
         },
         {
           value: '[0]', 
-          label: '待发布0'
+          label: '待发布'
         },
         {
           value: '[3]',
-          label: '发布失败3'
+          label: '发布失败'
         }
       ],
       search:{
@@ -186,6 +186,7 @@ export default {
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: '发布成功!'});
+                      this.init();
                     }else{
                       this.$message.error( res.data.msg.detail);
                     }

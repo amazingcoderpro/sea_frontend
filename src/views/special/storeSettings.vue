@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import * as base from '../assets/js/base'
-import router from '../router'
+import * as base from '../../assets/js/base'
+import router from '../../router'
 export default {
     name: "storeSetting",
     components:{},

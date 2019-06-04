@@ -2,12 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Notfount from './components/404.vue'
 import Login from './views/login.vue'
-import ShopfyRegist from './views/shopfy_regist.vue'
-import Personal from './views/personal.vue'
-import StoreSettings from './views/storeSettings.vue'
 
 import Index from './views/index'
-import AutState from './views/aut_state'
 import Dashboard from './views/dashboard'
 import AccountList from './views/account/account_List'
 import BoardList from './views/board/board_List'
@@ -28,6 +24,10 @@ import SubAccountReport from './views/subAccountReport/sub_account_report'
 import BoardReport from './views/subAccountReport/board_report'
 import PinsReport from './views/subAccountReport/pins_report'
 
+import AutState from './views/special/aut_state'
+import Personal from './views/special/personal.vue'
+import ShopfyRegist from './views/special/shopfy_regist.vue'
+import StoreSettings from './views/special/storeSettings.vue'
 
 
 Vue.use(Router)
@@ -62,6 +62,7 @@ const router = new Router({
         { path: '/role_manager', name: 'role_manager', component: RoleManager },
         { path: '/store_manager', name: 'store_manager', component: StoreManager },
         { path: '/storeSettings', name: 'storeSettings', component: StoreSettings },
+        { path: '/personal', name: 'personal', component: Personal },
         
       ]
     },
@@ -74,11 +75,6 @@ const router = new Router({
       path: '/shopfy_regist',
       name: 'shopfy_regist',
       component: ShopfyRegist
-    },
-    {
-      path: '/personal',
-      name: 'personal',
-      component:Personal
     },
     {
       path: '/aut_state',
