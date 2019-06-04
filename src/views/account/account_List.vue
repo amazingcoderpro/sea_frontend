@@ -243,7 +243,5 @@ export default {
 </script>
 
 <style>
-.btnRight{
-  margin-right: 30px!important;
-}
+
 </style>

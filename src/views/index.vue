@@ -31,7 +31,7 @@ html, body {margin: 0;padding: 0;}
   position: relative;
   top: 0;
   left: 250px;
-  width: calc(100% - 230px);
+  width: calc(100% - 250px);
   height: calc(100% - 71px);
   overflow: auto;
 }
