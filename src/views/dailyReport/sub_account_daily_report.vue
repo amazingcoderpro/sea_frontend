@@ -45,10 +45,8 @@
                     <el-option v-for="item in searchData.PinsArray" :key="item.id" :label="item.pin_uri" :value="item.id"></el-option>
                 </el-select>
                 <!-- 搜索框 -->
-                <div class="input_id">
-                  <el-input v-model="searchData.search" @keyup.enter.native="init()"></el-input>
-                  <el-button type="primary" size="small" icon="view" @click="init()">查询</el-button>
-                </div>
+                <el-input v-model="searchData.search" @keyup.enter.native="init()" :class="'W20'"></el-input>
+                <el-button type="primary" size="small" icon="view" @click="init()">查询</el-button>
             </el-form-item>
           </div>
         </el-form>  
@@ -105,8 +103,8 @@ export default {
 //5 Likes pin_likes
 //6 Comments pin_comments
       tableValue:{
-         XValue:[], 
-         YValue:[], 
+         XValue:['没有数据'], 
+         YValue:[0], 
       },
       dataArray:[//时间区间的星期几
         {"label":"Custom","value":"0"},
@@ -162,8 +160,12 @@ export default {
       .then(res=> {
         console.log(res)
           if(res.data.code == 1){
-            this.bigReport = res.data.data.results;
-            this.tableInit(0);
+            if(res.data.data.results.length>0){
+              this.bigReport = res.data.data.results;
+              this.tableInit(0);
+            }else{
+              this.initChart();
+            }
           }else{
             this.$message("获取失败!");
           }
@@ -173,30 +175,32 @@ export default {
       this.tableType=num;
       this.tableValue.YValue=[];
       this.tableValue.XValue=[];
-      this.bigReport.map(e => {
-          this.tableValue.XValue.push(e.date)
-          if(this.tableType == 0){
-            this.tableValue.YValue.push(parseFloat(e.Revenue));
-          }
-          else if(this.tableType == 1){
-            this.tableValue.YValue.push(parseFloat(e.product_sales));
-          }
-          else if(this.tableType == 2){
-            this.tableValue.YValue.push(parseFloat(e.account_followers));
-          }
-          else if(this.tableType == 3){
-            this.tableValue.YValue.push(parseFloat(e.pins));
-          }
-          else if(this.tableType == 4){
-            this.tableValue.YValue.push(parseFloat(e.Repins));
-          }
-          else if(this.tableType == 5){
-            this.tableValue.YValue.push(parseFloat(e.pin_likes));
-          }else{
-            this.tableValue.YValue.push(parseFloat(e.pin_comments));
-          }
+      if(this.bigReport.length>0){
+          this.bigReport.map(e => {
+              this.tableValue.XValue.push(e.date)
+              if(this.tableType == 0){
+                this.tableValue.YValue.push(parseFloat(e.Revenue));
+              }
+              else if(this.tableType == 1){
+                this.tableValue.YValue.push(parseFloat(e.product_sales));
+              }
+              else if(this.tableType == 2){
+                this.tableValue.YValue.push(parseFloat(e.account_followers));
+              }
+              else if(this.tableType == 3){
+                this.tableValue.YValue.push(parseFloat(e.pins));
+              }
+              else if(this.tableType == 4){
+                this.tableValue.YValue.push(parseFloat(e.Repins));
+              }
+              else if(this.tableType == 5){
+                this.tableValue.YValue.push(parseFloat(e.pin_likes));
+              }else{
+                this.tableValue.YValue.push(parseFloat(e.pin_comments));
+              }
+          });    
         this.initChart();
-      });    
+      }
     },
     getPinterestFun:function(){
         this.$axios.get("/api/v1/select/account/")
@@ -339,8 +343,8 @@ export default {
 .sub_account_daily_report .Options span{display:block;margin-top:30px;margin-bottom:20px;}
 .sub_account_daily_report .week_name{width:120px;}
 .sub_account_daily_report .block{display:inline;padding-left:20px;}
-.sub_account_daily_report .Filter_week{padding-left:44px;}
-.sub_account_daily_report .input_id{float:right;display:flex;padding-left:40px;width:170px;}
+.sub_account_daily_report .Filter_week{padding-right:2%;}
+.sub_account_daily_report .input_id{float:right;display:flex;padding-left:40px;margin-right: 5px;}
 .sub_account_daily_report .iconfont{font-size:25px;padding-left:15px;padding-top:7px;cursor:pointer;}
 .sub_account_daily_report .table_right{margin-top:50px;}
 

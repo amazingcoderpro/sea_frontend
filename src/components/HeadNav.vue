@@ -27,17 +27,32 @@
             </el-col>
 
         </el-row>
+        <DialogFound :dialog="dialog"></DialogFound>
 
     </header>
 </template>
 <script>
+import DialogFound from "../views/modifyPassword";
+
 export default {
   name: "head_nav",
+  data() {
+    return {
+      dialog: {
+        show: false,
+        title: "",
+        option: "edit"
+      }
+    };
+  },
   computed: {
     user() {
       // return this.$store.getters.user;
       return window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user')) : this.$store.getters.user
     }
+  },
+  components: {
+    DialogFound
   },
   methods: {
     setDialogInfo(cmditem) {
@@ -47,7 +62,7 @@ export default {
       }
       switch (cmditem) {
         case "modify_password":
-          this.modifyPassword();
+          this.changeMsg();
           break;
         case "logout":
           this.logout();
@@ -65,6 +80,14 @@ export default {
 
       // 页面跳转
       this.$router.push("/login");
+    },
+    changeMsg(){
+      this.dialog = {
+        show: true,
+        title: "修改密码",
+        option: "put"
+      };
+
     }
   }
 };
