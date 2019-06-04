@@ -106,7 +106,7 @@ export default {
         option: "edit"
       },
       form: {
-        account_uri: "",  //PinterestAccount唯一标识码
+        account: "",  //PinterestAccount唯一标识码
         nickname: "",     //账户名称
         email: "",        //登陆邮箱
         type: "",         //账号类型 (0, 'business'), (1, 'individual')
@@ -157,7 +157,7 @@ export default {
         option: "post"
       };
       this.form = {
-        account_uri: "",  //PinterestAccount唯一标识码
+        account: "",  //PinterestAccount唯一标识码
         nickname: "",     //账户名称
         email: "",        //登陆邮箱
         type: "0",         //账号类型 (0, 'business'), (1, 'individual')

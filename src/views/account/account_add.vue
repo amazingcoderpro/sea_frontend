@@ -3,8 +3,8 @@
     <div class="account_add">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
           <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="账号" prop="account_uri">
-                <el-input v-model="form.account_uri"></el-input>
+              <el-form-item label="账号" prop="account">
+                <el-input v-model="form.account"></el-input>
               </el-form-item>
               <el-form-item label="登陆邮箱" prop="email">
                 <el-input v-model="form.email"></el-input>
@@ -42,7 +42,7 @@
     data() {
       return {
         rules: {
-          account_uri: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+          account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
           email:[
             { required: true, message: '请输入邮箱地址', trigger: 'blur' },
             { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
