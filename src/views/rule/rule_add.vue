@@ -2,7 +2,7 @@
 <template>
     <div class="ruleAdd">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false">
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
             <el-form-item label="Website">
               <span style="color:red;font-size:16px;font-weight: 600;">{{website}}</span>
             </el-form-item>
@@ -76,10 +76,10 @@
               <el-button type="primary"  @click="serchProductFun('serchProduct')" :style="'margin-left:20px;'">Search</el-button>
               <div class="el-form-item__error" v-if="productListState == 2">请查询出满足以下条件的商品</div>
             </el-form-item>
-            <el-form-item label="Product Name" prop="product__name">
+            <el-form-item label="Category Name" prop="product__name">
                 <el-input v-model="serchProduct.product__name" :style="'width: 400px;'"></el-input>
             </el-form-item>
-            <el-form-item label="Product Time" prop="data1">
+            <el-form-item label="Product Online Time" prop="data1">
                 <el-date-picker v-model="serchProduct.data1" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                 </el-date-picker>
             </el-form-item>
@@ -200,6 +200,7 @@ import * as base from '../../assets/js/base'
     },
     watch:{
       dialog:function (){
+        this.website = JSON.parse(window.localStorage.getItem('store')).name;
         this.$axios.get("/api/v1/rule/pinterest_account_board/?authorized=[1]")
         .then(res => {
             if(res.data.code == 1){
@@ -340,8 +341,8 @@ import * as base from '../../assets/js/base'
 </script>
 <style>
 .ruleAdd .el-dialog{width: 70%;height: 86%;overflow: auto;margin: 0;left: 15%;top: -10%;}
-.ruleAdd .el-form-item__label{width:155px!important;}
-.ruleAdd .el-form-item__content{margin-left:155px!important;}
+.ruleAdd .el-form-item__label{width:165px!important;}
+.ruleAdd .el-form-item__content{margin-left:165px!important;}
 .ruleAdd .W20{width:20%;margin-right:2%;}
 .ruleAdd .W36{width:36%;margin-right:2%;}
 .ruleAdd .W40{width:40%;margin-right:2%;}

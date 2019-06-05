@@ -21,20 +21,20 @@
                         <el-option
                         v-for="item in searchData.PinsArray"
                         :key="item.id"
-                        :label="item.pin_uri"
+                        :label="item.note"
                         :value="item.id">
                         </el-option>
                 </el-select>
                 <el-date-picker
                     v-model="searchData.timeArray"
-                    type="datetimerange"
+                    type="daterange" :picker-options="pickerOptions"
                     range-separator="--"
                     start-placeholder="start time"
                     end-placeholder="End time"
-                    class="W400"
+                    class="W300"
                   >
                 </el-date-picker>
-                <el-input v-model="searchData.search" @keyup.enter.native="init()"  class="W10"></el-input>
+                <el-input v-model="searchData.search" @keyup.enter.native="init()"  class="W200"></el-input>
                 <el-button type="primary" size="small" icon="view" @click="init()">Search</el-button>
             </el-form-item>
         </el-form>  
@@ -42,13 +42,13 @@
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  align="center"  prop="board_id" label="board ID"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="board_id" label="Board ID"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="board_name" label="Board Name"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="board_followers" label="Followers"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="pin_likes" label="Like"  width="100"></el-table-column>
+            <!-- <el-table-column  align="center"  prop="pin_likes" label="Like"  width="100"></el-table-column> -->
             <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="150"></el-table-column>
@@ -71,6 +71,11 @@ export default {
   name: "board_report",
   data() {
     return {
+        pickerOptions: {
+            disabledDate(time) {
+                return time.getTime() > Date.now();//设置选择明天之前的日期
+            }
+        },  
         total:0,//默认数据总数
         pagesize:10,//每页的数据条数
         pagesizes:[10, 20, 30, 40],//分组数量
@@ -88,7 +93,7 @@ export default {
           PinterestArray:[],        //Pinterest的下拉框数据源
           BoardArray:[],            //Board的下拉框数据源
           PinsArray:[],             //Pins的下拉框数据源
-          timeArray:[new Date(2019, 3, 1, 8, 0), new Date(2019, 5, 1, 16, 0)],             //日期数据源
+          timeArray:[new Date(2019, 3, 1, 0, 0), new Date(2019, 5, 1, 0, 0)],             //日期数据源
         },
         tableData: []
     };
@@ -103,8 +108,8 @@ export default {
   },
   methods: {
     init() {
-        this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0],'day');
-        this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
+        this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
+        this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime()+ 1000 * 24 * 60 * 60);
         var urlString = `/api/v1/subaccount_report/board/?index=10`;
           urlString +=`&pinterest_account_id=${this.searchData.pinterest_account_id}`;
           if(this.searchData.board_id != ''){
@@ -175,22 +180,28 @@ export default {
       });
     },
     getPinFun:function(){
-      this.$axios.get(`/api/v1/select/pin/?board=${this.searchData.board_id}`)
-      .then(res=> {
-          if(res.data.code == 1){
-            this.searchData.PinsArray = res.data.data;
-              if(res.data.data.length>0){
-                this.searchData.pin_id = res.data.data[0].id;
-              }else{
-                this.searchData.pin_id = '';
-              }
-              this.init();
-          }else{
-            this.$message("获取失败!");
-          }
-      }).catch(function(errof){
-          this.$message("接口超时!");
-      })
+      if(this.searchData.board_id!=''){
+        this.$axios.get(`/api/v1/select/pin/?board=${this.searchData.board_id}`)
+        .then(res=> {
+            if(res.data.code == 1){
+              this.searchData.PinsArray = res.data.data;
+                if(res.data.data.length>0){
+                  this.searchData.pin_id = res.data.data[0].id;
+                }else{
+                  this.searchData.pin_id = '';
+                }
+                this.init();
+            }else{
+              this.$message("获取失败!");
+            }
+        }).catch(function(errof){
+            this.$message("接口超时!");
+        })
+      }else{
+        //如果board_id == '' pin的数组为空 ，值为空
+        this.searchData.pin_id = '';
+        this.searchData.PinsArray = [];
+      }
     },
     ListManagerFun(row) {
       // 去规则详情页面

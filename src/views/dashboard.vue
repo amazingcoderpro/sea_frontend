@@ -19,12 +19,13 @@
             <!-- 日期时间范围 -->
             <el-date-picker
                 v-model="searchData.timeArray"
-                type="datetimerange"
+                type="daterange" 
                 range-separator="--"
                 start-placeholder="start time"
                 end-placeholder="End time"
                 :disabled="disabledType=='1'"
-                class="W400"
+                :picker-options="pickerOptions"
+                class="W300"
                 >
             </el-date-picker>
             <el-button type="primary" icon="view" @click="init()">Search</el-button>
@@ -116,8 +117,7 @@
                                     <td>{{item.pin_uri}}</td>
                                     <td>{{item.SKU}}</td>
                                     <td>
-                                        <img src="../assets/img/none.png" min-width="70" height="70" />
-                                        <!-- {{item.image}} -->
+                                        <img :src="'data:image/jpeg;base64,'+ item.image" width="70" height="70" />
                                     </td>
                                     <td>{{item.pin_date}}</td>
                                     <td>{{item.saves}}</td>
@@ -184,6 +184,11 @@ export default {
     },
     data() {
         return {
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now();//设置选择今天之前的日期
+                }
+            },
             chart: null,
             bigReport:null,      //最大数据
             tableType:0,       
@@ -217,7 +222,7 @@ export default {
                 start_time:'',
                 end_time:'',
                 store_id:'1',
-                timeArray:[new Date(2019, 4, 28, 8, 0), new Date(2019, 5, 6, 16, 0)],             //日期数据源
+                timeArray:[new Date(2019, 4, 28, 0, 0), new Date(2019, 5, 1, 0, 0)],             //日期数据源
             }
         }
     },
@@ -225,15 +230,15 @@ export default {
     },
     mounted() {
         this.init();
-        this.updates();
-        this.pins();
-        this.activity();
     },
     methods:{
         init() {
+            this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
+            this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime()+ 1000 * 24 * 60 * 60);
+            this.updates();
+            this.pins();
+            this.activity();
         // 获取表格数据
-            this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0],'day');
-            this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
             var urlString = `/api/v1/dashboard/1/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
@@ -245,14 +250,9 @@ export default {
                     this.$message("获取失败!");
                 }
             })
-            .catch(error => {
-                this.$message("接口超时!");
-            });
         },
         updates() {
         // 获取表格数据
-            this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0],'day');
-            this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
             var urlString = `/api/v1/dashboard/2/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
@@ -261,12 +261,9 @@ export default {
                     this.$message("获取失败!");
                 }
             })
-            .catch(error => {
-                this.$message("接口超时!");
-            });
         },
         pins(){
-            var urlString = `/api/v1/dashboard/3/`;
+            var urlString = `/api/v1/dashboard/3/?pins_period=7`;
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
                     this.pinsArray = res.data.data;
@@ -293,8 +290,6 @@ export default {
             });
         },
         activity(){
-            this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0],'day');
-            this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1],'day');
             var urlString = `/api/v1/dashboard/5/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
@@ -312,24 +307,24 @@ export default {
             this.tableValue.YValue=[];
             this.tableValue.XValue=[];
             this.bigReport.map(e => {
-                    this.tableValue.XValue.push(base.dateFormat(e.date,"day"))
+                    this.tableValue.XValue.unshift(base.dateFormat(e.date,"day"))
                 if(this.tableType == 0){
-                    this.tableValue.YValue.push(parseFloat(e.board_num));
+                    this.tableValue.YValue.unshift(parseFloat(e.board_num));
                 }
                 else if(this.tableType == 1){
-                    this.tableValue.YValue.push(parseFloat(e.click_num));
+                    this.tableValue.YValue.unshift(parseFloat(e.click_num));
                 }
                 else if(this.tableType == 2){
-                    this.tableValue.YValue.push(parseFloat(e.board_followers));
+                    this.tableValue.YValue.unshift(parseFloat(e.board_followers));
                 }
                 else if(this.tableType == 3){
-                    this.tableValue.YValue.push(parseFloat(e.pin_num));
+                    this.tableValue.YValue.unshift(parseFloat(e.pin_num));
                 }
                 else if(this.tableType == 4){
-                    this.tableValue.YValue.push(parseFloat(e.pin_saves));
+                    this.tableValue.YValue.unshift(parseFloat(e.pin_saves));
                 }
                 else if(this.tableType == 5){
-                    this.tableValue.YValue.push(parseFloat(e.revenue_num));
+                    this.tableValue.YValue.unshift(parseFloat(e.revenue_num));
                 }
                 this.initChart();
             });    

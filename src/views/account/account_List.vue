@@ -11,9 +11,9 @@
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column type="selection" align="center" width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
-            <el-table-column label="Photo" align="center" width="150">
+            <el-table-column label="phtot" align="center" width="150">
               <template slot-scope="scope">
-                <img src="../../assets/img/none.png" min-width="70" height="70" />
+                    <img :src="'data:image/jpeg;base64,'+scope.row.account_thumbnail"  min-width="70" height="70" />        
               </template> 
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="center"  width="350">

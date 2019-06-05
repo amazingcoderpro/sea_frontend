@@ -17,12 +17,9 @@
             <el-table-column  class="parentNodeColumn" align="center" prop="pins,pins_increment" label="Pin"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.pins}}<br/>New:{{scope.row.pins_increment}}</template>
             </el-table-column>            
-            <el-table-column  class="parentNodeColumn" align="center" prop="repin,repin_increment" label="RePin"  width="150">
+            <el-table-column  class="parentNodeColumn" align="center" prop="repin,repin_increment" label="Saves"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>New:{{scope.row.saves_increment}}</template>
-            </el-table-column>            
-            <el-table-column  class="parentNodeColumn" align="center" prop="like,like_increment" label="Like"  width="300">
-              <template slot-scope="scope"> Total:{{scope.row.likes}}<br/>New:{{scope.row.likes_increment}}</template>
-            </el-table-column>           
+            </el-table-column>             
             <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comment"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>New:{{scope.row.comments_increment}}</template>
             </el-table-column>           

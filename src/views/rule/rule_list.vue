@@ -19,7 +19,7 @@
             <el-input placeholder="Tag" v-model="searchData.tag" :class="'W200'"></el-input>
           </el-form-item>
           <el-form-item label="CreatTime:">
-              <el-date-picker type="datetimerange" v-model="searchData.creatTime" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W400'">
+              <el-date-picker type="daterange" v-model="searchData.creatTime" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W300'">
               </el-date-picker>
           </el-form-item>
           <el-form-item>
@@ -98,6 +98,11 @@ export default {
   name: "RuleList",
   data() {
     return {
+        pickerOptions: {
+            disabledDate(time) {
+                return time.getTime() > Date.now();//设置选择明天之前的日期
+            }
+        },
         total:0,//默认数据总数
         pagesize:10,//每页的数据条数
         pagesizes:[10, 20, 30, 40],//分组数量
@@ -105,7 +110,7 @@ export default {
 
         searchData:{
           tag:'',  
-          creatTime:[],
+          creatTime:[new Date(2019, 4, 28, 0, 0), new Date(2019, 5, 1, 0, 0)],
           pinterest:'',
           board:''
         },
@@ -151,7 +156,7 @@ export default {
           urlString += `&begin_time=${base.dateFormat(this.searchData.creatTime[0])}`;
         }
         if(this.searchData.creatTime.length == 2){
-          urlString += `&end_time=${base.dateFormat(this.searchData.creatTime[1])}`;
+          urlString += `&end_time=${base.dateFormat(new Date(this.searchData.creatTime[1]).getTime()+ 1000 * 24 * 60 * 60)}`;
         }
         if(this.searchData.board != ''){
           var _thisboardlist = new Array();
@@ -193,7 +198,7 @@ export default {
       // 添加
       this.dialog = {
         show: true,
-        title: "添加规则",
+        title: "Add Rule",
         option: "post"
       };
     },

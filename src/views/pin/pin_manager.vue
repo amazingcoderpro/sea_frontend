@@ -28,9 +28,6 @@
             <el-table-column  class="parentNodeColumn" prop="saves,saves_increment" label="Saves" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>Todays new:{{scope.row.saves_increment}}</template>
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="like,like_increment" label="Like" align="center"  width="150">
-              <template slot-scope="scope"> Total:{{scope.row.likes}}<br/>Todays new:{{scope.row.likes_increment}}</template>
-            </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comment" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>Todays new:{{scope.row.comments_increment}}</template>
             </el-table-column>
