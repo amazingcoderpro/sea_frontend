@@ -1,6 +1,10 @@
 <template>
     <div class="RuleList">
-        <div class="tableTitle"><span>Rule List</span></div>
+        <!-- <div class="tableTitle"><span>Rule List</span></div> -->
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>Home</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/">Rule List</a></el-breadcrumb-item>
+        </el-breadcrumb>
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null">
           <el-form-item label="Pinterest:">
             <el-select v-model="searchData.pinterest" placeholder="Pinterest"  @change="pinterestChange" :class="'W200'">
@@ -132,6 +136,7 @@ export default {
   created() {
     this.account_id = this.$route.query.account_id;
     if(this.account_id){
+      this.searchData.creatTime = [];
       this.init();
     }else{
       this.searchInit();

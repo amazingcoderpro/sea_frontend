@@ -1,8 +1,9 @@
 <template>
   <div class="sub_account_daily_report">
-      <div class="tableTitle">
-        <span class="report_title">SubAccountDailyReport</span>
-      </div>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>Home</el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/">SubAccountDailyReport</a></el-breadcrumb-item>
+      </el-breadcrumb>
       <div class="Options">
         <span>Options</span>
       </div>
@@ -30,6 +31,7 @@
                   </el-option>
               </el-select>
               <el-date-picker v-model="searchData.timeArray"
+                :disabled="disabledType=='1'"
                 type="daterange" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :class="'W300'" >
               </el-date-picker>
               <el-input v-model="searchData.search" placeholder="ID"  @keyup.enter.native="init()" :class="'W200'"></el-input>
@@ -40,16 +42,16 @@
         <div style="width:1600px;height:400px;" ref="myEchart"></div> 
                 <!-- 选择按钮 -->
         <div class="menu">
-            <el-button type="primary" size="small" icon="view" @click="tableInit(0)">Revenue</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(1)">Sales</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(2)">Followers</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(3)">pins</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(4)">Repins</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(5)">Comments</el-button>
+            <el-button type="primary" size="small" icon="view" @click="chartInit(0)">Revenue</el-button>
+            <el-button type="primary" size="small" icon="view" @click="chartInit(1)">Sales</el-button>
+            <el-button type="primary" size="small" icon="view" @click="chartInit(2)">Followers</el-button>
+            <el-button type="primary" size="small" icon="view" @click="chartInit(3)">pins</el-button>
+            <el-button type="primary" size="small" icon="view" @click="chartInit(4)">Repins</el-button>
+            <el-button type="primary" size="small" icon="view" @click="chartInit(5)">Comments</el-button>
         </div>
                <!-- 日报表格 --> 
         <div class="table_right">
-            <el-table border ref="topictable" :data="bigReport">
+            <el-table border ref="topictable" :data="TableReport" :height="tableheight">
               <el-table-column prop="date" label="Data" align="center"  width="110" ></el-table-column>
               <el-table-column prop="boards" label="Boards" align="center"  width="120"></el-table-column>
               <el-table-column prop="account_followings" label="Followings" align="center" width="120"></el-table-column>
@@ -66,6 +68,10 @@
               <el-table-column prop="product_revenue" align="center" label="Revenue" fixed="right" width="120"></el-table-column>
             </el-table>
         </div>
+        <div class="paging">
+          <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
+        </div>
+
   </div>
 </template>
 
@@ -76,14 +82,25 @@ import * as base from '../../assets/js/base'
 export default {
   data() {
     return {
+      tableheight:window.innerHeight - 50,
+      bigReport:null,      //最大数据
+
+
+      TableReport:null,      //列表数据（被处理了）
+      total:0,//默认数据总数
+      pagesize:10,//每页的数据条数
+      pagesizes:[10, 20, 30, 40],//分组数量
+      currentPage:1,//默认开始页面
+
+
       pickerOptions: {
           disabledDate(time) {
               return time.getTime() > Date.now();//设置选择明天之前的日期
           }
       },
       chart: null,
-      bigReport:null,      //最大数据
       tableType:0,     
+      disabledType:'1',   //是否可自定义事件框  1 不可以   0 可以
       tableValue:{
          XValue:['no value'], 
          YValue:[0], 
@@ -92,12 +109,12 @@ export default {
         {"label":"Custom","value":"0"},
         {"label":"Yesterday","value":"1"},
         {"label":"Today","value":"2"},
-        {"label":"Sevenday","value":"3"},
+        {"label":"7 Day","value":"3"},
         {"label":"The Months","value":"4"},
         {"label":"The Years","value":"5"},
       ],
       searchData:{
-          dataType:'0',    //显示几天 
+          dataType:'2',    //显示几天 
           store_id:'2',
           search:'',//搜索框输入的值(pin_uri or board_uri or pin_description or board_name)
           pinterest_account_id:'',
@@ -120,6 +137,7 @@ export default {
   },
   methods: {
     init(){
+      this.dataSelect();
       this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
       this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime()+ 1000 * 24 * 60 * 60);
       var url = `/api/v1/select/daily_report/?index=1`;
@@ -143,7 +161,8 @@ export default {
           if(res.data.code == 1){
             if(res.data.data.results.length>0){
               this.bigReport = res.data.data.results;
-              this.tableInit(0);
+              this.chartInit(0);
+              this.tableInit();
             }else{
               this.initChart();
             }
@@ -152,7 +171,11 @@ export default {
           }
       })
     },
-    tableInit(num){
+    tableInit(){
+      this.total = this.bigReport.length; 
+      this.TableReport = this.bigReport.slice((this.currentPage - 1)*this.pagesize ,this.currentPage*this.pagesize)
+    },
+    chartInit(num){
       this.tableType=num;
       this.tableValue.YValue=[];
       this.tableValue.XValue=[];
@@ -260,7 +283,7 @@ export default {
                 }else if(this.searchData.dataType == 2){
                     // 今天
                      _star = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
-                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                     _end =  new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 3){
                     // 近七天
                      _star = new Date(base.dateFormat(new Date(new Date().getTime()-7*1000*24*60*60),"day") + " 00:00:00");
@@ -269,12 +292,12 @@ export default {
                     // 本月
                     var time = new Date();
                      _star = new Date(base.dateFormat(time.getFullYear()+"-"+ (time.getMonth()+1) +"-1"+ " 00:00:00"));
-                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 5){
                     //本年度
                     var time = new Date();
                      _star = new Date(base.dateFormat(time.getFullYear()+"-1-1"+ " 00:00:00"));
-                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }
                 this.searchData.timeArray = [_star,_end]
             }
@@ -312,6 +335,16 @@ export default {
          
         }]
       })
+    },
+    current_change(val){
+        //点击数字时触发
+        this.currentPage = val;
+        this.tableInit();
+    },
+    handleSizeChange(val){
+        //修改每页显示多少条时触发
+        this.pagesize = val;
+        this.tableInit();
     }
   },
   beforeDestroy() {

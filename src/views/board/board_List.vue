@@ -1,6 +1,11 @@
 <template>
     <div class="board_List ">
-        <div class="tableTitle"><span>Account Basic information</span></div>
+        <!-- <div class="tableTitle"><span>Account Basic information</span></div> -->
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>Home</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/account_manager">Account List</a></el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/">Board List</a></el-breadcrumb-item>
+        </el-breadcrumb>
         <div  class="massage">
           <p>Username: {{account_data.account_name}}</p>
           <p>Email Address: {{account_data.account_email}}</p>
@@ -8,7 +13,7 @@
           <p>About Your Profile: {{account_data.account_description}}</p>
           <p>Account Data: Pin {{account_data.pins}} RePin {{account_data.repin}} Like {{account_data.like}} Comment {{account_data.comment}}</p>
         </div>
-        <div class="tableTitle"><span>Board List</span></div>
+        <!-- <div class="tableTitle"><span>Board List</span></div> -->
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border  ref="topictable"  :height="tableHeight">

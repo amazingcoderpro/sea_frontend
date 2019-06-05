@@ -30,6 +30,8 @@ body,
 .el-table tbody  tr td{border-color: #ccc;}
 .el-table--border{border-color: #ccc!important;border-bottom: 1px solid #ccc!important;}
 .el-loading-mask{z-index: 3000!important;}
-
+.el-breadcrumb {
+    margin: 10px 0;
+}
 
 

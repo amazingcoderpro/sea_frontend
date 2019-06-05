@@ -1,8 +1,15 @@
 <template>
     <div class="dashboard">
-        <div class="tableTitle">
+        <!-- <div class="tableTitle">
             <span style="width: 200px;">Account Dashboard</span>
-        </div>
+        </div> -->
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>Home</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/">Dashboard</a></el-breadcrumb-item>
+        </el-breadcrumb>
+
+        
+        
         <el-form :inline="true">
             <el-form-item label="Date Range">
                 <el-select v-model="searchData.dataType" placeholder="Yesterday" class="week_name" @change="dataSelect">
@@ -179,7 +186,7 @@ export default {
         },
         height: {
         type: String,
-        default: '500px'
+        default: '400px'
         }
     },
     data() {
@@ -207,18 +214,18 @@ export default {
             pinsArray:[],
             BoardArray:[],
             ActivityArray:[],
-            disabledType:'0',   //是否可自定义事件框  0 不可以   1 可以
+            disabledType:'1',   //是否可自定义事件框  1 不可以   0 可以
             tableData:[],
             dataArray:[//时间区间的星期几
                 {"label":"Custom","value":"0"},
                 {"label":"Yesterday","value":"1"},
                 {"label":"Today","value":"2"},
-                {"label":"Sevenday","value":"3"},
+                {"label":"7 Day","value":"3"},
                 {"label":"The Months","value":"4"},
                 {"label":"The Years","value":"5"},
             ],
             searchData:{
-                dataType:'0',    //显示几天            
+                dataType:'3',    //显示几天            
                 start_time:'',
                 end_time:'',
                 store_id:'1',
@@ -235,6 +242,7 @@ export default {
         init() {
             this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
             this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime()+ 1000 * 24 * 60 * 60);
+            this.dataSelect();
             this.updates();
             this.pins();
             this.activity();
@@ -307,7 +315,12 @@ export default {
             this.tableValue.YValue=[];
             this.tableValue.XValue=[];
             this.bigReport.map(e => {
+                if(this.searchData.dataType == '5'){
                     this.tableValue.XValue.unshift(base.dateFormat(e.date,"day"))
+                }else{
+                    this.tableValue.XValue.unshift(base.dateFormat(e.date,"noyear"))
+                }
+
                 if(this.tableType == 0){
                     this.tableValue.YValue.unshift(parseFloat(e.board_num));
                 }
@@ -326,8 +339,10 @@ export default {
                 else if(this.tableType == 5){
                     this.tableValue.YValue.unshift(parseFloat(e.revenue_num));
                 }
-                this.initChart();
-            });    
+            });  
+            this.initChart();
+            console.log(this.tableValue.XValue)
+  
         },
         initChart() {
             this.chart = echarts.init(this.$refs.myEchart);
@@ -377,7 +392,7 @@ export default {
                 }else if(this.searchData.dataType == 2){
                     // 今天
                      _star = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
-                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 3){
                     // 近七天
                      _star = new Date(base.dateFormat(new Date(new Date().getTime()-7*1000*24*60*60),"day") + " 00:00:00");
@@ -386,12 +401,12 @@ export default {
                     // 本月
                     var time = new Date();
                      _star = new Date(base.dateFormat(time.getFullYear()+"-"+ (time.getMonth()+1) +"-1"+ " 00:00:00"));
-                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 5){
                     //本年度
                     var time = new Date();
                      _star = new Date(base.dateFormat(time.getFullYear()+"-1-1"+ " 00:00:00"));
-                     _end = new Date(base.dateFormat(new Date(new Date().getTime()+1000*24*60*60),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }
                 this.searchData.timeArray = [_star,_end]
             }

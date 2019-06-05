@@ -26,18 +26,18 @@
                   </el-date-picker>
               </div>
             </el-form-item>
-            <el-form-item label="schedule_rule" prop="schedule_rule">
+            <el-form-item label="schedule_rule" prop="schedule_rule" ref="scheduleRuleClass" class="scheduleRuleClass">
               <el-select :class="'W20'" v-model="scheduleRule.weekday" placeholder="schedule_rule">
                 <el-option v-for="item in weekArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
               <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="start time" end-placeholder="End time" placeholder="选择时间范围">
               </el-time-picker>
-              <div class="el-form-item__error" :style="'margin-left:154px;'" v-if="timeValState == 2">Must be more than 2 hours</div>
-
+              <div class="el-form-item__error" :style="'margin-left:244px;'" v-if="timeValState == 2">Must be more than 2 hours</div>
               <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="interval_time">
                 <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
               <el-button type="primary"  @click="scheduleRuleFun()">Add</el-button>
+              <div class="el-form-item__error" v-if="scheduleRruleState == 2">请添加区间</div>
             </el-form-item>
             <!-- 时间区间的列表，没有数据是处于隐藏状态 -->
             <div v-if="ruleForm.schedule_rule.length>0">
@@ -71,11 +71,6 @@
             </el-form-item>
           </el-form>
           <el-form :model="serchProduct" :rules="searchRules" ref="serchProduct" label-width="100px" class="demo-serchProduct searchContent">
-            <el-form-item label="Number of Products">
-              <span>{{ruleForm.product_list.length}}个</span>
-              <el-button type="primary"  @click="serchProductFun('serchProduct')" :style="'margin-left:20px;'">Search</el-button>
-              <div class="el-form-item__error" v-if="productListState == 2">请查询出满足以下条件的商品</div>
-            </el-form-item>
             <el-form-item label="Category Name" prop="product__name">
                 <el-input v-model="serchProduct.product__name" :style="'width: 400px;'"></el-input>
             </el-form-item>
@@ -83,11 +78,11 @@
                 <el-date-picker v-model="serchProduct.data1" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="Time" prop="data2" :class="'specialTime'">
+            <!-- <el-form-item label="Time" prop="data2" :class="'specialTime'">
                 <el-date-picker v-model="serchProduct.data2" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                 </el-date-picker>
-            </el-form-item>
-            <el-form-item label="Scan" prop="scan">
+            </el-form-item> -->
+            <!-- <el-form-item label="Scan" prop="scan">
               <el-select :class="'W20'" v-model="serchProduct.scan_sign">
                 <el-option  :label="'='" :value="'=='"> </el-option>
                 <el-option  :label="'>'" :value="'>'"> </el-option>
@@ -96,8 +91,8 @@
                 <el-option  :label="'<='" :value="'<='"> </el-option>
               </el-select>
               <el-input :class="'W36'" v-model="serchProduct.scan" type="number" placeholder="Scan"></el-input>
-            </el-form-item>
-            <el-form-item label="Sale" prop="sale">
+            </el-form-item> -->
+            <!-- <el-form-item label="Sale" prop="sale">
               <el-select :class="'W20'"  v-model="serchProduct.sale_sign">
                 <el-option  :label="'='" :value="'=='"> </el-option>
                 <el-option  :label="'>'" :value="'>'"> </el-option>
@@ -106,7 +101,13 @@
                 <el-option  :label="'<='" :value="'<='"> </el-option>
               </el-select>
               <el-input :class="'W36'" v-model="serchProduct.sale" type="number"  placeholder="Sale"></el-input>
+            </el-form-item> -->
+            <el-form-item label="Number of Products">
+              <el-button type="primary"  @click="serchProductFun('serchProduct')" :style="'margin-right:20px;'">Search</el-button>
+              <span>{{ruleForm.product_list.length}}个</span>
+              <div class="el-form-item__error" v-if="productListState == 2">请查询出满足以下条件的商品</div>
             </el-form-item>
+
           </el-form>
         </el-dialog>
     </div>
@@ -133,6 +134,7 @@ import * as base from '../../assets/js/base'
           pinterestArray:[],//Pinterest下拉框数据
           boardArray:[],     //board下拉框数据
           productListState:1,      //商品列表错误提示是否展示  1隐藏 2展示
+          scheduleRruleState:1,         //添加时区的错误提示
           timeValState:1,          //时间区间错误提示是否展示  1隐藏 2展示
           scheduleRule:{//时间区间临时数据
               weekday:"0",  
@@ -168,7 +170,7 @@ import * as base from '../../assets/js/base'
             sale_sign:'>',           // 销量标识符
             sale:'',           //产品销量
             scan_sign:'>',       //浏览量标识符
-            scan:'1',           // 浏览量
+            scan:'',           // 浏览量
           },
           ruleForm: {//最终添加规则需要提交过去的对象
             pinterest:'',
@@ -185,7 +187,7 @@ import * as base from '../../assets/js/base'
             pinterest: [{ required: true, message: '请选择pinterest', trigger: 'change' }],
             board: [{ required: true, message: '请选择board', trigger: 'change' }],
             ruleTime: [{required: true, message: '请选择日期', trigger: 'change' }],
-            schedule_rule:[{required: true,validator:scheduleRuleFun}],
+            // schedule_rule:[{required: true,validator:scheduleRuleFun}],
             tag: [{ required: true, message: '请输入标签', trigger: 'blur' },],
           },
           searchRules:{
@@ -193,9 +195,8 @@ import * as base from '../../assets/js/base'
             data1:[{required: true, message: '请选择商品上架时间', trigger: 'change' }],
             data2:[{required: true, message: '请选择商品浏览量、销量时间', trigger: 'change' }],
             // sale: [{ required: true, message: '请输入产品销量', trigger: 'blur' },],
-            scan: [{ required: true, message: '请输入产品浏览量', trigger: 'blur'}],
+            // scan: [{ required: true, message: '请输入产品浏览量', trigger: 'blur'}],
           },
-
       };
     },
     watch:{
@@ -218,30 +219,39 @@ import * as base from '../../assets/js/base'
     methods: {
       submitForm(formName) {
           // 最终提交
+        if(this.ruleForm.schedule_rule.length == 0){
+          //检查是否有满足条件的区间
+          this.scheduleRruleState = 2;
+        }else{
+          this.scheduleRruleState = 1;
+        }
+        if(this.ruleForm.product_list.length == 0){
+          //检查是否有满足条件的商品
+          this.productListState = 2;
+        }else{
+            this.productListState = 1;
+
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              if(this.ruleForm.product_list.length == 0){
-                //检查是否有满足条件的商品
-                this.productListState = 2;
-              }else{
-                  this.productListState = 1;
-                  this.ruleForm.start_time = base.dateFormat(this.ruleForm.ruleTime[0]);
-                  this.ruleForm.end_time =  base.dateFormat(this.ruleForm.ruleTime[1]);
-                  this.ruleForm.schedule_rule = JSON.stringify(this.ruleForm.schedule_rule);
-                  this.ruleForm.product_list = JSON.stringify(this.ruleForm.product_list);
-                  console.log(this.ruleForm)
-                  this.$axios.post(`/api/v1/rule/`, this.ruleForm).then(res => {
-                      if(res.data.code == 1){
-                          this.$message({
-                            message: "添加成功!",
-                            type: "success"
-                          });
-                          this.dialog.show = false;
-                          this.$parent.init();
-                      }else{
-                        this.$message("添加失败!");
-                      }
-                  })  
+              if(this.scheduleRruleState == 1 && this.productListState == 1){
+                this.ruleForm.start_time = base.dateFormat(this.ruleForm.ruleTime[0]);
+                this.ruleForm.end_time =  base.dateFormat(this.ruleForm.ruleTime[1]);
+                this.ruleForm.schedule_rule = JSON.stringify(this.ruleForm.schedule_rule);
+                this.ruleForm.product_list = JSON.stringify(this.ruleForm.product_list);
+                console.log(this.ruleForm)
+                this.$axios.post(`/api/v1/rule/`, this.ruleForm).then(res => {
+                    if(res.data.code == 1){
+                        this.$message({
+                          message: "添加成功!",
+                          type: "success"
+                        });
+                        this.dialog.show = false;
+                        this.$parent.init();
+                    }else{
+                      this.$message("添加失败!");
+                    }
+                }) 
               }
           } else {
             console.log('error submit!!');
@@ -253,11 +263,11 @@ import * as base from '../../assets/js/base'
         this.$refs[formName].resetFields();
       },
       scheduleRuleFun(){
+
         // 添加分区需要做的事 把输入框的值，扔进一个scheduleRuleArray 作为最后植入ruleForm.schedule_rule
         var sTime = new Date(this.scheduleRule.timeVal[0]).getTime();
         var eTime = new Date(this.scheduleRule.timeVal[1]).getTime();
         var ctime = eTime - sTime;
-        console.log(ctime)
         if(ctime>=7200000){
               this.timeValState = 1;
               //判断选择的时段是否大于两小时 ，不大于两小时不给添加
@@ -277,6 +287,14 @@ import * as base from '../../assets/js/base'
         }else{
             this.timeValState = 2;
         }
+        console.log(this.ruleForm.schedule_rule.length)
+        if(this.ruleForm.schedule_rule.length == 0){
+          //检查是否有满足条件的商品
+          this.scheduleRruleState = 2;
+        }else{
+          this.scheduleRruleState = 1;
+        }
+
       },
       deletschedule(index){
         //删除指定分区
@@ -287,17 +305,17 @@ import * as base from '../../assets/js/base'
           if (valid) {
               this.serchProduct.publish_begin_time = base.dateFormat(this.serchProduct.data1[0]);
               this.serchProduct.publish_end_time =  base.dateFormat(this.serchProduct.data1[1]);
-              this.serchProduct.begin_time = base.dateFormat(this.serchProduct.data2[0]);
-              this.serchProduct.end_time =  base.dateFormat(this.serchProduct.data2[1]);
+              // this.serchProduct.begin_time = base.dateFormat(this.serchProduct.data2[0]);
+              // this.serchProduct.end_time =  base.dateFormat(this.serchProduct.data2[1]);
               var url = "/api/v1/rule/search_product/?index=1";
               if(this.serchProduct.data1.length == 2){
                   url += "&publish_begin_time="+this.serchProduct.publish_begin_time;
                   url += "&publish_end_time="+this.serchProduct.publish_end_time;
               }
-              if(this.serchProduct.data2.length == 2){
-                  url += "&begin_time="+this.serchProduct.begin_time;
-                  url += "&end_time="+this.serchProduct.end_time;
-              }
+              // if(this.serchProduct.data2.length == 2){
+              //     url += "&begin_time="+this.serchProduct.begin_time;
+              //     url += "&end_time="+this.serchProduct.end_time;
+              // }
               if(this.serchProduct.product__name != ""){
                   url += "&product__name="+this.serchProduct.product__name;
               }
@@ -352,7 +370,7 @@ import * as base from '../../assets/js/base'
 .ruleAdd .scheduleRuleList li{font-size:14px;color:#606266;margin-bottom:5px;}
 .ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
 .ruleAdd .el-dialog__body{position: relative;}
-.ruleAdd .contentBg{height:300px;}
+.ruleAdd .contentBg{height:176px;}
 .ruleAdd .searchContent{position: absolute;bottom:100px;}
 .ruleAdd .specialTime{
     position: absolute;
