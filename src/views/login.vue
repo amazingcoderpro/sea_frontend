@@ -1,23 +1,23 @@
 <template>
     <div class="login">
         <section class="form_container">
-                  <span class="title">Pinbooster</span>
-                  <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
+                  <span class="title">PinBooster</span>
+                  <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
                     
-                    <el-form-item label="账号" prop="username">
-                      <el-input v-model="loginUser.username" placeholder="请输入账号"></el-input>
+                    <el-form-item label="User Name" prop="username">
+                      <el-input v-model="loginUser.username" placeholder="User Name"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="密码" prop="password">
-                      <el-input type="password" v-model="loginUser.password" placeholder="请输入密码"></el-input>
+                    <el-form-item label="Password" prop="password">
+                      <el-input type="password" v-model="loginUser.password" placeholder="Password"></el-input>
                     </el-form-item>
 
                     <el-form-item>
-                      <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')" >登录</el-button>
+                      <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')" >Login</el-button>
                     </el-form-item>
 
                     <div class="tiparea">
-                        <p>还没有账号？现在<router-link to='/shopfy_regist'>注册</router-link> </p>
+                        <p>No User Name?Now<router-link to='/shopfy_regist'>Regist</router-link> </p>
                     </div>
                   </el-form>
         </section>
@@ -118,7 +118,7 @@ export default {
   font-size: 25px;
 }
 .form_container {
-    width: 370px;
+    width: 400px;
     height: 314px;
     position: absolute;
     top: 50%;
@@ -126,7 +126,7 @@ export default {
     padding: 25px;
     border-radius: 5px;
     text-align: center;
-    margin-left: -210px;
+    margin-left: -250px;
     margin-top: -200px;
 }
 .form_container .manage_tip .title {

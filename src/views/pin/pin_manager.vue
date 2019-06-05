@@ -1,7 +1,13 @@
 
 <template>
     <div class="pin_manager">
-        <div class="tableTitle"><span>Pin List management</span></div>
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>Home</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/account_manager">Account List</a></el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/board_manager">Board List</a></el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/">Pin List management</a></el-breadcrumb-item>
+        </el-breadcrumb>
+        <div class="tableTitle"><span></span></div>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="pinID"  placeholder="Pin Name"></el-input>

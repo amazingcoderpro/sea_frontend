@@ -18,7 +18,7 @@
                             </span>
                             <el-dropdown-menu slot="dropdown">
                                 <!-- <el-dropdown-item command='info'>个人信息</el-dropdown-item> -->
-                                <el-dropdown-item  command='modify_password'>Modify Password</el-dropdown-item>
+                                <el-dropdown-item  command='modify_password'>Change Password</el-dropdown-item>
                                 <el-dropdown-item  command='logout'>Logout</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>

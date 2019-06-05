@@ -1,6 +1,10 @@
 <template>
     <div class="account_List">
-        <div class="tableTitle"><span>Account List</span></div>
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>Home</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/account_manager">Account List</a></el-breadcrumb-item>
+        </el-breadcrumb>
+        <!-- <div class="tableTitle"><span>Account List</span></div> -->
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
                 <el-button  type="primary" @click='addFun()'>Add</el-button>

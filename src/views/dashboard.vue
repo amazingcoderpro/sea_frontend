@@ -7,9 +7,6 @@
           <el-breadcrumb-item>Home</el-breadcrumb-item>
           <el-breadcrumb-item><a href="/">Dashboard</a></el-breadcrumb-item>
         </el-breadcrumb>
-
-        
-        
         <el-form :inline="true">
             <el-form-item label="Date Range">
                 <el-select v-model="searchData.dataType" placeholder="Yesterday" class="week_name" @change="dataSelect">
@@ -218,8 +215,8 @@ export default {
             tableData:[],
             dataArray:[//时间区间的星期几
                 {"label":"Custom","value":"0"},
-                {"label":"Yesterday","value":"1"},
-                {"label":"Today","value":"2"},
+                // {"label":"Yesterday","value":"1"},
+                // {"label":"Today","value":"2"},
                 {"label":"7 Day","value":"3"},
                 {"label":"The Months","value":"4"},
                 {"label":"The Years","value":"5"},
