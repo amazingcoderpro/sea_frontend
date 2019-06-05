@@ -59,7 +59,7 @@ export default {
     },
      
       methods: {
-          init() {
+        init() {
           this.personalUser.personalID = JSON.parse(window.localStorage.getItem('user')).id;
           this.$axios(`/api/v1/account/users/${this.personalUser.personalID}/`).then(res => {
               if(res.data.code == 1){

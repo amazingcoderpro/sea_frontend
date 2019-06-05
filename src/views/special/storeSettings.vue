@@ -1,4 +1,29 @@
 <template>
+
+<div class="store_personal">
+    <div class="personal">
+            <section class="form_container">
+                      <div class="tableTitle"><span>Profile Settings</span></div>
+                      <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="110px">
+                        <!-- 名 -->
+                        <el-form-item label="FirstName" prop="first_name">
+                          <el-input v-model="personalUser.first_name" placeholder="Daisy"></el-input>
+                        </el-form-item>
+                        <!-- 姓 -->
+                        <el-form-item label="LastName" prop="last_name">
+                          <el-input v-model="personalUser.last_name" placeholder="zhang"></el-input>
+                        </el-form-item>
+                        <!-- 邮箱 -->
+                        <el-form-item label="EmailAddress" prop="email">
+                          <el-input v-model="personalUser.email" disabled placeholder="请输入email"></el-input>
+                        </el-form-item>
+                        <!-- 点击 -->
+                        <el-form-item>
+                          <el-button type="primary" class="submit_btn" @click="submitForm('personalForm')" >Update</el-button>
+                        </el-form-item>
+                      </el-form>
+            </section>
+        </div>
     <div class="storeSetting">
         <section class="form_container">
                   <div class="tableTitle"><span>Store Settings</span></div>
@@ -31,10 +56,14 @@
                     <!-- 点击 -->
                     <el-form-item>
                       <el-button type="primary" class="submit_btn" @click="submitForm()">Save Changes</el-button>
+                      <div class="storeurl_s">
+                        <!-- <el-input disabled placeholder="当前时间" @change="dataSelect"></el-input> -->
+                      </div>
                     </el-form-item>
                   </el-form>
         </section>
     </div>
+  </div>
 </template>
 
 <script>
@@ -42,7 +71,14 @@ import * as base from '../../assets/js/base'
 import router from '../../router'
 export default {
     name: "storeSetting",
+    name: "personal",
     components:{},
+     created(){  
+          this.init();
+      },
+       created(){  
+        this.init();
+    },
     data(){    
       return {
         storeUser:{
@@ -52,12 +88,30 @@ export default {
           url_format:"",
           storeID:"",
           store_view_id:"",
-        }       
+        },
+         personalUser:{
+          first_name:"",
+          last_name:"",
+          email:"",
+          password:"",
+          personalID:"",
+        },     
+         rules: {
+          first_name: [
+            { required: true, message: "用户名不能为空", trigger: "change" },
+            { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur",left:"100px"}  
+        ],
+          last_name: [
+            { required: true, message: "用户名不能为空", trigger: "change" },
+            { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur" }  
+        ],
+          email: [
+            { required: true, message: "邮箱格式不正确", trigger: "change",type:"email"},
+        ],
+        }          
       }
     },
-    created(){  
-        this.init();
-    },
+   
     methods: {
       init() {
         this.storeUser.storeID = JSON.parse(window.localStorage.getItem('store')).id;
@@ -77,6 +131,20 @@ export default {
                 });
             }
         })
+         this.personalUser.personalID = JSON.parse(window.localStorage.getItem('user')).id;
+          this.$axios(`/api/v1/account/users/${this.personalUser.personalID}/`).then(res => {
+              if(res.data.code == 1){
+                  this.personalUser.first_name = res.data.data.first_name;
+                  this.personalUser.last_name = res.data.data.last_name;
+                  this.personalUser.email = res.data.data.email;
+              }else{
+                  this.$message({
+                    message: "code 异常!",
+                    type: 'warning',
+                    center: true
+                  });
+              }                                                   
+          })
       },
       submitForm() {
         this.$axios
@@ -94,22 +162,30 @@ export default {
           .catch(error => {
             this.$message("接口超时!");
        });
+       this.$refs[formName].validate(valid => {
+          if (valid) {
+            this.$axios
+              .put(`/api/v1/account/users/${this.personalUser.personalID}/`, this.personalUser)
+              .then(res => {
+                if (res.data.code == 1) {
+                  this.$message({message: res.data.msg,type: 'success'});
+                } else {
+                  this.$message("修改成功!");
+                }
+              })
+            }
+        });
+      },
     },
-  },
-};
+  };
 </script>
 
 
 
 <style scope>
-.storeSetting{
+.store_personal{
   width: 100%;
   height: 100%;
-}
-.storeSetting .form_container {
-    width: 100%;
-    height: 100%;
-    padding-left: 10px;
 }
 .storeSetting .el-input{
   width: 400px;
@@ -139,6 +215,34 @@ export default {
   margin-top: 15px;
 }
 .storeSetting .Parameter{
-  width: 1500px;
+  width: 1000px;
+}
+.storeurl_s{
+  display: inline-block;
+  margin-left: 150px;
+}
+.storeurl_s .el-input{
+    width: 150px;
+}
+.personal{
+    margin-bottom: 100px;
+}
+.personal .el-input{
+    width: 500px;
+}
+.personal .tableTitle{
+    margin-bottom:50px;
+}
+.personal .submit_btn{
+    background: #0f8fcf;
+    color: #fff;
+    padding: 15px 55px;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-left: -100px;
+}
+.personal .newpass{
+    padding-left: 17px;
+    color: #0f8fcf;
 }
 </style>

@@ -4,7 +4,7 @@
         <div class="tableTitle"><span>Pin List management</span></div>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
-                <el-input v-model="pinID"  placeholder="请输入PinID"></el-input>
+                <el-input v-model="pinID"  placeholder="Pin Name"></el-input>
                 <el-button  type="primary" @click='init()'>Search</el-button>
             </el-form-item>
         </el-form>
@@ -13,15 +13,15 @@
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
-            <el-table-column prop="pin_id" label="pin_id" align="center" width="100"></el-table-column>
+            <el-table-column prop="pin_id" label="pin id" align="center" width="100"></el-table-column>
             <el-table-column prop="pin_thumbnail" label="Pin Map" align="center" width="100">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
-            <el-table-column prop="pin_note" label="Pin Description" align="center" width="100"></el-table-column>
-            <el-table-column prop="pin_url" label="URL" align="center" width="100"></el-table-column>
-            <el-table-column prop="product_sku" label="产品SKU" align="center" width="100"></el-table-column>
+            <el-table-column prop="pin_note" label="Pin Description" align="center" width="130"></el-table-column>
+            <el-table-column prop="pin_url" label="URL" align="center" width="120"></el-table-column>
+            <el-table-column prop="product_sku" label="产品SKU" align="center" width="120"></el-table-column>
             <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.views}}<br/>Todays new:{{scope.row.views_increment}}</template>
             </el-table-column>
@@ -31,9 +31,9 @@
             <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comment" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>Todays new:{{scope.row.comments_increment}}</template>
             </el-table-column>
-            <el-table-column prop="under_board_id" label="Thei Board ID" align="center" width="100"></el-table-column>
-            <el-table-column prop="under_account_id" label="Thei Account ID" align="center" width="150"></el-table-column>
-            <el-table-column prop="operation" align="center" label="Manage Your Pin" fixed="right" width="200">
+            <el-table-column prop="under_board_name" label="The Board Name" align="center" width="160"></el-table-column>
+            <el-table-column prop="under_account_name" label="The Account Name" align="center" width="160"></el-table-column>
+            <el-table-column prop="operation" align="center" label="Manage Your Pin" fixed="right" width="190">
               <template slot-scope="scope">
                   <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">edit</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">Delete</el-button>
@@ -161,8 +161,7 @@ export default {
 </script>
 
 <style>
-/* .pin_manager {} */
-
+.pin_manager .tableTitle span{width: 230px;}
 .pin_manager .btnRight .el-form-item__content{
    width: 300px; 
 }

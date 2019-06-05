@@ -9,14 +9,13 @@
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
-            <el-table-column type="selection" align="center" width="55" ></el-table-column>
-            <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
-            <el-table-column label="phtot" align="center" width="150">
+            <el-table-column type="index"  label="ID" align="center" width="50" fixed="left"></el-table-column>
+            <el-table-column label="phtot" align="center" width="150" fixed="left">
               <template slot-scope="scope">
-                    <img :src="'data:image/jpeg;base64,'+scope.row.account_thumbnail"  min-width="70" height="70" />        
+                    <img :src="'data:image/jpeg;base64,'+scope.row.account_thumbnail"  min-width="70" height="70"/>        
               </template> 
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="center"  width="350">
+            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="center" fixed="left" width="350">
               <template slot-scope="scope"> 
                 User Name:{{scope.row.account_name}}<br/>
                 Email Address:{{scope.row.account_email}}<br/> 
@@ -45,7 +44,7 @@
             <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="Updates" align="center"  width="350">
               <template slot-scope="scope">
                  Updated By:{{scope.row.update_person}}<br/>
-                 Latest Account Status:<span v-if='scope.row.account_state=0'>normal</span><span v-else>forbidden</span><br/>
+                 Latest Account Status:<span v-if='scope.row.account_state==0'>normal</span><span v-else>forbidden</span><br/>
                  Latest Publish Time:{{scope.row.account_publish_time}}<br/>
                  Latest Data Latch Time:{{scope.row.account_crawl_time}}
               </template>
@@ -70,7 +69,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="operation" align="center" label="Edit" width="100" fixed="right" >
+            <el-table-column prop="operation" align="center" label="Edit" width="100">
               <template slot-scope="scope">
                 <el-button icon="edit" type="danger" size="small" @click="deteleFun(scope.row)">Delete</el-button>
               </template>

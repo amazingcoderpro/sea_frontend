@@ -3,24 +3,11 @@
     <div class="account_add">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
           <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="User Name" prop="account">
-                <el-input v-model="form.account"></el-input>
-              </el-form-item>
               <el-form-item label="Email" prop="email">
                 <el-input v-model="form.email"></el-input>
               </el-form-item>
-              <el-form-item label="type" prop="type">
-                <el-radio v-model="form.type" label="0">business</el-radio>
-                <el-radio v-model="form.type" label="1">individual</el-radio>
-              </el-form-item>
-              <el-form-item label="Create Time" prop="create_time">
-                    <el-date-picker
-                      v-model="form.create_time"
-                      type="datetime">
-                    </el-date-picker>
-              </el-form-item>
-              <el-form-item label="Description">
-                <el-input v-model="form.description"></el-input>
+              <el-form-item label="User Name" prop="account">
+                <el-input v-model="form.account" placeholder="Optional Filling"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="submitForm('form')">Add</el-button>
@@ -41,14 +28,11 @@
     data() {
       return {
         rules: {
-          account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+          // account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
           email:[
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+            { required: true, message: 'Please enter your email address', trigger: 'blur' },
+            { type: 'email', message: 'Please enter the correct email address', trigger: ['blur', 'change'] }
           ],
-          create_time: [
-            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-          ]
         }
       };
     },
@@ -82,4 +66,5 @@
 <style>
 .account_add .el-form-item__label{width:115px!important;}
 .account_add .el-form-item__content{margin-left:115px!important;}
-</style>
+.account_add .el-input{width: 300px;}
+</style> 

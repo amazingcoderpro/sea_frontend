@@ -99,7 +99,7 @@ export default {
                   //   {"id":21,"menu_name":"Role Manager","menu_url":"/role_manager","parent_id":19,"icon":null,"childs":[]}]},
                   // {"id":22,"menu_name":"Store Manager","menu_url":"/store_manager","parent_id":18,"icon":null,"childs":[]},
                   {"id":23,"menu_name":"Store Settings","menu_url":"/storeSettings","parent_id":18,"icon":null,"childs":[]},
-                  {"id":24,"menu_name":"Personal","menu_url":"/personal","parent_id":18,"icon":null,"childs":[]}
+                  // {"id":24,"menu_name":"Personal","menu_url":"/personal","parent_id":18,"icon":null,"childs":[]}
               ]}
             ]  
     };

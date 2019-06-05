@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <section class="form_container">
-                  <span class="title">Pinboosters</span>
+                  <span class="title">Pinbooster</span>
                   <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
                     
                     <el-form-item label="账号" prop="username">
@@ -114,6 +114,9 @@ export default {
   background: url(../assets/img/bg.jpg) no-repeat center center;
   background-size: 100% 100%;
 }
+.form_container .title{
+  font-size: 25px;
+}
 .form_container {
     width: 370px;
     height: 314px;
@@ -132,7 +135,7 @@ export default {
   font-size: 26px;
   color: #fff;
 }
-.loginForm {
+.form_container .loginForm {
   margin-top: 20px;
   background-color: #fff;
   padding: 20px 40px 20px 20px;
@@ -140,15 +143,15 @@ export default {
   box-shadow: 0px 5px 10px #cccc;
 }
 
-.submit_btn {
+.form_container .submit_btn {
   width: 100%;
 }
-.tiparea {
+.form_container .tiparea {
   text-align: right;
   font-size: 12px;
   color: #333;
 }
-.tiparea p a {
+.form_container .tiparea p a {
   color: #409eff;
 }
 </style>

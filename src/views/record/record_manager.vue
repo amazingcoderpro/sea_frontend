@@ -53,7 +53,7 @@
                     <el-button type="primary" icon="edit" size="small" disabled="">发布成功</el-button>
                 </template>
                 <template v-else>
-                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">手动发布</el-button>
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">Manual release</el-button>
                 </template>
               </template>
             </el-table-column>
@@ -98,11 +98,11 @@ export default {
         },
         {
           value: '[0]', 
-          label: '待发布'
+          label: 'To be released'
         },
         {
           value: '[3]',
-          label: '发布失败'
+          label: 'Post failure'
         }
       ],
       search:{
@@ -223,7 +223,7 @@ export default {
 }
 .record_manager .btnLeft{
     float: right;
-    width: 110px;
+    width: 150px;
     padding-right: 20px;
 }
 </style>
