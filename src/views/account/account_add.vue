@@ -10,7 +10,7 @@
                 <el-input v-model="form.account" placeholder="Optional Filling"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="submitForm('form')">Add</el-button>
+                <el-button type="primary" @click="submitForm('form')">Go Authorize</el-button>
                 <el-button @click="resetForm('form')">Reset</el-button>
             </el-form-item>
           </el-form>

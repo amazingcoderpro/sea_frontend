@@ -214,8 +214,8 @@ export default {
 .storeSetting .storeurl{
   margin-top: 15px;
 }
-.storeSetting .Parameter{
-  width: 1000px;
+.storeSetting .Parameter:hover{
+  width: 1100px;
 }
 .storeurl_s{
   display: inline-block;

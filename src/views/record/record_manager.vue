@@ -50,7 +50,7 @@
             <el-table-column prop="state" label="State" align="center" width="200">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 0">
-                    <el-button type="primary" icon="edit" size="small" disabled="">发布成功</el-button>
+                    <el-button type="primary" icon="edit" size="small" disabled="">待发布</el-button>
                 </template>
                 <template v-else>
                     <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">Manual release</el-button>
