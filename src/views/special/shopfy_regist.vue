@@ -1,36 +1,36 @@
 <template>
   <div class="shopfy_regist">
     <section class="form_container">
-      <el-form :model="registUser" :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
+      <el-form :model="registUser" :rules="rules" ref="loginForm" label-width="160px" class="loginForm">
         <!-- 账号 -->
-        <el-form-item label="username:" prop="username">
+        <el-form-item label="Shop Url :" prop="username">
           <el-input v-model="registUser.username" disabled></el-input>
         </el-form-item>
         <!-- 邮箱 -->
-        <el-form-item label="emailstr:" prop="emailstr">
+        <el-form-item label="Email :" prop="email">
           <el-input v-model="registUser.emailstr" disabled></el-input>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item label="password:" prop="password">
+        <el-form-item label="Password :" prop="password">
           <el-input type="password" v-model="registUser.password"></el-input>
         </el-form-item>
         <!-- 确认密码 -->
-        <el-form-item label="password2:" prop="password2">
+        <el-form-item label="Comfirm Password :" prop="password2">
           <el-input type="password" v-model="registUser.password2"></el-input>
         </el-form-item>
       </el-form>
       <div class="text">
-        <div class="text_hint">
+        <!-- <div class="text_hint">
           <span>My store is not in English</span>
-        </div>
+        </div> -->
         <div class="button">
           <el-button type="primary" @click="submitForm('loginForm')">Regist</el-button>
         </div>
         <div class="clause">
           <p>
             By signing up,you agree to our
-            <a href="#">Terms of Service</a> and
-            <a href="#">Privacy Policy</a>
+            <!-- <a href="#">Terms of Service</a> and -->
+            <a href="/privacy">Privacy Policy</a>
           </p>
         </div>
       </div>

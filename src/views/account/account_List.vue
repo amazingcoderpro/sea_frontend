@@ -13,8 +13,8 @@
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
-            <el-table-column type="index"  label="ID" align="center" width="50" fixed="left"></el-table-column>
-            <el-table-column label="phtot" align="center" width="150" fixed="left">
+            <el-table-column align="center" type="index"  label="ID" width="50" fixed="left"></el-table-column>
+            <el-table-column label="Phtot" align="center" width="150" fixed="left">
               <template slot-scope="scope">
                     <img :src="'data:image/jpeg;base64,'+scope.row.account_thumbnail"  min-width="70" height="70"/>        
               </template> 
@@ -25,6 +25,12 @@
                 Email Address:{{scope.row.account_email}}<br/> 
                 Create Time:{{scope.row.account_create_time}}<br/> 
                 Account Type:<span v-if='scope.row.account_type=0'>business</span><span v-else>individual</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
+              <template slot-scope="scope">
+                <span v-if="scope.row.account_authorized == 1">Authorized</span>
+                <el-button v-else type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
               </template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" align="center" label="Pins"  width="120">
@@ -41,9 +47,8 @@
             </el-table-column>
             <el-table-column prop="update_person" label="Report Details" align="center" width="150">
                <template slot-scope="scope">
-                <el-button icon="edit"  type="primary"  size="small" @click="BoardManagerFun(scope.row)">go border list</el-button>
+                <el-button icon="edit"  type="primary"  size="small" @click="BoardManagerFun(scope.row)">View Board List</el-button>
               </template>
-             
             </el-table-column>
             <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="Updates" align="center"  width="350">
               <template slot-scope="scope">
@@ -53,10 +58,9 @@
                  Latest Data Latch Time:{{scope.row.account_crawl_time}}
               </template>
             </el-table-column>
-
             <el-table-column prop="role_name" label="Rules" align="center" width="150" >
               <template slot-scope="scope">
-                <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">rule list</el-button>
+                <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">View Rule List</el-button>
               </template>
             </el-table-column>
             <el-table-column  prop="finished,pending" align="center" label="Publish History"  width="200">
@@ -65,14 +69,6 @@
                  Unpublished Today:{{scope.row.pending}}<br/>
               </template>
             </el-table-column>
-            <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
-              <template slot-scope="scope">
-                <!-- <el-button v-if="scope.row.account_authorized == 1"  type="primary" size="small" disabled="">已授权</el-button> -->
-                <span v-if="scope.row.account_authorized == 1">Authorized</span>
-                <el-button v-else type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
-              </template>
-            </el-table-column>
-
             <el-table-column prop="operation" align="center" label="Edit" width="100">
               <template slot-scope="scope">
                 <el-button icon="edit" type="danger" size="small" @click="deteleFun(scope.row)">Delete</el-button>
@@ -189,7 +185,7 @@ export default {
         var statedata = {
             state :'1'   //(0, '待执行'), (1, '删除'), (2, '过期'), (3, '运行'), (4, '暂停'), (5,"已完成")
         }
-        this.$confirm('Make sure to delete?', 'Hint', {
+        this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
               confirmButtonText: 'Confirm',
               cancelButtonText: 'Cancel',
               type: 'warning'

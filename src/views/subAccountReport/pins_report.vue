@@ -125,7 +125,6 @@ export default {
               urlString +=`&start_time=${this.searchData.start_time}`;
               urlString +=`&end_time=${this.searchData.end_time}`;
           }
-
         this.$axios.get(urlString).then(res => {
           if(res.data.code==1){ 
               this.tableData = res.data.data.results;

@@ -69,20 +69,22 @@ export default {
               {"id":1,"menu_name":"DashBoard","menu_url":"/dashboard","parent_id":null,"icon":"iconfont icon-zhuye1","childs":[]},
               {"id":2,"menu_name":"Report","menu_url":"1","parent_id":null,"icon":"iconfont icon-report1",
                 "childs":[
-                  {"id":3,"menu_name":"Daily Report","menu_url":"2","parent_id":2,"icon":null,"childs":[
-                    {"id":4,"menu_name":"Sub-Account Daily Report","menu_url":"/sub_account_daily_report","parent_id":3,"icon":null,"childs":[]},
+                  {"id":3,"menu_name":"Daily Report","menu_url":"/sub_account_daily_report","parent_id":2,"icon":null,"childs":[
+                    //{"id":4,"menu_name":"Sub-Account Daily Report","menu_url":"/sub_account_daily_report","parent_id":3,"icon":null,"childs":[]},
                     // {"id":5,"menu_name":"Boards Daily Report","menu_url":"/boards_daily_report","parent_id":3,"icon":null,"childs":[]},
                     // {"id":6,"menu_name":"Pins Daily Report","menu_url":"/pins_daily_report","parent_id":3,"icon":null,"childs":[]}
                     ]
                     },
-                  {"id":7,"menu_name":"Sub AccountReport","menu_url":"2-1","parent_id":2,"icon":null,"childs":[
-                    {"id":8,"menu_name":"Sub-Account Report","menu_url":"/sub_account_report","parent_id":7,"icon":null,"childs":[]},
-                    {"id":9,"menu_name":"Board Report","menu_url":"/board_report","parent_id":7,"icon":null,"childs":[]},
-                    {"id":10,"menu_name":"Pins Report","menu_url":"/pins_peport","parent_id":7,"icon":null,"childs":[]}]}
+                  {"id":7,"menu_name":"Sub-Account Report","menu_url":"/sub_account_report","parent_id":2,"icon":null,"childs":[
+                    // {"id":8,"menu_name":"Sub-Account Report","menu_url":"/sub_account_report","parent_id":7,"icon":null,"childs":[]},
+                    // {"id":9,"menu_name":"Board Report","menu_url":"/board_report","parent_id":7,"icon":null,"childs":[]},
+                    // {"id":10,"menu_name":"Pins Report","menu_url":"/pins_peport","parent_id":7,"icon":null,"childs":[]}
+                    ]
+                    }
               ]},
-              {"id":11,"menu_name":"Account Manager","menu_url":"3","parent_id":null,"icon":"iconfont icon-report",
+              {"id":11,"menu_name":"Account Manager","menu_url":"/account_manager","parent_id":null,"icon":"iconfont icon-report",
               "childs":[
-                {"id":12,"menu_name":"Account Manager","menu_url":"/account_manager","parent_id":11,"icon":null,"childs":[]},
+                // {"id":12,"menu_name":"Account Manager","menu_url":"/account_manager","parent_id":11,"icon":null,"childs":[]},
                 // {"id":13,"menu_name":"BoardManager","menu_url":"/board_manager","parent_id":11,"icon":null,"childs":[]},
                 // {"id":14,"menu_name":"PinManager","menu_url":"/pin_manager","parent_id":11,"icon":null,"childs":[]}
               ]},

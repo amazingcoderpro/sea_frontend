@@ -1,68 +1,118 @@
 <template>
     <div class="sub_account_report">
-        <div class="tableTitle"><span>SubAccountReport</span></div>
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>Home</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/">SubAccountReport</a></el-breadcrumb-item>
+        </el-breadcrumb>
         <el-form  :inline="true" :model="searchData" class="demo-form-inline">
-
-            <el-form-item label="Filter" prop="dep">
+            <el-form-item label="Pinterest">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" class="Filter_week W200" @change="getBodFun">
+                   <el-option :label="'All'" :value="''"></el-option>    
                    <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
                 </el-select>
+            </el-form-item>
+            <el-form-item label="Boards">
                 <el-select v-model="searchData.board_id" placeholder="All Boards" class="Filter_week W200" @change="getPinFun">
                         <el-option   :label="'All'" :value="''"></el-option>    
-                        <el-option
-                        v-for="item in searchData.BoardArray"
-                        :key="item.id"
-                        :label="item.name "
-                        :value="item.id ">
-                        </el-option>
+                        <el-option v-for="item in searchData.BoardArray" :key="item.id" :label="item.name " :value="item.id "></el-option>
                 </el-select>
+            </el-form-item>
+            <el-form-item label="Pins">
                 <el-select v-model="searchData.pin_id" placeholder="All Pins" class="Filter_week W200">
                         <el-option   :label="'All'" :value="''"></el-option>    
-                        <el-option
-                        v-for="item in searchData.PinsArray"
-                        :key="item.id"
-                        :label="item.note"
-                        :value="item.id">
-                        </el-option>
+                        <el-option v-for="item in searchData.PinsArray" :key="item.id" :label="item.note" :value="item.id"></el-option>
                 </el-select>
-                <el-date-picker
-                    v-model="searchData.timeArray"
-                    type="daterange" :picker-options="pickerOptions"
-                    range-separator="--"
-                    start-placeholder="start time"
-                    end-placeholder="End time"
-                    class="W300"
-                  >
-                </el-date-picker>
-                <el-input v-model="searchData.search" @keyup.enter.native="init()"  class="W200"></el-input>
-                <el-button type="primary" size="small" icon="view" @click="init()">Search</el-button>
+            </el-form-item>
+            <el-form-item label="Time">
+                <el-date-picker v-model="searchData.timeArray" type="daterange" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" class="W300"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="Search" prop="dep">
+                <template>
+                        <template v-if="tableState == 1">
+                                <el-input v-model="searchData.search" @keyup.enter.native="init()" placeholder="Pinterest Account Name"  class="W200"></el-input>
+                        </template>
+                        <template  v-else-if="tableState == 2">
+                                <el-input v-model="searchData.search" @keyup.enter.native="init()" placeholder="Board Name"  class="W200"></el-input>
+                        </template>
+                        <template  v-else-if="tableState == 3">
+                                <el-input v-model="searchData.search" @keyup.enter.native="init()" placeholder="Pin Title"  class="W200"></el-input>
+                        </template>
+                </template>
+                <el-button type="primary" icon="view" @click="init()">Search</el-button>
             </el-form-item>
         </el-form>  
         <!-- 表单部分 -->
-        <div class="table_right">
-          <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
+        <template v-if="tableState == 1">
+            <div class="table_right">
+              <p>Accounts:{{searchData.PinterestArray.length}}</p>
+              <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
+                <!-- <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column> -->
+                <el-table-column  align="center"  prop="account_name" label="Account Name"  width="150"></el-table-column>
+                <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
+                <el-table-column  align="center"  prop="account_followings" label="Followings"  width="200"></el-table-column>
+                <el-table-column  align="center"  prop="account_followers" label="Followers"  width="100"></el-table-column>
+                <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
+                <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="100"></el-table-column>
+                <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="100"></el-table-column>
+                <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="100"></el-table-column>
+                <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="150"></el-table-column>
+                <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="100"></el-table-column>
+                <el-table-column  align="center"  prop="product_sales" label="Sales"  width="100"></el-table-column>
+                <el-table-column  align="center"  prop="product_revenue" label="Revenue"  ></el-table-column>
+              </el-table>
+            </div>
+            <!-- 分页 -->
+        </template>
+        <template v-else-if="tableState == 2">
+            <div class="table_right">
+              <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  align="center"  prop="subaccount_id" label="Subaccount ID"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="account_name" label="Account Name"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="board_id" label="Board ID"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="board_name" label="Board Name"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="account_followings" label="Followings"  width="200"></el-table-column>
-            <el-table-column  align="center"  prop="account_followers" label="Followers"  width="100"></el-table-column>
+            <el-table-column  align="center"  prop="board_followers" label="Followers"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="100"></el-table-column>
-            <!-- <el-table-column  align="center"  prop="pin_likes" label="Like"  width="100"></el-table-column> -->
             <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="150"></el-table-column>
-            <!-- <el-table-column  align="center"  prop="account_views" label="View"  width="100"></el-table-column> -->
             <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_sales" label="Sales"  width="100"></el-table-column>
-            <el-table-column  align="center"  prop="product_revenue" label="Revenue"  width="100" ></el-table-column>
-          </el-table>
-        </div>
-        <!-- 分页 -->
+            <el-table-column  align="center"  prop="product_revenue" label="Revenue" ></el-table-column>
+              </el-table>
+            </div>
+            <!-- 分页 -->
+        </template>
+
+        <template v-else-if="tableState == 3">
+            <div class="table_right">
+              <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
+                  <el-table-column  align="center"  prop="pin_uri" label="Pin ID"  width="200"></el-table-column>
+                  <el-table-column  align="center"  prop="pin_thumbnail" label="Image"  width="200">
+                      <template slot-scope="scope"> 
+                          <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  min-width="70" height="70" />        
+                      </template>
+                  </el-table-column>
+                  <el-table-column  align="center"  prop="product_sales" label="Sales"  width="200"></el-table-column>
+                  <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="200"></el-table-column>
+                  <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="200"></el-table-column>
+                  <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="150"></el-table-column>
+                  <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="200"></el-table-column>
+                  <el-table-column  align="center"  prop="product_sales" label="Sales"  width="200"></el-table-column>
+                  <el-table-column  align="center"  prop="product_revenue" label="Revenue"></el-table-column>
+              </el-table>
+            </div>
+            <!-- 分页 -->
+        </template>
+
+
         <div class="paging">
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
+
+
+
+
     </div>
 </template>
 
@@ -82,6 +132,7 @@ export default {
         pagesizes:[10, 20, 30, 40],//分组数量
         currentPage:1,//默认开始页面
         tableHeight:'100',
+        tableState:'1', //展示哪个表格？1 所有信息 2 只有Board的 3 PIn的
         searchData:{
           start_time:'',
           end_time:'',
@@ -100,19 +151,29 @@ export default {
     };
   },
   created() {
+      this.timeInit();
       this.getPinterestFun();
   },
   mounted() {
       setTimeout(() => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 130;
       }, 50);
   },
   methods: {
     init() {
         this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
-        this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime()+ 1000 * 24 * 60 * 60);
-        var urlString = `/api/v1/subaccount_report/subaccount/?pagesize=9`;
-          urlString +=`&pinterest_account_id=${this.searchData.pinterest_account_id}`;
+        this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60);
+        var urlString = `/api/v1/subaccount_report/subaccount/`;
+              if(this.searchData.board_id){
+                  urlString = `/api/v1/subaccount_report/board/`;
+                if(this.searchData.pin_id){
+                  urlString = `/api/v1/subaccount_report/pins/`;
+                }
+              }
+          urlString +=`?page=${this.currentPage}&page_size=${this.pagesize}`;
+          if(this.searchData.pinterest_account_id != ''){
+              urlString +=`&pinterest_account_id=${this.searchData.pinterest_account_id}`;
+          }
           if(this.searchData.board_id != ''){
               urlString +=`&board_id=${this.searchData.board_id}`;
           }
@@ -131,6 +192,14 @@ export default {
           if(res.data.code==1){ 
               this.tableData = res.data.data.results;
               this.total = res.data.data.count;
+              if(this.searchData.pinterest_account_id){
+                this.tableState = 2;
+                if(this.searchData.board_id){
+                  this.tableState = 3;
+                }
+              }else{
+                  this.tableState = 1;
+              }
           }else{
             this.$message("获取失败!");
           }
@@ -145,14 +214,14 @@ export default {
             if(res.data.code == 1){
               this.searchData.PinterestArray = res.data.data;
               if(res.data.data.length>0){
-                this.searchData.pinterest_account_id = res.data.data[0].id;
+                this.searchData.pinterest_account_id = '';
                 this.getBodFun();
               }else{
                 this.searchData.pinterest_account_id = '';
                 this.searchData.board_id = '';
                 this.searchData.pin_id = '';
-                this.init();
               }
+              this.init();
             }else{
               this.$message("获取失败!");
             }
@@ -161,24 +230,31 @@ export default {
         });
     },
     getBodFun:function(){
-      this.$axios.get(`/api/v1/select/board/?pinterest_account_id=${this.searchData.pinterest_account_id}`)
-      .then(res=> {
-          if(res.data.code == 1){
-            this.searchData.BoardArray = res.data.data;
-              if(res.data.data.length>0){
-                this.searchData.board_id = res.data.data[0].id;
-                this.getPinFun();
-              }else{
-                this.searchData.board_id = '';
-                this.searchData.pin_id = '';
+      if(this.searchData.pinterest_account_id != ''){
+        this.$axios.get(`/api/v1/select/board/?pinterest_account_id=${this.searchData.pinterest_account_id}`)
+        .then(res=> {
+            if(res.data.code == 1){
+              this.searchData.BoardArray = res.data.data;
+                if(res.data.data.length>0){
+                  this.searchData.board_id = '';
+                  this.getPinFun();
+                }else{
+                  this.searchData.board_id = '';
+                  this.searchData.pin_id = '';
+                }
                 this.init();
-              }
-          }else{
-            this.$message("获取失败!");
-          }
-      }).catch(function(errof){
-          this.$message("接口超时!");
-      });
+            }else{
+              this.$message("获取失败!");
+            }
+        }).catch(function(errof){
+            this.$message("接口超时!");
+        });
+      }else{
+        this.searchData.board_id = '';
+        this.searchData.pin_id = '';
+        this.searchData.BoardArray = [];
+        this.searchData.PinsArray = [];
+      }
     },
     getPinFun:function(){
       if(this.searchData.board_id!=''){
@@ -186,11 +262,7 @@ export default {
         .then(res=> {
             if(res.data.code == 1){
               this.searchData.PinsArray = res.data.data;
-                if(res.data.data.length>0){
-                  this.searchData.pin_id = res.data.data[0].id;
-                }else{
-                  this.searchData.pin_id = '';
-                }
+                this.searchData.pin_id = '';
                 this.init();
             }else{
               this.$message("获取失败!");
@@ -208,6 +280,9 @@ export default {
     ListManagerFun(row) {
       // 去规则详情页面
       this.$router.push({path:"/list_manager", query: { index: row.index }});
+    },
+    timeInit(){
+      this.searchData.timeArray[1] = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
     },
     current_change(val){
         //点击数字时触发

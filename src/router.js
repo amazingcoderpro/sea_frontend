@@ -28,6 +28,7 @@ import AutState from './views/special/aut_state'
 import Personal from './views/special/personal.vue'
 import ShopfyRegist from './views/special/shopfy_regist.vue'
 import StoreSettings from './views/special/storeSettings.vue'
+import Privacy from './views/special/privacy.vue'
 
 
 Vue.use(Router)
@@ -77,6 +78,12 @@ const router = new Router({
       component: ShopfyRegist
     },
     {
+      path: '/privacy',
+      name: 'privacy',
+      component: Privacy
+    },
+    
+    {
       path: '/aut_state',
       name: 'aut_state',
       component: AutState
@@ -93,7 +100,7 @@ const router = new Router({
 
 router.beforeEach((to,from,next) =>{
   const isLogin = localStorage.eleToken ? true : false;
-  if(to.path == "/login" || to.path == "/shopfy_regist" ){
+  if(to.path == "/login" || to.path == "/shopfy_regist" || to.path == "/privacy" ){
     next()
   }else{
     //isLogin ? next() : next('/login');

@@ -20,13 +20,13 @@
                 </template>
               </el-select>
             </el-form-item>
-            <el-form-item label="ruleTime" prop="ruleTime">
+            <el-form-item label="Rule Time" prop="ruleTime">
               <div class="block">
                   <el-date-picker v-model="ruleForm.ruleTime" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                   </el-date-picker>
               </div>
             </el-form-item>
-            <el-form-item label="schedule_rule" prop="schedule_rule" ref="scheduleRuleClass" class="scheduleRuleClass">
+            <el-form-item label="Schedule Rule" prop="schedule_rule" ref="scheduleRuleClass" class="scheduleRuleClass">
               <el-select :class="'W20'" v-model="scheduleRule.weekday" placeholder="schedule_rule">
                 <el-option v-for="item in weekArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
@@ -66,7 +66,7 @@
             <el-form-item label=" " :class="'contentBg'">
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">Add</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">Save</el-button>
               <el-button @click="resetForm('ruleForm')">Reset</el-button>
             </el-form-item>
           </el-form>
@@ -263,15 +263,12 @@ import * as base from '../../assets/js/base'
         this.$refs[formName].resetFields();
       },
       scheduleRuleFun(){
-
-        // 添加分区需要做的事 把输入框的值，扔进一个scheduleRuleArray 作为最后植入ruleForm.schedule_rule
         var sTime = new Date(this.scheduleRule.timeVal[0]).getTime();
         var eTime = new Date(this.scheduleRule.timeVal[1]).getTime();
         var ctime = eTime - sTime;
         if(ctime>=7200000){
               this.timeValState = 1;
-              //判断选择的时段是否大于两小时 ，不大于两小时不给添加
-              this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],"hour");// 时间区间 中的时间数据 转成最终数据
+              this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],"hour");
               this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],"hour");
               var _thisObj = {
                     weekday:"0",  
@@ -305,17 +302,11 @@ import * as base from '../../assets/js/base'
           if (valid) {
               this.serchProduct.publish_begin_time = base.dateFormat(this.serchProduct.data1[0]);
               this.serchProduct.publish_end_time =  base.dateFormat(this.serchProduct.data1[1]);
-              // this.serchProduct.begin_time = base.dateFormat(this.serchProduct.data2[0]);
-              // this.serchProduct.end_time =  base.dateFormat(this.serchProduct.data2[1]);
               var url = "/api/v1/rule/search_product/?index=1";
               if(this.serchProduct.data1.length == 2){
                   url += "&publish_begin_time="+this.serchProduct.publish_begin_time;
                   url += "&publish_end_time="+this.serchProduct.publish_end_time;
               }
-              // if(this.serchProduct.data2.length == 2){
-              //     url += "&begin_time="+this.serchProduct.begin_time;
-              //     url += "&end_time="+this.serchProduct.end_time;
-              // }
               if(this.serchProduct.product__name != ""){
                   url += "&product__name="+this.serchProduct.product__name;
               }

@@ -5,11 +5,13 @@
           <el-breadcrumb-item>Home</el-breadcrumb-item>
           <el-breadcrumb-item><a href="/">Rule List</a></el-breadcrumb-item>
         </el-breadcrumb>
-        <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null">
-          <el-form-item label="Pinterest:">
+        <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null" label-width="100px">
+          <el-form-item label="Pinterest">
             <el-select v-model="searchData.pinterest" placeholder="Pinterest"  @change="pinterestChange" :class="'W200'">
               <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="Board">
             <el-select v-model="searchData.board" placeholder="Board" :class="'W200'">
               <el-option :label="'All'" :value="'-1'"> </el-option>
               <template v-for="item in pinterestArray">
@@ -19,10 +21,10 @@
               </template>
             </el-select>
           </el-form-item>
-          <el-form-item label="Rule Tag:">
+          <el-form-item label="Tag">
             <el-input placeholder="Tag" v-model="searchData.tag" :class="'W200'"></el-input>
           </el-form-item>
-          <el-form-item label="CreatTime:">
+          <el-form-item label="CreatTime">
               <el-date-picker type="daterange" v-model="searchData.creatTime" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W300'">
               </el-date-picker>
           </el-form-item>
@@ -78,9 +80,9 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="Board Name"  width="200">
               <template slot-scope="scope"> {{scope.row.baord_name}}</template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="operation" width="180"  fixed="right">
+            <el-table-column prop="operation" align="center" label="Operation" width="180">
               <template slot-scope="scope">
-                <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>
+                <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Change</el-button>
                 <el-button type="danger" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
               </template>
             </el-table-column>
@@ -212,18 +214,18 @@ export default {
         var statedata = {
             state :'2'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
         }
-        this.$confirm('确定要暂停?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+        this.$confirm('Are you sure you wanna change this rule?', 'Warning', {
+              confirmButtonText: 'Confirm',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
                 this.$axios.put(`/api/v1/rule/state/${row.id}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
-                      this.$message({type: 'success',message: '暂停成功!'});
+                      this.$message({type: 'success',message: 'Change successfully!'});
                       this.init();
                     }else{
-                      this.$message.error('暂停失败!');
+                      this.$message.error('Change failed!');
                     }
                   })
             }) 
@@ -233,18 +235,18 @@ export default {
         var statedata = {
             state :'5'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
         }
-        this.$confirm('确定要删除?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+        this.$confirm('Are you sure you wanna delete this rule?', 'Warning', {
+              confirmButtonText: 'Confirm',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
                 this.$axios.put(`/api/v1/rule/state/${row.id}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
-                      this.$message({type: 'success',message: '删除成功!'});
+                      this.$message({type: 'success',message: 'Deleted successfully!'});
                       this.init();
                     }else{
-                      this.$message.error('删除失败!');
+                      this.$message.error('Delete failed!');
                     }
                   })
             }) 
