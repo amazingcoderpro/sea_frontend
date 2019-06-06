@@ -38,11 +38,11 @@
         
         <div class="menu">
             <template v-for="item in chartBtnArray" >
-                    <div :key="item.btnValue" class="menuSon active"  v-if="tableType == item.btnValue"  @click="chartInit(item.btnValue)" >
+                    <div :key="item.btnValue" class="menuSon active"  v-if="tableType == item.btnValue"  @click="tableInit(item.btnValue)" >
                         <span class="point "></span>
                         <span class="name">{{item.btnName}}</span>
                     </div>
-                    <div :key="item.btnValue" class="menuSon"  v-else  @click="chartInit(item.btnValue)" >
+                    <div :key="item.btnValue" class="menuSon"  v-else  @click="tableInit(item.btnValue)" >
                         <span class="point "></span>
                         <span class="name">{{item.btnName}}</span>
                     </div>
