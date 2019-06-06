@@ -35,14 +35,18 @@
             <el-button type="primary" icon="view" @click="init()">Search</el-button>
         </el-form>
         <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
-        <div class="menu MB10">
-            <el-button type="primary" size="small" icon="view" @click="tableInit(1)">Clicks</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(5)">Sales</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(5)">Revenues</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(3)">Pins</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(4)">Saves</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(0)">board_num</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(2)">board_followers</el-button>
+        
+        <div class="menu">
+            <template v-for="item in chartBtnArray" >
+                    <div :key="item.btnValue" class="menuSon active"  v-if="tableType == item.btnValue"  @click="chartInit(item.btnValue)" >
+                        <span class="point "></span>
+                        <span class="name">{{item.btnName}}</span>
+                    </div>
+                    <div :key="item.btnValue" class="menuSon"  v-else  @click="chartInit(item.btnValue)" >
+                        <span class="point "></span>
+                        <span class="name">{{item.btnName}}</span>
+                    </div>
+            </template>
         </div>
         <!-- 表单部分 -->
         <div class="table_right MB10">
@@ -204,6 +208,14 @@ export default {
                 XValue:[], 
                 YValue:[], 
             },
+            chartBtnArray:[
+                {btnName:'Clicks',btnValue:'0'},
+                {btnName:'Sales',btnValue:'1'},
+                {btnName:'Revenue',btnValue:'2'},
+                {btnName:'Pins',btnValue:'3'},
+                {btnName:'Saves',btnValue:'4'},
+                {btnName:'Boards',btnValue:'5'},
+            ],
             updatesData:{
                 datetime:"2019-1-1 12:00:00",
                 new_accounts:"99999",
@@ -322,28 +334,25 @@ export default {
                     this.tableValue.XValue.unshift(base.dateFormat(e.date,"noyear"))
                 }
 
-                if(this.tableType == 0){
-                    this.tableValue.YValue.unshift(parseFloat(e.board_num));
-                }
-                else if(this.tableType == 1){
-                    this.tableValue.YValue.unshift(parseFloat(e.click_num));
-                }
-                else if(this.tableType == 2){
-                    this.tableValue.YValue.unshift(parseFloat(e.board_followers));
-                }
-                else if(this.tableType == 3){
-                    this.tableValue.YValue.unshift(parseFloat(e.pin_num));
-                }
-                else if(this.tableType == 4){
-                    this.tableValue.YValue.unshift(parseFloat(e.pin_saves));
-                }
-                else if(this.tableType == 5){
-                    this.tableValue.YValue.unshift(parseFloat(e.revenue_num));
-                }
+              if(this.tableType == 0){
+                this.tableValue.YValue.unshift(parseFloat(e.click_num));
+              }
+              else if(this.tableType == 1){
+                this.tableValue.YValue.unshift(parseFloat(e.sales_num));
+              }
+              else if(this.tableType == 2){
+                this.tableValue.YValue.unshift(parseFloat(e.revenue_num));
+              }
+              else if(this.tableType == 3){
+                this.tableValue.YValue.unshift(parseFloat(e.pin_num));
+              }
+              else if(this.tableType == 4){
+                this.tableValue.YValue.unshift(parseFloat(e.pin_saves));
+              }else{
+                this.tableValue.YValue.unshift(parseFloat(e.board_num));
+              }
             });  
             this.initChart();
-            console.log(this.tableValue.XValue)
-  
         },
         initChart() {
             this.chart = echarts.init(this.$refs.myEchart);
@@ -440,7 +449,12 @@ export default {
 .dashboard .RTBox{min-height:400px;}
 .dashboard .RBBox{min-height:400px;}
 .dashboard .LBBox{min-height:269px;}
-.dashboard .el-table thead tr th{
-    background: #006699;
-}
+.dashboard .el-table thead tr th{background:#006699;}
+.dashboard .menu{border:1px solid #797979;border-radius:20px;padding:5px;text-align:center;display:-webkit-box;display:-ms-flexbox;display:flex;display:-webkit-flex;margin-bottom:40px;width:70%;margin-left:10%;}
+.dashboard .menu .menuSon{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;height:0;cursor:pointer;}
+.dashboard .menu .menuSon .point{position:absolute;left:47%;top:-6px;width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#999999;box-shadow:0 0 6px #000;}
+.dashboard .menu .menuSon.active .point{width:20px;height:20px;top:-12px;background:#006699;}
+.dashboard .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
+
+
 </style>

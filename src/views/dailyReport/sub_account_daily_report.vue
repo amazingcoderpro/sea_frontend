@@ -112,7 +112,7 @@ export default {
         {"label":"Custom","value":"0"},
         {"label":"Yesterday","value":"1"},
         {"label":"Today","value":"2"},
-        {"label":"7 Day","value":"3"},
+        {"label":"Last 7 Day","value":"3"},
         {"label":"This Months","value":"4"},
         {"label":"This Years","value":"5"},
       ],
