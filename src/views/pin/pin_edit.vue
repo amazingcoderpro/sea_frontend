@@ -2,21 +2,21 @@
     <div class="pin_edit">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
           <el-form :model="editData" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-               <el-form-item label="pin_uri">
+               <el-form-item label="Pin ID">
                 <el-input v-model="editData.pin_uri" disabled></el-input>
               </el-form-item>
-               <el-form-item label="boardID">
-                <el-input v-model="editData.board" disabled=""></el-input>
+               <el-form-item label="Board ID">
+                <el-input v-model="editData.board" disabled></el-input>
               </el-form-item>
-               <el-form-item label="pin_url" prop="url">
-                <el-input v-model="editData.url"></el-input>
+               <el-form-item label="Pin URL" prop="url">
+                <el-input v-model="editData.url" disabled></el-input>
               </el-form-item>
-               <el-form-item label="note" prop="note">
+               <el-form-item label="Pin Description" prop="note">
                 <el-input v-model="editData.note"></el-input>
               </el-form-item>
               
               <el-form-item>
-                <el-button type="primary" @click="submitForm('form')">修改</el-button>
+                <el-button type="primary" @click="submitForm('form')">Amend</el-button>
                 <el-button @click="resetForm('form')">Reset</el-button>
             </el-form-item>
           </el-form>

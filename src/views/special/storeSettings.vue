@@ -1,5 +1,4 @@
 <template>
-
 <div class="store_personal">
     <div class="personal">
             <section class="form_container">
@@ -49,18 +48,21 @@
                       <el-input v-model="storeUser.timezone" disabled placeholder="请输入内容"></el-input>
                    </div>
                    <!-- store_view_id -->
+                    
                    <div class="storeurl">
-                     <span>Store view ID</span>
+                      <span>Google Analytics View ID</span>
                       <el-input v-model="storeUser.store_view_id" placeholder="请输入内容"></el-input>
+                      <el-button type="primary"  size="small" @click="showStatement()">Statement</el-button>
                    </div>
                     <!-- 点击 -->
                     <el-form-item>
                       <el-button type="primary" class="submit_btn" @click="submitForm()">Save Changes</el-button>
                       <div class="storeurl_s">
-                        <!-- <el-input disabled placeholder="当前时间" @change="dataSelect"></el-input> -->
                       </div>
                     </el-form-item>
                   </el-form>
+                  <!-- 展示请求权限的弹窗 -->
+                  <DialogFound :dialog='dialog'  ref="dailog" ></DialogFound>
         </section>
     </div>
   </div>
@@ -69,10 +71,13 @@
 <script>
 import * as base from '../../assets/js/base'
 import router from '../../router'
+import DialogFound from "./statement";
 export default {
     name: "storeSetting",
     name: "personal",
-    components:{},
+    components:{
+      DialogFound
+    },
      created(){  
           this.init();
       },
@@ -81,6 +86,12 @@ export default {
     },
     data(){    
       return {
+        
+        dialog: {
+            show: false,
+            title: "",
+            option: "edit"
+        },
         storeUser:{
           url:"",
           name:"",
@@ -174,8 +185,16 @@ export default {
                 }
               })
             }
-        });
+        });  
       },
+      showStatement(){
+    
+      this.dialog = {
+        show: true,
+        title: "Statement",
+        option: "post"
+      };    
+      }
     },
   };
 </script>

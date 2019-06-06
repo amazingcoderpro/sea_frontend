@@ -2,14 +2,11 @@
     <div class="board_edit">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
           <el-form :model="editData" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-               <el-form-item label="board_uri">
+               <el-form-item label="Board ID">
                 <el-input v-model="editData.board_uri" disabled></el-input>
               </el-form-item>
-               <el-form-item label="board名称" prop="name">
+               <el-form-item label="Board Name" prop="name" class="board_name">
                 <el-input v-model="editData.name"></el-input>
-              </el-form-item>
-               <el-form-item label="Board Description" prop="description">
-                <el-input v-model="editData.description"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="submitForm('form')">Submit</el-button>
@@ -90,6 +87,6 @@
   }
 </script>
 <style>
-/* .board_edit  */
+.board_edit .el-form-item__label{padding-right: 5px!important;}
 
 </style>

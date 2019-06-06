@@ -26,57 +26,45 @@
                 <!-- 批量操作 -->
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
                 <!-- ID -->
-            <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
+            <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
                 <!-- 产品SKU -->
             <el-table-column prop="product.sku" label="SKU" align="center" width="200"></el-table-column>
                 <!-- Pin图 -->
-            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="110">
+            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="130">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
                 <!-- Pin描述 -->
-            <el-table-column prop="pin.note"  label="Pin Note" align="center" width="110">
+            <el-table-column prop="pin.note"  label="Pin Note" align="center" width="130">
             </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="pin.url" label="Pin URL" align="center" width="110"></el-table-column>
-                <!-- 产品浏览量 -->
-            <el-table-column  class="parentNodeColumn" prop="rule.scan" label="Scan" align="center"  width="120">
-              <template slot-scope="scope">
-                {{scope.row.rule.scan_sign}} == {{scope.row.rule.scan}}
-              </template>
-            </el-table-column>
-                <!-- 产品销量 -->
-            <el-table-column  class="parentNodeColumn" prop="sale" label="Sale" align="center"  width="120">
-              <template slot-scope="scope">
-                {{scope.row.rule.sale_sign}} == {{scope.row.rule.sale}}
-              </template>
-            </el-table-column>
+            <el-table-column prop="pin.url" label="Pin URL" align="center" width="130"></el-table-column>
                 <!-- 价格 -->
-            <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">
+            <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="130">
             </el-table-column>
                 <!-- 所属规则标签 -->
-            <el-table-column prop="product.tag" label="Tag" align="center" width="120">
+            <el-table-column prop="product.tag" label="Tag" align="center" width="130">
                 <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
                 <!-- 所属Board ID -->
-            <el-table-column prop="board.id" label="Board ID" align="center" width="120"></el-table-column>
+            <el-table-column prop="board.id" label="Board Name" align="center" width="138"></el-table-column>
                 <!-- 所属账户ID -->
-            <el-table-column prop="board.pinterest_account" label="Pinterest Account ID" align="center" width="200"></el-table-column>
+            <el-table-column prop="board.pinterest_account" label="Pinterest Account Name" align="center" width="200"></el-table-column>
                 <!-- 发布状态 --> 
-            <el-table-column prop="state" label="State" align="center" width="150">
+            <el-table-column prop="state" label="State" align="center" width="180">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 3">
-                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >手动发布</el-button>
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Manual release</el-button>
                 </template>
                 <template v-else>
-                    <el-button type="primary" icon="edit" size="small" disabled="">发布成功</el-button>
+                    <el-button type="primary" icon="edit" size="small" disabled="">Unpublic</el-button>
                 </template>
               </template>
 
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="Remark" fixed="right" width="180">
-
+            <el-table-column prop="remark" align="center" label="Remark" width="180">
+                
             </el-table-column>
           </el-table>
         </div>
@@ -184,7 +172,6 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-              
                 this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
                   .then(res => {
                     if(res.data.code == 1){

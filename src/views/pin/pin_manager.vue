@@ -7,41 +7,40 @@
           <el-breadcrumb-item><a href="/board_manager">Board List</a></el-breadcrumb-item>
           <el-breadcrumb-item><a href="/">Pin List management</a></el-breadcrumb-item>
         </el-breadcrumb>
-        <div class="tableTitle"><span></span></div>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
-                <el-input v-model="pinID"  placeholder="Pin Name"></el-input>
+                <el-input v-model="pinID"  placeholder="Pin Descripttion/SKU"></el-input>
                 <el-button  type="primary" @click='init()'>Search</el-button>
             </el-form-item>
+             <!-- <el-button type="primary" round class="button_right" @click="deteleFun()">Bulk Delete</el-button> -->
         </el-form>
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
-            <el-table-column prop="pin_id" label="pin id" align="center" width="100"></el-table-column>
-            <el-table-column prop="pin_thumbnail" label="Pin Map" align="center" width="100">
+            <el-table-column prop="pin_thumbnail" label="Pin Image" align="center" width="100">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
-            <el-table-column prop="pin_note" label="Pin Description" align="center" width="130"></el-table-column>
-            <el-table-column prop="pin_url" label="URL" align="center" width="120"></el-table-column>
-            <el-table-column prop="product_sku" label="产品SKU" align="center" width="120"></el-table-column>
+            <el-table-column prop="pin_note" label="Pin Description" align="center" width="150"></el-table-column>
+            <el-table-column prop="pin_url" label="Pin URL" align="center" width="150"></el-table-column>
+            <el-table-column prop="product_sku" label="Product SKU" align="center" width="150"></el-table-column>
             <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.views}}<br/>Todays new:{{scope.row.views_increment}}</template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="saves,saves_increment" label="Saves" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>Todays new:{{scope.row.saves_increment}}</template>
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comment" align="center"  width="150">
+            <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comments" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>Todays new:{{scope.row.comments_increment}}</template>
             </el-table-column>
             <el-table-column prop="under_board_name" label="The Board Name" align="center" width="160"></el-table-column>
             <el-table-column prop="under_account_name" label="The Account Name" align="center" width="160"></el-table-column>
-            <el-table-column prop="operation" align="center" label="Manage Your Pin" fixed="right" width="190">
+            <el-table-column prop="operation" align="center" label="Manage Your Pins" fixed="right" width="190">
               <template slot-scope="scope">
-                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">edit</el-button>
+                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">Edit</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">Delete</el-button>
               </template>
             </el-table-column>
@@ -124,30 +123,30 @@ export default {
 
       this.dialog = {
         show: true,
-        title: "Modify fund information",
+        title: "Edit Pin",
         option: "put"
       };
     },
     deteleFun(row, index) {
       // 删除
       console.log(row)
-        this.$confirm('确定要删除?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+        this.$confirm('Determine to delete', 'Tips', {
+              confirmButtonText: 'Determine',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
                 this.$axios.DELETE(`/api/v1/pin_manage/${row.pin_id}/`)
                   .then(res => {
                     if(res.data.code == 1){
-                      this.$message({type: 'success',message: '删除成功!'});
+                      this.$message({type: 'success',message: 'Successful deletion!'});
                       this.dialog.show = false;
                       this.$parent.init();
                     }else{
-                      this.$message.error('删除失败!');
+                      this.$message.error('Delete failed!');
                     }
                   })
                   .catch(error => {
-                     this.$message.error('接口超时!');
+                     this.$message.error('Interface timeout!');
                   }); 
             }) 
     },
@@ -176,5 +175,9 @@ export default {
 }
 .pin_manager .btnRight .el-form-item__content .el-button.el-button--primary{
     float:right;
+}
+.pin_manager .button_right{
+   float: right;
+   margin-right: 20px;
 }
 </style>

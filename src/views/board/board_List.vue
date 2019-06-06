@@ -18,27 +18,27 @@
         <div class="table_right">
           <el-table :data="tableData" border  ref="topictable"  :height="tableHeight">
             <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
-            <el-table-column prop="board_description" label="Board Description" align="center" width="100"></el-table-column>
-            <el-table-column  class="parentNodeColumn" align="center" prop="pins,pins_increment" label="Pin"  width="150">
+            <el-table-column prop="board_description" label="Board Name" align="center" width="180"></el-table-column>
+            <el-table-column  class="parentNodeColumn" align="center" prop="pins,pins_increment" label="Pins"  width="180">
               <template slot-scope="scope"> Total:{{scope.row.pins}}<br/>New:{{scope.row.pins_increment}}</template>
             </el-table-column>            
-            <el-table-column  class="parentNodeColumn" align="center" prop="repin,repin_increment" label="Saves"  width="150">
+            <el-table-column  class="parentNodeColumn" align="center" prop="repin,repin_increment" label="Saves"  width="180">
               <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>New:{{scope.row.saves_increment}}</template>
             </el-table-column>             
-            <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comment"  width="150">
+            <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comments"  width="180">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>New:{{scope.row.comments_increment}}</template>
             </el-table-column>           
-            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="Report Details"  width="200" >
+            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="Report Details"  width="180" >
               <template slot-scope="scope">
                 <el-button icon="edit" type="primary" size="small" @click="PinManagerFun(scope.row)">View Pin List</el-button>
               </template>
             </el-table-column>            
-            <el-table-column  prop="board_state" label="Board Status" align="center"  width="250">
+            <el-table-column  prop="board_state" label="Board Status" align="center"  width="240">
               <template slot-scope="scope">
                 <span v-if='scope.row.board_state=0'>Private</span><span v-else>Public</span>
               </template>
             </el-table-column>
-            <el-table-column  prop="failed,finished,pending" label="Publish History" align="center"  width="250">
+            <el-table-column  prop="failed,finished,pending" label="Publish History" align="center"  width="240">
               <template slot-scope="scope">
                  Published Today:{{scope.row.failed}}<br/>
                  Unpublished Today:{{scope.row.finished}}<br/>
@@ -47,7 +47,7 @@
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Board" fixed="right" width="200">
               <template slot-scope="scope">
-                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">edit</el-button>
+                  <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">Edit</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">Delete</el-button>
               </template>
             </el-table-column>
@@ -118,7 +118,7 @@ export default {
       // 编辑
       this.dialog = {
         show: true,
-        title: "修改board信息",
+        title: "Edit Board",
         option: "put"
       };
       this.formData = row;

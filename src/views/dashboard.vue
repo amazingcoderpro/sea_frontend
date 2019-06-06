@@ -36,23 +36,24 @@
         </el-form>
         <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
         <div class="menu MB10">
+            <el-button type="primary" size="small" icon="view" @click="tableInit(1)">Clicks</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(5)">Sales</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(5)">Revenues</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(3)">Pins</el-button>
+            <el-button type="primary" size="small" icon="view" @click="tableInit(4)">Saves</el-button>
             <el-button type="primary" size="small" icon="view" @click="tableInit(0)">board_num</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(1)">click_num</el-button>
             <el-button type="primary" size="small" icon="view" @click="tableInit(2)">board_followers</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(3)">pin_num</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(4)">pin_saves</el-button>
-            <el-button type="primary" size="small" icon="view" @click="tableInit(5)">revenue_num</el-button>
         </div>
         <!-- 表单部分 -->
         <div class="table_right MB10">
           <el-table :data="tableData" border ref="topictable">
-            <el-table-column  align="center"  class="parentNodeColumn" prop="site_num" label="Site Num"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="subaccount_num" label="Subaccount Num"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="subaccount_num" label="Accounts"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="board_num" label="Boards"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="pin_num" label="Pins"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Saves"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="visitor_num" label="Visitors"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="click_num" label="Clicks"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Sales"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="site_num" label="Sales"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenues"  ></el-table-column>
           </el-table>
         </div>
@@ -72,7 +73,7 @@
                         <div class="bigNum">{{updatesData.new_pins}}</div>
                         <div class="smText">New Pins</div>
                         <div class="bigNum">{{updatesData.new_board}}</div>
-                        <div class="smText">New Board</div>
+                        <div class="smText">New BoardS</div>
                         <div class="bigNum">{{updatesData.new_accounts}}</div>
                         <div class="smText">New Accounts</div>
                     </div>
@@ -125,7 +126,10 @@
                                     </td>
                                     <td>{{item.pin_date}}</td>
                                     <td>{{item.saves}}</td>
-                                    <td>{{item.trends}}</td>
+                                    <td>
+                                        {{item.trends}}
+                                        <!-- <i class="iconfont icon-changjiantou-shang"></i> -->
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -217,9 +221,9 @@ export default {
                 {"label":"Custom","value":"0"},
                 // {"label":"Yesterday","value":"1"},
                 // {"label":"Today","value":"2"},
-                {"label":"7 Day","value":"3"},
-                {"label":"The Months","value":"4"},
-                {"label":"The Years","value":"5"},
+                {"label":"Last 7 Days","value":"3"},
+                {"label":"Curret Month","value":"4"},
+                {"label":"This Year","value":"5"},
             ],
             searchData:{
                 dataType:'3',    //显示几天            
@@ -436,4 +440,7 @@ export default {
 .dashboard .RTBox{min-height:400px;}
 .dashboard .RBBox{min-height:400px;}
 .dashboard .LBBox{min-height:269px;}
+.dashboard .el-table thead tr th{
+    background: #006699;
+}
 </style>

@@ -16,51 +16,40 @@
             :value="item.value">
             </el-option>
         </el-select>
+         <el-button type="primary" round class="button_right">Bulk Delete</el-button>
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" :height="tableHeight">
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
-            <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
+            <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
             <el-table-column prop="product.sku" label="SKU" align="center" width="200"></el-table-column>
-            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="110">
+            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
-            <el-table-column prop="board.description"  label="Description" align="center" width="110">
+            <el-table-column prop="board.description"  label="Description" align="center" width="120">
             </el-table-column>
             <el-table-column prop="product.url" label="Pin URL" align="center" width="200"></el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="rule.scan" label="Scan" align="center"  width="120">
-              <template slot-scope="scope">
-                {{scope.row.rule.scan_sign}} == {{scope.row.rule.scan}}
-              </template>
-            </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="sale" label="Sale" align="center"  width="120">
-              <template slot-scope="scope">
-                {{scope.row.rule.sale_sign}} == {{scope.row.rule.sale}}
-              </template>
-            </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">
             </el-table-column>
             <el-table-column prop="product.tag" label="Tag" align="center" width="120">
                 <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
-            <el-table-column prop="board.id" label="Board ID" align="center" width="120"></el-table-column>
-            <el-table-column prop="board.pinterest_account" label="Pinterest Account ID" align="center" width="200"></el-table-column>
-            <el-table-column prop="state" label="State" align="center" width="200">
+            <el-table-column prop="board.id" label="Board Name" align="center" width="120"></el-table-column>
+            <el-table-column prop="board.pinterest_account" label="Pinterest Account Name" align="center" width="200"></el-table-column>
+            <el-table-column prop="state" label="State" align="center" width="198">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 0">
-                    <el-button type="primary" icon="edit" size="small" disabled="">待发布</el-button>
+                    <el-button type="primary" icon="edit" size="small" disabled="">Unpublic</el-button>
                 </template>
                 <template v-else>
                     <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">Manual release</el-button>
                 </template>
               </template>
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="Remark" width="150">
-            </el-table-column>
-            <el-table-column align="center" label="operation" fixed="right" width="150">
-                <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >取消</el-button>
+            <el-table-column align="center" label="Operation" width="150">
+                <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >Cancel</el-button>
             </el-table-column>
 
           </el-table>
@@ -225,5 +214,9 @@ export default {
     float: right;
     width: 150px;
     padding-right: 20px;
+}
+.record_manager .button_right{
+  float: right;
+  margin-right: 20px;
 }
 </style>
