@@ -6,13 +6,14 @@
               <p class="title">Tracking visitors From Pinbooster By using Google Analytics</p>
               <p>You are currently try to license your google analytic account to pinbooster system. Connecting Google Analytics to your pinbooster program pages is extremely easy. Please see below:</p>
               <p>Step1. Sign up for a Google Analytics account, if you haven't already done so.</p>
+              <p>Step2. Add <a>test123@eternal-argon-241002.iam.gserviceaccount.com</a> as a user in your GA view user management. Give us data read & Analyze permissions.</p>
               <p>Step2. Add your Google Analytics Tracking Code to Pinbooster pages.</p>
               <p>Step3. Click the Save Button.</p>
               <p>Page views from your pinbooster program may take up to 24 hours to appear on your GA dashboard. You can check Pinbooster data performance on your GA Dashboard follow these step.</p>
               <p>Step1. Login to your Google Analytics account, if you haven't already done so.</p>
-              <p>Step2. Click AcquisitionAll trafficSource/mediumInput ”pinbooster” in the advanced search blankSearch</p>
-              <p>got it  </p>
-              <p>Authorize  </p>
+              <p>Step2. Click Acquisition → All traffic → Source/medium → Input ”pinbooster” in the advanced search blank → Search</p>
+              <p>got it <span>Authorize</span></p>
+              <!-- <p>Authorize</p> -->
               <el-form-item>
             </el-form-item>
           </el-form>
@@ -40,4 +41,6 @@
 <style>
 .statement p{width: 61%;margin-left: 20%;color: #000;text-indent: 2em; word-break: keep-all;}
 .statement p.title{font-size: 20px;font-weight: 600;text-align: center;text-indent: 0;}
+.statement p a{color: #0f8fcf;}
+.statement p span{padding-left: 180px;}
 </style>
