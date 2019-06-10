@@ -12,7 +12,7 @@
                 <el-input v-model="pinID"  placeholder="Pin Descripttion/SKU"></el-input>
                 <el-button  type="primary" @click='init()'>Search</el-button>
             </el-form-item>
-             <!-- <el-button type="primary" round class="button_right" @click="deteleFun()">Bulk Delete</el-button> -->
+             <el-button type="primary" round class="button_right" @click="removeBatch(sels)">Bulk Delete</el-button>
         </el-form>
         <!-- 表单部分 -->
         <div class="table_right">
@@ -76,12 +76,12 @@ export default {
       board_data:{},
       thisId:'-1',
       tableData: [],
+      sels: [],//选中显示的值
       dialog: {
         show: false,
         title: "",
         option: "edit"
       }
-
     };
   },
   mounted() {
@@ -135,7 +135,7 @@ export default {
               cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
-                this.$axios.DELETE(`/api/v1/pin_manage/${row.pin_id}/`)
+                this.$axios.delete(`/api/v1/pin_manage/${row.pin_id}/`)
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: 'Successful deletion!'});
@@ -149,6 +149,26 @@ export default {
                      this.$message.error('Interface timeout!');
                   }); 
             }) 
+    },
+    // 批量刪除
+    removeBatch(rows){
+      var ids = [];
+      rows.forEach(element =>{
+        ids.push(element.id)
+      })
+      this.$confirm('确定要删除选中的文件吗?','提示').then(() =>{
+        $axios.delete(`/api/v1/pin_manage/${row.pin_id}/`,{
+          ids:ids
+        }).then(res => {
+            if(res.data.code == 1){
+              this.$message({type: 'success',message: 'Successful deletion!'});
+              this.dialog.show = false;
+              this.$parent.init();
+            }else{
+              this.$message.error('Delete failed!');
+            }
+          })
+      }).catch(()=>{});
     },
     current_change(val){
         //点击数字时触发

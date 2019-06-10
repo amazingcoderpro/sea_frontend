@@ -17,7 +17,7 @@
                     </el-form-item>
 
                     <div class="tiparea">
-                        <p>No User Name?Now<router-link to='/shopfy_regist'>Regist</router-link> </p>
+                        <p>No User Name?Now <router-link to='/shopfy_regist'>Regist</router-link> </p>
                     </div>
                   </el-form>
         </section>

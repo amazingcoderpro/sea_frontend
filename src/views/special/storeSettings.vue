@@ -40,7 +40,7 @@
                   <!-- Link Parameter -->
                    <div class="storeurl">
                      <span>Link Parameter</span>
-                     <el-input v-model="storeUser.url_format" disabled placeholder="Berrylook" class="Parameter"></el-input>
+                     <el-input v-model="storeUser.url_format" disabled placeholder="Berrylook"></el-input>
                    </div>
                   <!-- Store Timezone -->
                    <div class="storeurl">
@@ -242,9 +242,6 @@ export default {
 }
 .storeSetting .storeurl{
   margin-top: 15px;
-}
-.storeSetting .Parameter:hover{
-  width: 1100px;
 }
 .storeurl_s{
   display: inline-block;

@@ -20,8 +20,8 @@
             :value="item.value">
             </el-option>
         </el-select>
-         <el-button type="primary" round class="button_right">Bulk Delete</el-button>
-         <!-- <el-button @click="deleteFileOrDirectory(sels)" :disabled="this.sels.length === 0" class="button_right"> Bulk Delete</el-button> -->
+         <!-- 批量删除 -->
+         <el-button type="primary" round class="button_right" @click="removeBatch(sels)">Bulk Delete</el-button>
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" :height="tableHeight">
@@ -77,14 +77,12 @@ export default {
   name: "record_manager",
   data() {
     return {
-
       total:0,//默认数据总数
       pagesize:10,//每页的数据条数
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面
       tableHeight:"100",
-
-
+      sels: [],//选中显示的值
       options: [
         {
           value: '[0,3]', 
@@ -167,29 +165,42 @@ export default {
                       this.$message.error('取消失败!');
                     }
                   })
-            }) 
-    },
-    recordHead(row){
-        this.$confirm('是否要手动发布?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              
-                this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
-                  .then(res => {
-                    if(res.data.code == 1){
-                      this.$message({type: 'success',message: '发布成功!'});
-                      this.init();
-                    }else{
-                      this.$message.error( res.data.msg.detail);
-                    }
-                  })
-                  .catch(error => {
-                     this.$message.error('接口超时!');
-                  }); 
-            }) 
-    },
+               }) 
+            },
+      recordHead(row){
+          this.$confirm('是否要手动发布?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+              this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
+                .then(res => {
+                  if(res.data.code == 1){
+                    this.$message({type: 'success',message: '发布成功!'});
+                    this.init();
+                  }else{
+                    this.$message.error( res.data.msg.detail);
+                  }
+                })
+                .catch(error => {
+                  this.$message.error('接口超时!');
+                }); 
+              }) 
+            },
+        // 批量刪除
+       removeBatch(rows){
+          var ids = [];
+          rows.forEach(element =>{
+            ids.push(element.id)
+          })
+          this.$confirm('确定要删除选中的文件吗?','提示').then(() =>{
+            $axios.DELETE(``,{
+              ids:ids
+            }).then(dara =>{
+              this.updateData();
+            })
+          }).catch(()=>{});
+        },    
     current_change(val){
         //点击数字时触发
         this.currentPage = val;
