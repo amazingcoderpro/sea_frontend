@@ -5,20 +5,13 @@
             <li><a href="/account_manager"><span class="el-icon-right"> </span> Account Manager</a></li>
             <li><a><span class="el-icon-right"> </span> Board Manager</a></li>
         </ul>
-        <!-- <div class="tableTitle"><span>Account Basic information</span></div> -->
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>Home</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/account_manager">Account List</a></el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/"></a></el-breadcrumb-item>
-        </el-breadcrumb>
         <div  class="massage">
           <p>Username: {{account_data.account_name}}</p>
           <p>Email Address: {{account_data.account_email}}</p>
           <p>Admin: {{account_data.update_person}}</p>
-          <p>About Your Profile: {{account_data.account_description}}</p>
-          <p>Account Data: Pin {{account_data.pins}} RePin {{account_data.repin}} Like {{account_data.like}} Comment {{account_data.comment}}</p>
+          <p>Account Profile: {{account_data.account_description}}</p>
+          <p>Account Data: Pin {{account_data.pins}} | RePin | {{account_data.repin}} Like | {{account_data.like}} Comment {{account_data.comment}}</p>
         </div>
-        <!-- <div class="tableTitle"><span>Board List</span></div> -->
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border  ref="topictable"  :height="tableHeight">
@@ -58,14 +51,12 @@
             </el-table-column>
           </el-table>
         </div>
-
         <!-- 分页 -->
         <div class="paging">
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog='dialog' :formData='formData' ></DialogFound>
-
     </div>
 </template>
 
@@ -111,7 +102,7 @@ export default {
         this.account_data =JSON.parse(localStorage.getItem("account_data"));
         this.thisId = this.$route.query.thisId;
         if( this.account_data.pinterest_account_id == null || this.account_data.pinterest_account_id == undefined){
-              this.$message({message: "参数不全",type: 'warning',center: true});
+              this.$message({message: "Incomplete Parameters",type: 'warning',center: true});
         }else{
           this.$axios(`/api/v1/account_list/${this.account_data.pinterest_account_id}/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
             this.tableData = res.data.data.results;
@@ -131,23 +122,23 @@ export default {
     deteleFun(row, index) {
       // 删除
       console.log(row)
-        this.$confirm('确定要删除?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+        this.$confirm('Determine To Delete?', 'Tips', {
+              confirmButtonText: 'Determine',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
                 this.$axios.delete(`/api/v1/board_manage/${row.board_id}/`)
                   .then(res => {
                     if(res.data.code == 1){
-                      this.$message({type: 'success',message: '删除成功!'});
+                      this.$message({type: 'success',message: 'Successful Deletion!'});
                       this.dialog.show = false;
                       this.$parent.init();
                     }else{
-                      this.$message.error('删除失败!');
+                      this.$message.error('Delete Failed!');
                     }
                   })
                   .catch(error => {
-                     this.$message.error('接口超时!');
+                     this.$message.error('Interface Timeout!');
                   }); 
             }) 
     },

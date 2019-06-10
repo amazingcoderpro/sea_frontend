@@ -153,10 +153,10 @@ export default {
                 this.init();
               }
             }else{
-              this.$message("获取失败!");
+              this.$message("Acquisition failure!");
             }
         }).catch(function(errof){
-          this.$message("接口超时!");
+          this.$message("Interface timeout!");
         });
     },
     getBodFun:function(){
@@ -173,10 +173,10 @@ export default {
                 this.init();
               }
           }else{
-            this.$message("获取失败!");
+            this.$message("Acquisition failure!");
           }
       }).catch(function(errof){
-          this.$message("接口超时!");
+          this.$message("Interface timeout!");
       });
     },
     getPinFun:function(){
@@ -192,10 +192,10 @@ export default {
                 }
                 this.init();
             }else{
-              this.$message("获取失败!");
+              this.$message("Acquisition failure!");
             }
         }).catch(function(errof){
-            this.$message("接口超时!");
+            this.$message("Interface timeout!");
         })
       }else{
         //如果board_id == '' pin的数组为空 ，值为空

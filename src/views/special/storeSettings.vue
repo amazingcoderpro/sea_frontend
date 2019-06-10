@@ -60,10 +60,6 @@
             <el-input v-model="storeUser.url" disabled placeholder="Berrylook"></el-input>
           </div>
           <!-- Link Parameter -->
-          <!-- <div class="storeurl">
-                     <span>Link Parameter</span>
-                     <el-input class="storeUser_url" v-model="storeUser.url_format" disabled placeholder="Berrylook"></el-input>
-          </div>-->
           <div class="storeurl url_format_box">
             <span :class="'url_format_son'">{{storeUser.url_format}}</span>
             <span>Link Parameter</span>
@@ -148,7 +144,7 @@ export default {
           {
             min: 1,
             max: 30,
-            message: "长度在 1 到 30 个字符",
+            message: "Length of 1 To 30 characters",
             trigger: "blur",
             left: "100px"
           }
@@ -159,12 +155,12 @@ export default {
             message: "The user name cannot be empty",
             trigger: "change"
           },
-          { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur" }
+          { min: 1, max: 30, message: "Length of 1 To 30 characters", trigger: "blur" }
         ],
         email: [
           {
             required: true,
-            message: "邮箱格式不正确",
+            message: "The mailbox format is incorrect",
             trigger: "change",
             type: "email"
           }
@@ -189,7 +185,7 @@ export default {
           this.storeUser.store_view_id = res.data.data.store_view_id;
         } else {
           this.$message({
-            message: "code 异常!",
+            message: "code Abnormal!",
             type: "warning",
             center: true
           });
@@ -207,7 +203,7 @@ export default {
           this.personalUser.email = res.data.data.email;
         } else {
           this.$message({
-            message: "code 异常!",
+            message: "code Abnormal!",
             type: "warning",
             center: true
           });
@@ -220,15 +216,15 @@ export default {
         .then(res => {
           if (res.data.code == 1) {
             this.$message({
-              message: "修改成功!",
+              message: "Successful revision!",
               type: "success"
             });
           } else {
-            this.$message("接口超时!");
+            this.$message("Interface timeout!");
           }
         })
         .catch(error => {
-          this.$message("接口超时!");
+          this.$message("Interface timeout!");
         });
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -241,7 +237,7 @@ export default {
               if (res.data.code == 1) {
                 this.$message({ message: res.data.msg, type: "success" });
               } else {
-                this.$message("修改成功!");
+                this.$message("Successful revision!");
               }
             });
         }

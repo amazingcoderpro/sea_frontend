@@ -7,7 +7,7 @@
           <el-input v-model="registUser.username" disabled></el-input>
         </el-form-item>
         <!-- 邮箱 -->
-        <el-form-item label="Email :" prop="email">
+        <el-form-item label="Email :" prop="emailstr">
           <el-input v-model="registUser.emailstr" disabled></el-input>
         </el-form-item>
         <!-- 密码 -->
@@ -50,7 +50,7 @@ export default {
   data() {
     var validatePass2 = (rule, value, callback) => {
       if (value !== this.registUser.password) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error("Inconsistent password input!"));
       } else {
         callback();
       }
@@ -64,21 +64,21 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: "账号不能为空", trigger: "change" },
+          { required: true, message: "Account cannot be empty", trigger: "change" },
         ],
         emailstr: [
-          { required: true, message: "账号不能为空", trigger: "change" },
+          { required: true, message: "Mailbox cannot be empty", trigger: "change" },
         ],
         password: [
-          { required: true, message: "密码不能为空", trigger: "blur" },
-          { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
+          { required: true, message: "Password cannot be empty", trigger: "blur" },
+          { min: 6, max: 30, message: "Length of 6 to 30 characters", trigger: "blur" }
         ],
         password2: [
-          { required: true, message: "确认密码不能为空", trigger: "blur" },
+          { required: true, message: "Confirmation password cannot be empty", trigger: "blur" },
           {
             min: 6,
             max: 30,
-            message: "长度在 6 到 30 个字符",
+            message: "Length of 6 to 30 characters",
             trigger: "blur"
           },
           { validator: validatePass2, trigger: "blur" }
@@ -104,11 +104,11 @@ export default {
               if (res.data.code == 1) {
                   router.push("/login");
               } else {
-                this.$message("接口超时!");
+                this.$message("Interface timeout!");
               }
             })
             .catch(error => {
-              this.$message("接口超时!");
+              this.$message("Interface timeout!");
             });
         }
       });

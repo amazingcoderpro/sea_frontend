@@ -42,12 +42,12 @@ export default {
         },
         rules: {
           username: [
-            { required: true, message: "用户名不能为空", trigger: "change" },
-            { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" }  
+            { required: true, message: "User name cannot be empty", trigger: "change" },
+            { min: 2, max: 30, message: "Length of 2 to 30 characters", trigger: "blur" }  
           ],
           password: [
-            { required: true, message: "密码不能为空", trigger: "blur" },
-            { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
+            { required: true, message: "Password cannot be empty", trigger: "blur" },
+            { min: 6, max: 30, message: "Length of 6 to 30 characters", trigger: "blur" }
           ]
         }        
       }
