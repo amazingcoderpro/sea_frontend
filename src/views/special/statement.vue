@@ -38,6 +38,6 @@
   }
 </script>
 <style>
-.statement p{width: 60%;margin-left: 20%;color: #000;text-indent: 2em; word-break: keep-all;}
+.statement p{width: 61%;margin-left: 20%;color: #000;text-indent: 2em; word-break: keep-all;}
 .statement p.title{font-size: 20px;font-weight: 600;text-align: center;text-indent: 0;}
 </style>

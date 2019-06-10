@@ -45,14 +45,15 @@
                   <!-- Store Timezone -->
                    <div class="storeurl">
                      <span>Store Timezone</span>
-                      <el-input v-model="storeUser.timezone" disabled placeholder="请输入内容"></el-input>
+                      <el-input id="result" v-model="storeUser.timezone" disabled></el-input>
                    </div>
                    <!-- store_view_id -->
-                    
                    <div class="storeurl">
-                      <span>Google Analytics View ID</span>
-                      <el-input v-model="storeUser.store_view_id" placeholder="请输入内容"></el-input>
-                      <el-button type="primary"  size="small" @click="showStatement()">Statement</el-button>
+                      <div>
+                        <span>Google Analytics View ID</span>
+                      </div>
+                      <el-input v-model="storeUser.store_view_id" placeholder="请输入内容" class="btn_input"></el-input>
+                      <el-button type="primary"  size="small" @click="showStatement()" class="btn_stat">Statement</el-button>
                    </div>
                     <!-- 点击 -->
                     <el-form-item>
@@ -81,12 +82,9 @@ export default {
      created(){  
           this.init();
       },
-       created(){  
-        this.init();
-    },
+
     data(){    
       return {
-        
         dialog: {
             show: false,
             title: "",
@@ -109,11 +107,11 @@ export default {
         },     
          rules: {
           first_name: [
-            { required: true, message: "用户名不能为空", trigger: "change" },
+            { required: true, message: "The user name cannot be empty", trigger: "change" },
             { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur",left:"100px"}  
         ],
           last_name: [
-            { required: true, message: "用户名不能为空", trigger: "change" },
+            { required: true, message: "The user name cannot be empty", trigger: "change" },
             { min: 1, max: 30, message: "长度在 1 到 30 个字符", trigger: "blur" }  
         ],
           email: [
@@ -122,7 +120,19 @@ export default {
         }          
       }
     },
-   
+    mounted(){
+      setTimeout(() => {
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth()+1;
+        var day = today.getDate();
+        month  = month<10  ? "0"+month : month;
+        day  = day <10  ? "0"+day : day;
+        var str = year+"-"+month+"-"+day+"";
+        var obj = document.getElementById("result");
+        obj.placeholder = str;
+      },1000);
+    },
     methods: {
       init() {
         this.storeUser.storeID = JSON.parse(window.localStorage.getItem('store')).id;
@@ -156,7 +166,7 @@ export default {
                   });
               }                                                   
           })
-      },
+      }, 
       submitForm() {
         this.$axios
           .put(`/api/v1/store/${this.storeUser.storeID}/`, this.storeUser)
@@ -188,7 +198,6 @@ export default {
         });  
       },
       showStatement(){
-    
       this.dialog = {
         show: true,
         title: "Statement",
@@ -196,6 +205,7 @@ export default {
       };    
       }
     },
+      
   };
 </script>
 
@@ -263,5 +273,11 @@ export default {
 .personal .newpass{
     padding-left: 17px;
     color: #0f8fcf;
+}
+.storeurl .btn_input{
+  display: inline-block;
+}
+.storeurl .btn_stat{
+  margin-left: 20px;
 }
 </style>

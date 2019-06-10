@@ -1,7 +1,11 @@
 
 <template>
     <div class="record_manager">
-        <div class="tableTitle"><span>Record Manager</span></div> 
+        <!-- <div class="tableTitle"><span>Record Manager</span></div>  -->
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item>Home</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/">Record Manager</a></el-breadcrumb-item>
+        </el-breadcrumb>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="search.product__sku"  placeholder="SKU"></el-input>
@@ -17,6 +21,7 @@
             </el-option>
         </el-select>
          <el-button type="primary" round class="button_right">Bulk Delete</el-button>
+         <!-- <el-button @click="deleteFileOrDirectory(sels)" :disabled="this.sels.length === 0" class="button_right"> Bulk Delete</el-button> -->
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" :height="tableHeight">
