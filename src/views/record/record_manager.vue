@@ -20,10 +20,10 @@
             </el-option>
         </el-select>
          <!-- 批量删除 -->
-         <el-button type="primary" round class="button_right" @click="removeBatch(sels)">Bulk Delete</el-button>
+         <el-button type="primary" round class="button_right" @click="cancelAll()">Bulk Delete</el-button>
         <!-- 表单部分 -->
         <div class="table_right">
-          <el-table :data="tableData" border ref="topictable" :height="tableHeight">
+          <el-table :data="tableData" border ref="topictable" :height="tableHeight" @selection-change="handleSelectionChange">
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
             <el-table-column prop="product.sku" label="SKU" align="center" width="200"></el-table-column>
@@ -52,10 +52,11 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="Operation" width="150">
+            <el-table-column align="center" label="Operation" width="150" >
+              <template  slot-scope="scope">
                 <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >Cancel</el-button>
+              </template>
             </el-table-column>
-
           </el-table>
         </div>
         <!-- 分页 -->
@@ -81,7 +82,7 @@ export default {
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面
       tableHeight:"100",
-      sels: [],//选中显示的值
+      multipleSelection: [],//选中显示的值
       options: [
         {
           value: '[0,3]', 
@@ -150,12 +151,13 @@ export default {
         var statedata = {
             state :'4'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
         }
+        console.log()
         this.$confirm('确定要取消?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-                this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
+                this.$axios.put(`/api/v1/rule/state/${row.id}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: '取消成功!'});
@@ -164,42 +166,62 @@ export default {
                       this.$message.error('取消失败!');
                     }
                   })
-               }) 
+                }) 
             },
-      recordHead(row){
-          this.$confirm('是否要手动发布?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-              this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
+    recordHead(row){
+        this.$confirm('是否要手动发布?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+            this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
+              .then(res => {
+                if(res.data.code == 1){
+                  this.$message({type: 'success',message: '发布成功!'});
+                  this.init();
+                }else{
+                  this.$message.error( res.data.msg.detail);
+                }
+              })
+              .catch(error => {
+                this.$message.error('接口超时!');
+              }); 
+            }) 
+          },
+    // 批量取消
+    cancelAll(){
+      var ids = [];
+      this.multipleSelection.forEach(element =>{
+        ids.push(element.id)
+      });
+      var ids = [];
+      this.multipleSelection.forEach(element =>{
+        ids.push(element.pin_id)
+      });
+      var pin_list = JSON.stringify(ids);
+      this.$confirm('Determine to delete', 'Tips', {
+            confirmButtonText: 'Determine',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+              this.$axios.delete(`/api/v1/pin_manage/?pin_list=` + pin_list)
                 .then(res => {
                   if(res.data.code == 1){
-                    this.$message({type: 'success',message: '发布成功!'});
+                    this.$message({type: 'success',message: 'Successful deletion!'});
+                    this.dialog.show = false;
                     this.init();
                   }else{
-                    this.$message.error( res.data.msg.detail);
+                    this.$message.error('Delete failed!');
                   }
                 })
                 .catch(error => {
-                  this.$message.error('接口超时!');
+                    this.$message.error('Interface timeout!');
                 }); 
-              }) 
-            },
-        // 批量刪除
-       removeBatch(rows){
-          var ids = [];
-          rows.forEach(element =>{
-            ids.push(element.id)
-          })
-          this.$confirm('确定要删除选中的文件吗?','提示').then(() =>{
-            $axios.DELETE(``,{
-              ids:ids
-            }).then(dara =>{
-              this.updateData();
-            })
-          }).catch(()=>{});
-        },    
+          }) 
+    },
+    handleSelectionChange(val) {
+        this.multipleSelection = val;
+    },    
     current_change(val){
         //点击数字时触发
         this.currentPage = val;

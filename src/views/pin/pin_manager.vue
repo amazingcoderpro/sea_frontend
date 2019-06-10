@@ -12,7 +12,7 @@
                 <el-input v-model="pinID"  placeholder="Pin Descripttion/SKU"></el-input>
                 <el-button  type="primary" @click='init()'>Search</el-button>
             </el-form-item>
-             <el-button type="primary" round class="button_right" @click="removeBatch()">Bulk Delete</el-button>
+             <el-button type="primary" round class="button_right" @click="deleteAll()">Bulk Delete</el-button>
         </el-form>
         <!-- 表单部分 -->
         <div class="table_right">
@@ -155,7 +155,7 @@ export default {
             }) 
     },
     // 批量刪除
-    removeBatch(){
+    deleteAll(){
       var ids = [];
       this.multipleSelection.forEach(element =>{
         ids.push(element.pin_id)
