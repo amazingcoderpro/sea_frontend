@@ -1,16 +1,14 @@
 <template>
     <div class="account_List">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>Home</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/account_manager">Account List</a></el-breadcrumb-item>
-        </el-breadcrumb>
-        <!-- <div class="tableTitle"><span>Account List</span></div> -->
+        <ul id="breadcrumb">
+            <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+            <li><a href="/account_manager"><span class="el-icon-right"> </span> Account Manager</a></li>
+        </ul>
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
                 <el-button  type="primary" @click='addFun()'>Add</el-button>
             </el-form-item>
         </el-form>
-        <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50" fixed="left"></el-table-column>

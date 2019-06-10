@@ -1,12 +1,9 @@
 <template>
     <div class="dashboard">
-        <!-- <div class="tableTitle">
-            <span style="width: 200px;">Account Dashboard</span>
-        </div> -->
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>Home</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">Dashboard</a></el-breadcrumb-item>
-        </el-breadcrumb>
+        <ul id="breadcrumb">
+            <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+            <li><a href="/dashboard"><span class="el-icon-right"> </span> Dashboard</a></li>
+        </ul>
         <el-form :inline="true">
             <el-form-item label="Date Range">
                 <el-select v-model="searchData.dataType" placeholder="Yesterday" class="week_name" @change="dataSelect">

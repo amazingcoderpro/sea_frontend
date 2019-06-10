@@ -56,7 +56,7 @@ const router = new Router({
         { path: '/account_manager', name: 'account_List', component: AccountList },
         { path: '/board_manager', name: 'board_List', component: BoardList },
         { path: '/pin_manager', name: 'pin_manager', component: PinManager },
-        { path: '/list_manager', name: 'rule_list', component: RuleList },
+        { path: '/rule_list', name: 'rule_list', component: RuleList },
         { path: '/record_manager', name: 'record_manager', component: RecordManager },
         { path: '/record_history', name: 'record_history', component: RecordHistory },
         { path: '/user_manager', name: 'user_manager', component: UserManager },

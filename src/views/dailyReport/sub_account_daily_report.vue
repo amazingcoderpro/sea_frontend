@@ -1,9 +1,9 @@
 <template>
   <div class="sub_account_daily_report">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>Home</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/">Daily Report</a></el-breadcrumb-item>
-      </el-breadcrumb>
+        <ul id="breadcrumb">
+            <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+            <li><a href="/sub_account_daily_report"><span class="el-icon-right"> </span> Daily Report</a></li>
+        </ul>
         <el-form :inline="true" class="topForm"  label-width="91px" >
             <el-form-item label="Pinterest">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" @change="getBodFun" :class="'W200'">
@@ -49,7 +49,14 @@
                 <!-- 选择按钮 -->
         <div class="menu">
             <template v-for="item in chartBtnArray" >
-              <el-button type="primary" size="small" icon="view" :key="item.btnValue" @click="chartInit(item.btnValue)">{{item.btnName}}</el-button>
+                    <div :key="item.btnValue" class="menuSon active"  v-if="tableType == item.btnValue"  @click="chartInit(item.btnValue)" >
+                        <span class="point "></span>
+                        <span class="name">{{item.btnName}}</span>
+                    </div>
+                    <div :key="item.btnValue" class="menuSon"  v-else  @click="chartInit(item.btnValue)" >
+                        <span class="point "></span>
+                        <span class="name">{{item.btnName}}</span>
+                    </div>
             </template>
         </div>
         <div class="table_right">
@@ -371,5 +378,11 @@ export default {
 .sub_account_daily_report .searchBox .el-input{width:20%;margin-right:2%;}
 .sub_account_daily_report .menu{margin-bottom:10px;}
 .sub_account_daily_report .topForm .el-form-item{margin-bottom:10px;}
+.sub_account_daily_report .menu{border:1px solid #797979;border-radius:20px;padding:5px;text-align:center;display:-webkit-box;display:-ms-flexbox;display:flex;display:-webkit-flex;margin-bottom:40px;width:70%;margin-left:10%;}
+.sub_account_daily_report .menu .menuSon{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;height:0;cursor:pointer;}
+.sub_account_daily_report .menu .menuSon .point{position:absolute;left:47%;top:-6px;width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#999999;box-shadow:0 0 6px #000;}
+.sub_account_daily_report .menu .menuSon.active .point{width:20px;height:20px;top:-12px;background:#006699;}
+.sub_account_daily_report .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
+
 
 </style>

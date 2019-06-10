@@ -1,9 +1,9 @@
 <template>
     <div class="sub_account_report">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>Home</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">SubAccountReport</a></el-breadcrumb-item>
-        </el-breadcrumb>
+        <ul id="breadcrumb">
+            <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+            <li><a href="/sub_account_report"><span class="el-icon-right"> </span> SubAccountReport</a></li>
+        </ul>
         <el-form  :inline="true" :model="searchData" class="demo-form-inline">
             <el-form-item label="Pinterest">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" class="Filter_week W200" @change="getBodFun">

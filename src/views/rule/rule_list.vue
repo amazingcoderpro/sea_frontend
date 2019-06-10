@@ -1,10 +1,10 @@
 <template>
     <div class="RuleList">
         <!-- <div class="tableTitle"><span>Rule List</span></div> -->
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>Home</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">Rule List</a></el-breadcrumb-item>
-        </el-breadcrumb>
+        <ul id="breadcrumb">
+            <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+            <li><a href="/rule_list"><span class="el-icon-right"> </span> Rule Manager</a></li>
+        </ul>
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null" label-width="100px">
           <el-form-item label="Pinterest">
             <el-select v-model="searchData.pinterest" placeholder="Pinterest"  @change="pinterestChange" :class="'W200'">
