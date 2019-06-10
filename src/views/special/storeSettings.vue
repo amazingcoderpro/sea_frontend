@@ -2,7 +2,10 @@
 <div class="store_personal">
     <div class="personal">
             <section class="form_container">
-                      <div class="tableTitle"><span>Profile Settings</span></div>
+                  <ul id="breadcrumb">
+                      <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+                      <li><a href="/storeSettings"><span class="el-icon-right"> </span> Profile Settings</a></li>
+                  </ul>
                       <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="110px">
                         <!-- 名 -->
                         <el-form-item label="FirstName" prop="first_name">
@@ -25,7 +28,10 @@
         </div>
     <div class="storeSetting">
         <section class="form_container">
-                  <div class="tableTitle"><span>Store Settings</span></div>
+              <ul id="breadcrumb">
+                  <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+                  <li><a href="/storeSettings"><span class="el-icon-right"> </span> Store Settings</a></li>
+              </ul>
                   <el-form :model="storeUser" ref="personalForm" label-width="180px" class="personalForm">
                   <!-- Store Name -->
                    <div class="storename">
@@ -45,7 +51,7 @@
                   <!-- Store Timezone -->
                    <div class="storeurl">
                      <span>Store Timezone</span>
-                      <el-input id="result" v-model="storeUser.timezone" disabled></el-input>
+                      <el-input v-model="storeUser.timezone" disabled ></el-input>
                    </div>
                    <!-- store_view_id -->
                    <div class="storeurl">
@@ -58,10 +64,9 @@
                     <!-- 点击 -->
                     <el-form-item>
                       <el-button type="primary" class="submit_btn" @click="submitForm()">Save Changes</el-button>
-                      <div class="storeurl_s">
-                      </div>
                     </el-form-item>
-                  </el-form>
+                   </el-form>
+                      <el-input id="result" disabled></el-input>
                   <!-- 展示请求权限的弹窗 -->
                   <DialogFound :dialog='dialog'  ref="dailog" ></DialogFound>
         </section>
@@ -128,7 +133,7 @@ export default {
         var day = today.getDate();
         month  = month<10  ? "0"+month : month;
         day  = day <10  ? "0"+day : day;
-        var str = year+"-"+month+"-"+day+"";
+        var str = year+"-"+month+"-"+day+"";  
         var obj = document.getElementById("result");
         obj.placeholder = str;
       },1000);
@@ -137,7 +142,7 @@ export default {
       init() {
         this.storeUser.storeID = JSON.parse(window.localStorage.getItem('store')).id;
         this.storeUser.store_view_id = JSON.parse(window.localStorage.getItem('store')).store_view_id;
-        this.$axios(`/api/v1/store/${this.storeUser.storeID}/`).then(res => {
+        this.$axios(`/api/v1/store/5/`).then(res => {
             if(res.data.code == 1){
               this.storeUser.name = res.data.data.name;
               this.storeUser.url = res.data.data.url;
@@ -166,7 +171,7 @@ export default {
                   });
               }                                                   
           })
-      }, 
+      },
       submitForm() {
         this.$axios
           .put(`/api/v1/store/${this.storeUser.storeID}/`, this.storeUser)
@@ -210,7 +215,6 @@ export default {
 </script>
 
 
-
 <style scope>
 .store_personal{
   width: 100%;
@@ -242,13 +246,6 @@ export default {
 }
 .storeSetting .storeurl{
   margin-top: 15px;
-}
-.storeurl_s{
-  display: inline-block;
-  margin-left: 150px;
-}
-.storeurl_s .el-input{
-    width: 150px;
 }
 .personal{
     margin-bottom: 100px;

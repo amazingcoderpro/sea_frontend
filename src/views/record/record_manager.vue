@@ -1,11 +1,10 @@
 
 <template>
     <div class="record_manager">
-        <!-- <div class="tableTitle"><span>Record Manager</span></div>  -->
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>Home</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">Record Manager</a></el-breadcrumb-item>
-        </el-breadcrumb>
+        <ul id="breadcrumb">
+            <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+            <li><a href="/record_manager"><span class="el-icon-right"> </span> Record Manager</a></li>
+        </ul>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="search.product__sku"  placeholder="SKU"></el-input>
