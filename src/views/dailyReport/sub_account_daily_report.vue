@@ -2,7 +2,7 @@
   <div class="sub_account_daily_report">
         <ul id="breadcrumb">
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
-            <li><a href="/sub_account_daily_report"><span class="el-icon-right"> </span> Daily Report</a></li>
+            <li><a><span class="el-icon-right"> </span> Daily Report</a></li>
         </ul>
         <el-form :inline="true" class="topForm"  label-width="91px" >
             <el-form-item label="Pinterest">
@@ -147,7 +147,8 @@ export default {
     init(){
       this.dataSelect();
       this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
-      this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60);
+     // this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1]);
+      this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60 -1000);
       var url = `/api/v1/select/daily_report/?index=1`;
       if(this.searchData.pinterest_account_id != ''){
           url +=`&pinterest_account_id=${this.searchData.pinterest_account_id}`;

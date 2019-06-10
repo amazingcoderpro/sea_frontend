@@ -2,7 +2,7 @@
     <div class="dashboard">
         <ul id="breadcrumb">
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
-            <li><a href="/dashboard"><span class="el-icon-right"> </span> Dashboard</a></li>
+            <li><a><span class="el-icon-right"> </span> Dashboard</a></li>
         </ul>
         <el-form :inline="true">
             <el-form-item label="Date Range">

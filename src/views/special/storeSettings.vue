@@ -9,7 +9,7 @@
             </a>
           </li>
           <li>
-            <a href="/storeSettings">
+            <a>
               <span class="el-icon-right"></span> Profile Settings
             </a>
           </li>
@@ -43,7 +43,7 @@
             </a>
           </li>
           <li>
-            <a href="/storeSettings">
+            <a>
               <span class="el-icon-right"></span> Store Settings
             </a>
           </li>

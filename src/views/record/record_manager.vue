@@ -3,7 +3,7 @@
     <div class="record_manager">
         <ul id="breadcrumb">
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
-            <li><a href="/record_manager"><span class="el-icon-right"> </span> Record Manager</a></li>
+            <li><a><span class="el-icon-right"> </span> Record Manager</a></li>
         </ul>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">

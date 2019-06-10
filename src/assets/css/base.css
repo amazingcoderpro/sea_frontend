@@ -50,7 +50,7 @@ body,
 #breadcrumb li a:before,#breadcrumb li a:after{content:"";position:absolute;top:0;border:0 solid #3498db;border-width:20px 10px;width:0;height:0;}
 #breadcrumb li a:before{left:-20px;border-left-color:transparent;}
 #breadcrumb li a:after{left:100%;border-color:transparent;border-left-color:#3498db;}
-#breadcrumb li a:hover{background-color:#1abc9c;}
+#breadcrumb li a:hover{background-color:#1abc9c;cursor: pointer;}
 #breadcrumb li a:hover:before{border-color:#1abc9c;border-left-color:transparent;}
 #breadcrumb li a:hover:after{border-left-color:#1abc9c;}
 #breadcrumb li a:active{background-color:#16a085;}

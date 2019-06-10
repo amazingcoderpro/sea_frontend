@@ -3,7 +3,7 @@
         <!-- <div class="tableTitle"><span>Rule List</span></div> -->
         <ul id="breadcrumb">
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
-            <li><a href="/rule_list"><span class="el-icon-right"> </span> Rule Manager</a></li>
+            <li><a><span class="el-icon-right"> </span> Rule Manager</a></li>
         </ul>
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null" label-width="100px">
           <el-form-item label="Pinterest">

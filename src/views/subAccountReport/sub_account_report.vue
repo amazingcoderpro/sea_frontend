@@ -2,7 +2,7 @@
     <div class="sub_account_report">
         <ul id="breadcrumb">
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
-            <li><a href="/sub_account_report"><span class="el-icon-right"> </span> SubAccountReport</a></li>
+            <li><a><span class="el-icon-right"> </span> SubAccountReport</a></li>
         </ul>
         <el-form  :inline="true" :model="searchData" class="demo-form-inline">
             <el-form-item label="Pinterest">

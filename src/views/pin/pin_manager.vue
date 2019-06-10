@@ -5,7 +5,7 @@
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
             <li><a href="/account_manager"><span class="el-icon-right"> </span> Account Manager</a></li>
             <li><a href="/board_manager"><span class="el-icon-right"> </span> Board Manager</a></li>
-            <li><a href="/pin_manager"><span class="el-icon-right"> </span> Pin Manager</a></li>
+            <li><a><span class="el-icon-right"> </span> Pin Manager</a></li>
         </ul>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
