@@ -277,10 +277,6 @@ export default {
       }
 
     },
-    ListManagerFun(row) {
-      // 去规则详情页面
-      this.$router.push({path:"/list_manager", query: { index: row.index }});
-    },
     timeInit(){
       this.searchData.timeArray[1] = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
     },

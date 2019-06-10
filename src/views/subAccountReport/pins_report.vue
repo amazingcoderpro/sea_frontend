@@ -202,10 +202,6 @@ export default {
         this.searchData.PinsArray = [];
       }
     },
-    ListManagerFun(row) {
-      // 去规则详情页面
-      this.$router.push({path:"/list_manager", query: { index: row.index }});
-    },
     current_change(val){
         //点击数字时触发
         this.currentPage = val;

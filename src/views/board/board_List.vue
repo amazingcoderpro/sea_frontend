@@ -1,10 +1,15 @@
 <template>
     <div class="board_List ">
+        <ul id="breadcrumb">
+            <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+            <li><a href="/account_manager"><span class="el-icon-right"> </span> Account Manager</a></li>
+            <li><a href="/board_manager"><span class="el-icon-right"> </span> Board Manager</a></li>
+        </ul>
         <!-- <div class="tableTitle"><span>Account Basic information</span></div> -->
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>Home</el-breadcrumb-item>
           <el-breadcrumb-item><a href="/account_manager">Account List</a></el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">Board List</a></el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/"></a></el-breadcrumb-item>
         </el-breadcrumb>
         <div  class="massage">
           <p>Username: {{account_data.account_name}}</p>

@@ -1,23 +1,23 @@
 
 <template>
     <div class="pin_manager">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>Home</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/account_manager">Account List</a></el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/board_manager">Board List</a></el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">Pin List management</a></el-breadcrumb-item>
-        </el-breadcrumb>
+        <ul id="breadcrumb">
+            <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
+            <li><a href="/account_manager"><span class="el-icon-right"> </span> Account Manager</a></li>
+            <li><a href="/board_manager"><span class="el-icon-right"> </span> Board Manager</a></li>
+            <li><a href="/pin_manager"><span class="el-icon-right"> </span> Pin Manager</a></li>
+        </ul>
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="pinID"  placeholder="Pin Descripttion/SKU"></el-input>
                 <el-button  type="primary" @click='init()'>Search</el-button>
             </el-form-item>
-             <el-button type="primary" round class="button_right" @click="removeBatch(sels)">Bulk Delete</el-button>
+             <el-button type="primary" round class="button_right" @click="removeBatch()">Bulk Delete</el-button>
         </el-form>
         <!-- 表单部分 -->
         <div class="table_right">
-          <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
-            <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
+          <el-table :data="tableData" border ref="topictable"  :height="tableHeight" @selection-change="handleSelectionChange" >
+            <el-table-column type="selection" label="批量操作" align="center" width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
             <el-table-column prop="pin_thumbnail" label="Pin Image" align="center" width="100">
                 <template slot-scope="scope"> 
@@ -76,7 +76,7 @@ export default {
       board_data:{},
       thisId:'-1',
       tableData: [],
-      sels: [],//选中显示的值
+      multipleSelection: [],//选中
       dialog: {
         show: false,
         title: "",
@@ -128,19 +128,23 @@ export default {
       };
     },
     deteleFun(row, index) {
+      var ids = [];
+          ids.push(row.pin_id);
+      var pin_list = JSON.stringify(ids);
+  
+
       // 删除
-      console.log(row)
         this.$confirm('Determine to delete', 'Tips', {
               confirmButtonText: 'Determine',
               cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
-                this.$axios.delete(`/api/v1/pin_manage/${row.pin_id}/`)
+                this.$axios.delete(`/api/v1/pin_manage/?pin_list=`+pin_list)
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: 'Successful deletion!'});
                       this.dialog.show = false;
-                      this.$parent.init();
+                      this.init();
                     }else{
                       this.$message.error('Delete failed!');
                     }
@@ -151,24 +155,34 @@ export default {
             }) 
     },
     // 批量刪除
-    removeBatch(rows){
+    removeBatch(){
       var ids = [];
-      rows.forEach(element =>{
-        ids.push(element.id)
-      })
-      this.$confirm('确定要删除选中的文件吗?','提示').then(() =>{
-        $axios.delete(`/api/v1/pin_manage/${row.pin_id}/`,{
-          ids:ids
-        }).then(res => {
-            if(res.data.code == 1){
-              this.$message({type: 'success',message: 'Successful deletion!'});
-              this.dialog.show = false;
-              this.$parent.init();
-            }else{
-              this.$message.error('Delete failed!');
-            }
-          })
-      }).catch(()=>{});
+      this.multipleSelection.forEach(element =>{
+        ids.push(element.pin_id)
+      });
+      var pin_list = JSON.stringify(ids);
+      this.$confirm('Determine to delete', 'Tips', {
+            confirmButtonText: 'Determine',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+              this.$axios.delete(`/api/v1/pin_manage/?pin_list=` + pin_list)
+                .then(res => {
+                  if(res.data.code == 1){
+                    this.$message({type: 'success',message: 'Successful deletion!'});
+                    this.dialog.show = false;
+                    this.init();
+                  }else{
+                    this.$message.error('Delete failed!');
+                  }
+                })
+                .catch(error => {
+                    this.$message.error('Interface timeout!');
+                }); 
+          }) 
+    },
+    handleSelectionChange(val) {
+        this.multipleSelection = val;
     },
     current_change(val){
         //点击数字时触发

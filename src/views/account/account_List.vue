@@ -37,9 +37,6 @@
             <el-table-column  prop="repin,repin_increment" label="Saves" align="center"  width="120">
               <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>New:{{scope.row.saves_increment}}</template>
             </el-table-column>
-            <el-table-column  prop="like,like_increment" label="Likes" align="center"  width="120">
-              <template slot-scope="scope"> Total:{{scope.row.likes}}<br/>New:{{scope.row.likes_increment}}</template>
-            </el-table-column>
             <el-table-column  prop="comment,comment_increment" label="Comments" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>New:{{scope.row.comments_increment}}</template>
             </el-table-column>
@@ -233,7 +230,7 @@ export default {
     },
     ListManagerFun(row) {
       // 去规则列表页面
-      this.$router.push({path:"/list_manager", query: { account_id: row.index }});
+      this.$router.push({path:"/rule_list", query: { account_id: row.index }});
     },
     BoardManagerFun(row) {
       // 去board_manager页面
