@@ -147,7 +147,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$message("接口超时!");
+          this.$message("Interface timeout!");
         });   
            
     },
@@ -155,40 +155,40 @@ export default {
         var statedata = {
             state :'4'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
         }
-        console.log()
-        this.$confirm('确定要取消?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+        console.log()       //取消
+        this.$confirm('Make sure to cancel?', 'Tips', {
+              confirmButtonText: 'Determine',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
                 this.$axios.put(`/api/v1/rule/state/${row.id}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
-                      this.$message({type: 'success',message: '取消成功!'});
+                      this.$message({type: 'success',message: 'Cancellation Successful!'});
                       this.init();
                     }else{
-                      this.$message.error('取消失败!');
+                      this.$message.error('Cancellation failure!');
                     }
                   })
                 }) 
             },
     recordHead(row){
-        this.$confirm('是否要手动发布?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+        this.$confirm('Do you want to publish manually?', 'Tips', {
+              confirmButtonText: 'Determine',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
             this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
               .then(res => {
                 if(res.data.code == 1){
-                  this.$message({type: 'success',message: '发布成功!'});
+                  this.$message({type: 'success',message: 'Successful release!'});
                   this.init();
                 }else{
                   this.$message.error( res.data.msg.detail);
                 }
               })
               .catch(error => {
-                this.$message.error('接口超时!');
+                this.$message.error('Interface timeout!');
               }); 
             }) 
           },
@@ -242,22 +242,10 @@ export default {
 </script>
 
 <style>
-.record_manager .btnRight .el-form-item__content{
-   width: 300px; 
-}
-.record_manager .btnRight .el-form-item__content .el-input{
-   width: 200px; 
-}
-.record_manager .btnRight .el-form-item__content .el-button.el-button--primary{
-    float:right;
-}
-.record_manager .btnLeft{
-    float: right;
-    width: 150px;
-    padding-right: 20px;
-}
-.record_manager .button_right{
-  float: right;
-  margin-right: 20px;
-}
+.record_manager .btnRight .el-form-item__content{width:300px;}
+.record_manager .btnRight .el-form-item__content .el-input{width:200px;}
+.record_manager .btnRight .el-form-item__content .el-button.el-button--primary{float:right;}
+.record_manager .btnLeft{float:right;width:150px;padding-right:20px;}
+.record_manager .button_right{float:right;margin-right:20px;}
+
 </style>

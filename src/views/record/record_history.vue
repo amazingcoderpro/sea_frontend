@@ -27,23 +27,23 @@
                 <!-- ID -->
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
                 <!-- 产品SKU -->
-            <el-table-column prop="product.sku" label="SKU" align="center" width="200"></el-table-column>
+            <el-table-column prop="product.sku" label="SKU" align="center" width="150"></el-table-column>
                 <!-- Pin图 -->
-            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="130">
+            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="150">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
                 <!-- Pin描述 -->
-            <el-table-column prop="pin.note"  label="Pin Note" align="center" width="130">
+            <el-table-column prop="pin.note"  label="Pin Note" align="center" width="150">
             </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="pin.url" label="Pin URL" align="center" width="130"></el-table-column>
+            <el-table-column prop="pin.url" label="Pin URL" align="center" width="150"></el-table-column>
                 <!-- 价格 -->
-            <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="130">
+            <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="150">
             </el-table-column>
                 <!-- 所属规则标签 -->
-            <el-table-column prop="product.tag" label="Tag" align="center" width="130">
+            <el-table-column prop="product.tag" label="Tag" align="center" width="150">
                 <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
                 <!-- 所属Board ID -->
@@ -51,7 +51,7 @@
                 <!-- 所属账户ID -->
             <el-table-column prop="board.pinterest_account" label="Pinterest Account Name" align="center" width="200"></el-table-column>
                 <!-- 发布状态 --> 
-            <el-table-column prop="state" label="State" align="center" width="180">
+            <el-table-column prop="state" label="State" align="center" width="150">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 3">
                     <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Manual release</el-button>
@@ -62,7 +62,7 @@
               </template>
 
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="Remark" width="180">
+            <el-table-column prop="remark" align="center" label="Remark" width="160">
                 
             </el-table-column>
           </el-table>
@@ -100,11 +100,11 @@ export default {
         },
         {
           value: '[1]', 
-          label: '已发布'
+          label: 'Published'
         },
         {
           value: '[3]',
-          label: '发布失败'
+          label: 'Publishing failure'
         }
       ],
       search:{
@@ -156,7 +156,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$message("接口超时!");
+          this.$message("Interface timeout!");
         });   
 
     },
@@ -164,27 +164,27 @@ export default {
       // 编辑
       this.dialog = {
         show: true,
-        title: "修改资金信息",
+        title: "Modification of funds information",
         option: "put"
       };
     },
-    recordHead(row){
-        this.$confirm('是否要手动发布?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+    recordHead(row){             //发布状态
+        this.$confirm('Do you want to publish manually?', 'Tips', {
+              confirmButtonText: 'Determine',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
                 this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
                   .then(res => {
                     if(res.data.code == 1){
-                      this.$message({type: 'success',message: '发布成功!'});
+                      this.$message({type: 'success',message: 'Successful release!'});
                       this.init();
                     }else{
                       this.$message.error( res.data.msg.detail);
                     }
                   })
                   .catch(error => {
-                     this.$message.error('接口超时!');
+                     this.$message.error('Interface timeout!');
                   }); 
             }) 
     },
@@ -204,18 +204,8 @@ export default {
 </script>
 
 <style>
-.record_manager .btnRight .el-form-item__content{
-   width: 300px; 
-}
-.record_manager .btnRight .el-form-item__content .el-input{
-   width: 200px; 
-}
-.record_manager .btnRight .el-form-item__content .el-button.el-button--primary{
-    float:right;
-}
-.record_manager .btnLeft{
-    float: right;
-    width: 110px;
-    padding-right: 20px;
-}
+.record_manager .btnRight .el-form-item__content{width:300px;}
+.record_manager .btnRight .el-form-item__content .el-input{width:200px;}
+.record_manager .btnRight .el-form-item__content .el-button.el-button--primary{float:right;}
+.record_manager .btnLeft{float:right;width:110px;padding-right:20px;}
 </style>
