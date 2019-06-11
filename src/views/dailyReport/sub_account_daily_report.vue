@@ -120,7 +120,7 @@ export default {
         {"label":"Yesterday","value":"1"},
         {"label":"Today","value":"2"},
         {"label":"Last 7 Day","value":"3"},
-        {"label":"This Months","value":"4"},
+        {"label":"Current Month","value":"4"},
         {"label":"This Years","value":"5"},
       ],
       searchData:{

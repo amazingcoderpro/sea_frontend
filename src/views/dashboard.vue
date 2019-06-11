@@ -230,7 +230,7 @@ export default {
                 // {"label":"Yesterday","value":"1"},
                 // {"label":"Today","value":"2"},
                 {"label":"Last 7 Days","value":"3"},
-                {"label":"Curret Month","value":"4"},
+                {"label":"Current Month","value":"4"},
                 {"label":"This Year","value":"5"},
             ],
             searchData:{

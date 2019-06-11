@@ -53,11 +53,11 @@
                  Latest Data Latch Time : {{scope.row.account_crawl_time}}
               </template>
             </el-table-column>
-            <el-table-column prop="role_name" label="Rules" align="center" width="150" >
+            <!-- <el-table-column prop="role_name" label="Rules" align="center" width="150" >
               <template slot-scope="scope">
                 <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">View Rule List</el-button>
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column  prop="finished,pending" align="center" label="Publish History"  width="200">
               <template slot-scope="scope">
                  Published Today : {{scope.row.finished}}<br/>

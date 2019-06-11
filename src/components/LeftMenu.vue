@@ -95,9 +95,11 @@ export default {
                 // {"id":14,"menu_name":"PinManager","menu_url":"/pin_manager","parent_id":11,"icon":null,"childs":[]}
               ]},
               {"id":15,"menu_name":"Rule Manager","menu_url":"3-1","parent_id":null,"icon":"iconfont icon-touruguize",
-                "childs":[{"id":16,"menu_name":"Rule List","menu_url":"/rule_list","parent_id":15,"icon":null,"childs":[]},
-                {"id":17,"menu_name":"Record Manager","menu_url":"/record_manager","parent_id":15,"icon":null,"childs":[]},
-                {"id":17,"menu_name":"Record History","menu_url":"/record_history","parent_id":15,"icon":null,"childs":[]}]
+                "childs":[
+                  // {"id":16,"menu_name":"Rule List","menu_url":"/rule_list","parent_id":15,"icon":null,"childs":[]},
+                  {"id":17,"menu_name":"Record Manager","menu_url":"/record_manager","parent_id":15,"icon":null,"childs":[]},
+                  {"id":17,"menu_name":"Record History","menu_url":"/record_history","parent_id":15,"icon":null,"childs":[]}
+                ]
 
               },
               {"id":18,"menu_name":"Personal Center","menu_url":"storeSettings","parent_id":null,"icon":"iconfont icon-icon_pc",
