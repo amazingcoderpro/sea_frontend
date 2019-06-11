@@ -12,12 +12,12 @@
                     ref="form" 
                     :model="form"
                     :rules="form_rules"
-                    label-width="100px" >
+                    label-width="150px" >
 
                     <el-form-item label="password:" prop="password">
                       <el-input type="password" v-model="form.password"></el-input>
                     </el-form-item>
-                    <el-form-item label="password2:" prop="password2">
+                    <el-form-item label="Confirm password:" prop="password2">
                       <el-input type="password" v-model="form.password2"></el-input>
                     </el-form-item>
                     <el-form-item  class="text_right">
@@ -40,7 +40,7 @@ export default {
   data() {
     var validatePass2 = (rule, value, callback) => {
       if (value !== this.form.password) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error("Inconsistent passwords!"));
       } else {
         callback();
       }
@@ -53,15 +53,15 @@ export default {
       },
       form_rules: {
         password: [
-          { required: true, message: "密码不能为空", trigger: "blur" },
-          { min: 6, max: 30, message: "长度在 6 到 30 个字符", trigger: "blur" }
+          { required: true, message: "Password cannot be empty", trigger: "blur" },
+          { min: 6, max: 30, message: "Length of 6 to 30 characters", trigger: "blur" }
         ],
         password2: [
-          { required: true, message: "确认密码不能为空", trigger: "blur" },
+          { required: true, message: "Confirmation password cannot be empty", trigger: "blur" },
           {
             min: 6,
             max: 30,
-            message: "长度在 6 到 30 个字符",
+            message: "Length of 6 to 30 characters",
             trigger: "blur"
           },
           { validator: validatePass2, trigger: "blur" }
@@ -78,14 +78,14 @@ export default {
             .put(`/api/v1/account/set_passwords/${this.form.userID}/`, this.form)
             .then(res => {
               if (res.data.code == 1) {
-                this.$message({message: "修改成功",type: "success"});
+                this.$message({message: "Successful revision",type: "success"});
                 this.dialog.show = false;
               } else {
-                this.$message("接口超时!");
+                this.$message("Interface timeout!");
               }
             })
             .catch(error => {
-              this.$message("接口超时!");
+              this.$message("Interface timeout!");
             });
           }
       });
@@ -93,5 +93,6 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
+.modifyPassword .el-dialog__header{ text-align: center;padding: 40px 20px 10px;}
 </style>

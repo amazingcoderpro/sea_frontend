@@ -263,7 +263,7 @@ export default {
 .storeSetting .newpass{padding-left:17px;color:#0f8fcf;}
 .storeSetting .storename{margin-top:30px;}
 .storeSetting .storeurl{margin-top:15px;}
-.personal{margin-bottom:100px;}
+.personal{margin-bottom:50px;}
 .personal .el-input{width:500px;}
 .personal .tableTitle{margin-bottom:50px;}
 .personal .submit_btn{background:#0f8fcf;color:#fff;padding:15px 55px;font-size:16px;margin-top:10px;margin-left:-100px;}
