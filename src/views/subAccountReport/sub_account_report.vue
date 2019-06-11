@@ -44,8 +44,7 @@
         <template v-if="tableState == 1">
             <div class="table_right">
               <p>Accounts:{{searchData.PinterestArray.length}}</p>
-              <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
-                <!-- <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column> -->
+              <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight">
                 <el-table-column  align="center"  prop="account_name" label="Account Name"  width="150"></el-table-column>
                 <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
                 <el-table-column  align="center"  prop="account_followings" label="Followings"  width="200"></el-table-column>
@@ -147,7 +146,9 @@ export default {
         this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 130;
       }, 50);
       window.addEventListener('resize', () => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+        if(document.getElementsByClassName("topictable").length>0){
+            this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
+        }
       });
   },
   methods: {

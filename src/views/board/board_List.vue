@@ -6,15 +6,16 @@
             <li><a><span class="el-icon-right"> </span> Board Manager</a></li>
         </ul>
         <div  class="massage">
+          <img class="headImg" :src="'data:image/jpeg;base64,'+account_data.account_thumbnail" />
           <p>Username: {{account_data.account_name}}</p>
           <p>Email Address: {{account_data.account_email}}</p>
           <p>Admin: {{account_data.update_person}}</p>
           <p>Account Profile: {{account_data.account_description}}</p>
-          <p>Account Data: Pin {{account_data.pins}} | RePin | {{account_data.repin}} Like | {{account_data.like}} Comment {{account_data.comment}}</p>
+          <p>Account Data: Pin {{account_data.pins}} | Save {{account_data.saves}} | Comment {{account_data.comments}}</p>
         </div>
         <!-- 表单部分 -->
         <div class="table_right">
-          <el-table :data="tableData" border  ref="topictable"  :height="tableHeight">
+          <el-table :data="tableData" border  ref="topictable" class="topictable"  :height="tableHeight">
             <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
             <el-table-column prop="board_description" label="Board Name" align="center" width="180"></el-table-column>
             <el-table-column  class="parentNodeColumn" align="center" prop="pins,pins_increment" label="Pins"  width="180">
@@ -90,7 +91,9 @@ export default {
         this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
       }, 50);
       window.addEventListener('resize', () => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+        if(document.getElementsByClassName("topictable").length>0){
+            this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
+        }
       });
   },
   components: {
@@ -166,12 +169,7 @@ export default {
 </script>
 
 <style>
-.board_List .massage p{
-    margin: 5px 0;
-    padding-left: 5px;
-    font-size: 16px;
-}
-.board_List .tableTitle span{
-        width: 268px;
-}
+.board_List .headImg{width: 120px;position: absolute;left: 0;top: 83px;}
+.board_List .massage p{margin:5px 0;padding-left:150px;font-size:16px;}
+.board_List .tableTitle span{width:268px;}
 </style>

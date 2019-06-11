@@ -16,7 +16,7 @@
         </el-form>
         <!-- 表单部分 -->
         <div class="table_right">
-          <el-table :data="tableData" border ref="topictable"  :height="tableHeight" @selection-change="handleSelectionChange" >
+          <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight" @selection-change="handleSelectionChange" >
             <el-table-column type="selection" label="批量操作" align="center" width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="60"></el-table-column>
             <el-table-column prop="pin_thumbnail" label="Pin Image" align="center" width="160">
@@ -89,7 +89,9 @@ export default {
         this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
       }, 50);
       window.addEventListener('resize', () => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+        if(document.getElementsByClassName("topictable").length>0){
+            this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
+        }
       });
   },
   components: {

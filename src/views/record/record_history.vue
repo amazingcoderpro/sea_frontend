@@ -1,6 +1,6 @@
 
 <template>
-    <div class="record_manager">
+    <div class="record_history">
          <ul id="breadcrumb">
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
             <li><a><span class="el-icon-right"> </span> Record History</a></li>
@@ -21,7 +21,7 @@
         </el-select>
         <!-- 表单部分 -->
         <div class="table_right">
-          <el-table :data="tableData" border ref="topictable" :height="tableHeight">
+          <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight">
                 <!-- 批量操作 -->
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
                 <!-- ID -->
@@ -82,7 +82,7 @@
 // import DialogFound from "./dialog/board_manager_dialog";
 
 export default {
-  name: "record_manager",
+  name: "record_history",
   data() {
     return {
 
@@ -130,7 +130,9 @@ export default {
         this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
       }, 50);
       window.addEventListener('resize', () => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+        if(document.getElementsByClassName("topictable").length>0){
+            this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
+        }
       });
   },
   components: {
@@ -204,8 +206,8 @@ export default {
 </script>
 
 <style>
-.record_manager .btnRight .el-form-item__content{width:300px;}
-.record_manager .btnRight .el-form-item__content .el-input{width:200px;}
-.record_manager .btnRight .el-form-item__content .el-button.el-button--primary{float:right;}
-.record_manager .btnLeft{float:right;width:110px;padding-right:20px;}
+.record_history .btnRight .el-form-item__content{width:300px;}
+.record_history .btnRight .el-form-item__content .el-input{width:200px;}
+.record_history .btnRight .el-form-item__content .el-button.el-button--primary{float:right;}
+.record_history .btnLeft{float:right;width:110px;padding-right:20px;}
 </style>

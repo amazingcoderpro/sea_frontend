@@ -59,7 +59,9 @@ export default {
         this.leftHeight = window.innerHeight - this.$refs.leftMenu.$el.offsetTop +"px";
       }, 50);
       window.addEventListener('resize', () => {
-        this.leftHeight = window.innerHeight - this.$refs.leftMenu.$el.offsetTop +"px";
+        setTimeout(() => {
+          this.leftHeight = window.innerHeight - this.$refs.leftMenu.$el.offsetTop +"px";
+        }, 50);
       });
     
   },
