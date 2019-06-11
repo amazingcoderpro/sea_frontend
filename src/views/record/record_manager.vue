@@ -119,7 +119,11 @@ export default {
       setTimeout(() => {
         this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
       }, 50);
+      window.addEventListener('resize', () => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      });
   },
+ 
   components: {
     //  DialogFound
   },

@@ -18,26 +18,26 @@
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable"  :height="tableHeight" @selection-change="handleSelectionChange" >
             <el-table-column type="selection" label="批量操作" align="center" width="55" ></el-table-column>
-            <el-table-column type="index"  label="ID" align="center"  width="50"></el-table-column>
-            <el-table-column prop="pin_thumbnail" label="Pin Image" align="center" width="100">
+            <el-table-column type="index"  label="ID" align="center"  width="60"></el-table-column>
+            <el-table-column prop="pin_thumbnail" label="Pin Image" align="center" width="160">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
-            <el-table-column prop="pin_note" label="Pin Description" align="center" width="150"></el-table-column>
+            <el-table-column prop="pin_note" label="Pin Description" align="center" width="160"></el-table-column>
             <el-table-column prop="pin_url" label="Pin URL" align="center" width="150"></el-table-column>
-            <el-table-column prop="product_sku" label="Product SKU" align="center" width="150"></el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
+            <el-table-column prop="product_sku" label="Product SKU" align="center" width="160"></el-table-column>
+            <!-- <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.views}}<br/>Todays new:{{scope.row.views_increment}}</template>
-            </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="saves,saves_increment" label="Saves" align="center"  width="150">
+            </el-table-column> -->
+            <el-table-column  class="parentNodeColumn" prop="saves,saves_increment" label="Saves" align="center"  width="170">
               <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>Todays new:{{scope.row.saves_increment}}</template>
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comments" align="center"  width="150">
+            <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comments" align="center"  width="170">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>Todays new:{{scope.row.comments_increment}}</template>
             </el-table-column>
-            <el-table-column prop="under_board_name" label="The Board Name" align="center" width="160"></el-table-column>
-            <el-table-column prop="under_account_name" label="The Account Name" align="center" width="160"></el-table-column>
+            <el-table-column prop="under_board_name" label="The Board Name" align="center" width="170"></el-table-column>
+            <el-table-column prop="under_account_name" label="The Account Name" align="center" width="170"></el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Pins" fixed="right" width="190">
               <template slot-scope="scope">
                   <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">Edit</el-button>
@@ -88,6 +88,9 @@ export default {
       setTimeout(() => {
         this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
       }, 50);
+      window.addEventListener('resize', () => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      });
   },
   components: {
       DialogFound
