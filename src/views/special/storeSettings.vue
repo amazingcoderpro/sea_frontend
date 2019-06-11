@@ -36,18 +36,6 @@
     </div>
     <div class="storeSetting">
       <section class="form_container">
-        <ul id="breadcrumb">
-          <li>
-            <a href="/dashboard">
-              <span class="el-icon-house"></span> Home
-            </a>
-          </li>
-          <li>
-            <a>
-              <span class="el-icon-right"></span> Store Settings
-            </a>
-          </li>
-        </ul>
         <el-form :model="storeUser" ref="personalForm" label-width="180px" class="personalForm">
           <!-- Store Name -->
           <div class="storename">

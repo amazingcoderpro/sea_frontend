@@ -41,7 +41,7 @@
               <template slot-scope="scope">
                  Published Today:{{scope.row.failed}}<br/>
                  Unpublished Today:{{scope.row.finished}}<br/>
-                 pending:{{scope.row.pending}}
+                 <!-- pending:{{scope.row.pending}} -->
               </template>
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Board" fixed="right" width="200">
@@ -74,7 +74,7 @@ export default {
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面
       tableHeight:"100",
-
+      
       formData:{}, // row data
       account_data:{},
       thisId:'-1',
@@ -112,6 +112,7 @@ export default {
         }else{
           this.$axios(`/api/v1/account_list/${this.account_data.pinterest_account_id}/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
             this.tableData = res.data.data.results;
+            // console.log( this.tableData)
             this.total = res.data.data.count;
           });
         }

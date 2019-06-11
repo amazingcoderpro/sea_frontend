@@ -33,8 +33,8 @@
           pinterest_account_id: ''
         },
         rules: {
-          name: [{required: true, message: '请输入账户名称', trigger: 'blur'}],
-          description: [{required: true, message: '请输入账户描述', trigger: 'blur'}],
+          name: [{required: true, message: 'Please enter the account name.', trigger: 'blur'}], 
+          description: [{required: true, message: 'Please enter the account description.', trigger: 'blur'}],
         }
       };
     },
@@ -53,7 +53,7 @@
               this.editData.description = res.data.data.description;
             }else{
               this.$message({
-                message: "获取数据失败",
+                message: "Failure to obtain data",
                 type: 'warning',
                 center: true
               });
@@ -71,11 +71,11 @@
                       this.$parent.init();
                     }else{
                       this.dialog.show = false; 
-                      this.$message("修改失败!");
+                      this.$message("Modification failed!");
                     }
                 })
                 .catch(error => {
-                  this.$message("接口超时!");
+                  this.$message("Interface timeout!");
                 });
           }
         });

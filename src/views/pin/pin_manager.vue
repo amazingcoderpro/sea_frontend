@@ -21,7 +21,7 @@
             <el-table-column type="index"  label="ID" align="center"  width="60"></el-table-column>
             <el-table-column prop="pin_thumbnail" label="Pin Image" align="center" width="160">
                 <template slot-scope="scope"> 
-                    <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />        
+                    <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
             <el-table-column prop="pin_note" label="Pin Description" align="center" width="160"></el-table-column>
