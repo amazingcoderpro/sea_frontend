@@ -48,11 +48,11 @@
                       this.$parent.init();
                     }else{
                       this.dialog.show = false; 
-                      this.$message("添加失败!");
+                      this.$message("Failure to add!");
                     }
                 })
                 .catch(error => {
-                  this.$message("接口超时!");
+                  this.$message("Interface timeout!");
                 });
           }
         });

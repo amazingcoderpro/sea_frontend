@@ -137,7 +137,7 @@ export default {
             this.total = res.data.data.count;
           }else{
               this.$message({
-                message: "code 异常!",
+                message: "code Abnormal!",
                 type: 'warning',
                 center: true
               });
@@ -145,7 +145,7 @@ export default {
       })
       .catch(error => {
           this.$message({
-            message: "接口超时!",
+            message: "Interface timeout!",
             type: 'warning',
             center: true
           });
@@ -213,7 +213,7 @@ export default {
           }
       }).catch(error => {
               this.$message({
-                message: "接口超时!",
+                message: "Interface timeout!",
                 type: 'warning',
                 center: true
               });

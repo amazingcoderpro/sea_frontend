@@ -20,16 +20,12 @@
         </el-form-item>
       </el-form>
       <div class="text">
-        <!-- <div class="text_hint">
-          <span>My store is not in English</span>
-        </div> -->
         <div class="button">
           <el-button type="primary" @click="submitForm('loginForm')">Regist</el-button>
         </div>
         <div class="clause">
           <p>
             By signing up,you agree to our
-            <!-- <a href="#">Terms of Service</a> and -->
             <a href="/privacy">Privacy Policy</a>
           </p>
         </div>
@@ -118,57 +114,13 @@ export default {
 </script>
 
 <style scoped>
-.shopfy_regist {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: url(../../assets/img/bg.jpg) no-repeat center center;
-  background-size: 100% 100%;
-}
-.form_container {
-  width: 470px;
-  height: 400px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border-radius: 5px;
-  margin-left: -220px;
-  margin-top: -300px;
-}
-.loginForm {
-  background-color: #fff;
-  padding: 20px 40px 20px 20px;
-  border-radius: 5px;
-  box-shadow: 0px 5px 10px #cccc;
-}
-.text {
-  width: 470px;
-  height: 172px;
-  border-radius: 5px;
-  background: #f9f9f9;
-}
-.text .text_hint {
-  text-align: center;
-  color: #277fc2;
-  font-size: 13px;
-  padding-top: 25px;
-}
-.button {
-  text-align: center;
-  padding-top: 22px;
-}
-.el-button {
-  padding: 15px 55px;
-  font-size: 16px;
-  background: #0f8fcf;
-}
-.clause p {
-  text-align: center;
-  padding-top: 22px;
-  font-size: 13px;
-  color: #65635d;
-}
-.clause p a {
-  color: #0f8fcf;
-}
+.shopfy_regist{position:relative;width:100%;height:100%;background:url(../../assets/img/bg.jpg) no-repeat center center;background-size:100% 100%;}
+.form_container{width:470px;height:400px;position:absolute;left:50%;top:50%;border-radius:5px;margin-left:-220px;margin-top:-300px;}
+.loginForm{background-color:#fff;padding:20px 40px 20px 20px;border-radius:5px;box-shadow:0px 5px 10px #cccc;}
+.text{width:470px;height:172px;border-radius:5px;background:#f9f9f9;}
+.text .text_hint{text-align:center;color:#277fc2;font-size:13px;padding-top:25px;}
+.button{text-align:center;padding-top:22px;}
+.el-button{padding:15px 55px;font-size:16px;background:#0f8fcf;}
+.clause p{text-align:center;padding-top:22px;font-size:13px;color:#65635d;}
+.clause p a{color:#0f8fcf;}
 </style>

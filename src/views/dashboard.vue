@@ -74,7 +74,7 @@
                         <div class="bigNum">{{updatesData.new_pins}}</div>
                         <div class="smText">New Pins</div>
                         <div class="bigNum">{{updatesData.new_board}}</div>
-                        <div class="smText">New BoardS</div>
+                        <div class="smText">New Boards</div>
                         <div class="bigNum">{{updatesData.new_accounts}}</div>
                         <div class="smText">New Accounts</div>
                     </div>
@@ -129,7 +129,6 @@
                                     <td>{{item.saves}}</td>
                                     <td>
                                         {{item.trends}}
-                                        <!-- <i class="iconfont icon-changjiantou-shang"></i> -->
                                     </td>
                                 </tr>
                             </tbody>
