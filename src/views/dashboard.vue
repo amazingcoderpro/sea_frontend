@@ -245,13 +245,8 @@ export default {
     components:{
     },
     mounted() {
+        this.dataSelect();
         this.init();
-         setTimeout(() => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
-      }, 50);
-      window.addEventListener('resize', () => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
-      });
     },
     methods:{
         init() {
