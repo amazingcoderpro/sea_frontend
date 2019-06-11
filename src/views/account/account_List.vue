@@ -17,12 +17,12 @@
                     <img :src="'data:image/jpeg;base64,'+scope.row.account_thumbnail"  min-width="70" height="70"/>        
               </template> 
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="center" fixed="left" width="350">
+            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="left" fixed="left" width="350">
               <template slot-scope="scope"> 
-                User Name:{{scope.row.account_name}}<br/>
-                Email Address:{{scope.row.account_email}}<br/> 
-                Create Time:{{scope.row.account_create_time}}<br/> 
-                Account Type:<span v-if='scope.row.account_type=0'>business</span><span v-else>individual</span>
+                User Name : {{scope.row.account_name}}<br/>
+                Email Address : {{scope.row.account_email}}<br/> 
+                Create Time : {{scope.row.account_create_time}}<br/> 
+                Account Type : <span v-if='scope.row.account_type=0'>business</span><span v-else>individual</span>
               </template>
             </el-table-column>
             <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
@@ -32,25 +32,25 @@
               </template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" align="center" label="Pins"  width="120">
-              <template slot-scope="scope"> Total:{{scope.row.pins}}<br/>New:{{scope.row.pins_increment}}</template>
+              <template slot-scope="scope"> Total : {{scope.row.pins}}<br/> New: {{scope.row.pins_increment}}</template>
             </el-table-column>
             <el-table-column  prop="repin,repin_increment" label="Saves" align="center"  width="120">
-              <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>New:{{scope.row.saves_increment}}</template>
+              <template slot-scope="scope"> Total : {{scope.row.saves}}<br/>New : {{scope.row.saves_increment}}</template>
             </el-table-column>
             <el-table-column  prop="comment,comment_increment" label="Comments" align="center"  width="150">
-              <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>New:{{scope.row.comments_increment}}</template>
+              <template slot-scope="scope"> Total : {{scope.row.comments}}<br/>New : {{scope.row.comments_increment}}</template>
             </el-table-column>
             <el-table-column prop="update_person" label="Report Details" align="center" width="150">
                <template slot-scope="scope">
                 <el-button icon="edit"  type="primary"  size="small" @click="BoardManagerFun(scope.row)">View Board List</el-button>
               </template>
             </el-table-column>
-            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="Updates" align="center"  width="350">
+            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="Updates" align="left"  width="400">
               <template slot-scope="scope">
-                 Updated By:{{scope.row.update_person}}<br/>
-                 Latest Account Status:<span v-if='scope.row.account_state==0'>normal</span><span v-else>forbidden</span><br/>
-                 Latest Publish Time:{{scope.row.account_publish_time}}<br/>
-                 Latest Data Latch Time:{{scope.row.account_crawl_time}}
+                 Updated By : {{scope.row.update_person}}<br/>
+                 Latest Account Status : <span v-if='scope.row.account_state==0'>normal</span><span v-else>forbidden</span><br/>
+                 Latest Publish Time : {{scope.row.account_publish_time}}<br/>
+                 Latest Data Latch Time : {{scope.row.account_crawl_time}}
               </template>
             </el-table-column>
             <el-table-column prop="role_name" label="Rules" align="center" width="150" >
@@ -60,8 +60,8 @@
             </el-table-column>
             <el-table-column  prop="finished,pending" align="center" label="Publish History"  width="200">
               <template slot-scope="scope">
-                 Published Today:{{scope.row.finished}}<br/>
-                 Unpublished Today:{{scope.row.pending}}<br/>
+                 Published Today : {{scope.row.finished}}<br/>
+                 Unpublished Today : {{scope.row.pending}}<br/>
               </template>
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Edit" width="100">
@@ -127,6 +127,9 @@ export default {
       setTimeout(() => {
         this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
       }, 50);
+      window.addEventListener('resize', () => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      });
   },
   methods: {
     init() {

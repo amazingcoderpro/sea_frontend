@@ -58,6 +58,10 @@ export default {
       setTimeout(() => {
         this.leftHeight = window.innerHeight - this.$refs.leftMenu.$el.offsetTop +"px";
       }, 50);
+      window.addEventListener('resize', () => {
+        this.leftHeight = window.innerHeight - this.$refs.leftMenu.$el.offsetTop +"px";
+      });
+    
   },
   data() {
     return {

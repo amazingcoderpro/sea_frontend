@@ -4,7 +4,7 @@
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
             <li><a><span class="el-icon-right"> </span> SubAccountReport</a></li>
         </ul>
-        <el-form  :inline="true" :model="searchData" class="demo-form-inline">
+        <el-form  :inline="true" :model="searchData" class="demo-form-inline"  label-width="91px">
             <el-form-item label="Pinterest">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" class="Filter_week W200" @change="getBodFun">
                    <el-option :label="'All'" :value="''"></el-option>    
@@ -41,7 +41,6 @@
                 <el-button type="primary" icon="view" @click="init()">Search</el-button>
             </el-form-item>
         </el-form>  
-        <!-- 表单部分 -->
         <template v-if="tableState == 1">
             <div class="table_right">
               <p>Accounts:{{searchData.PinterestArray.length}}</p>
@@ -81,9 +80,7 @@
             <el-table-column  align="center"  prop="product_revenue" label="Revenue" ></el-table-column>
               </el-table>
             </div>
-            <!-- 分页 -->
         </template>
-
         <template v-else-if="tableState == 3">
             <div class="table_right">
               <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
@@ -102,20 +99,12 @@
                   <el-table-column  align="center"  prop="product_revenue" label="Revenue"></el-table-column>
               </el-table>
             </div>
-            <!-- 分页 -->
         </template>
-
-
         <div class="paging">
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
-
-
-
-
     </div>
 </template>
-
 <script>
 import * as base from '../../assets/js/base'
 export default {
@@ -141,7 +130,6 @@ export default {
           board_id:'',
           pinterest_account_id:'',
           store_id:'',
-
           PinterestArray:[],        //Pinterest的下拉框数据源
           BoardArray:[],            //Board的下拉框数据源
           PinsArray:[],             //Pins的下拉框数据源
@@ -158,6 +146,9 @@ export default {
       setTimeout(() => {
         this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 130;
       }, 50);
+      window.addEventListener('resize', () => {
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+      });
   },
   methods: {
     init() {
