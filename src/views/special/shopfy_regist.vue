@@ -1,6 +1,7 @@
 <template>
   <div class="shopfy_regist">
     <section class="form_container">
+      <span class="title">PinBooster</span>
       <el-form :model="registUser" :rules="rules" ref="loginForm" label-width="160px" class="loginForm">
         <!-- 账号 -->
         <el-form-item label="Shop Url :" prop="username">
@@ -115,12 +116,13 @@ export default {
 
 <style scoped>
 .shopfy_regist{position:relative;width:100%;height:100%;background:url(../../assets/img/bg.jpg) no-repeat center center;background-size:100% 100%;}
-.form_container{width:470px;height:400px;position:absolute;left:50%;top:50%;border-radius:5px;margin-left:-220px;margin-top:-300px;}
-.loginForm{background-color:#fff;padding:20px 40px 20px 20px;border-radius:5px;box-shadow:0px 5px 10px #cccc;}
+.form_container{width:470px;height:400px;position:absolute;left:50%;top:50%;border-radius:5px;margin-left:-220px;margin-top:-300px;text-align: center;}
+.loginForm{background-color:#fff;padding:20px 40px 20px 20px;border-radius:5px;box-shadow:0px 5px 10px #cccc;margin-top: 20px;}
 .text{width:470px;height:172px;border-radius:5px;background:#f9f9f9;}
 .text .text_hint{text-align:center;color:#277fc2;font-size:13px;padding-top:25px;}
 .button{text-align:center;padding-top:22px;}
 .el-button{padding:15px 55px;font-size:16px;background:#0f8fcf;}
 .clause p{text-align:center;padding-top:22px;font-size:13px;color:#65635d;}
 .clause p a{color:#0f8fcf;}
+.shopfy_regist .form_container .title{font-family:"Microsoft YaHei";font-size:25px;}
 </style>

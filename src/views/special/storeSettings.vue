@@ -10,21 +10,21 @@
           </li>
           <li>
             <a>
-              <span class="el-icon-right"></span> Profile Settings
+              <span class="el-icon-right"></span> Personal Center
             </a>
           </li>
         </ul>
-        <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="110px">
+        <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="130px">
           <!-- 名 -->
-          <el-form-item label="FirstName" prop="first_name">
+          <el-form-item label="First Name" prop="first_name">
             <el-input v-model="personalUser.first_name" placeholder="Daisy"></el-input>
           </el-form-item>
           <!-- 姓 -->
-          <el-form-item label="LastName" prop="last_name">
+          <el-form-item label="Last Name" prop="last_name">
             <el-input v-model="personalUser.last_name" placeholder="zhang"></el-input>
           </el-form-item>
           <!-- 邮箱 -->
-          <el-form-item label="EmailAddress" prop="email">
+          <el-form-item label="Email Address" prop="email">
             <el-input v-model="personalUser.email" disabled placeholder="请输入email"></el-input>
           </el-form-item>
           <!-- 点击 -->
@@ -34,6 +34,8 @@
         </el-form>
       </section>
     </div>
+
+
     <div class="storeSetting">
       <section class="form_container">
         <el-form :model="storeUser" ref="personalForm" label-width="180px" class="personalForm">
@@ -73,7 +75,7 @@
           </div>
           <!-- 点击 -->
           <el-form-item>
-            <el-button type="primary" class="submit_btn" @click="submitForm()">Save Changes</el-button>
+            <el-button type="primary" class="submit_btn" @click="submitwo()">Save Changes</el-button>
           </el-form-item>
         </el-form>
         <div class="primary_time">
@@ -164,7 +166,7 @@ export default {
       this.storeUser.store_view_id = JSON.parse(
         window.localStorage.getItem("store")
       ).store_view_id;
-      this.$axios(`/api/v1/store/5/`).then(res => {
+      this.$axios(`/api/v1/store/${this.storeUser.storeID}/`).then(res => {
         if (res.data.code == 1) {
           this.storeUser.name = res.data.data.name;
           this.storeUser.url = res.data.data.url;
@@ -179,9 +181,9 @@ export default {
           });
         }
       });
-      this.personalUser.personalID = JSON.parse(
-        window.localStorage.getItem("user")
-      ).id;
+
+
+      this.personalUser.personalID = JSON.parse(window.localStorage.getItem("user")).id;
       this.$axios(
         `/api/v1/account/users/${this.personalUser.personalID}/`
       ).then(res => {
@@ -196,9 +198,26 @@ export default {
             center: true
           });
         }
-      });
+      })
     },
-    submitForm() {
+    submitForm(formName) {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            this.$axios
+              .put(`/api/v1/account/users/${this.personalUser.personalID}/`, this.personalUser)
+              .then(res => {
+                if (res.data.code == 1) {
+                  this.$message({message: res.data.msg,type: 'success'});
+                } else {
+                  this.$message("修改成功!");
+                }
+              })
+            }
+        });
+      },
+
+
+    submitwo() {
       this.$axios
         .put(`/api/v1/store/${this.storeUser.storeID}/`, this.storeUser)
         .then(res => {
@@ -214,27 +233,12 @@ export default {
         .catch(error => {
           this.$message("Interface timeout!");
         });
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$axios
-            .put(
-              `/api/v1/account/users/${this.personalUser.personalID}/`,
-              this.personalUser
-            )
-            .then(res => {
-              if (res.data.code == 1) {
-                this.$message({ message: res.data.msg, type: "success" });
-              } else {
-                this.$message("Successful revision!");
-              }
-            });
-        }
-      });
     },
+
     showStatement() {
       this.dialog = {
         show: true,
-        title: "Statement",
+        title: "",
         option: "post"
       };
     }
@@ -257,9 +261,9 @@ export default {
 .personal .submit_btn{background:#0f8fcf;color:#fff;padding:15px 55px;font-size:16px;margin-top:10px;margin-left:-100px;}
 .personal .newpass{padding-left:17px;color:#0f8fcf;}
 .storeurl .btn_input{display:inline-block;}
-.storeurl .btn_stat{margin-left:20px;}
+.storeurl .btn_stat{margin-left:20px; background: #0f8fcf;}
 .storeSetting .url_format_box{position:relative;}
-.storeSetting .url_format_son{display:none;position:absolute;left:170px;font-size:14px;color:#ddd;top:8px;}
+.storeSetting .url_format_son{display:none;position:absolute;left:170px;font-size:14px;color:black;top:8px;}
 .storeSetting .url_format_box:hover .url_format_son{display:block;}
 .primary_time {margin-bottom: 20px;}
 .primary_time span {color: gray;}

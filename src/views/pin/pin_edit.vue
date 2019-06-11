@@ -16,7 +16,7 @@
               </el-form-item>
               
               <el-form-item>
-                <el-button type="primary" @click="submitForm('form')">Amend</el-button>
+                <el-button type="primary" @click="submitForm('form')">Save</el-button>
                 <el-button @click="resetForm('form')">Reset</el-button>
             </el-form-item>
           </el-form>

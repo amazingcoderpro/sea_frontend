@@ -39,7 +39,7 @@
                 type="daterange" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :class="'W250'" >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="Search">
+            <el-form-item class="report_search">
               <el-input v-model="searchData.search" placeholder="Pinterest Account Name"  @keyup.enter.native="init()" :class="'W200'"></el-input>
             </el-form-item>
             <el-button type="primary" icon="view" @click="init()">Search</el-button>
@@ -384,6 +384,6 @@ export default {
 .sub_account_daily_report .menu .menuSon .point{position:absolute;left:47%;top:-6px;width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#999999;box-shadow:0 0 6px #000;}
 .sub_account_daily_report .menu .menuSon.active .point{width:20px;height:20px;top:-12px;background:#006699;}
 .sub_account_daily_report .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
-
+.sub_account_daily_report .report_search{padding-left: 90px;}
 
 </style>

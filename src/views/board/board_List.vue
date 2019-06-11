@@ -17,7 +17,7 @@
         <div class="table_right">
           <el-table :data="tableData" border  ref="topictable" class="topictable"  :height="tableHeight">
             <el-table-column type="index"  label="ID" align="center" width="50"></el-table-column>
-            <el-table-column prop="board_description" label="Board Name" align="center" width="180"></el-table-column>
+            <el-table-column prop="board_name" label="Board Name" align="center" width="180"></el-table-column>
             <el-table-column  class="parentNodeColumn" align="center" prop="pins,pins_increment" label="Pins"  width="180">
               <template slot-scope="scope"> Total:{{scope.row.pins}}<br/>New:{{scope.row.pins_increment}}</template>
             </el-table-column>            
@@ -27,7 +27,7 @@
             <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comments"  width="180">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>New:{{scope.row.comments_increment}}</template>
             </el-table-column>           
-            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="Report Details"  width="180" >
+            <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="Pin Details"  width="180" >
               <template slot-scope="scope">
                 <el-button icon="edit" type="primary" size="small" @click="PinManagerFun(scope.row)">View Pin List</el-button>
               </template>

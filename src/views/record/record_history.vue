@@ -8,7 +8,7 @@
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="search.product__sku"  placeholder="SKU"></el-input>
-                <el-button  type="primary" @click='init()'>search</el-button>
+                <el-button  type="primary" class="button_left" @click='init()'>search</el-button>
             </el-form-item>
         </el-form>
         <el-select v-model="search.state" filterable class="btnLeft">
@@ -62,7 +62,7 @@
               </template>
 
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="Remark" width="160">
+            <el-table-column prop="remark" align="center" label="Error" width="160">
                 
             </el-table-column>
           </el-table>
@@ -210,4 +210,5 @@ export default {
 .record_history .btnRight .el-form-item__content .el-input{width:200px;}
 .record_history .btnRight .el-form-item__content .el-button.el-button--primary{float:right;}
 .record_history .btnLeft{float:right;width:110px;padding-right:20px;}
+.record_history .button_left{color: #fff;font-weight: 600;}
 </style>

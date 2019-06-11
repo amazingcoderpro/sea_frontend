@@ -21,7 +21,7 @@
             <el-table-column type="index"  label="ID" align="center"  width="60"></el-table-column>
             <el-table-column prop="pin_thumbnail" label="Pin Image" align="center" width="160">
                 <template slot-scope="scope"> 
-                    <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  min-width="70" height="70" />        
+                    <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail" width="70" height="70" />        
                 </template>
             </el-table-column>
             <el-table-column prop="pin_note" label="Pin Description" align="center" width="160"></el-table-column>
@@ -36,8 +36,8 @@
             <el-table-column  class="parentNodeColumn" prop="comment,comment_increment" label="Comments" align="center"  width="170">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>Todays new:{{scope.row.comments_increment}}</template>
             </el-table-column>
-            <el-table-column prop="under_board_name" label="The Board Name" align="center" width="170"></el-table-column>
-            <el-table-column prop="under_account_name" label="The Account Name" align="center" width="170"></el-table-column>
+            <el-table-column prop="under_board_name" label="Board Name" align="center" width="170"></el-table-column>
+            <el-table-column prop="under_account_name" label="Account Name" align="center" width="170"></el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Pins" fixed="right" width="190">
               <template slot-scope="scope">
                   <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">Edit</el-button>
@@ -166,8 +166,8 @@ export default {
         ids.push(element.pin_id)
       });
       var pin_list = JSON.stringify(ids);
-      this.$confirm('Determine to delete', 'Tips', {
-            confirmButtonText: 'Determine',
+      this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
+            confirmButtonText: 'Yes, I’m Sure',
             cancelButtonText: 'Cancel',
             type: 'warning'
           }).then(() => {

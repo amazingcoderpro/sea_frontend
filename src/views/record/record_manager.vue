@@ -8,7 +8,7 @@
         <el-form :inline="true" ref="add_data">
             <el-form-item class="btnRight">
                 <el-input v-model="search.product__sku"  placeholder="SKU"></el-input>
-                <el-button  type="primary" @click='init()'>search</el-button>
+                <el-button  type="primary" class="button_left" @click='init()'>Search</el-button>
             </el-form-item>
         </el-form>
         <el-select v-model="search.state" filterable class="btnLeft">
@@ -40,8 +40,8 @@
             <el-table-column prop="product.tag" label="Tag" align="center" width="120">
                 <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
-            <el-table-column prop="board.id" label="Board Name" align="center" width="120"></el-table-column>
             <el-table-column prop="board.pinterest_account" label="Pinterest Account Name" align="center" width="200"></el-table-column>
+            <el-table-column prop="board.id" label="Board Name" align="center" width="120"></el-table-column>
             <el-table-column prop="state" label="State" align="center" width="198">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 0">
@@ -52,7 +52,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="Operation" width="150" >
+            <el-table-column align="center" label="Edit" width="150" >
               <template  slot-scope="scope">
                 <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >Cancel</el-button>
               </template>
@@ -205,8 +205,8 @@ export default {
         ids.push(element.pin_id)
       });
       var pin_list = JSON.stringify(ids);
-      this.$confirm('Determine to delete', 'Tips', {
-            confirmButtonText: 'Determine',
+      this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
+            confirmButtonText: 'Yes, I’m Sure',
             cancelButtonText: 'Cancel',
             type: 'warning'
           }).then(() => {
@@ -248,6 +248,6 @@ export default {
 .record_manager .btnRight .el-form-item__content .el-input{width:200px;}
 .record_manager .btnRight .el-form-item__content .el-button.el-button--primary{float:right;}
 .record_manager .btnLeft{float:right;width:150px;padding-right:20px;}
-.record_manager .button_right{float:right;margin-right:20px;}
-
+.record_manager .button_right{float:right;margin-right:20px;color: #fff;font-weight: 600;}
+.record_manager .button_left{color: #fff;font-weight: 600;}
 </style>
