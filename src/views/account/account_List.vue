@@ -12,12 +12,12 @@
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50" fixed="left"></el-table-column>
-            <el-table-column label="Phtot" align="center" width="150" fixed="left">
+            <el-table-column label="Photo" align="center" width="150" fixed="left">
               <template slot-scope="scope">
                     <img :src="'data:image/jpeg;base64,'+scope.row.account_thumbnail"  min-width="70" height="70"/>        
               </template> 
             </el-table-column>
-            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="left" fixed="left" width="350">
+            <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="center" fixed="left" width="350">
               <template slot-scope="scope"> 
                 User Name : {{scope.row.account_name}}<br/>
                 Email Address : {{scope.row.account_email}}<br/> 
@@ -27,8 +27,13 @@
             </el-table-column>
             <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
               <template slot-scope="scope">
-                <span v-if="scope.row.account_authorized == 1">Authorized</span>
-                <el-button v-else type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
+                <template v-if="scope.row.account_authorized == 1">
+                    <span>Authorized</span>
+                    <el-button  type="danger"  size="small">Cancel</el-button>
+                </template>
+                <template v-else>
+                  <el-button  type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
+                </template>
               </template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" align="center" label="Pins"  width="120">
@@ -40,12 +45,12 @@
             <el-table-column  prop="comment,comment_increment" label="Comments" align="center"  width="150">
               <template slot-scope="scope"> Total : {{scope.row.comments}}<br/>New : {{scope.row.comments_increment}}</template>
             </el-table-column>
-            <el-table-column prop="update_person" label="Report Details" align="center" width="150">
+            <el-table-column prop="update_person" label="Board Details" align="center" width="150">
                <template slot-scope="scope">
                 <el-button icon="edit"  type="primary"  size="small" @click="BoardManagerFun(scope.row)">View Board List</el-button>
               </template>
             </el-table-column>
-            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="Updates" align="left"  width="400">
+            <el-table-column  prop="update_person,account_state,account_publish_time,account_crawl_time" label="Updates" align="center"  width="400">
               <template slot-scope="scope">
                  Updated By : {{scope.row.update_person}}<br/>
                  Latest Account Status : <span v-if='scope.row.account_state==0'>normal</span><span v-else>forbidden</span><br/>
@@ -53,11 +58,11 @@
                  Latest Data Latch Time : {{scope.row.account_crawl_time}}
               </template>
             </el-table-column>
-            <!-- <el-table-column prop="role_name" label="Rules" align="center" width="150" >
+            <el-table-column prop="role_name" label="Rules" align="center" width="150" v-if="ruleListState">
               <template slot-scope="scope">
                 <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">View Rule List</el-button>
               </template>
-            </el-table-column> -->
+            </el-table-column>
             <el-table-column  prop="finished,pending" align="center" label="Publish History"  width="200">
               <template slot-scope="scope">
                  Published Today : {{scope.row.finished}}<br/>
@@ -95,6 +100,7 @@ export default {
 
       tableHeight:"100",
       tableData: [],
+      ruleListState:true,  //规则列表是否展示
       dialog: {
         show: false,
         title: "",
@@ -121,6 +127,7 @@ export default {
       DialogFound2
   },
   created() {
+    this.userFun();
     this.init();
   },
   mounted() {
@@ -132,8 +139,6 @@ export default {
             this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
         }
       });
-
-
   },
   methods: {
     init() {
@@ -243,6 +248,12 @@ export default {
       // 去board_manager页面
       localStorage.setItem("account_data",JSON.stringify( row ) );
       this.$router.push({path:"/board_manager"});
+    },
+    userFun(){
+      const user = JSON.parse( localStorage.user);
+      if(user.first_name == "test001"){
+        this.ruleListState = false;
+      }    
     },
     current_change(val){
         //点击数字时触发

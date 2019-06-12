@@ -20,7 +20,7 @@
             </el-option>
         </el-select>
          <!-- 批量删除 -->
-         <el-button type="primary" round class="button_right" @click="cancelAll()">Bulk Delete</el-button>
+         <el-button type="primary" round class="button_right" @click="cancelAll()">Bulk Cancel</el-button>
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" class="topictable" :height="tableHeight" @selection-change="handleSelectionChange">
@@ -154,16 +154,18 @@ export default {
            
     },
     cancelFun(row){
+        let newArray = [];
+            newArray.push(row.id);
+            newArray = JSON.stringify(newArray);
         var statedata = {
-            state :'4'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
+            publish_record_list :newArray  
         }
-        console.log()       //取消
         this.$confirm('Make sure to cancel?', 'Tips', {
               confirmButtonText: 'Determine',
               cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
-                this.$axios.put(`/api/v1/rule/state/${row.id}/`,statedata)
+                this.$axios.post(`/api/v1/rule/publish_record/delete/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: 'Cancellation Successful!'});
@@ -173,7 +175,7 @@ export default {
                     }
                   })
                 }) 
-            },
+    },
     recordHead(row){
         this.$confirm('Do you want to publish manually?', 'Tips', {
               confirmButtonText: 'Determine',
@@ -200,21 +202,19 @@ export default {
       this.multipleSelection.forEach(element =>{
         ids.push(element.id)
       });
-      var ids = [];
-      this.multipleSelection.forEach(element =>{
-        ids.push(element.pin_id)
-      });
       var pin_list = JSON.stringify(ids);
+      var statedata = {
+          publish_record_list :pin_list  
+      }
       this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
             confirmButtonText: 'Yes, I’m Sure',
             cancelButtonText: 'Cancel',
             type: 'warning'
           }).then(() => {
-              this.$axios.delete(`/api/v1/pin_manage/?pin_list=` + pin_list)
+                this.$axios.post(`/api/v1/rule/publish_record/delete/`,statedata)
                 .then(res => {
                   if(res.data.code == 1){
                     this.$message({type: 'success',message: 'Successful deletion!'});
-                    this.dialog.show = false;
                     this.init();
                   }else{
                     this.$message.error('Delete failed!');

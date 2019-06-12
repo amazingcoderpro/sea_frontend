@@ -61,7 +61,7 @@
                 </ul>
             </div>
             <el-form-item label="Tag" prop="tag">
-              <el-input v-model="ruleForm.tag"></el-input>
+              <el-input v-model="ruleForm.tag" :style="'width: 400px;'"></el-input>
             </el-form-item>
             <el-form-item label=" " :class="'contentBg'">
             </el-form-item>

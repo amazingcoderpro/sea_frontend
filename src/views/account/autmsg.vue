@@ -2,7 +2,7 @@
 <template>
     <div class="autmsg">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
-          <el-form ref="form" label-width="200px" class="demo-ruleForm">
+          <el-form ref="form" label-width="380px" class="demo-ruleForm">
               <p class="title">Pinterest Account Authorization Guide</p>
               <p>You are currently trying to license your Pinterest account to the Pinbooster system. To ensure that pinbooster is successfully authorized by your designated Pinterest account, please follow these tips:</p>
               <p>1. If you are already logged into your Pinterest account in your current browser, please check to make sure that the account you are currently logged into is an account that will be licensed to pinbooster.</p>
