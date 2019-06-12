@@ -58,7 +58,7 @@
           <!-- Store Timezone -->
           <div class="storeurl">
             <span>Store Timezone</span>
-            <el-input v-model="storeUser.timezone" disabled placeholder="UTC/GMT+08:00"></el-input>
+            <el-input v-model="storeUser.timezone" disabled></el-input>
           </div>
           <!-- store_view_id -->
           <div class="storeurl">
@@ -79,7 +79,7 @@
           </el-form-item>
         </el-form>
         <div class="primary_time">
-          <!-- <span>UTC/GMT+08:00</span> -->
+          <span>UTC/GMT+08:00</span>
         </div>
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog="dialog" ref="dailog"></DialogFound>
@@ -265,7 +265,7 @@ export default {
 .storeSetting .url_format_box{position:relative;}
 .storeSetting .url_format_son{display:none;position:absolute;left:170px;font-size:14px;color:black;top:8px;}
 .storeSetting .url_format_box:hover .url_format_son{display:block;}
-.primary_time {margin-bottom: 20px;}
-.primary_time span {color: gray;}
+.primary_time {margin-bottom: 20px; text-align: center;}
+.primary_time span {color: gray; font-size: 18px;}
 
 </style>
