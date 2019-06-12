@@ -32,7 +32,7 @@
                     <el-button  type="danger"  size="small">Cancel</el-button>
                 </template>
                 <template v-else>
-                  <el-button  type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
+                  <!-- <el-button  type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button> -->
                 </template>
               </template>
             </el-table-column>
@@ -233,6 +233,15 @@ export default {
     },
     confirmFun(row){
       this.pinterest_account_id = row.pinterest_account_id;
+      // 添加
+      this.dialog2 = {
+        show: true,
+        title: "",
+        option: "post"
+      };
+    },
+    confirmFunTwo(num){
+      this.pinterest_account_id = num;
       // 添加
       this.dialog2 = {
         show: true,
