@@ -44,9 +44,10 @@
                 .then(res => {
                     if(res.data.code == 1){
                       this.dialog.show = false;
-                      this.$message({message: res.data.msg,type: 'success'});
+                      this.$parent.confirmFunTwo(res.data.data.url);
+                      //this.$message({message: res.data.msg,type: 'success'});
                       //this.$parent.confirmFunTwo();
-                      this.$parent.init();
+                      // this.$parent.init();
                     }else{
                       this.dialog.show = false; 
                       this.$message("Failure to add!");

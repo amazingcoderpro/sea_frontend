@@ -30,6 +30,7 @@
         this.dialog.show = false;
         this.$parent.AutFun();
       }
+      
     }
   }
 </script>

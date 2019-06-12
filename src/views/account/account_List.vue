@@ -32,7 +32,7 @@
                     <el-button  type="danger"  size="small">Cancel</el-button>
                 </template>
                 <template v-else>
-                  <!-- <el-button  type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button> -->
+                  <el-button  type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
                 </template>
               </template>
             </el-table-column>
@@ -109,9 +109,11 @@ export default {
       dialog2: {
         show: false,
         title: "",
-        option: "edit"
+        option: "edit",
+        type:0,   // 0默认是从列表进去，1从添加用户进入
       },
       pinterest_account_id:'',  //授权专用的
+      pinterest_account_url:'',  //添加用户时授权，成功后返回的url
       form: {
         account: "",  //PinterestAccount唯一标识码
         nickname: "",     //账户名称
@@ -212,24 +214,28 @@ export default {
             }) 
     },
     AutFun() {
+      if(this.pinterest_account_url ==''){
       // 获取授权
-      this.$axios.post(`/api/v1/auth/pinterest_account/${this.pinterest_account_id}/`).then(res => {
-          if(res.data.code == 1){
-            window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
-          }else{
-              this.$message({
-                message: res.data.msg,
-                type: 'warning',
-                center: true
+          this.$axios.post(`/api/v1/auth/pinterest_account/${this.pinterest_account_id}/`).then(res => {
+              if(res.data.code == 1){
+                window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
+              }else{
+                  this.$message({
+                    message: res.data.msg,
+                    type: 'warning',
+                    center: true
+                  });
+              }
+          }).catch(error => {
+                  this.$message({
+                    message: "Interface timeout!",
+                    type: 'warning',
+                    center: true
+                  });
               });
-          }
-      }).catch(error => {
-              this.$message({
-                message: "Interface timeout!",
-                type: 'warning',
-                center: true
-              });
-          });
+      }else{
+        window.open(this.pinterest_account_url, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
+      }
     },
     confirmFun(row){
       this.pinterest_account_id = row.pinterest_account_id;
@@ -240,13 +246,14 @@ export default {
         option: "post"
       };
     },
-    confirmFunTwo(num){
-      this.pinterest_account_id = num;
+    confirmFunTwo(url){
+      this.pinterest_account_url = url;
       // 添加
       this.dialog2 = {
         show: true,
         title: "",
-        option: "post"
+        option: "post",
+        type:1,
       };
     },
     ListManagerFun(row) {
