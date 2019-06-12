@@ -79,7 +79,7 @@
           </el-form-item>
         </el-form>
         <div class="primary_time">
-          <span>UTC/GMT+08:00</span>
+          <span>(GMT-05:00) Eastern Time (US & Canada)</span>
         </div>
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog="dialog" ref="dailog"></DialogFound>

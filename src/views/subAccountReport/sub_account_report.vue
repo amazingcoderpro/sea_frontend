@@ -26,7 +26,7 @@
             <el-form-item label="Time">
                 <el-date-picker v-model="searchData.timeArray" type="daterange" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" class="W300"></el-date-picker>
             </el-form-item>
-            <el-form-item label="Search" prop="dep">
+            <el-form-item class="report_search" prop="dep">
                 <template>
                         <template v-if="tableState == 1">
                                 <el-input v-model="searchData.search" @keyup.enter.native="init()" placeholder="Pinterest Account Name"  class="W200"></el-input>
@@ -284,8 +284,8 @@ export default {
     }
   }
 };
-
-
-
 </script>
+<style scoped>
+.sub_account_report .report_search{display:block;margin-left: 90px;}
+</style>
 

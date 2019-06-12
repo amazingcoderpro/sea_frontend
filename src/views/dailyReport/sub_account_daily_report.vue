@@ -385,5 +385,6 @@ export default {
 .sub_account_daily_report .menu .menuSon.active .point{width:20px;height:20px;top:-12px;background:#006699;}
 .sub_account_daily_report .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
 .sub_account_daily_report .report_search{padding-left: 90px;}
-
+.sub_account_daily_report .topForm .el-form-item{margin-bottom: 20px;}
+.sub_account_daily_report .el-form--inline .el-form-item{margin-right: 0;}
 </style>
