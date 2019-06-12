@@ -251,7 +251,7 @@ export default {
     methods:{
         init() {
             this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
-            this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime()+ 1000 * 24 * 60 * 60);
+            this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60 - 1000);
             this.dataSelect();
             this.updates();
             this.pins();

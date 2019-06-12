@@ -22,14 +22,14 @@
                 User Name : {{scope.row.account_name}}<br/>
                 Email Address : {{scope.row.account_email}}<br/> 
                 Create Time : {{scope.row.account_create_time}}<br/> 
-                Account Type : <span v-if='scope.row.account_type=0'>business</span><span v-else>individual</span>
+                Account Type : <span v-if='scope.row.account_type == 0'>business</span><span v-else>individual</span>
               </template>
             </el-table-column>
             <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
               <template slot-scope="scope">
                 <template v-if="scope.row.account_authorized == 1">
                     <span>Authorized</span>
-                    <el-button  type="danger"  size="small">Cancel</el-button>
+                    <el-button  type="danger"  size="small" @click="cancelAut(scope.row)">Cancel</el-button>
                 </template>
                 <template v-else>
                   <el-button  type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
@@ -176,9 +176,6 @@ export default {
         account: "",  //PinterestAccount唯一标识码
         nickname: "",     //账户名称
         email: "",        //登陆邮箱
-        type: "0",         //账号类型 (0, 'business'), (1, 'individual')
-        description: "",    //账户描述
-        create_time: "",    //账号创建时间
       };
     },
     EditFun(row) {
@@ -245,6 +242,27 @@ export default {
         title: "",
         option: "post"
       };
+    },
+    cancelAut(row){
+      // 取消授权
+      this.$confirm('Are you sure you wanna cancel this authorized?', 'Warning', {
+            confirmButtonText: 'Confirm',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+              var data = {
+                authorized:0,
+                token:''
+              }
+              this.$axios.put(`/api/v1/auth/pinterest_account/cancel_auth/${row.pinterest_account_id}/`,data).then(res => {
+                  if(res.data.code == 1){
+                    this.$message({type: 'success',message: res.data.msg});
+                    this.init();
+                  }else{
+                    this.$message.error('Delete failed!');
+                  }
+              })
+          }) 
     },
     confirmFunTwo(url){
       this.pinterest_account_url = url;

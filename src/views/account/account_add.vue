@@ -3,11 +3,11 @@
     <div class="account_add">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false"  >
           <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="Email" prop="email">
-                <el-input v-model="form.email"></el-input>
+              <el-form-item label="Account" prop="account">
+                <el-input v-model="form.account"></el-input>
               </el-form-item>
-              <el-form-item label="User Name" prop="account">
-                <el-input v-model="form.account" placeholder="Optional Filling"></el-input>
+              <el-form-item label="User Name" prop="nickname">
+                <el-input v-model="form.nickname" placeholder="Optional Filling"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="submitForm('form')">Go Authorize</el-button>
@@ -29,9 +29,8 @@
       return {
         rules: {
           // account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-          email:[
-            { required: true, message: 'Please enter your email address', trigger: 'blur' },
-            { type: 'email', message: 'Please enter the correct email address', trigger: ['blur', 'change'] }
+          account:[
+            { required: true, message: 'Please enter your account', trigger: 'blur' },
           ],
         }
       };
@@ -40,14 +39,13 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+                this.form.email = this.form.account
+                this.form.nickname = this.form.nickname
                 this.$axios.post(`/api/v1/pinterest_account/`,this.form)
                 .then(res => {
                     if(res.data.code == 1){
                       this.dialog.show = false;
                       this.$parent.confirmFunTwo(res.data.data.url);
-                      //this.$message({message: res.data.msg,type: 'success'});
-                      //this.$parent.confirmFunTwo();
-                      // this.$parent.init();
                     }else{
                       this.dialog.show = false; 
                       this.$message("Failure to add!");

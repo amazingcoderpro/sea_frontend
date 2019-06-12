@@ -8,7 +8,7 @@
             <el-form-item label="Pinterest">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" @change="getBodFun" :class="'W200'">
                     <el-option :label="'All'" :value="''"></el-option>
-                    <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
+                    <el-option v-for="item in searchData.PinterestArray" :key="item.account" :label="item.account" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="Boards">
