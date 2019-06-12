@@ -42,30 +42,30 @@
           <!-- Store Name -->
           <div class="storename">
             <span>Store Name</span>
-            <el-input v-model="storeUser.name" disabled placeholder="Berrylook" class="input_name"></el-input>
+            <el-input v-model="storeUser.name" disabled placeholder="" class="input_name"></el-input>
           </div>
           <!-- Store URL -->
           <div class="storeurl">
             <span>Store URL</span>
-            <el-input v-model="storeUser.url" disabled placeholder="Berrylook"></el-input>
+            <el-input v-model="storeUser.url" disabled placeholder=""></el-input>
           </div>
           <!-- Link Parameter -->
           <div class="storeurl url_format_box">
             <span :class="'url_format_son'">{{storeUser.url_format}}</span>
             <span>Link Parameter</span>
-            <el-input v-model="storeUser.url_format" disabled placeholder="Berrylook"></el-input>
+            <el-input v-model="storeUser.url_format" disabled placeholder=""></el-input>
           </div>
           <!-- Store Timezone -->
           <div class="storeurl">
             <span>Store Timezone</span>
-            <el-input v-model="storeUser.timezone" disabled></el-input>
+            <el-input v-model="storeUser.timezone" disabled placeholder="UTC/GMT+08:00"></el-input>
           </div>
           <!-- store_view_id -->
           <div class="storeurl">
             <div>
               <span>Google Analytics View ID</span>
             </div>
-            <el-input v-model="storeUser.store_view_id" placeholder="请输入内容" class="btn_input"></el-input>
+            <el-input v-model="storeUser.store_view_id" placeholder="" class="btn_input"></el-input>
             <el-button
               type="primary"
               size="small"
@@ -79,7 +79,7 @@
           </el-form-item>
         </el-form>
         <div class="primary_time">
-          <span>(GMT-05:00) Eastern Time (US & Canada)</span>
+          <!-- <span>UTC/GMT+08:00</span> -->
         </div>
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog="dialog" ref="dailog"></DialogFound>
@@ -216,7 +216,6 @@ export default {
         });
       },
 
-
     submitwo() {
       this.$axios
         .put(`/api/v1/store/${this.storeUser.storeID}/`, this.storeUser)
@@ -249,6 +248,7 @@ export default {
 
 <style scope>
 .store_personal{width:100%;height:100%;}
+.store_personal .storeSetting{padding-left: 20px;}
 .storeSetting .el-input{width:400px;display:block;margin-top:10px;}
 .storeSetting .el-select{display:block;width:400px;}
 .storeSetting .submit_btn{background:#0f8fcf;color:#fff;padding:15px 55px;font-size:16px;margin-left:-180px;margin-top:30px;}
@@ -267,4 +267,5 @@ export default {
 .storeSetting .url_format_box:hover .url_format_son{display:block;}
 .primary_time {margin-bottom: 20px;}
 .primary_time span {color: gray;}
+
 </style>

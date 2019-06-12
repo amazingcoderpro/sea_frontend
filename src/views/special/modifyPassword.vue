@@ -78,7 +78,9 @@ export default {
             .put(`/api/v1/account/set_passwords/${this.form.userID}/`, this.form)
             .then(res => {
               if (res.data.code == 1) {
-                this.$message({message: "Successful revision",type: "success"});
+                this.$message({message: "Successful revision "+ res.data.data.email,type: "success"});
+            
+                //this.logout();
                 this.dialog.show = false;
               } else {
                 this.$message("Interface timeout!");
@@ -89,6 +91,14 @@ export default {
             });
           }
       });
+    },
+    logout() {
+      // 清除token
+      localStorage.removeItem("eleToken");
+      this.$store.dispatch("clearCurrentState");
+
+      // 页面跳转
+      this.$router.push("/login");
     }
   }
 };
