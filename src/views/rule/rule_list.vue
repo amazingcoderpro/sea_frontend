@@ -1,6 +1,5 @@
 <template>
     <div class="RuleList">
-        <!-- <div class="tableTitle"><span>Rule List</span></div> -->
         <ul id="breadcrumb">
             <li><a href="/dashboard"><span class="el-icon-house"> </span> Home</a></li>
             <li><a><span class="el-icon-right"> </span> Rule Manager</a></li>
@@ -46,16 +45,16 @@
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="Tag"  width="200">
+            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="Tag"  width="180">
               <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="Create Time"  width="250">
+            <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="Create Time"  width="180">
               <template slot-scope="scope"> {{scope.row.create_time}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Date Of Validity"  width="300">
+            <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Date Of Validity"  width="180">
               <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="400">
+            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="348">
             <template slot-scope="scope" >
                 <div  v-for="item in scope.row.schedule_rule" :key="item.id">
                     <template>
@@ -72,13 +71,13 @@
                 </div>
             </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="200">
+            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="180">
               <template slot-scope="scope"> {{JSON.parse(scope.row.product_list).length }}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="200">
+            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="180">
               <template slot-scope="scope"> {{scope.row.account_name}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="Board Name"  width="200">
+            <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="Board Name"  width="180">
               <template slot-scope="scope"> {{scope.row.baord_name}}</template>
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Operation" width="180">

@@ -8,7 +8,7 @@
             <el-form-item label="Pinterest">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" @change="getBodFun" :class="'W200'">
                     <el-option :label="'All'" :value="''"></el-option>
-                    <el-option v-for="item in searchData.PinterestArray" :key="item.account" :label="item.account" :value="item.id"></el-option>
+                    <el-option v-for="item in searchData.PinterestArray" v-bind:key="item.id" :label="item.account" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="Boards">
@@ -60,20 +60,20 @@
             </template>
         </div>
         <div class="table_right">
-            <el-table border ref="topictable" :data="TableReport" :height="tableheight">
-              <el-table-column prop="date" label="Data" align="center"  width="110" ></el-table-column>
-              <el-table-column prop="boards" label="Boards" align="center"  width="120"></el-table-column>
-              <el-table-column prop="account_followings" label="Following" align="center" width="120"></el-table-column>
-              <el-table-column prop="account_followers" label="Followers" align="center" width="120"></el-table-column>
-              <el-table-column prop="pins" label="Pins" align="center" width="120"></el-table-column>
-              <el-table-column prop="pin_saves" label="Saves" align="center"  width="120"></el-table-column>
-              <el-table-column prop="pin_comments" label="Comments" align="center"  width="120"></el-table-column>
-              <el-table-column prop="product_visitors" label="Visitors" align="center"  width="120"></el-table-column>
+            <el-table border ref="topictable" :data="TableReport">
+              <el-table-column prop="date" label="Data" align="center"  width="130" ></el-table-column>
+              <el-table-column prop="boards" label="Boards" align="center"  width="130"></el-table-column>
+              <el-table-column prop="account_followings" label="Following" align="center" width="130"></el-table-column>
+              <el-table-column prop="account_followers" label="Followers" align="center" width="130"></el-table-column>
+              <el-table-column prop="pins" label="Pins" align="center" width="130"></el-table-column>
+              <el-table-column prop="pin_saves" label="Saves" align="center"  width="130"></el-table-column>
+              <el-table-column prop="pin_comments" label="Comments" align="center"  width="130"></el-table-column>
+              <el-table-column prop="product_visitors" label="Visitors" align="center"  width="130"></el-table-column>
               <el-table-column prop="product_new_visitors" label="New Vistors" align="center" width="120"></el-table-column>
               <el-table-column prop="account_views" label="View" align="center" width="120"></el-table-column>
               <el-table-column prop="product_clicks" label="Clicks" align="center" width="120"></el-table-column>
               <el-table-column prop="product_sales" label="Sales" align="center" width="120"> </el-table-column>   
-              <el-table-column prop="product_revenue" align="center" label="Revenue" fixed="right" width="120"></el-table-column>
+              <el-table-column prop="product_revenue" align="center" label="center" fixed="right" width="120"></el-table-column>
             </el-table>
         </div>
         <div class="paging">
@@ -89,7 +89,6 @@ import * as base from '../../assets/js/base'
 export default {
   data() {
     return {
-      tableheight:window.innerHeight - 50,
       bigReport:null,      //最大数据
       TableReport:null,      //列表数据（被处理了）
       total:0,//默认数据总数
@@ -387,4 +386,5 @@ export default {
 .sub_account_daily_report .report_search{padding-left: 90px;}
 .sub_account_daily_report .topForm .el-form-item{margin-bottom: 20px;}
 .sub_account_daily_report .el-form--inline .el-form-item{margin-right: 0;}
+.sub_account_daily_report .paging{margin-bottom: 25px;}
 </style>

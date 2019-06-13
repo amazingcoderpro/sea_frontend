@@ -2,7 +2,13 @@
   <div class="shopfy_regist">
     <section class="form_container">
       <span class="title">PinBooster</span>
-      <el-form :model="registUser" :rules="rules" ref="loginForm" label-width="160px" class="loginForm">
+      <el-form
+        :model="registUser"
+        :rules="rules"
+        ref="loginForm"
+        label-width="160px"
+        class="loginForm"
+      >
         <!-- 账号 -->
         <el-form-item label="Shop Url :" prop="username">
           <el-input v-model="registUser.username" disabled></el-input>
@@ -37,7 +43,7 @@
 
 
 <script>
-import * as base from '../../assets/js/base'
+import * as base from "../../assets/js/base";
 import router from "../../router";
 import Menufilter from "../../components/menufilter.js";
 export default {
@@ -57,21 +63,42 @@ export default {
         password: "",
         username: "", //商铺名
         emailstr: "",
-        id:'',
+        id: ""
       },
       rules: {
         username: [
-          { required: true, message: "Account cannot be empty", trigger: "change" },
+          {
+            required: true,
+            message: "Account cannot be empty",
+            trigger: "change"
+          }
         ],
         emailstr: [
-          { required: true, message: "Mailbox cannot be empty", trigger: "change" },
+          {
+            required: true,
+            message: "Mailbox cannot be empty",
+            trigger: "change"
+          }
         ],
         password: [
-          { required: true, message: "Password cannot be empty", trigger: "blur" },
-          { min: 6, max: 30, message: "Length of 6 to 30 characters", trigger: "blur" }
+          {
+            required: true,
+            message: "Password cannot be empty",
+            trigger: "blur"
+          },
+          {
+            min: 6,
+            max: 30,
+            message: "Length of 6 to 30 characters",
+            trigger: "blur"
+          }
         ],
         password2: [
-          { required: true, message: "Confirmation password cannot be empty", trigger: "blur" },
+          {
+            required: true,
+            message: "Confirmation password cannot be empty",
+            trigger: "blur"
+          },
           {
             min: 6,
             max: 30,
@@ -96,10 +123,13 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios
-            .put(`/api/v1/account/set_password/${this.registUser.id}/`, this.registUser)
+            .put(
+              `/api/v1/account/set_password/${this.registUser.id}/`,
+              this.registUser
+            )
             .then(res => {
               if (res.data.code == 1) {
-                  router.push("/login");
+                router.push("/login");
               } else {
                 this.$message("Interface timeout!");
               }
@@ -107,7 +137,7 @@ export default {
             .catch(error => {
               this.$message("Interface timeout!");
             });
-        }
+         }
       });
     }
   }
@@ -115,14 +145,63 @@ export default {
 </script>
 
 <style scoped>
-.shopfy_regist{position:relative;width:100%;height:100%;background:url(../../assets/img/bg.jpg) no-repeat center center;background-size:100% 100%;}
-.form_container{width:470px;height:400px;position:absolute;left:50%;top:50%;border-radius:5px;margin-left:-220px;margin-top:-300px;text-align: center;}
-.loginForm{background-color:#fff;padding:20px 40px 20px 20px;border-radius:5px;box-shadow:0px 5px 10px #cccc;margin-top: 20px;}
-.text{width:470px;height:172px;border-radius:5px;background:#f9f9f9;}
-.text .text_hint{text-align:center;color:#277fc2;font-size:13px;padding-top:25px;}
-.button{text-align:center;padding-top:22px;}
-.el-button{padding:15px 55px;font-size:16px;background:#409EFF;}
-.clause p{text-align:center;padding-top:22px;font-size:13px;color:#65635d;}
-.clause p a{color:#0f8fcf;}
-.shopfy_regist .form_container .title{font-family:"Microsoft YaHei";font-size:25px;}
+.shopfy_regist {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url(../../assets/img/bg.jpg) no-repeat center center;
+  background-size: 100% 100%;
+}
+.form_container {
+  width: 470px;
+  height: 400px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 5px;
+  margin-left: -220px;
+  margin-top: -300px;
+  text-align: center;
+}
+.loginForm {
+  background-color: #fff;
+  padding: 20px 40px 20px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px #cccc;
+  margin-top: 20px;
+}
+.text {
+  width: 470px;
+  height: 172px;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+.text .text_hint {
+  text-align: center;
+  color: #277fc2;
+  font-size: 13px;
+  padding-top: 25px;
+}
+.button {
+  text-align: center;
+  padding-top: 22px;
+}
+.el-button {
+  padding: 15px 55px;
+  font-size: 16px;
+  background: #409eff;
+}
+.clause p {
+  text-align: center;
+  padding-top: 22px;
+  font-size: 13px;
+  color: #65635d;
+}
+.clause p a {
+  color: #0f8fcf;
+}
+.shopfy_regist .form_container .title {
+  font-family: "Microsoft YaHei";
+  font-size: 25px;
+}
 </style>

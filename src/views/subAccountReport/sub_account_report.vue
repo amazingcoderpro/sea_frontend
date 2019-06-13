@@ -45,18 +45,18 @@
             <div class="table_right">
               <p>Accounts:{{searchData.PinterestArray.length}}</p>
               <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight">
-                <el-table-column  align="center"  prop="account_name" label="Account Name"  width="150"></el-table-column>
-                <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
-                <el-table-column  align="center"  prop="account_followings" label="Followings"  width="200"></el-table-column>
-                <el-table-column  align="center"  prop="account_followers" label="Followers"  width="100"></el-table-column>
-                <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
-                <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="100"></el-table-column>
-                <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="100"></el-table-column>
-                <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="100"></el-table-column>
-                <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="150"></el-table-column>
-                <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="100"></el-table-column>
-                <el-table-column  align="center"  prop="product_sales" label="Sales"  width="100"></el-table-column>
-                <el-table-column  align="center"  prop="product_revenue" label="Revenue"  ></el-table-column>
+                <el-table-column  align="center"  prop="account_name" label="Account Name"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="boards" label="Boards"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="account_followings" label="Followings"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="account_followers" label="Followers"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="pins" label="Pins"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="product_sales" label="Sales"  width="120"></el-table-column>
+                <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="120"></el-table-column>
               </el-table>
             </div>
             <!-- 分页 -->
@@ -64,7 +64,7 @@
         <template v-else-if="tableState == 2">
             <div class="table_right">
               <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
-            <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
+            <el-table-column  align="center" type="index"  label="ID" width="50"></el-table-column>
             <el-table-column  align="center"  prop="board_id" label="Board ID"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="board_name" label="Board Name"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
@@ -287,5 +287,6 @@ export default {
 </script>
 <style scoped>
 .sub_account_report .report_search{display:block;margin-left: 90px;}
+.sub_account_report .paging{margin-bottom: 20px;}
 </style>
 

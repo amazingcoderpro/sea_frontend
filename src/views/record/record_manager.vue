@@ -45,7 +45,7 @@
             <!-- Publish Time -->
             <el-table-column label="Publish Time" align="center" width="170">
                 <template slot-scope="scope">
-                  <template v-if="scope.state == 1">
+                  <template v-if="scope.state == 1||scope.state == 3">
                     <span>{{scope.row.finished_time}}</span>
                   </template>
                   <template v-else>
@@ -53,7 +53,7 @@
                   </template>
                 </template>
             </el-table-column>            
-            <el-table-column prop="state" label="State" align="center" width="115">
+            <el-table-column prop="state" label="State" align="center" width="118">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 0">
                     <el-button type="primary" icon="edit" size="small" disabled="">Unpublic</el-button>
@@ -63,7 +63,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="Edit" width="115" >
+            <el-table-column align="center" label="Edit" width="110" >
               <template  slot-scope="scope">
                 <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >Cancel</el-button>
               </template>
