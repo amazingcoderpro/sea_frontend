@@ -26,13 +26,13 @@
           <el-table :data="tableData" border ref="topictable" class="topictable" :height="tableHeight" @selection-change="handleSelectionChange">
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
-            <el-table-column prop="product.sku" label="SKU" align="center" width="200"></el-table-column>
+            <el-table-column prop="product.sku" label="SKU" align="center" width="170"></el-table-column>
             <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
-            <el-table-column prop="board.description"  label="Description" align="center" width="120">
+            <el-table-column prop="product.name"  label="Description" align="center" width="150">
             </el-table-column>
             <el-table-column prop="product.url" label="Pin URL" align="center" width="200"></el-table-column>
             <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">
@@ -40,8 +40,8 @@
             <el-table-column prop="product.tag" label="Tag" align="center" width="120">
                 <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
-            <el-table-column prop="board.pinterest_account" label="Pinterest Account Name" align="center" width="200"></el-table-column>
-            <el-table-column prop="board.id" label="Board Name" align="center" width="120"></el-table-column>
+            <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
+            <el-table-column prop="board.name" label="Board Name" align="center" width="120"></el-table-column>
             <el-table-column prop="state" label="State" align="center" width="198">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 0">
