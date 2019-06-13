@@ -6,6 +6,8 @@
             <el-form-item label="Website">
               <span style="color:red;font-size:16px;font-weight: 600;">{{website}}</span>
             </el-form-item>
+            <el-form-item label=" " :class="'contentBg'">
+            </el-form-item>
             <el-form-item label="Pinterest">
               <el-select v-model="ruleForm.pinterest" placeholder="Pinterest"  @change="pinterestChange">
                 <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
@@ -62,8 +64,6 @@
             </div>
             <el-form-item label="Tag" prop="tag">
               <el-input v-model="ruleForm.tag" :style="'width: 400px;'"></el-input>
-            </el-form-item>
-            <el-form-item label=" " :class="'contentBg'">
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">Save</el-button>
@@ -302,6 +302,8 @@ import * as base from '../../assets/js/base'
           if (valid) {
               this.serchProduct.publish_begin_time = base.dateFormat(this.serchProduct.data1[0]);
               this.serchProduct.publish_end_time =  base.dateFormat(this.serchProduct.data1[1]);
+              var store = JSON.parse(window.localStorage.getItem('store'));
+
               var url = "/api/v1/rule/search_product/?index=1";
               if(this.serchProduct.data1.length == 2){
                   url += "&publish_begin_time="+this.serchProduct.publish_begin_time;
@@ -318,6 +320,7 @@ import * as base from '../../assets/js/base'
                   url += "&scan_sign="+this.serchProduct.scan_sign;
                   url += "&scan="+this.serchProduct.scan;
               }
+                  url += "&store="+store.id;
               this.$axios.get(url).then(res => {
                   if(res.data.code == 1){
                     this.ruleForm.product_list = res.data.data;
@@ -362,7 +365,7 @@ import * as base from '../../assets/js/base'
 .ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
 .ruleAdd .el-dialog__body{position: relative;}
 .ruleAdd .contentBg{height:176px;}
-.ruleAdd .searchContent{position: absolute;bottom:100px;}
+.ruleAdd .searchContent{position: absolute;bottom:416px;}
 .ruleAdd .specialTime{
     position: absolute;
     left: 346px;
