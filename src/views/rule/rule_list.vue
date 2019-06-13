@@ -186,7 +186,8 @@ export default {
               }
         }
         urlString += "&store="+store.id;
-        this.$axios.get(urlString).then(res => {
+        this.$axios.get(urlString)
+        .then(res => {
           if(res.data.code==1){
               res.data.data.results.map(e => {
                 e.create_time = base.getLastTime(e.create_time);
@@ -199,6 +200,9 @@ export default {
             this.$message("获取失败!");
           }
         })
+        .catch(error => {
+            this.$message("Interface timeout!");
+        });
     },
     searchInit(){
         var  _star = new Date(base.dateFormat(new Date(new Date().getTime()-6*1000*24*60*60),"day") + " 00:00:00");
@@ -213,6 +217,9 @@ export default {
               this.init();
             }
         })
+        .catch(error => {
+            this.$message("Interface timeout!");
+        });
     },
     addFun() {
       // 添加
@@ -240,6 +247,9 @@ export default {
                       this.$message.error('stop failed!');
                     }
                   })
+                  .catch(error => {
+                      this.$message("Interface timeout!");
+                  });
             }) 
     },
     
@@ -261,6 +271,9 @@ export default {
                       this.$message.error('Delete failed!');
                     }
                   })
+                  .catch(error => {
+                      this.$message("Interface timeout!");
+                  });
             }) 
     },
     pinterestChange(){

@@ -76,6 +76,7 @@ export default {
     logout() {
       // 清除token
       localStorage.removeItem("eleToken");
+      localStorage.removeItem("store");
       this.$store.dispatch("clearCurrentState");
 
       // 页面跳转

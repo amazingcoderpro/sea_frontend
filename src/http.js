@@ -35,18 +35,64 @@ axios.interceptors.response.use(response => {
 }, error => {
     // 错误提醒
     endLoading()
-    Message.error(error.response.data)
+    if (error.response) {
+        switch (error.response.status) {
+            case 400:     error.message = '请求错误'   
 
-    const { status } = error.response
-    if (status == 401) {
-        Message.error('token值无效，请重新登录')
-        // 清除token
-        localStorage.removeItem('eleToken')
-
-        // 页面跳转
-        router.push('/login')
+            break     
+     
+            case 401:    
+                error.message = '未授权，请登录' 
+                localStorage.removeItem('eleToken')
+                localStorage.removeItem('store')
+                router.push('/login')
+            break 
+     
+            case 403:          
+            Message.error('token值无效，请重新登录')
+            // 清除token
+            localStorage.removeItem('eleToken')
+            localStorage.removeItem('store')
+            // 页面跳转
+            router.push('/login')
+             break    
+     
+            case 404:    error.message = `请求地址出错: ${error.response.config.url}` 
+     
+            break  
+     
+            case 408:   error.message = '请求超时' 
+     
+            break   
+     
+            case 500:     error.message = '服务器内部错误'
+     
+             break    
+     
+            case 501:     error.message = '服务未实现'  
+     
+            break   
+     
+            case 502:     error.message = '网关错误'  
+     
+            break     
+     
+           case 503:        error.message = '服务不可用'    
+     
+           break     
+     
+           case 504:  error.message = '网关超时'   
+     
+           break  
+     
+           case 505:      error.message = 'HTTP版本不受支持'  
+     
+           break   
+     
+           default:  
+                            error.message = '其他情况'  
+        }
     }
-
     return Promise.reject(error)
 })
 

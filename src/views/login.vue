@@ -85,11 +85,14 @@ export default {
                     router.push('/dashboard');
                 }else{
                   this.$message({
-                    message: res.data.msg,
+                    message: res.data.msg.detail,
                     type: 'warning',
                     center: true
                   });
                 }
+              })
+              .catch(error => {
+                  this.$message("Interface timeout!");
               });
           }
         });

@@ -258,7 +258,8 @@ export default {
             this.activity();
         // 获取表格数据
             var urlString = `/api/v1/dashboard/1/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
-            this.$axios.get(urlString).then(res => {
+            this.$axios.get(urlString)
+            .then(res => {
                 if(res.data.code==1){
                     this.bigReport = res.data.data.overview_list;
                     this.tableData = [];
@@ -268,21 +269,29 @@ export default {
                     this.$message("获取失败!");
                 }
             })
+            .catch(error => {
+                this.$message("Interface timeout!");
+            });
         },
         updates() {
         // 获取表格数据
             var urlString = `/api/v1/dashboard/2/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
-            this.$axios.get(urlString).then(res => {
+            this.$axios.get(urlString)
+            .then(res => {
                 if(res.data.code==1){
                     this.updatesData = res.data.data;
                 }else{
                     this.$message("获取失败!");
                 }
             })
+            .catch(error => {
+                this.$message("Interface timeout!");
+            });
         },
         pins(){
             var urlString = `/api/v1/dashboard/3/?pins_period=7`;
-            this.$axios.get(urlString).then(res => {
+            this.$axios.get(urlString)
+            .then(res => {
                 if(res.data.code==1){
                     this.pinsArray = res.data.data;
                     this.Board();
