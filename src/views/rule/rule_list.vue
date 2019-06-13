@@ -77,8 +77,8 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="180">
               <template slot-scope="scope"> {{scope.row.account_name}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="baord_name" label="Board Name"  width="180">
-              <template slot-scope="scope"> {{scope.row.baord_name}}</template>
+            <el-table-column  align="center" class="parentNodeColumn" prop="board_name" label="Board Name"  width="180">
+              <template slot-scope="scope"> {{scope.row.board_name}}</template>
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Operation" width="180">
               <template slot-scope="scope">

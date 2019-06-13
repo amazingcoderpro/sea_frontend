@@ -17,15 +17,15 @@
         <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="130px">
           <!-- 名 -->
           <el-form-item label="First Name" prop="first_name">
-            <el-input v-model="personalUser.first_name" placeholder="Daisy"></el-input>
+            <el-input v-model="personalUser.first_name" placeholder=""></el-input>
           </el-form-item>
           <!-- 姓 -->
           <el-form-item label="Last Name" prop="last_name">
-            <el-input v-model="personalUser.last_name" placeholder="zhang"></el-input>
+            <el-input v-model="personalUser.last_name" placeholder=""></el-input>
           </el-form-item>
           <!-- 邮箱 -->
           <el-form-item label="Email Address" prop="email">
-            <el-input v-model="personalUser.email" disabled placeholder="请输入email"></el-input>
+            <el-input v-model="personalUser.email" disabled placeholder=""></el-input>
           </el-form-item>
           <!-- 点击 -->
           <el-form-item>
@@ -126,26 +126,12 @@ export default {
       },
       rules: {
         first_name: [
-          {
-            required: true,
-            message: "The user name cannot be empty",
-            trigger: "change"
-          },
-          {
-            min: 1,
-            max: 30,
-            message: "Length of 1 To 30 characters",
-            trigger: "blur",
-            left: "100px"
-          }
-        ],
+            { required: true,message: "The user name cannot be empty",trigger: "change"},
+            { min: 1, max: 30, message: "Length of 1 To 30 characters",trigger: "blur",left: "100px"}
+          ],
         last_name: [
-          {
-            required: true,
-            message: "The user name cannot be empty",
-            trigger: "change"
-          },
-          { min: 1, max: 30, message: "Length of 1 To 30 characters", trigger: "blur" }
+            { required: true,message: "The user name cannot be empty",trigger: "change"},
+            { min: 1, max: 30, message: "Length of 1 To 30 characters",trigger: "blur",left: "100px"}
         ],
         email: [
           {

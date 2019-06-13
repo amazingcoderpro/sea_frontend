@@ -230,7 +230,7 @@ import * as base from '../../assets/js/base'
         }else{
             this.productListState = 1;
 
-        }
+        }      
         this.$refs[formName].validate((valid) => {
           if (valid) {
               if(this.scheduleRruleState == 1 && this.productListState == 1){
