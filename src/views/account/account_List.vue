@@ -210,7 +210,7 @@ export default {
               cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
-                this.$axios.put(`/api/v1/rule/state/${row.index}/`,statedata)
+                this.$axios.delete(`/api/v1/account_manage/${row.pinterest_account_id}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
                       this.$message({type: 'success',message: 'Deleted successfully!'});
