@@ -90,11 +90,11 @@ export default {
         },
         {
           value: '[0]', 
-          label: 'To be released'
+          label: 'Published'
         },
         {
           value: '[3]',
-          label: 'Post failure'
+          label: 'Unpublished'
         }
       ],
       search:{
