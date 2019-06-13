@@ -8,6 +8,7 @@
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null" label-width="100px">
           <el-form-item label="Pinterest">
             <el-select v-model="searchData.pinterest" placeholder="Pinterest"  @change="pinterestChange" :class="'W200'">
+              <el-option :label="'All'" :value="''"></el-option>
               <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
@@ -82,7 +83,7 @@
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Operation" width="180">
               <template slot-scope="scope">
-                <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Change</el-button>
+                <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>
                 <el-button type="danger" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
               </template>
             </el-table-column>
@@ -116,7 +117,7 @@ export default {
 
         searchData:{
           tag:'',  
-          creatTime:[new Date(2019, 4, 28, 0, 0), new Date(2019, 5, 1, 0, 0)],
+          creatTime:[],
           pinterest:'',
           board:''
         },
@@ -159,6 +160,7 @@ export default {
     init() {
       // 获取表格数据
         var urlString = `/api/v1/rule/?page=${this.currentPage}&page_size=${this.pagesize}`;
+        var store = JSON.parse(window.localStorage.getItem('store'));
         if(this.account_id != null || this.account_id != undefined ){
           urlString += `&account_id=${this.account_id}`;
         }
@@ -179,9 +181,12 @@ export default {
               }else{
                 _thisboardlist.push(this.searchData.board);
               }
-              _thisboardlist = JSON.stringify(_thisboardlist)
-          urlString += `&board_list=`+_thisboardlist;
+              if(_thisboardlist.length>0){
+                _thisboardlist = JSON.stringify(_thisboardlist)
+                urlString += `&board_list=`+_thisboardlist;
+              }
         }
+        urlString += "&store="+store.id;
         this.$axios.get(urlString).then(res => {
           if(res.data.code==1){
               res.data.data.results.map(e => {
@@ -197,12 +202,15 @@ export default {
         })
     },
     searchInit(){
+        var  _star = new Date(base.dateFormat(new Date(new Date().getTime()-6*1000*24*60*60),"day") + " 00:00:00");
+        var  _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+        this.searchData.creatTime = [_star,_end]
         this.$axios.get("/api/v1/rule/pinterest_account_board/?authorized=[0,1]")
         .then(res => {
             if(res.data.code == 1){
               this.pinterestArray = res.data.data;
-              this.searchData.pinterest = res.data.data[0].id;
-              this.pinterestChange();
+              this.searchData.pinterest = '';
+              this.searchData.board = '-1';
               this.init();
             }
         })
@@ -216,11 +224,10 @@ export default {
       };
     },
     stopFun(row){
-      console.log(row)
         var statedata = {
             state :'2'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
         }
-        this.$confirm('Are you sure you wanna change this rule?', 'Warning', {
+        this.$confirm('Are you sure you wanna stop this rule?', 'Warning', {
               confirmButtonText: 'Confirm',
               cancelButtonText: 'Cancel',
               type: 'warning'
@@ -228,10 +235,10 @@ export default {
                 this.$axios.put(`/api/v1/rule/state/${row.id}/`,statedata)
                   .then(res => {
                     if(res.data.code == 1){
-                      this.$message({type: 'success',message: 'Change successfully!'});
+                      this.$message({type: 'success',message: 'stop successfully!'});
                       this.init();
                     }else{
-                      this.$message.error('Change failed!');
+                      this.$message.error('stop failed!');
                     }
                   })
             }) 
@@ -259,18 +266,25 @@ export default {
     },
     pinterestChange(){
       //pinterest账户变更触发的事件
-      this.pinterestArray.map(e => {
-        if(e.id == this.searchData.pinterest){
-          if(e.board_pinterest_account.length>0){
-            this.searchData.board = e.board_pinterest_account[0].id;
-            e.board_pinterest_account.map(s => {
-              this.boardArray.push(s.id);
-            });
-          }else{
-            this.searchData.board = '';
+      if(this.searchData.pinterest == ''){
+              this.searchData.board = '-1';
+      }else{
+        this.boardArray = [];
+        this.pinterestArray.map(e => {
+          if(e.id == this.searchData.pinterest){
+            if(e.board_pinterest_account.length>0){
+              this.searchData.board = e.board_pinterest_account[0].id;
+              e.board_pinterest_account.map(s => {
+                this.boardArray.push(s.id);
+              });
+            }else{
+              this.searchData.board = '-1';
+            }
           }
-        }
-      });   
+        });
+      }
+                    console.log(this.boardArray)
+   
     },
     ListManagerFun(row) {
       // 去规则详情页面

@@ -1,7 +1,8 @@
 <template>
     <div class="aut_state">
-        <span v-if="state == 1">授权成功!</span>
-        <span v-else>授权失败!</span>
+        <span v-if="state == 1">Successful authorization!</span>
+        <span v-else-if="state == 2">failed authorization!</span>
+        <span v-else>This account is authorized!</span>
     </div>
 
 </template>

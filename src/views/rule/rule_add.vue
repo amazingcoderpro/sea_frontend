@@ -1,7 +1,7 @@
 
 <template>
     <div class="ruleAdd">
-         <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false">
+         <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false" @close='resetForm'>
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
             <el-form-item label="Website">
               <span style="color:red;font-size:16px;font-weight: 600;">{{website}}</span>
@@ -67,7 +67,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">Save</el-button>
-              <el-button @click="resetForm('ruleForm')">Reset</el-button>
+              <el-button @click="resetForm()">Reset</el-button>
             </el-form-item>
           </el-form>
           <el-form :model="serchProduct" :rules="searchRules" ref="serchProduct" label-width="100px" class="demo-serchProduct searchContent">
@@ -181,7 +181,6 @@ import * as base from '../../assets/js/base'
             schedule_rule:[],         // 
             product_list:[],        //满足条件的商品列表  
             tag:'',      //规则标签
-          
           },
           rules: {
             pinterest: [{ required: true, message: '请选择pinterest', trigger: 'change' }],
@@ -213,7 +212,7 @@ import * as base from '../../assets/js/base'
               }
               this.pinterestChange();
             }
-        })  
+        }) 
       }
     },
     methods: {
@@ -259,8 +258,10 @@ import * as base from '../../assets/js/base'
           }
         });
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      resetForm() {
+        console.log(111)
+        this.$refs['ruleForm'].resetFields();
+        this.$refs['serchProduct'].resetFields();
       },
       scheduleRuleFun(){
         var sTime = new Date(this.scheduleRule.timeVal[0]).getTime();
@@ -365,7 +366,7 @@ import * as base from '../../assets/js/base'
 .ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
 .ruleAdd .el-dialog__body{position: relative;}
 .ruleAdd .contentBg{height:176px;}
-.ruleAdd .searchContent{position: absolute;bottom:416px;}
+.ruleAdd .searchContent{position: absolute;top: 82px;}
 .ruleAdd .specialTime{
     position: absolute;
     left: 346px;
