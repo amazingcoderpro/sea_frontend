@@ -6,7 +6,8 @@
         </ul>
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
-                <el-button  type="primary" @click='addFun()'>Add</el-button>
+                <!-- <el-button  type="primary" @click='addFun()'>Add</el-button> -->
+                <el-button  type="primary" @click='AuthorizedFun()'>Authorized</el-button>
             </el-form-item>
         </el-form>
         <div class="table_right">
@@ -25,7 +26,7 @@
                 Account Type : <span v-if='scope.row.account_type == 0'>business</span><span v-else>individual</span>
               </template>
             </el-table-column>
-            <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
+            <!-- <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
               <template slot-scope="scope">
                 <template v-if="scope.row.account_authorized == 1">
                     <span>Authorized</span>
@@ -35,7 +36,7 @@
                   <el-button  type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
                 </template>
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" align="center" label="Pins"  width="120">
               <template slot-scope="scope"> Total : {{scope.row.pins}}<br/> New: {{scope.row.pins_increment}}</template>
             </el-table-column>
@@ -177,6 +178,19 @@ export default {
         nickname: "",     //账户名称
         email: "",        //登陆邮箱
       };
+    },
+    AuthorizedFun(){
+      this.$axios.get(`/api/v1/auth/pinterest_account/`)
+                      .then(res => {
+                          if(res.data.code == 1){
+                            window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
+                          }else{
+                            this.$message("Failure to add!");
+                          }
+                      })
+                      .catch(error => {
+                        this.$message("Interface timeout!");
+                      });       
     },
     EditFun(row) {
       // 添加

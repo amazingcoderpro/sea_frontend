@@ -2,7 +2,7 @@
     <div class="aut_state">
         <span v-if="state == 1">Successful authorization!</span>
         <span v-else-if="state == 2">failed authorization!</span>
-        <span v-else>This account is authorized!</span>
+        <span v-else>This account is authorized! Please don't authorization again!  </span>
     </div>
 
 </template>
