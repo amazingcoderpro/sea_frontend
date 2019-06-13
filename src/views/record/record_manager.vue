@@ -26,7 +26,7 @@
           <el-table :data="tableData" border ref="topictable" class="topictable" :height="tableHeight" @selection-change="handleSelectionChange">
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
-            <el-table-column prop="product.sku" label="SKU" align="center" width="170"></el-table-column>
+            <el-table-column prop="product.sku" label="SKU" align="center" width="120"></el-table-column>
             <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
                     <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
@@ -42,7 +42,18 @@
             </el-table-column>
             <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
             <el-table-column prop="board.name" label="Board Name" align="center" width="120"></el-table-column>
-            <el-table-column prop="state" label="State" align="center" width="198">
+            <!-- Publish Time -->
+            <el-table-column label="Publish Time" align="center" width="170">
+                <template slot-scope="scope">
+                  <template v-if="scope.state == 1">
+                    <span>{{scope.row.finished_time}}</span>
+                  </template>
+                  <template v-else>
+                    <span>{{scope.row.execute_time}}</span>
+                  </template>
+                </template>
+            </el-table-column>            
+            <el-table-column prop="state" label="State" align="center" width="115">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 0">
                     <el-button type="primary" icon="edit" size="small" disabled="">Unpublic</el-button>
@@ -52,7 +63,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="Edit" width="150" >
+            <el-table-column align="center" label="Edit" width="115" >
               <template  slot-scope="scope">
                 <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >Cancel</el-button>
               </template>
