@@ -48,8 +48,8 @@
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">
             </el-table-column>
-            <el-table-column prop="product.tag" label="Tag" align="center" width="120">
-                <template slot-scope="scope"> {{scope.row.tag}}</template>
+            <el-table-column prop="rule.tag" label="Tag" align="center" width="120">
+                <template slot-scope="scope"> {{scope.row.rule.tag}}</template>
             </el-table-column>
             <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
             <el-table-column prop="board.name" label="Board Name" align="center" width="120"></el-table-column>
@@ -159,7 +159,7 @@ export default {
       // 获取表格数据
         this.account_data =JSON.parse(localStorage.getItem("account_data"));
         this.board_data =JSON.parse(localStorage.getItem("board_data"));
-        var url = `/api/v1/rule/report/?page=${this.currentPage}&page_size=${this.pagesize}`;
+        var url = `/api/v1/rule/report/?page=${this.currentPage}&page_size=${this.pagesize}&record_manager=1`;
             url +=`&state=${this.search.state}`;
         if(this.search.product__sku !=''){
             url +=`&product__sku=${this.search.product__sku}`;

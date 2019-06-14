@@ -49,21 +49,25 @@
             <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="150">
             </el-table-column>
                 <!-- 所属规则标签 -->
-            <el-table-column prop="product.tag" label="Tag" align="center" width="150">
-                <template slot-scope="scope"> {{scope.row.tag}}</template>
+            <el-table-column prop="rule.tag" label="Tag" align="center" width="150">
+                <template slot-scope="scope"> {{scope.row.rule.tag}}</template>
             </el-table-column>
                 <!-- 所属Board ID -->
             <el-table-column prop="board.id" label="Board Name" align="center" width="138"></el-table-column>
+                 <!-- 发布时间 -->
+            <el-table-column prop="execute_time" label="Publish Time" align="center" width="170">
+
+            </el-table-column> 
                 <!-- 所属账户ID -->
-            <el-table-column prop="board.pinterest_account" label="Pinterest Account Name" align="center" width="200"></el-table-column>
+            <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
                 <!-- 发布状态 --> 
             <el-table-column prop="state" label="State" align="center" width="150">
               <template  slot-scope="scope">
-                <template v-if="scope.row.state == 3">
-                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Manual release</el-button>
+                <template v-if="scope.row.state == 1">
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Published</el-button>
                 </template>
                 <template v-else>
-                    <el-button type="primary" icon="edit" size="small" disabled="">Unpublic</el-button>
+                    <el-button type="primary" icon="edit" size="small" disabled="">Failed</el-button>
                 </template>
               </template>
 
