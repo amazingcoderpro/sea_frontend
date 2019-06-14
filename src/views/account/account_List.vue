@@ -26,7 +26,6 @@
             <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="center" fixed="left" width="350">
               <template slot-scope="scope"> 
                 User Name : {{scope.row.account_name}}<br/>
-                Email Address : {{scope.row.account_email}}<br/> 
                 Create Time : {{scope.row.account_create_time}}<br/> 
                 Account Type : <span v-if='scope.row.account_type == 0'>individual</span><span v-else>business</span>
               </template>

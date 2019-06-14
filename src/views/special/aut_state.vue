@@ -1,8 +1,8 @@
 <template>
     <div class="aut_state">
-        <span v-if="state == 1">Successful authorization,Please try again later</span>
-        <span v-else-if="state == 2">failed authorization,Please try again later</span>
-        <span v-else :style="'margin-left:-326px;'">This account is authorized! Please don't authorization again!  </span>
+        <span v-if="state == 1" :style="'margin-left:-150px;'">Successful authorization!</span>
+        <span v-else-if="state == 2">failed authorization,Please try again later!</span>
+        <span v-else :style="'margin-left:-326px;'">This account has authorized! Please don't authorize again!  </span>
     </div>
 
 </template>

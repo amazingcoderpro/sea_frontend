@@ -25,7 +25,13 @@
             </el-table-column>             
             <el-table-column  class="parentNodeColumn" align="center" prop="comment,comment_increment" label="Comments"  width="180">
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>New:{{scope.row.comments_increment}}</template>
-            </el-table-column>           
+            </el-table-column>    
+            <el-table-column  class="parentNodeColumn" align="center" prop="board_followers,followers_increment" label="Followers"  width="180">
+              <template slot-scope="scope"> Total:{{scope.row.board_followers}}<br/>New:{{scope.row.followers_increment}}</template>
+            </el-table-column>    
+
+
+
             <el-table-column  class="parentNodeColumn" align="center" prop="commentt" label="Pin Details"  width="180" >
               <template slot-scope="scope">
                 <el-button icon="edit" type="primary" size="small" @click="PinManagerFun(scope.row)">View Pin List</el-button>
