@@ -17,11 +17,11 @@
         <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="130px">
           <!-- 名 -->
           <el-form-item label="First Name" prop="first_name">
-            <el-input v-model="personalUser.first_name" placeholder="Please enter your last name."></el-input>
+            <el-input v-model="personalUser.first_name" placeholder="Please enter your name"></el-input>
           </el-form-item>
           <!-- 姓 -->
           <el-form-item label="Last Name" prop="last_name">
-            <el-input v-model="personalUser.last_name" placeholder="Please enter your name."></el-input>
+            <el-input v-model="personalUser.last_name" placeholder="Please enter your last name"></el-input>
           </el-form-item>
           <!-- 邮箱 -->
           <el-form-item label="Email Address" prop="email">
