@@ -42,18 +42,18 @@
           <!-- Store Name -->
           <div class="storename">
             <span>Store Name</span>
-            <el-input v-model="storeUser.name" disabled placeholder="" class="input_name"></el-input>
+            <el-input v-model="storeUser.name"  disabled class="input_name"></el-input>
           </div>
           <!-- Store URL -->
           <div class="storeurl">
             <span>Store URL</span>
-            <el-input v-model="storeUser.url" disabled placeholder=""></el-input>
+            <el-input v-model="storeUser.url" disabled></el-input>
           </div>
           <!-- Link Parameter -->
           <div class="storeurl url_format_box">
             <span :class="'url_format_son'">{{storeUser.url_format}}</span>
             <span>Link Parameter</span>
-            <el-input v-model="storeUser.url_format" disabled placeholder=""></el-input>
+            <el-input v-model="storeUser.url_format" disabled></el-input>
           </div>
           <!-- Store Timezone -->
           <div class="storeurl">
@@ -111,10 +111,11 @@ export default {
       },
       storeUser: {
         url: "",
+        id: "",
         name: "",
         timezone: "",
         url_format: "",
-        storeID: "",
+        // storeID: "",
         store_view_id: ""
       },
       personalUser: {
@@ -146,19 +147,14 @@ export default {
   },
   methods: {
     init() {
-      this.storeUser.storeID = JSON.parse(
-        window.localStorage.getItem("store")
-      ).id;
-      this.storeUser.store_view_id = JSON.parse(
-        window.localStorage.getItem("store")
-      ).store_view_id;
-      this.$axios(`/api/v1/store/${this.storeUser.storeID}/`).then(res => {
+      this.$axios(`/api/v1/store/`).then(res => {
         if (res.data.code == 1) {
-          this.storeUser.name = res.data.data.name;
-          this.storeUser.url = res.data.data.url;
-          this.storeUser.timezone = res.data.data.timezone;
-          this.storeUser.url_format = res.data.data.url_format;
-          this.storeUser.store_view_id = res.data.data.store_view_id;
+          this.storeUser.id = res.data.data[0].id;
+          this.storeUser.name = res.data.data[0].name;
+          this.storeUser.url = res.data.data[0].url;
+          this.storeUser.timezone = res.data.data[0].timezone;
+          this.storeUser.url_format = res.data.data[0].url_format;
+          this.storeUser.store_view_id = res.data.data[0].store_view_id;
         } else {
           this.$message({
             message: "code Abnormal!",
@@ -204,7 +200,7 @@ export default {
 
     submitwo() {
       this.$axios
-        .put(`/api/v1/store/${this.storeUser.storeID}/`, this.storeUser)
+        .put(`/api/v1/store/${this.storeUser.id}/`, this.storeUser)
         .then(res => {
           if (res.data.code == 1) {
             this.$message({
