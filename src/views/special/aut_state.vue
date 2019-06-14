@@ -27,7 +27,7 @@ export default {
         this.state = base.getQueryString('state') == null?1:base.getQueryString('state');
         setTimeout(() => {
               // router.push('/dashboard');
-              // window.close();
+               window.close();
         }, 3000);
       }
     }
