@@ -159,7 +159,6 @@ export default {
     init() {
       // 获取表格数据
         var urlString = `/api/v1/rule/?page=${this.currentPage}&page_size=${this.pagesize}`;
-        var store = JSON.parse(window.localStorage.getItem('store'));
         if(this.account_id != null || this.account_id != undefined ){
           urlString += `&account_id=${this.account_id}`;
         }
@@ -185,7 +184,6 @@ export default {
                 urlString += `&board_list=`+_thisboardlist;
               }
         }
-        urlString += "&store="+store.id;
         this.$axios.get(urlString)
         .then(res => {
           if(res.data.code==1){

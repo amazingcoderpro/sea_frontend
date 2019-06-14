@@ -24,7 +24,8 @@
             </el-form-item>
             <el-form-item label="Rule Time" prop="ruleTime">
               <div class="block">
-                  <el-date-picker v-model="ruleForm.ruleTime" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
+                  <el-date-picker v-model="ruleForm.ruleTime" type="datetimerange" start-placeholder="start time" end-placeholder="End time" 
+                    :picker-options="pickerOptions">
                   </el-date-picker>
               </div>
             </el-form-item>
@@ -57,7 +58,7 @@
                     </template>
                     <span class="spanClass">Start:{{item.start_time}}</span>
                     <span class="spanClass">End:{{item.end_time}}</span>
-                    <span class="spanClass">interval_time:{{item.interval_time/3600}}H</span>
+                    <span class="spanClass">Interval Time:{{item.interval_time/3600}}H</span>
                     <el-button size="mini"  type="danger" @click="deletschedule(index)">X</el-button>
                   </li>
                 </ul>
@@ -129,7 +130,30 @@ import * as base from '../../assets/js/base'
           callback();
         }
       };
+      var RuleTimeFun = (rule, value, callback) => {
+        var _nowTime = new Date().getTime() + 1000 * 60 * 30;
+        var _startTime = new Date(this.ruleForm.ruleTime[0]).getTime();
+        if(this.ruleForm.ruleTime.length == 2){
+            if (_startTime < _nowTime) {
+              return callback(new Error('Start time should be Semih longer than the current time!'));
+            }else{
+              var _endTime = new Date(this.ruleForm.ruleTime[1]).getTime();
+              if(_endTime - _startTime < 1000 * 60 * 30){
+                return callback(new Error('The end time is more than half an hour!'));
+              }else{
+                callback();
+              }
+            }
+        }else{
+          return callback(new Error('请选择日期!'));
+        }
+      };
       return {
+          pickerOptions: {
+              disabledDate(time) {
+                  return time.getTime() < Date.now() - 1000 * 60 * 60 * 24;//设置选择今天之前的日期
+              }
+          },
           website:'Chicdb',    
           pinterestArray:[],//Pinterest下拉框数据
           boardArray:[],     //board下拉框数据
@@ -185,7 +209,7 @@ import * as base from '../../assets/js/base'
           rules: {
             pinterest: [{ required: true, message: '请选择pinterest', trigger: 'change' }],
             board: [{ required: true, message: '请选择board', trigger: 'change' }],
-            ruleTime: [{required: true, message: '请选择日期', trigger: 'change' }],
+            ruleTime: [{required: true,  trigger: 'change',validator:RuleTimeFun }],
             // schedule_rule:[{required: true,validator:scheduleRuleFun}],
             tag: [{ required: true, message: '请输入标签', trigger: 'blur' },],
           },
@@ -200,7 +224,6 @@ import * as base from '../../assets/js/base'
     },
     watch:{
       dialog:function (){
-        this.website = JSON.parse(window.localStorage.getItem('store')).name;
         this.$axios.get("/api/v1/rule/pinterest_account_board/?authorized=[1]")
         .then(res => {
             if(res.data.code == 1){
@@ -212,7 +235,18 @@ import * as base from '../../assets/js/base'
               }
               this.pinterestChange();
             }
-        }) 
+        });
+        this.$axios(`/api/v1/store/`).then(res => {
+          if (res.data.code == 1) {
+            this.website = res.data.data[0].name;
+          } else {
+            this.$message({
+              message: "code Abnormal!",
+              type: "warning",
+              center: true
+            });
+          }
+        });
       }
     },
     methods: {
@@ -224,6 +258,7 @@ import * as base from '../../assets/js/base'
         }else{
           this.scheduleRruleState = 1;
         }
+        this.ruleForm.product_list=[111]
         if(this.ruleForm.product_list.length == 0){
           //检查是否有满足条件的商品
           this.productListState = 2;
@@ -234,12 +269,16 @@ import * as base from '../../assets/js/base'
         this.$refs[formName].validate((valid) => {
           if (valid) {
               if(this.scheduleRruleState == 1 && this.productListState == 1){
-                this.ruleForm.start_time = base.dateFormat(this.ruleForm.ruleTime[0]);
-                this.ruleForm.end_time =  base.dateFormat(this.ruleForm.ruleTime[1]);
-                this.ruleForm.schedule_rule = JSON.stringify(this.ruleForm.schedule_rule);
-                this.ruleForm.product_list = JSON.stringify(this.ruleForm.product_list);
-                console.log(this.ruleForm)
-                this.$axios.post(`/api/v1/rule/`, this.ruleForm).then(res => {
+              var _thisruleForm = {
+                  pinterest:this.resetForm.pinterest,
+                  board:this.resetForm.board,
+                  start_time:base.dateFormat(this.ruleForm.ruleTime[0]),           //规则有效期开始时间
+                  end_time:base.dateFormat(this.ruleForm.ruleTime[1]),             //规则有效期结束时间
+                  schedule_rule:JSON.stringify(this.ruleForm.schedule_rule),         // 
+                  product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
+                  tag:this.resetForm.tag,      //规则标签
+                }
+                this.$axios.post(`/api/v1/rule/`, _thisruleForm).then(res => {
                     if(res.data.code == 1){
                         this.$message({
                           message: "添加成功!",
@@ -303,8 +342,6 @@ import * as base from '../../assets/js/base'
           if (valid) {
               this.serchProduct.publish_begin_time = base.dateFormat(this.serchProduct.data1[0]);
               this.serchProduct.publish_end_time =  base.dateFormat(this.serchProduct.data1[1]);
-              var store = JSON.parse(window.localStorage.getItem('store'));
-
               var url = "/api/v1/rule/search_product/?index=1";
               if(this.serchProduct.data1.length == 2){
                   url += "&publish_begin_time="+this.serchProduct.publish_begin_time;
@@ -321,7 +358,6 @@ import * as base from '../../assets/js/base'
                   url += "&scan_sign="+this.serchProduct.scan_sign;
                   url += "&scan="+this.serchProduct.scan;
               }
-                  url += "&store="+store.id;
               this.$axios.get(url).then(res => {
                   if(res.data.code == 1){
                     this.ruleForm.product_list = res.data.data;

@@ -23,7 +23,7 @@
                 User Name : {{scope.row.account_name}}<br/>
                 Email Address : {{scope.row.account_email}}<br/> 
                 Create Time : {{scope.row.account_create_time}}<br/> 
-                Account Type : <span v-if='scope.row.account_type == 0'>business</span><span v-else>individual</span>
+                Account Type : <span v-if='scope.row.account_type == 0'>individual</span><span v-else>business</span>
               </template>
             </el-table-column>
             <!-- <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
@@ -290,7 +290,7 @@ export default {
     },
     ListManagerFun(row) {
       // 去规则列表页面
-      this.$router.push({path:"/rule_list", query: { account_id: row.index }});
+      this.$router.push({path:"/rule_list", query: { account_id: row.pinterest_account_id }});
     },
     BoardManagerFun(row) {
       // 去board_manager页面

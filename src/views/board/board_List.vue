@@ -7,8 +7,7 @@
         </ul>
         <div  class="massage">
           <img class="headImg" :src="'data:image/jpeg;base64,'+account_data.account_thumbnail" />
-          <p>Username: {{account_data.account_name}}</p>
-          <p>Email Address: {{account_data.account_email}}</p>
+          <p>User Name: {{account_data.account_name}}</p>
           <p>Admin: {{account_data.update_person}}</p>
           <p>Account Profile: {{account_data.account_description}}</p>
           <p>Account Data: Pin {{account_data.pins}} | Save {{account_data.saves}} | Comment {{account_data.comments}}</p>
@@ -170,7 +169,10 @@ export default {
 </script>
 
 <style>
-.board_List .headImg{width: 120px;position: absolute;left: 0;top: 83px;}
+.board_List .headImg{width: 90px;
+    position: absolute;
+    left: 20px;
+    top: 83px;}
 .board_List .massage p{margin:5px 0;padding-left:150px;font-size:16px;}
 .board_List .tableTitle span{width:268px;}
 </style>

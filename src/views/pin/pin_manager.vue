@@ -21,7 +21,13 @@
             <el-table-column type="index"  label="ID" align="center"  width="60"></el-table-column>
             <el-table-column prop="pin_thumbnail" label="Pin Image" align="center" width="160">
                 <template slot-scope="scope"> 
-                    <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail" width="70" height="70" />        
+                  <el-popover
+                    placement="right"
+                    title=""
+                    trigger="hover">
+                    <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  :style="'width: 500px;'" width="100"/>
+                    <img slot="reference" :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail" :alt="'data:image/jpeg;base64,'+scope.row.pin_thumbnail" style="height: 70px;width: 70px">
+                  </el-popover>
                 </template>
             </el-table-column>
             <el-table-column prop="pin_note" label="Pin Description" align="center" width="160"></el-table-column>
@@ -161,30 +167,34 @@ export default {
     },
     // 批量刪除
     deleteAll(){
-      var ids = [];
-      this.multipleSelection.forEach(element =>{
-        ids.push(element.pin_id)
-      });
-      var pin_list = JSON.stringify(ids);
-      this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
-            confirmButtonText: 'Yes, I’m Sure',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }).then(() => {
-              this.$axios.delete(`/api/v1/pin_manage/?pin_list=` + pin_list)
-                .then(res => {
-                  if(res.data.code == 1){
-                    this.$message({type: 'success',message: 'Successful deletion!'});
-                    this.dialog.show = false;
-                    this.init();
-                  }else{
-                    this.$message.error('Delete failed!');
-                  }
-                })
-                .catch(error => {
-                    this.$message.error('Interface timeout!');
-                }); 
-          }) 
+      if(this.multipleSelection.length>0){
+        var ids = [];
+        this.multipleSelection.forEach(element =>{
+          ids.push(element.pin_id)
+        });
+        var pin_list = JSON.stringify(ids);
+        this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
+              confirmButtonText: 'Yes, I’m Sure',
+              cancelButtonText: 'Cancel',
+              type: 'warning'
+            }).then(() => {
+                this.$axios.delete(`/api/v1/pin_manage/?pin_list=` + pin_list)
+                  .then(res => {
+                    if(res.data.code == 1){
+                      this.$message({type: 'success',message: 'Successful deletion!'});
+                      this.dialog.show = false;
+                      this.init();
+                    }else{
+                      this.$message.error('Delete failed!');
+                    }
+                  })
+                  .catch(error => {
+                      this.$message.error('Interface timeout!');
+                  }); 
+            }) 
+      }else{
+          this.$message.error('Please choose at least one!');
+      }
     },
     handleSelectionChange(val) {
         this.multipleSelection = val;

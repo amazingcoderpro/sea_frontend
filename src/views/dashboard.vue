@@ -264,7 +264,7 @@ export default {
                     this.bigReport = res.data.data.overview_list;
                     this.tableData = [];
                     this.tableData.push(res.data.data.total_data);
-                    this.tableInit(0);
+                    this.tableInit(this.tableType);
                 }else{
                     this.$message("获取失败!");
                 }

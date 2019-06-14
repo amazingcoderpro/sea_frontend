@@ -29,7 +29,14 @@
             <el-table-column prop="product.sku" label="SKU" align="center" width="120"></el-table-column>
             <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
-                   <a :href="scope.row.product.url"> <img :src="scope.row.product.image_url"  min-width="70" height="70" /></a>      
+                   <!-- <img :src="scope.row"  min-width="70" height="70"/>     -->
+                  <el-popover
+                    placement="right"
+                    title=""
+                    trigger="hover">
+                    <img :src="scope.row.product.image_url"  :style="'width: 500px;'" width="100"/>
+                    <img slot="reference" :src="scope.row.product.image_url" :alt="scope.row.product.image_url" style="height: 70px;width: 70px">
+                  </el-popover>
                 </template>
             </el-table-column>
             <el-table-column prop="product.name"  label="Description" align="center" width="150">
@@ -214,31 +221,35 @@ export default {
     // 批量取消
     cancelAll(){
       var ids = [];
-      this.multipleSelection.forEach(element =>{
-        ids.push(element.id)
-      });
-      var pin_list = JSON.stringify(ids);
-      var statedata = {
-          publish_record_list :pin_list  
+      if(this.multipleSelection.length>0){
+        this.multipleSelection.forEach(element =>{
+          ids.push(element.id)
+        });
+        var pin_list = JSON.stringify(ids);
+        var statedata = {
+            publish_record_list :pin_list  
+        }
+        this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
+              confirmButtonText: 'Yes, I’m Sure',
+              cancelButtonText: 'Cancel',
+              type: 'warning'
+            }).then(() => {
+                  this.$axios.post(`/api/v1/rule/publish_record/delete/`,statedata)
+                  .then(res => {
+                    if(res.data.code == 1){
+                      this.$message({type: 'success',message: 'Successful deletion!'});
+                      this.init();
+                    }else{
+                      this.$message.error('Delete failed!');
+                    }
+                  })
+                  .catch(error => {
+                      this.$message.error('Interface timeout!');
+                  }); 
+            }) 
+      }else{
+        this.$message.error('Please choose at least one!');
       }
-      this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
-            confirmButtonText: 'Yes, I’m Sure',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }).then(() => {
-                this.$axios.post(`/api/v1/rule/publish_record/delete/`,statedata)
-                .then(res => {
-                  if(res.data.code == 1){
-                    this.$message({type: 'success',message: 'Successful deletion!'});
-                    this.init();
-                  }else{
-                    this.$message.error('Delete failed!');
-                  }
-                })
-                .catch(error => {
-                    this.$message.error('Interface timeout!');
-                }); 
-          }) 
     },
     handleSelectionChange(val) {
         this.multipleSelection = val;
