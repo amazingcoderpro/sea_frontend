@@ -17,15 +17,15 @@
         <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="130px">
           <!-- 名 -->
           <el-form-item label="First Name" prop="first_name">
-            <el-input v-model="personalUser.first_name" placeholder=""></el-input>
+            <el-input v-model="personalUser.first_name" placeholder="Please enter your last name."></el-input>
           </el-form-item>
           <!-- 姓 -->
           <el-form-item label="Last Name" prop="last_name">
-            <el-input v-model="personalUser.last_name" placeholder=""></el-input>
+            <el-input v-model="personalUser.last_name" placeholder="Please enter your name."></el-input>
           </el-form-item>
           <!-- 邮箱 -->
           <el-form-item label="Email Address" prop="email">
-            <el-input v-model="personalUser.email" disabled placeholder=""></el-input>
+            <el-input v-model="personalUser.email" disabled></el-input>
           </el-form-item>
           <!-- 点击 -->
           <el-form-item>
@@ -191,7 +191,7 @@ export default {
                 if (res.data.code == 1) {
                   this.$message({message: res.data.msg,type: 'success'});
                 } else {
-                  this.$message("修改成功!");
+                  this.$message("Successful revision!");
                 }
               })
             }

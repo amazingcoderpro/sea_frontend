@@ -29,12 +29,16 @@
             <el-table-column prop="product.sku" label="SKU" align="center" width="120"></el-table-column>
             <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
-                    <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
+                   <a :href="scope.row.product.url"> <img :src="scope.row.product.image_url"  min-width="70" height="70" /></a>      
                 </template>
             </el-table-column>
             <el-table-column prop="product.name"  label="Description" align="center" width="150">
             </el-table-column>
-            <el-table-column prop="product.url" label="Pin URL" align="center" width="200"></el-table-column>
+            <el-table-column prop="product.url" label="Pin URL" align="center" width="200">
+                <template slot-scope="scope"> 
+                   <a :href="scope.row.product.url">{{scope.row.product.url}}</a>      
+                </template>
+            </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">
             </el-table-column>
             <el-table-column prop="product.tag" label="Tag" align="center" width="120">
