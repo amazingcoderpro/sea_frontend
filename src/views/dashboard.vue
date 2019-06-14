@@ -128,7 +128,7 @@
                                     <td>{{item.pin_date}}</td>
                                     <td>{{item.saves}}</td>
                                     <td>
-                                        {{item.trends+'%'}}
+                                        {{item.trends*100+'%'}}
                                         <template v-if="item.trends<0">
                                             <i class="iconfont icon-xiangxiajiantou"></i>
                                         </template>
@@ -163,7 +163,15 @@
                                     <td>{{item.saves}}</td>
                                     <td>{{item.create_date}}</td>
                                     <td>{{item.followers}}</td>
-                                    <td>{{item.trends}}</td>
+                                    <td>
+                                        {{item.trends*100+'%'}}
+                                        <template v-if="item.trends<0">
+                                            <i class="iconfont icon-xiangxiajiantou"></i>
+                                        </template>
+                                        <template v-else>
+                                            <i class="iconfont icon-xiangshangjiantou"></i>
+                                        </template>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -458,6 +466,10 @@ export default {
 .dashboard .smText{width:100%;font-size:14px;}
 .dashboard table{width:100%;text-align: center;}
 .dashboard table tbody tr td{border-top:1px solid #ccc;padding:5px 0;}
+.dashboard table tbody tr td:last-child{
+    display: block;
+    padding-top: 21px;
+}
 .dashboard .indexTitle{background:#006699;width:calc(100% - 50px);color:#fff;display:inline-block;padding:10px 40px 10px 10px;font-size:20px;font-weight:600;-webkit-box-shadow:0 0 5px #006699;box-shadow:0 0 5px #006699;}
 .dashboard .RTBox{min-height:400px;}
 .dashboard .RBBox{min-height:400px;}
