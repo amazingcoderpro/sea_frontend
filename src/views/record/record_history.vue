@@ -27,7 +27,7 @@
                 <!-- ID -->
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
                 <!-- 产品SKU -->
-            <el-table-column prop="product.sku" label="SKU" align="center" width="120"></el-table-column>
+            <el-table-column prop="product.sku" label="SKU" align="center" width="110"></el-table-column>
                 <!-- Pin图 -->
             <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
@@ -44,7 +44,7 @@
             <el-table-column prop="pin.note"  label="Pin Note" align="center" width="150">
             </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="pin.url" label="Pin URL" align="center" width="120">
+            <el-table-column prop="pin.url" label="Pin URL" align="center" width="200">
                   <template slot-scope="scope"> 
                    <a :href="scope.row.pin.url" target="_blank">{{scope.row.pin.url}}</a>      
                   </template>
@@ -59,12 +59,12 @@
               <!-- 所属账户ID -->
             <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
                 <!-- 所属Board ID -->
-            <el-table-column prop="board.name" label="Board Name" align="center" width="138"></el-table-column>
+            <el-table-column prop="board.name" label="Board Name" align="center" width="120"></el-table-column>
                  <!-- 发布时间 -->
             <el-table-column prop="finished_time" label="Publish Time" align="center" width="160">
             </el-table-column> 
                 <!-- 发布状态 --> 
-            <el-table-column prop="state" label="State" align="center" width="150">
+            <el-table-column prop="state" label="State" align="center" width="120">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 3">
                     <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Failed</el-button>
@@ -75,7 +75,7 @@
               </template>
 
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="Error" width="150">
+            <el-table-column prop="remark" align="center" label="Error" width="120">
             </el-table-column>
           </el-table>
         </div>
