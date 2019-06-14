@@ -27,9 +27,9 @@
                 <!-- ID -->
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
                 <!-- 产品SKU -->
-            <el-table-column prop="product.sku" label="SKU" align="center" width="150"></el-table-column>
+            <el-table-column prop="product.sku" label="SKU" align="center" width="120"></el-table-column>
                 <!-- Pin图 -->
-            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="150">
+            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
                   <el-popover
                     placement="right"
@@ -44,36 +44,38 @@
             <el-table-column prop="pin.note"  label="Pin Note" align="center" width="150">
             </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="pin.url" label="Pin URL" align="center" width="150"></el-table-column>
+            <el-table-column prop="pin.url" label="Pin URL" align="center" width="120">
+                  <template slot-scope="scope"> 
+                   <a :href="scope.row.pin.url" target="_blank">{{scope.row.pin.url}}</a>      
+                  </template>
+            </el-table-column>
                 <!-- 价格 -->
-            <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="150">
+            <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">
             </el-table-column>
                 <!-- 所属规则标签 -->
-            <el-table-column prop="rule.tag" label="Tag" align="center" width="150">
+            <el-table-column prop="rule.tag" label="Tag" align="center" width="120">
                 <template slot-scope="scope"> {{scope.row.rule.tag}}</template>
             </el-table-column>
-                <!-- 所属Board ID -->
-            <el-table-column prop="board.id" label="Board Name" align="center" width="138"></el-table-column>
-                 <!-- 发布时间 -->
-            <el-table-column prop="execute_time" label="Publish Time" align="center" width="170">
-
-            </el-table-column> 
-                <!-- 所属账户ID -->
+              <!-- 所属账户ID -->
             <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
+                <!-- 所属Board ID -->
+            <el-table-column prop="board.name" label="Board Name" align="center" width="138"></el-table-column>
+                 <!-- 发布时间 -->
+            <el-table-column prop="finished_time" label="Publish Time" align="center" width="160">
+            </el-table-column> 
                 <!-- 发布状态 --> 
             <el-table-column prop="state" label="State" align="center" width="150">
               <template  slot-scope="scope">
-                <template v-if="scope.row.state == 1">
-                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Published</el-button>
+                <template v-if="scope.row.state == 3">
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Failed</el-button>
                 </template>
                 <template v-else>
-                    <el-button type="primary" icon="edit" size="small" disabled="">Failed</el-button>
+                    <el-button type="primary" icon="edit" size="small" disabled="">Published</el-button>
                 </template>
               </template>
 
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="Error" width="160">
-                
+            <el-table-column prop="remark" align="center" label="Error" width="150">
             </el-table-column>
           </el-table>
         </div>
@@ -90,7 +92,7 @@
 <script>
 
 // import DialogFound from "./dialog/board_manager_dialog";
-
+import * as base from '../../assets/js/base'
 export default {
   name: "record_history",
   data() {
@@ -164,6 +166,9 @@ export default {
         this.$axios.get(url).then(res => {
           if(res.data.code == 1){
             this.tableData = res.data.data.results;
+            this.tableData.map(e => {
+                e.finished_time = base.getLastTime(e.finished_time);
+            }); 
             this.total = res.data.data.count;
           }
         })
