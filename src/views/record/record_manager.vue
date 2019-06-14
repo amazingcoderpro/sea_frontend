@@ -70,7 +70,7 @@
                     <el-button type="primary" icon="edit" size="small" disabled="">Unpublic</el-button>
                 </template>
                 <template v-else>
-                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">Manual release</el-button>
+                    <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)">Failed</el-button>
                 </template>
               </template>
             </el-table-column>
@@ -116,7 +116,7 @@ export default {
         },
         {
           value: '[3]',
-          label: 'Unpublished'
+          label: 'Failed'
         }
       ],
       search:{

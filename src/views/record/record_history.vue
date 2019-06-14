@@ -44,9 +44,9 @@
             <el-table-column prop="pin.note"  label="Pin Note" align="center" width="150">
             </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="pin.url" label="Pin URL" align="center" width="200">
+            <el-table-column prop="product.url" label="Pin URL" align="center" width="200">
                   <template slot-scope="scope"> 
-                   <a :href="scope.row.pin.url" target="_blank">{{scope.row.pin.url}}</a>      
+                   <a :href="scope.row.product.url" target="_blank">{{scope.row.product.url}}</a>      
                   </template>
             </el-table-column>
                 <!-- 价格 -->
@@ -166,9 +166,6 @@ export default {
         this.$axios.get(url).then(res => {
           if(res.data.code == 1){
             this.tableData = res.data.data.results;
-            this.tableData.map(e => {
-                e.finished_time = base.getLastTime(e.finished_time);
-            }); 
             this.total = res.data.data.count;
           }
         })
@@ -187,7 +184,7 @@ export default {
     },
     recordHead(row){             //发布状态
         this.$confirm('Do you want to publish manually?', 'Tips', {
-              confirmButtonText: 'Determine',
+              confirmButtonText: 'Yes',
               cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
