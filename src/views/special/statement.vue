@@ -12,7 +12,7 @@
               <p>Page views from your pinbooster program may take up to 24 hours to appear on your GA dashboard. You can check Pinbooster data performance on your GA Dashboard follow these step.</p>
               <p>Step1. Login to your Google Analytics account, if you haven't already done so.</p>
               <p>Step2. Click Acquisition → All traffic → Source/medium → Input "pinbooster" in the advanced search blank → Search</p>
-              <el-button type="primary">Authorize</el-button>
+              <el-button type="primary" @click="clickFun">Ok</el-button>
               <el-form-item>
             </el-form-item>
           </el-form>

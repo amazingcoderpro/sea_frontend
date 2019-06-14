@@ -82,7 +82,12 @@
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Operation" width="180">
               <template slot-scope="scope">
-                <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>
+                <template v-if="scope.row.state == 2">
+                  <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>
+                </template>
+                <template v-else>
+                  <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)" disabled="">Stop</el-button>
+                </template>
                 <el-button type="danger" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
               </template>
             </el-table-column>

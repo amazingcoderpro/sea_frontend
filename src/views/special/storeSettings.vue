@@ -17,11 +17,11 @@
         <el-form :model="personalUser" :rules="rules" ref="personalForm" label-width="130px">
           <!-- 名 -->
           <el-form-item label="First Name" prop="first_name">
-            <el-input v-model="personalUser.first_name" placeholder="Please enter your name"></el-input>
+            <el-input v-model="personalUser.first_name" placeholder="Please enter your name. "></el-input>
           </el-form-item>
           <!-- 姓 -->
           <el-form-item label="Last Name" prop="last_name">
-            <el-input v-model="personalUser.last_name" placeholder="Please enter your last name"></el-input>
+            <el-input v-model="personalUser.last_name" placeholder="Please enter your last name."></el-input>
           </el-form-item>
           <!-- 邮箱 -->
           <el-form-item label="Email Address" prop="email">
@@ -34,11 +34,9 @@
         </el-form>
       </section>
     </div>
-
-
     <div class="storeSetting">
       <section class="form_container">
-        <el-form :model="storeUser" ref="personalForm" label-width="180px" class="personalForm">
+        <el-form :model="storeUser" label-width="180px" class="personalForm">
           <!-- Store Name -->
           <div class="storename">
             <span>Store Name</span>
@@ -101,7 +99,6 @@ export default {
   created() {
     this.init();
   },
-
   data() {
     return {
       dialog: {
@@ -163,8 +160,6 @@ export default {
           });
         }
       });
-
-
       this.personalUser.personalID = JSON.parse(window.localStorage.getItem("user")).id;
       this.$axios(
         `/api/v1/account/users/${this.personalUser.personalID}/`
@@ -197,7 +192,6 @@ export default {
             }
         });
       },
-
     submitwo() {
       this.$axios
         .put(`/api/v1/store/${this.storeUser.id}/`, this.storeUser)
@@ -215,7 +209,6 @@ export default {
           this.$message("Interface timeout!");
         });
     },
-
     showStatement() {
       this.dialog = {
         show: true,
@@ -226,7 +219,6 @@ export default {
   }
 };
 </script>
-
 
 <style scope>
 .store_personal{width:100%;height:100%;}

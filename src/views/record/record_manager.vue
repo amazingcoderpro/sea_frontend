@@ -43,7 +43,7 @@
             </el-table-column>
             <el-table-column prop="product.url" label="Pin URL" align="center" width="200">
                 <template slot-scope="scope"> 
-                   <a :href="scope.row.product.url">{{scope.row.product.url}}</a>      
+                   <a :href="scope.row.product.url" target="_blank">{{scope.row.product.url}}</a>      
                 </template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">
@@ -229,7 +229,7 @@ export default {
         var statedata = {
             publish_record_list :pin_list  
         }
-        this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
+        this.$confirm('Are you sure you wanna delete these pins?', 'Warning', {
               confirmButtonText: 'Yes, I’m Sure',
               cancelButtonText: 'Cancel',
               type: 'warning'

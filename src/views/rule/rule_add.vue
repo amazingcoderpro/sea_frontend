@@ -131,15 +131,15 @@ import * as base from '../../assets/js/base'
         }
       };
       var RuleTimeFun = (rule, value, callback) => {
-        var _nowTime = new Date().getTime() + 1000 * 60 * 30;
+        var _nowTime = new Date().getTime();
         var _startTime = new Date(this.ruleForm.ruleTime[0]).getTime();
         if(this.ruleForm.ruleTime.length == 2){
             if (_startTime < _nowTime) {
-              return callback(new Error('Start time should be Semih longer than the current time!'));
+              return callback(new Error('Start time should be greater than current time!'));
             }else{
               var _endTime = new Date(this.ruleForm.ruleTime[1]).getTime();
               if(_endTime - _startTime < 1000 * 60 * 30){
-                return callback(new Error('The end time is more than half an hour!'));
+                return callback(new Error('End time should be half an hour late from the start time at least!'));
               }else{
                 callback();
               }
@@ -258,7 +258,6 @@ import * as base from '../../assets/js/base'
         }else{
           this.scheduleRruleState = 1;
         }
-        this.ruleForm.product_list=[111]
         if(this.ruleForm.product_list.length == 0){
           //检查是否有满足条件的商品
           this.productListState = 2;
@@ -270,13 +269,13 @@ import * as base from '../../assets/js/base'
           if (valid) {
               if(this.scheduleRruleState == 1 && this.productListState == 1){
               var _thisruleForm = {
-                  pinterest:this.resetForm.pinterest,
-                  board:this.resetForm.board,
+                  pinterest:this.ruleForm.pinterest,
+                  board:this.ruleForm.board,
                   start_time:base.dateFormat(this.ruleForm.ruleTime[0]),           //规则有效期开始时间
                   end_time:base.dateFormat(this.ruleForm.ruleTime[1]),             //规则有效期结束时间
                   schedule_rule:JSON.stringify(this.ruleForm.schedule_rule),         // 
                   product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
-                  tag:this.resetForm.tag,      //规则标签
+                  tag:this.ruleForm.tag,      //规则标签
                 }
                 this.$axios.post(`/api/v1/rule/`, _thisruleForm).then(res => {
                     if(res.data.code == 1){

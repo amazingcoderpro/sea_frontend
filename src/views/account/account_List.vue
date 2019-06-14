@@ -15,7 +15,12 @@
             <el-table-column align="center" type="index"  label="ID" width="50" fixed="left"></el-table-column>
             <el-table-column label="Photo" align="center" width="150" fixed="left">
               <template slot-scope="scope">
-                    <img :src="'data:image/jpeg;base64,'+scope.row.account_thumbnail"  min-width="70" height="70"/>        
+                <template v-if="scope.row.account_thumbnail != null">
+                    <img :src="'data:image/jpeg;base64,'+scope.row.account_thumbnail"  width="70" height="70"/>
+                </template>
+                <template v-else>
+                    <img src=""  width="70" height="70"/>
+                </template>
               </template> 
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="account_name,account_email,account_create_time,account_type" label="Account Basic Info" align="center" fixed="left" width="350">

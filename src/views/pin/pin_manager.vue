@@ -25,13 +25,17 @@
                     placement="right"
                     title=""
                     trigger="hover">
-                    <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  :style="'width: 500px;'" width="100"/>
+                    <img :src="scope.row.pin_image"  :style="'width: 500px;'" width="100"/>
                     <img slot="reference" :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail" :alt="'data:image/jpeg;base64,'+scope.row.pin_thumbnail" style="height: 70px;width: 70px">
                   </el-popover>
                 </template>
             </el-table-column>
             <el-table-column prop="pin_note" label="Pin Description" align="center" width="160"></el-table-column>
-            <el-table-column prop="pin_url" label="Pin URL" align="center" width="150"></el-table-column>
+            <el-table-column prop="pin_url" label="Pin URL" align="center" width="150">
+                <template slot-scope="scope"> 
+                   <a :href="scope.row.pin_url" target="_blank">{{scope.row.pin_url}}</a>      
+                </template>
+            </el-table-column>
             <el-table-column prop="product_sku" label="Product SKU" align="center" width="160"></el-table-column>
             <!-- <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
               <template slot-scope="scope"> Total:{{scope.row.views}}<br/>Todays new:{{scope.row.views_increment}}</template>

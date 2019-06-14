@@ -49,12 +49,12 @@ axios.interceptors.response.use(response => {
             break 
      
             case 403:          
-            Message.error('token值无效，请重新登录')
-            // 清除token
-            localStorage.removeItem('eleToken')
-            localStorage.removeItem('store')
-            // 页面跳转
-            router.push('/login')
+                Message.error('token值无效，请重新登录')
+                // 清除token
+                localStorage.removeItem('eleToken')
+                localStorage.removeItem('store')
+                // 页面跳转
+                router.push('/login')
              break    
      
             case 404:    error.message = `请求地址出错: ${error.response.config.url}` 

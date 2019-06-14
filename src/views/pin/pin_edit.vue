@@ -52,7 +52,7 @@
                   this.$parent.init();             
                 }else{
                   this.$message({
-                    message: res.data.msg,
+                    message: res.data.msg.detail,
                     type: 'warning',
                     center: true
                   });

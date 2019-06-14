@@ -31,7 +31,13 @@
                 <!-- Pin图 -->
             <el-table-column prop="thumbnail" label="Pin Image" align="center" width="150">
                 <template slot-scope="scope"> 
-                    <img :src="scope.row.product.image_url"  min-width="70" height="70" />        
+                  <el-popover
+                    placement="right"
+                    title=""
+                    trigger="hover">
+                    <img :src="scope.row.product.image_url"  :style="'width: 500px;'" width="100"/>
+                    <img slot="reference" :src="scope.row.product.image_url" :alt="scope.row.product.image_url" style="height: 70px;width: 70px">
+                  </el-popover>
                 </template>
             </el-table-column>
                 <!-- Pin描述 -->

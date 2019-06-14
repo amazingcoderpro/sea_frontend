@@ -1,8 +1,8 @@
 <template>
     <div class="aut_state">
-        <span v-if="state == 1">Successful authorization!</span>
-        <span v-else-if="state == 2">failed authorization!</span>
-        <span v-else>This account is authorized! Please don't authorization again!  </span>
+        <span v-if="state == 1">Successful authorization,Please try again later</span>
+        <span v-else-if="state == 2">failed authorization,Please try again later</span>
+        <span v-else :style="'margin-left:-326px;'">This account is authorized! Please don't authorization again!  </span>
     </div>
 
 </template>
@@ -27,7 +27,7 @@ export default {
         this.state = base.getQueryString('state') == null?1:base.getQueryString('state');
         setTimeout(() => {
               // router.push('/dashboard');
-               window.close();
+              // window.close();
         }, 3000);
       }
     }
@@ -51,8 +51,8 @@ export default {
     font-size: 20px;
     font-weight: 600;
     border-radius: 20px;
-    margin-left: -65px;
-    margin-top: -33px;
+    margin-left: -240px;
+    margin-top: -33px;word-break: keep-all;
 }
 
 </style>
