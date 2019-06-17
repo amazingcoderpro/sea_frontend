@@ -64,10 +64,8 @@
         <template v-else-if="tableState == 2">
             <div class="table_right">
               <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
-            <el-table-column  align="center" type="index"  label="ID" width="50"></el-table-column>
             <el-table-column  align="center"  prop="board_id" label="Board ID"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="board_name" label="Board Name"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="boards" label="Boards"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="board_followers" label="Followers"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="100"></el-table-column>
@@ -156,12 +154,12 @@ export default {
         this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
         this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60);
         var urlString = `/api/v1/subaccount_report/subaccount/`;
+            if(this.searchData.pinterest_account_id){
+                urlString = `/api/v1/subaccount_report/board/`;
               if(this.searchData.board_id){
-                  urlString = `/api/v1/subaccount_report/board/`;
-                if(this.searchData.pin_id){
-                  urlString = `/api/v1/subaccount_report/pins/`;
-                }
+                urlString = `/api/v1/subaccount_report/pins/`;
               }
+            }
           urlString +=`?page=${this.currentPage}&page_size=${this.pagesize}`;
           if(this.searchData.pinterest_account_id != ''){
               urlString +=`&pinterest_account_id=${this.searchData.pinterest_account_id}`;
