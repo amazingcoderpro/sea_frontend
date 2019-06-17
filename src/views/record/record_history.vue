@@ -46,7 +46,7 @@
                 <!-- pin URL -->
             <el-table-column prop="product.url" label="Pin URL" align="center" width="200">
                   <template slot-scope="scope"> 
-                   <a :href="scope.row.product.url" target="_blank">{{scope.row.product.url}}</a>      
+                   <a :href="scope.row.pin.url" target="_blank">{{scope.row.pin.url}}</a>      
                   </template>
             </el-table-column>
                 <!-- 价格 -->

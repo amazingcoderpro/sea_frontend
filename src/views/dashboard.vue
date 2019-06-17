@@ -328,20 +328,27 @@ export default {
         },
         updates() {
         // 获取表格数据
-            var urlString = `/api/v1/dashboard/2/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
-            this.$axios.get(urlString)
-            .then(res => {
-                this.loadingState.dashboardTwo = false;
-                if(res.data.code==1){
-                    this.updatesData = res.data.data;
-                }else{
-                    this.$message("Acquisition failure!");
-                }
-            })
-            .catch(error => {
-                this.loadingState.dashboardTwo = false;
-                this.$message("Interface timeout!");
-            });
+
+            var _startTime = base.dateFormat(this.searchData.timeArray[0],"day"); 
+            var _endTime = base.dateFormat(this.searchData.timeArray[1],"day"); 
+            if(_endTime != _startTime){
+                var urlString = `/api/v1/dashboard/2/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
+                this.$axios.get(urlString)
+                .then(res => {
+                    this.loadingState.dashboardTwo = false;
+                    if(res.data.code==1){
+                        this.updatesData = res.data.data;
+                    }else{
+                        this.$message("Acquisition failure!");
+                    }
+                })
+                .catch(error => {
+                    this.loadingState.dashboardTwo = false;
+                    this.$message("Interface timeout!");
+                });
+            }else{
+                    this.loadingState.dashboardTwo = false;
+            }
         },
         pins(){
             var urlString = `/api/v1/dashboard/3/?pins_period=7`;
