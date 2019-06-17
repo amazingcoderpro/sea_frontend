@@ -80,7 +80,7 @@ export default {
             .then(res => {
               if (res.data.code == 1) {
                 this.$message({message: "Successful revision "+ res.data.data.email,type: "success"});
-            
+              
                 //this.logout();
                 this.dialog.show = false;
               } else {

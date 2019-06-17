@@ -27,7 +27,7 @@
               <template slot-scope="scope"> 
                 User Name : {{scope.row.account_name}}<br/>
                 Create Time : {{scope.row.account_create_time}}<br/> 
-                Account Type : <span v-if='scope.row.account_type == 0'>individual</span><span v-else>business</span>
+                Account Type : <span v-if='scope.row.account_type == 0'>Individual</span><span v-else>business</span>
               </template>
             </el-table-column>
             <!-- <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">

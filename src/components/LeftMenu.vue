@@ -92,7 +92,7 @@ export default {
                     ]
                     }
               ]},
-              {"id":11,"menu_name":"Account Manager","menu_url":"/account_manager","parent_id":null,"icon":"iconfont icon-report",
+              {"id":11,"menu_name":"Account Manager","menu_url":"/account_manager","parent_id":null,"icon":"iconfont icon-kehujingli1",
               "childs":[
                 // {"id":12,"menu_name":"Account Manager","menu_url":"/account_manager","parent_id":11,"icon":null,"childs":[]},
                 // {"id":13,"menu_name":"BoardManager","menu_url":"/board_manager","parent_id":11,"icon":null,"childs":[]},
