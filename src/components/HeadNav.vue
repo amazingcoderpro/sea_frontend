@@ -50,7 +50,11 @@ export default {
   computed: {
     user() {
       // return this.$store.getters.user;
-      return window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user')) : this.$store.getters.user
+      if(window.localStorage.getItem('user') == undefined){
+        base.LoginOut();
+      }else{
+        return window.localStorage.getItem('user') ? JSON.parse(window.localStorage.getItem('user')) : this.$store.getters.user
+      }
     }
   },
   components: {

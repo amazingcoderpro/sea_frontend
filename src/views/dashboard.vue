@@ -179,7 +179,14 @@
                 </div>
             </div>
         </div>
+        <div class="el-loading-mask is-fullscreen" style="background-color: rgba(0, 0, 0, 0.7); z-index: 2000;" v-if="loadingState.dashboardOne || loadingState.dashboardTwo || loadingState.dashboardThree || loadingState.dashboardFour || loadingState.dashboardFive ">
+            <div class="el-loading-spinner">
+            <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+            <p class="el-loading-text">加载中...</p>
+            </div>
+        </div>
     </div>
+
 </template>
 
 <script>
@@ -207,6 +214,13 @@ export default {
     },
     data() {
         return {
+            loadingState:{
+                dashboardOne:true,
+                dashboardTwo:true,
+                dashboardThree:true,
+                dashboardFour:true,
+                dashboardFive:true
+            },
             pickerOptions: {
                 disabledDate(time) {
                     return time.getTime() > Date.now();//设置选择今天之前的日期
@@ -229,11 +243,11 @@ export default {
             ],
             updatesData:{
                 datetime:"2019-1-1 12:00:00",
-                new_accounts:"99999",
-                new_board:"",
-                new_followers:"99999",
-                new_pins:"99999",
-                new_saves:"99999"
+                new_accounts:"0",
+                new_board:"0",
+                new_followers:"0",
+                new_pins:"0",
+                new_saves:"0"
             },
             pinsArray:[],
             BoardArray:[],
@@ -265,26 +279,50 @@ export default {
     },
     methods:{
         init() {
+            this.loadingState = {
+                dashboardOne:true,
+                dashboardTwo:true,
+                dashboardThree:true,
+                dashboardFour:true,
+                dashboardFive:true
+            };
+            this.echartsInit();
+            this.updates();
+            this.pins();
+            this.Board();
+            this.activity();
+        },
+        echartsInit(){
             this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
             this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60 - 1000);
             this.dataSelect();
-            this.updates();
-            this.pins();
-            this.activity();
         // 获取表格数据
+            // var DataSelf = window.localStorage.getItem('dashboardOne7');
+            // if(DataSelf && this.searchData.dataType == 3){
+            //     let _thisData = JSON.parse(DataSelf);
+            //     this.bigReport = _thisData.overview_list;
+            //     this.tableData = [];
+            //     this.tableData.push(_thisData.total_data);
+            //     this.tableInit(this.tableType);
+            //     this.loadingState.dashboardOne = false;
+            // }else{
+            // }
             var urlString = `/api/v1/dashboard/1/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString)
             .then(res => {
+                this.loadingState.dashboardOne = false;
                 if(res.data.code==1){
                     this.bigReport = res.data.data.overview_list;
                     this.tableData = [];
                     this.tableData.push(res.data.data.total_data);
                     this.tableInit(this.tableType);
+                    localStorage.setItem("dashboardOne7", JSON.stringify( res.data.data ));
                 }else{
                     this.$message("Acquisition failure!");
                 }
             })
             .catch(error => {
+                this.loadingState.dashboardOne = false;
                 this.$message("Interface timeout!");
             });
         },
@@ -293,6 +331,7 @@ export default {
             var urlString = `/api/v1/dashboard/2/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString)
             .then(res => {
+                this.loadingState.dashboardTwo = false;
                 if(res.data.code==1){
                     this.updatesData = res.data.data;
                 }else{
@@ -300,6 +339,7 @@ export default {
                 }
             })
             .catch(error => {
+                this.loadingState.dashboardTwo = false;
                 this.$message("Interface timeout!");
             });
         },
@@ -307,14 +347,15 @@ export default {
             var urlString = `/api/v1/dashboard/3/?pins_period=7`;
             this.$axios.get(urlString)
             .then(res => {
+                this.loadingState.dashboardThree = false;
                 if(res.data.code==1){
                     this.pinsArray = res.data.data;
-                    this.Board();
                 }else{
                     this.$message("Acquisition failure!");
                 }
             })
             .catch(error => {
+                this.loadingState.dashboardThree = false;
                 this.$message("Interface timeout!");
             });
         },
@@ -322,18 +363,21 @@ export default {
             var urlString = `/api/v1/dashboard/4/`;
             this.$axios.get(urlString).then(res => {
                 if(res.data.code==1){
+                    this.loadingState.dashboardFour = false;
                     this.BoardArray = res.data.data;
                 }else{
                     this.$message("Acquisition failure!");
                 }
             })
             .catch(error => {
+                this.loadingState.dashboardFour = false;
                 this.$message("Interface timeout!");
             });
         },
         activity(){
             var urlString = `/api/v1/dashboard/5/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString).then(res => {
+                this.loadingState.dashboardFive = false;
                 if(res.data.code==1){
                    this.ActivityArray = res.data.data;
                 }else{
@@ -341,6 +385,7 @@ export default {
                 }
             })
             .catch(error => {
+                this.loadingState.dashboardFive = false;
                 this.$message("Interface timeout!");
             });
         },
@@ -473,8 +518,8 @@ export default {
 .dashboard .el-table thead tr th{background:#006699;}
 .dashboard .menu{border:1px solid #797979;border-radius:20px;padding:5px;text-align:center;display:-webkit-box;display:-ms-flexbox;display:flex;display:-webkit-flex;margin-bottom:40px;width:70%;margin-left:15%;}
 .dashboard .menu .menuSon{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;height:0;cursor:pointer;}
-.dashboard .menu .menuSon .point{position:absolute;left:47%;top:-6px;width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#999999;box-shadow:0 0 6px #000;}
-.dashboard .menu .menuSon.active .point{width:20px;height:20px;top:-12px;background:#006699;}
+.dashboard .menu .menuSon .point{position:absolute;left:47%;top:-6px;width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#999999;box-shadow:0 0 6px #000; transition: all 0.3s;-webkit-transition: all 0.3s;}
+.dashboard .menu .menuSon.active .point{width:20px;height:20px;top:-12px;margin-left: -5px; background:#006699;}
 .dashboard .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
 .dashboard .rightBox .iconfont.icon-xiangxiajiantou{color: red;font-size: 30px;}
 .dashboard .rightBox .iconfont.icon-xiangshangjiantou{color: green;font-size: 30px;}
