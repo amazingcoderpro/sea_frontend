@@ -84,7 +84,7 @@
                   <el-table-column  align="center"  prop="pin_uri" label="Pin ID"  width="200"></el-table-column>
                   <el-table-column  align="center"  prop="pin_thumbnail" label="Image"  width="200">
                       <template slot-scope="scope"> 
-                          <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  min-width="70" height="70" />        
+                          <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  width="70" height="70" />        
                       </template>
                   </el-table-column>
                   <el-table-column  align="center"  prop="product_sales" label="Sales"  width="200"></el-table-column>
