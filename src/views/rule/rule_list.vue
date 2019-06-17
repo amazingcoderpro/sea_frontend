@@ -200,7 +200,7 @@ export default {
               this.tableData = res.data.data.results;
               this.total = res.data.data.count;
           }else{
-            this.$message("获取失败!");
+            this.$message("Acquisition failure!");
           }
         })
         .catch(error => {

@@ -28,7 +28,7 @@
       </el-form>
       <div class="text">
         <div class="button">
-          <el-button type="primary" @click="submitForm('loginForm')">Regist</el-button>
+          <el-button type="primary" @click="submitForm('loginForm')" :disabled="isDisable">Regist</el-button>
         </div>
         <div class="clause">
           <p>
@@ -40,7 +40,6 @@
     </section>
   </div>
 </template>
-
 
 <script>
 import * as base from "../../assets/js/base";
@@ -59,6 +58,7 @@ export default {
       }
     };
     return {
+      isDisable: false,  //表单重复提交
       registUser: {
         password: "",
         username: "", //商铺名
@@ -120,14 +120,12 @@ export default {
       this.registUser.id = base.getQueryString("id");
     },
     submitForm(formName) {
+      this.isDisable = true // 可以点击
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$axios
-            .put(
-              `/api/v1/account/set_password/${this.registUser.id}/`,
-              this.registUser
-            )
+          this.$axios.put(`/api/v1/account/set_password/${this.registUser.id}/`,this.registUser)
             .then(res => {
+              this.isDisable = false;   //执行请求后就不能点击了
               if (res.data.code == 1) {
                 router.push("/login");
               } else {

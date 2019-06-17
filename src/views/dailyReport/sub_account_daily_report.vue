@@ -381,7 +381,7 @@ export default {
 .sub_account_daily_report .menu{border:1px solid #797979;border-radius:20px;padding:5px;text-align:center;display:-webkit-box;display:-ms-flexbox;display:flex;display:-webkit-flex;margin-bottom:40px;width:70%;margin-left:15%;}
 .sub_account_daily_report .menu .menuSon{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;height:0;cursor:pointer;}
 .sub_account_daily_report .menu .menuSon .point{position:absolute;left:47%;top:-6px;width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#999999;box-shadow:0 0 6px #000;}
-.sub_account_daily_report .menu .menuSon.active .point{width:20px;height:20px;top:-12px;background:#006699;}
+.sub_account_daily_report .menu .menuSon.active .point{width:20px;height:20px;top:-12px;background:#006699;margin-left: -5px;}
 .sub_account_daily_report .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
 .sub_account_daily_report .report_search{padding-left: 90px;}
 .sub_account_daily_report .topForm .el-form-item{margin-bottom: 20px;}
