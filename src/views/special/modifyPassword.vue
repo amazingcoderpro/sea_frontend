@@ -79,10 +79,9 @@ export default {
             .put(`/api/v1/account/set_passwords/${this.form.userID}/`, this.form)
             .then(res => {
               if (res.data.code == 1) {
-                this.$message({message: "Successful revision "+ res.data.data.email,type: "success"});
-              
-                //this.logout();
+                this.$message({message:res.data.msg,type: "success"});
                 this.dialog.show = false;
+                base.LoginOut();
               } else {
                 this.$message("Interface timeout!");
               }
