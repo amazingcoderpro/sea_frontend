@@ -51,10 +51,10 @@
             <el-table-column  align="center"  class="parentNodeColumn" prop="subaccount_num" label="Accounts"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="board_num" label="Boards"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="pin_num" label="Pins"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Saves"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="pin_saves" label="Saves"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="visitor_num" label="Visitors"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="click_num" label="Clicks"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="site_num" label="Sales"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Sales"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenues"  ></el-table-column>
           </el-table>
         </div>
@@ -281,7 +281,7 @@ export default {
                     this.tableData.push(res.data.data.total_data);
                     this.tableInit(this.tableType);
                 }else{
-                    this.$message("获取失败!");
+                    this.$message("Acquisition failure!");
                 }
             })
             .catch(error => {
@@ -296,7 +296,7 @@ export default {
                 if(res.data.code==1){
                     this.updatesData = res.data.data;
                 }else{
-                    this.$message("获取失败!");
+                    this.$message("Acquisition failure!");
                 }
             })
             .catch(error => {
@@ -311,11 +311,11 @@ export default {
                     this.pinsArray = res.data.data;
                     this.Board();
                 }else{
-                    this.$message("获取失败!");
+                    this.$message("Acquisition failure!");
                 }
             })
             .catch(error => {
-                this.$message("接口超时!");
+                this.$message("Interface timeout!");
             });
         },
         Board(){
@@ -324,11 +324,11 @@ export default {
                 if(res.data.code==1){
                     this.BoardArray = res.data.data;
                 }else{
-                    this.$message("获取失败!");
+                    this.$message("Acquisition failure!");
                 }
             })
             .catch(error => {
-                this.$message("接口超时!");
+                this.$message("Interface timeout!");
             });
         },
         activity(){
@@ -337,11 +337,11 @@ export default {
                 if(res.data.code==1){
                    this.ActivityArray = res.data.data;
                 }else{
-                    this.$message("获取失败!");
+                    this.$message("Acquisition failure!");
                 }
             })
             .catch(error => {
-                this.$message("接口超时!");
+                this.$message("Interface timeout!");
             });
         },
         tableInit(num){
@@ -471,13 +471,15 @@ export default {
 .dashboard .RBBox{min-height:400px;}
 .dashboard .LBBox{min-height:269px;}
 .dashboard .el-table thead tr th{background:#006699;}
-.dashboard .menu{border:1px solid #797979;border-radius:20px;padding:5px;text-align:center;display:-webkit-box;display:-ms-flexbox;display:flex;display:-webkit-flex;margin-bottom:40px;width:70%;margin-left:10%;}
+.dashboard .menu{border:1px solid #797979;border-radius:20px;padding:5px;text-align:center;display:-webkit-box;display:-ms-flexbox;display:flex;display:-webkit-flex;margin-bottom:40px;width:70%;margin-left:15%;}
 .dashboard .menu .menuSon{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;height:0;cursor:pointer;}
 .dashboard .menu .menuSon .point{position:absolute;left:47%;top:-6px;width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#999999;box-shadow:0 0 6px #000;}
 .dashboard .menu .menuSon.active .point{width:20px;height:20px;top:-12px;background:#006699;}
 .dashboard .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
-.rightBox .iconfont.icon-xiangxiajiantou{color: red}
-.rightBox .iconfont.icon-xiangshangjiantou{color: green;font-size: 30px;}
-.RBBox .iconfont_left{display: block;}
-.RBBox .iconfont_left span{width: 30px;display: inline-block;padding-right: 25px;}
+.dashboard .rightBox .iconfont.icon-xiangxiajiantou{color: red;font-size: 30px;}
+.dashboard .rightBox .iconfont.icon-xiangshangjiantou{color: green;font-size: 30px;}
+.dashboard .RBBox .iconfont_left{padding-bottom: 15px;padding-left: 10px;}
+.dashboard .RBBox .iconfont_left span{width: 30px;display: inline-block;padding-right: 25px;}
+.dashboard .RTBox .iconfont_left{padding-bottom: 15px;padding-left: 10px;}
+.dashboard .RTBox .iconfont_left span{width: 30px;}
 </style>
