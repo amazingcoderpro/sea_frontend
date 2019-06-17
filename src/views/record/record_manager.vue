@@ -94,7 +94,7 @@
 <script>
 
 // import DialogFound from "./dialog/board_manager_dialog";
-
+import * as base from '../../assets/js/base'
 export default {
   name: "record_manager",
   data() {
@@ -167,6 +167,9 @@ export default {
         this.$axios.get(url).then(res => {
           if(res.data.code == 1){
             this.tableData = res.data.data.results;
+            this.tableData.map(e => {
+              e.execute_time = base.getLastTime(e.execute_time);
+            }); 
             this.total = res.data.data.count;
           }
         })

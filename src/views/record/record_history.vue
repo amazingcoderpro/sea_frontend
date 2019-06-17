@@ -166,13 +166,15 @@ export default {
         this.$axios.get(url).then(res => {
           if(res.data.code == 1){
             this.tableData = res.data.data.results;
+            this.tableData.map(e => {
+              e.finished_time = base.getLastTime(e.finished_time);
+            }); 
             this.total = res.data.data.count;
           }
-        })
+        })  
         .catch(error => {
           this.$message("Interface timeout!");
         });   
-
     },
     handleEdit(row) {
       // 编辑

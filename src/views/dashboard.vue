@@ -127,8 +127,8 @@
                                     </td>
                                     <td>{{item.pin_date}}</td>
                                     <td>{{item.saves}}</td>
-                                    <td>
-                                        {{item.trends*100+'%'}}
+                                    <td class="iconfont_left">
+                                        <span>{{item.trends*100+'%'}}</span>
                                         <template v-if="item.trends<0">
                                             <i class="iconfont icon-xiangxiajiantou"></i>
                                         </template>
@@ -163,8 +163,8 @@
                                     <td>{{item.saves}}</td>
                                     <td>{{item.create_date}}</td>
                                     <td>{{item.followers}}</td>
-                                    <td>
-                                        {{item.trends*100+'%'}}
+                                    <td class="iconfont_left">
+                                        <span>{{item.trends*100+'%'}}</span> 
                                         <template v-if="item.trends<0">
                                             <i class="iconfont icon-xiangxiajiantou"></i>
                                         </template>
@@ -478,4 +478,6 @@ export default {
 .dashboard .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
 .rightBox .iconfont.icon-xiangxiajiantou{color: red}
 .rightBox .iconfont.icon-xiangshangjiantou{color: green;font-size: 30px;}
+.RBBox .iconfont_left{display: block;}
+.RBBox .iconfont_left span{width: 30px;display: inline-block;padding-right: 25px;}
 </style>
