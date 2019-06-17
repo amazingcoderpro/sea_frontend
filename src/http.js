@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { Message, Loading } from 'element-ui';
 import router from './router'
-
-
+import * as base from './assets/js/base'
 
 let loading        //定义loading变量
 
@@ -43,19 +42,14 @@ axios.interceptors.response.use(response => {
      
             case 401:    
                 error.message = '未授权，请登录' 
-                localStorage.removeItem('eleToken')
-                localStorage.removeItem('store')
-                router.push('/login')
+                base.LoginOut();
             break 
      
             case 403:          
                 Message.error('token值无效，请重新登录')
                 // 清除token
-                localStorage.removeItem('eleToken')
-                localStorage.removeItem('store')
-                // 页面跳转
-                router.push('/login')
-             break    
+                base.LoginOut();
+            break    
      
             case 404:    error.message = `请求地址出错: ${error.response.config.url}` 
      

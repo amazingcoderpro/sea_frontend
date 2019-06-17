@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import * as base from '../../assets/js/base'
 export default {
   name: "modifyPassword",
   props: {
@@ -94,11 +95,8 @@ export default {
     },
     logout() {
       // 清除token
-      localStorage.removeItem("eleToken");
       this.$store.dispatch("clearCurrentState");
-
-      // 页面跳转
-      this.$router.push("/login");
+      base.LoginOut();
     }
   }
 };

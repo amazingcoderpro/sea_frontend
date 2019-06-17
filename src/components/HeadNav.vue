@@ -32,6 +32,8 @@
     </header>
 </template>
 <script>
+
+import * as base from '../assets/js/base'
 import DialogFound from "../views/special/modifyPassword";
 
 export default {
@@ -75,12 +77,8 @@ export default {
     },
     logout() {
       // 清除token
-      localStorage.removeItem("eleToken");
-      localStorage.removeItem("store");
       this.$store.dispatch("clearCurrentState");
-
-      // 页面跳转
-      this.$router.push("/login");
+      base.LoginOut();
     },
     changeMsg(){
       this.dialog = {

@@ -100,7 +100,7 @@ const router = new Router({
 
 router.beforeEach((to,from,next) =>{
   const isLogin = localStorage.eleToken ? true : false;
-  if(to.path == "/login" || to.path == "/shopfy_regist" || to.path == "/privacy" ){
+  if(to.path == "/login" || to.path == "/shopfy_regist" || to.path == "/privacy" || to.path == "/aut_state" ){
     next()
   }else{
     //isLogin ? next() : next('/login');

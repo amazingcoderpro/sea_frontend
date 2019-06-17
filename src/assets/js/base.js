@@ -1,3 +1,5 @@
+import router from '../../router'
+
 export function dateFormat(timeDate,type){
   function add0(m){return m<10?'0'+m:m }
   var time = new Date(timeDate);
@@ -29,6 +31,14 @@ export function getLastTime(string){
   var hourArray = yearArray[1].split(".");
   var str = yearArray[0]+" "+hourArray[0];
   return str;
+}
+
+
+export function LoginOut(){
+  localStorage.removeItem('eleToken')
+  localStorage.removeItem('store')
+  localStorage.removeItem("user");
+  router.push('/login')
 }
 
 
