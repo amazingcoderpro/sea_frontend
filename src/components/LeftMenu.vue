@@ -1,5 +1,5 @@
 <template>
-    <el-row class="menu_page" ref="leftMenu" 
+    <el-row class="menu_page leftMenu" ref="leftMenu" 
            :style="'height:'+ leftHeight"
            >
          <el-col>
@@ -63,9 +63,9 @@ export default {
         this.leftHeight = window.innerHeight - this.$refs.leftMenu.$el.offsetTop +"px";
       }, 50);
       window.addEventListener('resize', () => {
-        setTimeout(() => {
-          this.leftHeight = window.innerHeight - this.$refs.leftMenu.$el.offsetTop +"px";
-        }, 50);
+        if(document.getElementsByClassName("leftMenu").length>0){
+            this.leftHeight = window.innerHeight - document.getElementsByClassName("leftMenu")[0].offsetTop - 150;
+        }
       });
     
   },

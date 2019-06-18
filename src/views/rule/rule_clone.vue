@@ -1,6 +1,6 @@
 
 <template>
-    <div class="ruleAdd">
+    <div class="rule_clone">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false" @close='resetForm'>
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
             <el-form-item label="Website">
@@ -118,9 +118,10 @@
 
 import * as base from '../../assets/js/base'
   export default {
-    name: "ruleAdd",
+    name: "rule_clone",
     props: {
-      dialog: Object
+      dialog: Object,
+      cloneData:Object
     },
     data() {
       var scheduleRuleFun = (rule, value, callback) => {
@@ -234,6 +235,7 @@ import * as base from '../../assets/js/base'
                 this.ruleForm.pinterest = '';
               }
               this.pinterestChange();
+              this.Init();
             }
         });
         this.$axios(`/api/v1/store/`).then(res => {
@@ -247,9 +249,25 @@ import * as base from '../../assets/js/base'
             });
           }
         });
+        console.log(this.cloneData)
       }
     },
     methods: {
+      Init(){
+        this.serchProduct.product__name = this.cloneData.product_key;
+        let product_start = new Date(this.cloneData.product_start);
+        let product_end = new Date(this.cloneData.product_end);
+        this.serchProduct.data1 = [product_start,product_end];
+        
+        this.ruleForm.pinterest = this.cloneData.pinterest_account;
+        this.ruleForm.board = this.cloneData.board;
+        this.ruleForm.board = this.cloneData.board;
+        let rule_start = new Date(this.cloneData.start_time);
+        let rule_end = new Date(this.cloneData.end_time);
+        this.ruleForm.ruleTime = [rule_start,rule_end];
+        this.ruleForm.schedule_rule = this.cloneData.schedule_rule;
+        this.ruleForm.tag = this.cloneData.tag;
+      },
       submitForm(formName) {
           // 最终提交
         if(this.ruleForm.schedule_rule.length == 0){
@@ -263,7 +281,6 @@ import * as base from '../../assets/js/base'
           this.productListState = 2;
         }else{
             this.productListState = 1;
-
         }   
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -289,7 +306,7 @@ import * as base from '../../assets/js/base'
                           message: "添加成功!",
                           type: "success"
                         });
-                        this.dialog.show = false;
+                        this.dialog2.show = false;
                         this.$parent.init();
                     }else{
                       this.$message("添加失败!");
@@ -393,29 +410,29 @@ import * as base from '../../assets/js/base'
   }
 </script>
 <style>
-.ruleAdd .el-dialog{width: 70%;height: 86%;overflow: auto;margin: 0;left: 15%;top: -10%;}
-.ruleAdd .el-form-item__label{width:165px!important;}
-.ruleAdd .el-form-item__content{margin-left:165px!important;}
-.ruleAdd .W20{width:20%;margin-right:2%;}
-.ruleAdd .W36{width:36%;margin-right:2%;}
-.ruleAdd .W40{width:40%;margin-right:2%;}
-.ruleAdd .W54{width:54%;margin-right:2%;}
-.ruleAdd .W60{width:60%;margin-right:2%;}
-.ruleAdd .scheduleRuleList{margin-left:145px;padding:0;margin-bottom:22px;list-style:none;}
-.ruleAdd .scheduleRuleList li{font-size:14px;color:#606266;margin-bottom:5px;}
-.ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
-.ruleAdd .el-dialog__body{position: relative;}
-.ruleAdd .contentBg{height:176px;}
-.ruleAdd .searchContent{position: absolute;top: 82px;}
-.ruleAdd .specialTime{
+.rule_clone .el-dialog{width: 70%;height: 86%;overflow: auto;margin: 0;left: 15%;top: -10%;}
+.rule_clone .el-form-item__label{width:165px!important;}
+.rule_clone .el-form-item__content{margin-left:165px!important;}
+.rule_clone .W20{width:20%;margin-right:2%;}
+.rule_clone .W36{width:36%;margin-right:2%;}
+.rule_clone .W40{width:40%;margin-right:2%;}
+.rule_clone .W54{width:54%;margin-right:2%;}
+.rule_clone .W60{width:60%;margin-right:2%;}
+.rule_clone .scheduleRuleList{margin-left:145px;padding:0;margin-bottom:22px;list-style:none;}
+.rule_clone .scheduleRuleList li{font-size:14px;color:#606266;margin-bottom:5px;}
+.rule_clone .scheduleRuleList li span.spanClass{margin-right: 15px;}
+.rule_clone .el-dialog__body{position: relative;}
+.rule_clone .contentBg{height:176px;}
+.rule_clone .searchContent{position: absolute;top: 82px;}
+.rule_clone .specialTime{
     position: absolute;
     left: 346px;
 }
-.ruleAdd input::-webkit-outer-spin-button,
-.ruleAdd input::-webkit-inner-spin-button {
+.rule_clone input::-webkit-outer-spin-button,
+.rule_clone input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
-.ruleAdd input[type="number"]{
+.rule_clone input[type="number"]{
   -moz-appearance: textfield;
 }
 </style>

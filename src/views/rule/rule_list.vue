@@ -80,7 +80,7 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="board_name" label="Board Name"  width="180">
               <template slot-scope="scope"> {{scope.row.board_name}}</template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="Operation" width="180">
+            <el-table-column prop="operation" align="center" label="Operation" width="300" fixed="right">
               <template slot-scope="scope">
                 <template v-if="scope.row.state == -1 || scope.row.state == 0 || scope.row.state == 1">
                   <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>
@@ -88,6 +88,8 @@
                 <template v-else>
                   <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)" disabled="">Stop</el-button>
                 </template>
+                <el-button type="primary" icon="edit" size="small" @click="cloneFun(scope.row)">Clone</el-button>
+               
                 <el-button type="danger" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
               </template>
             </el-table-column>
@@ -99,11 +101,14 @@
         </div>
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog='dialog'></DialogFound>
+        <DialogFound2 :dialog='dialog2' :cloneData='cloneData'></DialogFound2>
+        
     </div>
 </template>
 
 <script>
 import DialogFound from "./rule_add";
+import DialogFound2 from "./rule_clone";
 import * as base from '../../assets/js/base'
 export default {
   name: "RuleList",
@@ -134,11 +139,18 @@ export default {
             show: false,
             title: "",
             option: "edit"
-        }
+        },
+        dialog2: {
+            show: false,
+            title: "",
+            option: "edit"
+        },
+        cloneData:null,
     };
   },
   components: {
-      DialogFound
+      DialogFound,
+      DialogFound2
   },
   created() {
     this.account_id = this.$route.query.account_id;
@@ -232,6 +244,17 @@ export default {
         option: "post"
       };
     },
+    cloneFun(row) {
+      // 克隆
+      this.cloneData = row;
+      this.dialog2 = {
+        show: true,
+        title: "Clone Rule",
+        option: "post"
+      };
+
+    },
+    
     stopFun(row){
         var statedata = {
             state :'2'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
@@ -255,7 +278,6 @@ export default {
                   });
             }) 
     },
-    
     deteleFun(row){
         var statedata = {
             state :'5'   //((-1, "新建"), (0, '待执行'), (1, '运行中'), (2, '暂停中'), (3, '已完成'), (4, '已过期'), (5, '已删除'))
@@ -297,9 +319,7 @@ export default {
             }
           }
         });
-      }
-                    console.log(this.boardArray)
-   
+      }   
     },
     ListManagerFun(row) {
       // 去规则详情页面
