@@ -41,8 +41,8 @@
                 <el-button type="primary" icon="view" @click="init()">Search</el-button>
             </el-form-item>
         </el-form>  
-        <template v-if="tableState == 1">
-            <div class="table_right">
+        <template>
+            <div class="table_right" :style="tableState == 1?'display:block;':'display:none;'">
               <p>Accounts:{{searchData.PinterestArray.length}}</p>
               <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight">
                 <el-table-column  align="center"  prop="account_name" label="Account Name"  width="140"></el-table-column>
@@ -61,8 +61,8 @@
             </div>
             <!-- 分页 -->
         </template>
-        <template v-else-if="tableState == 2">
-            <div class="table_right">
+        <template>
+            <div class="table_right" :style="tableState == 2?'display:block;':'display:none;'">
               <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
             <el-table-column  align="center"  prop="board_id" label="Board ID"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="board_name" label="Board Name"  width="150"></el-table-column>
@@ -78,13 +78,13 @@
               </el-table>
             </div>
         </template>
-        <template v-else-if="tableState == 3">
-            <div class="table_right">
+        <template>
+            <div class="table_right" :style="tableState == 3?'display:block;':'display:none;'">
               <el-table :data="tableData" border ref="topictable"  :height="tableHeight">
                   <el-table-column  align="center"  prop="pin_uri" label="Pin ID"  width="200"></el-table-column>
                   <el-table-column  align="center"  prop="pin_thumbnail" label="Image"  width="200">
                       <template slot-scope="scope"> 
-                          <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  width="70" height="70" />        
+                          <img :src="'data:image/jpeg;base64,' + scope.row.pin_thumbnail"  width="70" height="70" />    
                       </template>
                   </el-table-column>
                   <el-table-column  align="center"  prop="product_sales" label="Sales"  width="200"></el-table-column>
@@ -190,6 +190,7 @@ export default {
               }else{
                   this.tableState = 1;
               }
+              console.log(this.tableState)
           }else{
             this.$message("Acquisition failure!");
           }
