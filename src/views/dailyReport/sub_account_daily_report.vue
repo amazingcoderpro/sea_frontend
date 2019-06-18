@@ -355,11 +355,13 @@ export default {
         //点击数字时触发
         this.currentPage = val;
         this.tableInit();
+        this.$refs.topictable.bodyWrapper.scrollTop = 0;
     },
     handleSizeChange(val){
         //修改每页显示多少条时触发
         this.pagesize = val;
         this.tableInit();
+        this.$refs.topictable.bodyWrapper.scrollTop = 0;
     }
   },
   beforeDestroy() {

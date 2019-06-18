@@ -190,7 +190,6 @@ export default {
               }else{
                   this.tableState = 1;
               }
-              console.log(this.tableState)
           }else{
             this.$message("Acquisition failure!");
           }
@@ -245,6 +244,7 @@ export default {
         this.searchData.pin_id = '';
         this.searchData.BoardArray = [];
         this.searchData.PinsArray = [];
+        this.tableState = 1;
       }
     },
     getPinFun:function(){
@@ -265,6 +265,8 @@ export default {
         //如果board_id == '' pin的数组为空 ，值为空
         this.searchData.pin_id = '';
         this.searchData.PinsArray = [];
+        this.tableState = 2;
+
       }
 
     },
@@ -275,11 +277,13 @@ export default {
         //点击数字时触发
         this.currentPage = val;
         this.init();
+        this.$refs.topictable.bodyWrapper.scrollTop = 0;
     },
     handleSizeChange(val){
         //修改每页显示多少条时触发
         this.pagesize = val;
         this.init();
+        this.$refs.topictable.bodyWrapper.scrollTop = 0;
     }
   }
 };
