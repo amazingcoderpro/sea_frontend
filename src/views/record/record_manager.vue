@@ -16,7 +16,7 @@
             </el-form-item>
             <!-- SKU -->
             <el-form-item class="btnRight">
-                <el-input v-model="search.product__sku"  placeholder="SKU / Pin / Board"></el-input>
+                <el-input v-model="search.query_key"  placeholder="SKU / Pin / Board"></el-input>
             </el-form-item>
              <!-- 下拉框 -->
             <el-select v-model="search.state" filterable class="btnLeft W200">
@@ -133,7 +133,7 @@ export default {
       ],
       search:{
         state:'[0,3]',
-        product__sku:'',
+        query_key:'',
         creatTime:[],
       },
 
@@ -173,12 +173,18 @@ export default {
       // 获取表格数据
         this.account_data =JSON.parse(localStorage.getItem("account_data"));
         this.board_data =JSON.parse(localStorage.getItem("board_data"));
-        var url = `/api/v1/rule/report/?page=${this.currentPage}&page_size=${this.pagesize}&record_manager=1`;
-            url +=`&state=${this.search.state}`;
-        if(this.search.product__sku !=''){
-            url +=`&product__sku=${this.search.product__sku}`;
+        var urlString = `/api/v1/rule/report/?page=${this.currentPage}&page_size=${this.pagesize}&record_manager=1`;
+            urlString +=`&state=${this.search.state}`;
+        if(this.search.query_key !=''){
+            urlString +=`&query_key=${this.search.query_key}`;
         }
-        this.$axios.get(url).then(res => {
+        if(this.search.creatTime.length == 2){
+        urlString += `&publish_time_start=${base.dateFormat(this.search.creatTime[0])}`;
+        }
+        if(this.search.creatTime.length == 2){
+          urlString += `&publish_time_end=${base.dateFormat(new Date(this.search.creatTime[1]).getTime()+ 1000 * 24 * 60 * 60)}`;
+        }
+        this.$axios.get(urlString).then(res => {
           if(res.data.code == 1){
             this.tableData = res.data.data.results;
             this.tableData.map(e => {
