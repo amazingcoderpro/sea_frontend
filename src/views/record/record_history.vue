@@ -133,6 +133,7 @@ export default {
         state:'[1,3]',
         product__sku:'',
         creatTime:[],
+        query_key:''
       },
 
       recordID:'',  

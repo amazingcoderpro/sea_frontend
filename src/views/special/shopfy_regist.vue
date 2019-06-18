@@ -127,10 +127,6 @@ export default {
             .then(res => {
               this.isDisable = false;   //执行请求后就不能点击了
               if (res.data.code == 1) {
-               this.$message({
-                 type: 'success',
-                 message: 'Please log into daisy.zhou@orderplus.com to confirm and activate your pinbooster account!'
-              });
                 router.push("/login");
               } else {
                 this.$message("Interface timeout!");
