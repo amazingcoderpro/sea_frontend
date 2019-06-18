@@ -68,10 +68,10 @@
                 <el-button icon="edit" size="small"  type="primary"  @click="ListManagerFun(scope.row)">View Rule List</el-button>
               </template>
             </el-table-column>
-            <el-table-column  prop="finished,failed" align="center" label="Publish History"  width="200">
+            <el-table-column  prop="finished,pending" align="center" label="Publish History"  width="200">
               <template slot-scope="scope">
                  Published Today : {{scope.row.finished}}<br/>
-                 Unpublished Today : {{scope.row.failed}}<br/>
+                 Unpublished Today : {{scope.row.pending}}<br/>
               </template>
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Edit" width="100">

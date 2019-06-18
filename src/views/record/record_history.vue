@@ -6,19 +6,26 @@
             <li><a><span class="el-icon-right"> </span> Record History</a></li>
         </ul>
         <el-form :inline="true" ref="add_data">
+            <!-- 时间范围 -->
+            <el-button  type="primary" class="button_left" @click='init()'>Data</el-button>
+            <el-form-item class="Publish_right" label="Publish time">
+                <el-date-picker type="daterange" v-model="search.creatTime" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W300'">
+                </el-date-picker>
+            </el-form-item>
+            <!-- SKU -->
             <el-form-item class="btnRight">
                 <el-input v-model="search.product__sku"  placeholder="SKU"></el-input>
-                <el-button  type="primary" class="button_left" @click='init()'>search</el-button>
             </el-form-item>
+            <!-- 下拉框 -->
+            <el-select v-model="search.state" filterable class="btnLeft">
+                <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label" 
+                :value="item.value">
+                </el-option>
+            </el-select>
         </el-form>
-        <el-select v-model="search.state" filterable class="btnLeft">
-            <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-            </el-option>
-        </el-select>
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight">
@@ -73,9 +80,8 @@
                     <el-button type="primary" icon="edit" size="small" disabled="">Published</el-button>
                 </template>
               </template>
-
             </el-table-column>
-            <el-table-column prop="remark" align="center" label="Error" width="123">
+                 <el-table-column prop="remark" align="center" label="Error" width="123">
             </el-table-column>
           </el-table>
         </div>
@@ -97,7 +103,11 @@ export default {
   name: "record_history",
   data() {
     return {
-
+      pickerOptions: {
+          disabledDate(time) {
+              return time.getTime() > Date.now();//设置选择明天之前的日期
+          }
+      },
       total:0,//默认数据总数
       pagesize:10,//每页的数据条数
       pagesizes:[10, 20, 30, 40],//分组数量
@@ -122,6 +132,7 @@ export default {
       search:{
         state:'[1,3]',
         product__sku:'',
+        creatTime:[],
       },
 
       recordID:'',  
@@ -220,9 +231,8 @@ export default {
 </script>
 
 <style>
-.record_history .btnRight .el-form-item__content{width:300px;}
-.record_history .btnRight .el-form-item__content .el-input{width:200px;}
-.record_history .btnRight .el-form-item__content .el-button.el-button--primary{float:right;}
+.record_history .btnRight{margin-right: 25px;}
 .record_history .btnLeft{float:right;width:110px;padding-right:20px;}
-.record_history .button_left{color: #fff;font-weight: 600;}
+.record_history .button_left{float: right;margin-right: 15px;}
+.record_history .Publish_right{float: right;}
 </style>

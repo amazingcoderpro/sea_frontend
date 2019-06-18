@@ -127,6 +127,10 @@ export default {
             .then(res => {
               this.isDisable = false;   //执行请求后就不能点击了
               if (res.data.code == 1) {
+               this.$message({
+                 type: 'success',
+                 message: 'Please log into daisy.zhou@orderplus.com to confirm and activate your pinbooster account!'
+              });
                 router.push("/login");
               } else {
                 this.$message("Interface timeout!");
@@ -143,63 +147,14 @@ export default {
 </script>
 
 <style scoped>
-.shopfy_regist {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: url(../../assets/img/bg.jpg) no-repeat center center;
-  background-size: 100% 100%;
-}
-.form_container {
-  width: 470px;
-  height: 400px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border-radius: 5px;
-  margin-left: -220px;
-  margin-top: -300px;
-  text-align: center;
-}
-.loginForm {
-  background-color: #fff;
-  padding: 20px 40px 20px 20px;
-  border-radius: 5px;
-  box-shadow: 0px 5px 10px #cccc;
-  margin-top: 20px;
-}
-.text {
-  width: 470px;
-  height: 172px;
-  border-radius: 5px;
-  background: #f9f9f9;
-}
-.text .text_hint {
-  text-align: center;
-  color: #277fc2;
-  font-size: 13px;
-  padding-top: 25px;
-}
-.button {
-  text-align: center;
-  padding-top: 22px;
-}
-.el-button {
-  padding: 15px 55px;
-  font-size: 16px;
-  background: #409eff;
-}
-.clause p {
-  text-align: center;
-  padding-top: 22px;
-  font-size: 13px;
-  color: #65635d;
-}
-.clause p a {
-  color: #0f8fcf;
-}
-.shopfy_regist .form_container .title {
-  font-family: "Microsoft YaHei";
-  font-size: 25px;
-}
+.shopfy_regist{position:relative;width:100%;height:100%;background:url(../../assets/img/bg.jpg) no-repeat center center;background-size:100% 100%;}
+.shopfy_regist .form_container{width:470px;height:400px;position:absolute;left:50%;top:50%;border-radius:5px;margin-left:-220px;margin-top:-300px;text-align:center;}
+.shopfy_regist .loginForm{background-color:#fff;padding:20px 40px 20px 20px;border-radius:5px;box-shadow:0px 5px 10px #cccc;margin-top:20px;}
+.shopfy_regist .text{width:470px;height:172px;border-radius:5px;background:#f9f9f9;}
+.shopfy_regist .text .text_hint{text-align:center;color:#277fc2;font-size:13px;padding-top:25px;}
+.shopfy_regist .button{text-align:center;padding-top:22px;}
+.shopfy_regist .el-button{padding:15px 55px;font-size:16px;background:#409eff;}
+.shopfy_regist .clause p{text-align:center;padding-top:22px;font-size:13px;color:#65635d;}
+.shopfy_regist .clause p a{color:#0f8fcf;}
+.shopfy_regist .form_container .title{font-family:"Microsoft YaHei";font-size:25px;}
 </style>
