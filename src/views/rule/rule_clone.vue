@@ -253,19 +253,28 @@ import * as base from '../../assets/js/base'
     },
     methods: {
       Init(){
-        this.serchProduct.product__name = this.cloneData.product_key;
+        let rule_start = new Date(this.cloneData.start_time);
+        let rule_end = new Date(this.cloneData.end_time);
         let product_start = new Date(this.cloneData.product_start);
         let product_end = new Date(this.cloneData.product_end);
+
+        this.serchProduct.product__name = this.cloneData.product_key;
         this.serchProduct.data1 = [product_start,product_end];
         
         this.ruleForm.pinterest = this.cloneData.pinterest_account;
         this.ruleForm.board = this.cloneData.board;
         this.ruleForm.board = this.cloneData.board;
-        let rule_start = new Date(this.cloneData.start_time);
-        let rule_end = new Date(this.cloneData.end_time);
         this.ruleForm.ruleTime = [rule_start,rule_end];
-        this.ruleForm.schedule_rule = this.cloneData.schedule_rule;
         this.ruleForm.tag = this.cloneData.tag;
+        this.cloneData.schedule_rule.map(e => {
+          var _thisData = {
+                weekday:e.weekday,
+                start_time:e.start_time,
+                end_time:e.end_time,
+                interval_time:e.interval_time,         
+          }
+          this.ruleForm.schedule_rule.push(_thisData)
+        });  
       },
       submitForm(formName) {
           // 最终提交
@@ -305,7 +314,7 @@ import * as base from '../../assets/js/base'
                           message: "添加成功!",
                           type: "success"
                         });
-                        this.dialog2.show = false;
+                        this.dialog.show = false;
                         this.$parent.init();
                     }else{
                       this.$message("添加失败!");
