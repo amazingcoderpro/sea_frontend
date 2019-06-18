@@ -249,7 +249,6 @@ import * as base from '../../assets/js/base'
             });
           }
         });
-        console.log(this.cloneData)
       }
     },
     methods: {
@@ -298,9 +297,9 @@ import * as base from '../../assets/js/base'
                   product_end:base.dateFormat(this.serchProduct.data1[1]),             //产品的发布时间范围终点
                   product_key:this.serchProduct.product__name,      //产品的搜索关键字
                   pinterest_account:this.ruleForm.pinterest,      //pinterest账号id 
-
                 }
-                this.$axios.post(`/api/v1/rule/`, _thisruleForm).then(res => {
+                this.$axios.post(`/api/v1/rule/`, _thisruleForm)
+                .then(res => {
                     if(res.data.code == 1){
                         this.$message({
                           message: "添加成功!",
@@ -311,7 +310,10 @@ import * as base from '../../assets/js/base'
                     }else{
                       this.$message("添加失败!");
                     }
-                }) 
+                })
+                .catch(error => {
+                    this.$message("Interface timeout!");
+                }); 
               }
           } else {
             console.log('error submit!!');

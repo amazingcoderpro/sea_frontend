@@ -283,7 +283,8 @@ import * as base from '../../assets/js/base'
                   pinterest_account:this.ruleForm.pinterest,      //pinterest账号id 
 
                 }
-                this.$axios.post(`/api/v1/rule/`, _thisruleForm).then(res => {
+                this.$axios.post(`/api/v1/rule/`, _thisruleForm)
+                .then(res => {
                     if(res.data.code == 1){
                         this.$message({
                           message: "添加成功!",
@@ -294,7 +295,10 @@ import * as base from '../../assets/js/base'
                     }else{
                       this.$message("添加失败!");
                     }
-                }) 
+                })
+                .catch(error => {
+                    this.$message("Interface timeout!");
+                }); 
               }
           } else {
             console.log('error submit!!');

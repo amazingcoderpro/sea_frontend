@@ -64,10 +64,9 @@ export default {
       }, 50);
       window.addEventListener('resize', () => {
         if(document.getElementsByClassName("leftMenu").length>0){
-            this.leftHeight = window.innerHeight - document.getElementsByClassName("leftMenu")[0].offsetTop - 150;
+            this.leftHeight = window.innerHeight - document.getElementsByClassName("leftMenu")[0].offsetTop +"px";
         }
       });
-    
   },
   data() {
     return {
