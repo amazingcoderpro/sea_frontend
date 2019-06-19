@@ -319,7 +319,7 @@ export default {
                 if(this.searchData.dataType == 1){
                     // 昨天
                      _star = new Date(base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day") + " 00:00:00");
-                     _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+                     _end = new Date(base.dateFormat(new Date(new Date().getTime()-1000*24*60*60-1),"day") + " 00:00:00");
                 }else if(this.searchData.dataType == 2){
                     // 今天
                      _star = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
