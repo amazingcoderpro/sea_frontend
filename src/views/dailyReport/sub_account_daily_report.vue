@@ -45,7 +45,8 @@
             <el-button type="primary" icon="view" @click="init()">Search</el-button>
         </el-form>  
                 <!-- echarts图表 -->
-        <div style="width:1600px;height:400px;" ref="myEchart"></div> 
+        <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
+        <!-- <div style="width:1400px;height:400px;" ref="myEchart"></div>  -->
                 <!-- 选择按钮 -->
         <div class="menu">
             <template v-for="item in chartBtnArray" >
@@ -70,10 +71,10 @@
               <el-table-column prop="pin_comments" label="Comments" align="center"  width="130"></el-table-column>
               <el-table-column prop="product_visitors" label="Visitors" align="center"  width="130"></el-table-column>
               <el-table-column prop="product_new_visitors" label="New Vistors" align="center" width="120"></el-table-column>
-              <el-table-column prop="account_views" label="View" align="center" width="120"></el-table-column>
+              <!-- <el-table-column prop="account_views" label="View" align="center" width="120"></el-table-column> -->
               <el-table-column prop="product_clicks" label="Clicks" align="center" width="120"></el-table-column>
               <el-table-column prop="product_sales" label="Sales" align="center" width="120"> </el-table-column>   
-              <el-table-column prop="product_revenue" align="center" label="Revenue" fixed="right" width="120"></el-table-column>
+              <el-table-column prop="product_revenue" align="center" label="Revenue"></el-table-column>
             </el-table>
         </div>
         <div class="paging">
@@ -139,8 +140,33 @@ export default {
       }
     }
   },
+  props: {
+      className: {
+      type: String,
+      default: 'yourClassName'
+      },
+      id: {
+      type: String,
+      default: 'yourID'
+      },
+      width: {
+      type: String,
+      default: '100%'
+      },
+      height: {
+      type: String,
+      default: '400px'
+      }
+  },
   mounted() {
     this.getPinterestFun();
+          const self = this;//因为箭头函数会改变this指向，指向windows。所以先把this保存
+        setTimeout(() => {
+          window.onresize = function() {
+              self.chart = echarts.init(self.$refs.myEchart);
+              self.chart.resize();
+          }
+        },20)
   },
   methods: {
     init(){
@@ -389,4 +415,16 @@ export default {
 .sub_account_daily_report .topForm .el-form-item{margin-bottom: 20px;}
 .sub_account_daily_report .el-form--inline .el-form-item{margin-right: 0;}
 .sub_account_daily_report .paging{margin-bottom: 25px;}
+
+
+/* 
+[_echarts_instance_] div
+{
+  width:100%!important;
+}
+
+canvas{
+    width:100%!important;
+} */
+
 </style>

@@ -23,10 +23,20 @@
                         <el-option v-for="item in searchData.PinsArray" :key="item.id" :label="item.note" :value="item.id"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="Time">
-                <el-date-picker v-model="searchData.timeArray" type="daterange" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" class="W300"></el-date-picker>
+            <el-form-item label="Date Range">
+              <el-select v-model="searchData.dataType" placeholder="Yesterday" @change="dataSelect" :class="'W200'">
+                  <el-option
+                  v-for="item in dataArray"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                  </el-option>
+              </el-select>
             </el-form-item>
-            <el-form-item class="report_search" prop="dep">
+            <el-form-item label="Time">
+                <el-date-picker v-model="searchData.timeArray" type="daterange" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" class="W250"></el-date-picker>
+            </el-form-item>
+            <el-form-item class="report_search" prop="dep" label=" ">
                 <template>
                         <template v-if="tableState == 1">
                                 <el-input v-model="searchData.search" @keyup.enter.native="init()" placeholder="Pinterest Account Name"  class="W200"></el-input>
@@ -120,6 +130,7 @@ export default {
         tableHeight:'100',
         tableState:'1', //展示哪个表格？1 所有信息 2 只有Board的 3 PIn的
         searchData:{
+          dataType:'2',    //显示几天 
           start_time:'',
           end_time:'',
           search:'',
@@ -132,11 +143,19 @@ export default {
           PinsArray:[],             //Pins的下拉框数据源
           timeArray:[new Date(2019, 3, 1, 0, 0), new Date(2019, 5, 1, 0, 0)],             //日期数据源
         },
-        tableData: []
+        tableData: [],
+        dataArray:[//时间区间的星期几
+          {"label":"Custom","value":"0"},
+          {"label":"Yesterday","value":"1"},
+          {"label":"Today","value":"2"},
+          {"label":"Last 7 Day","value":"3"},
+          {"label":"Current Month","value":"4"},
+          {"label":"This Years","value":"5"},
+        ],
     };
   },
   created() {
-      this.timeInit();
+      this.dataSelect();
       this.getPinterestFun();
   },
   mounted() {
@@ -270,8 +289,38 @@ export default {
       }
 
     },
-    timeInit(){
-      this.searchData.timeArray[1] = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+    dataSelect(){
+        if(this.searchData.dataType == 0){
+            this.disabledType = 0;
+        }else{
+            this.disabledType = 1;
+            var _star;
+            var _end;
+            if(this.searchData.dataType == 1){
+                // 昨天
+                  _star = new Date(base.dateFormat(new Date(new Date().getTime()-1000*24*60*60),"day") + " 00:00:00");
+                  _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+            }else if(this.searchData.dataType == 2){
+                // 今天
+                  _star = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+                  _end =  new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+            }else if(this.searchData.dataType == 3){
+                // 近七天
+                  _star = new Date(base.dateFormat(new Date(new Date().getTime()-6*1000*24*60*60),"day") + " 00:00:00");
+                  _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+            }else if(this.searchData.dataType == 4){
+                // 本月
+                var time = new Date();
+                  _star = new Date(base.dateFormat(time.getFullYear()+"-"+ (time.getMonth()+1) +"-1"+ " 00:00:00"));
+                  _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+            }else if(this.searchData.dataType == 5){
+                //本年度
+                var time = new Date();
+                  _star = new Date(base.dateFormat(time.getFullYear()+"-1-1"+ " 00:00:00"));
+                  _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
+            }
+            this.searchData.timeArray = [_star,_end]
+        }
     },
     current_change(val){
         //点击数字时触发
@@ -289,7 +338,6 @@ export default {
 };
 </script>
 <style scoped>
-.sub_account_report .report_search{display:block;margin-left: 90px;}
 .sub_account_report .paging{margin-bottom: 20px;}
 </style>
 
