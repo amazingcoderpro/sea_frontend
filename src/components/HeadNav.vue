@@ -8,19 +8,6 @@
             <el-col :span='6' class="user">
                 <div class="userinfo">
                      <img src="../assets/img/none.png" class='avatar' alt="">
-
-                    <!-- <el-upload
-                    class="avatar-uploader"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                  </el-upload> -->
-
-
-
                     <div class='welcome'>
                       <p class='name comename'>Welcome , <span class="avatarname">{{user.username}}</span></p>
                     </div>
@@ -45,10 +32,8 @@
     </header>
 </template>
 <script>
-
 import * as base from '../assets/js/base'
 import DialogFound from "../views/special/modifyPassword";
-
 export default {
   name: "head_nav",
   data() {
@@ -103,7 +88,6 @@ export default {
         title: "Modify Password",
         option: "put"
       };
-
     }
   }
 };

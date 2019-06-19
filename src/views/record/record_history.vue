@@ -36,14 +36,14 @@
                 <!-- 产品SKU -->
             <el-table-column prop="product.sku" label="SKU" align="center" width="100"></el-table-column>
                 <!-- Pin图 -->
-            <el-table-column prop="product.image_url" label="product Image" align="center" width="130">
+            <el-table-column prop="pin.image_url" label="Pin Image" align="center" width="130">
                 <template slot-scope="scope"> 
                   <el-popover
                     placement="right"
                     title=""
                     trigger="hover">
-                    <img :src="scope.row.product.image_url"  :style="'width: 500px;'" width="100"/>
-                    <img slot="reference" :src="scope.row.product.image_url" :alt="scope.row.product.image_url" style="height: 70px;width: 70px">
+                    <img :src="scope.row.pin.image_url"  :style="'width: 500px;'" width="100"/>
+                    <img slot="reference" :src="scope.row.pin.image_url" :alt="scope.row.pin.image_url" style="height: 70px;width: 70px">
                   </el-popover>
                 </template>
             </el-table-column>
@@ -51,9 +51,9 @@
             <el-table-column prop="pin.note"  label="Pin Note" align="center" width="150">
             </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="product.url" label="Product URL" align="center" width="180">
+            <el-table-column prop="pin.url" label="Pin URL" align="center" width="180">
                   <template slot-scope="scope"> 
-                   <a :href="scope.row.product.url" target="_blank">{{scope.row.product.url}}</a>      
+                   <a :href="scope.row.pin.url" target="_blank">{{scope.row.pin.url}}</a>      
                   </template>
             </el-table-column>
                 <!-- 价格 -->
