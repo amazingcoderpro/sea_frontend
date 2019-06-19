@@ -35,7 +35,7 @@
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
             <el-table-column prop="product.sku" label="SKU" align="center" width="110"></el-table-column>
-            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
+            <el-table-column prop="product.image_url" label="Product Image" align="center" width="130">
                 <template slot-scope="scope"> 
                   <el-popover
                     placement="right"
@@ -48,7 +48,7 @@
             </el-table-column>
             <el-table-column prop="product.name"  label="Description" align="center" width="150">
             </el-table-column>
-            <el-table-column prop="product.url" label="Pin URL" align="center" width="200">
+            <el-table-column prop="product.url" label="Product URL" align="center" width="180">
                 <template slot-scope="scope"> 
                    <a :href="scope.row.product.url" target="_blank">{{scope.row.product.url}}</a>      
                 </template>
@@ -300,4 +300,10 @@ export default {
 .record_manager .button_left{color: #fff;font-weight: 600;float: right;margin-right: 60px;}
 .record_manager .Bulk_right{float: right;margin-right: 10px;}
 .record_manager .Publish_right{float:right;margin-right:0px;color: #fff;margin-left: 10px;}
+@media screen and (max-width:1400px){ 
+  .record_manager .btnLeft {float: left;width: auto;}
+}
+@media screen and (max-width:1180px){ 
+  .record_manager .btnRight{float:left;width: auto;}
+}
 </style>

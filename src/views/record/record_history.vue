@@ -36,7 +36,7 @@
                 <!-- 产品SKU -->
             <el-table-column prop="product.sku" label="SKU" align="center" width="100"></el-table-column>
                 <!-- Pin图 -->
-            <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
+            <el-table-column prop="product.image_url" label="product Image" align="center" width="130">
                 <template slot-scope="scope"> 
                   <el-popover
                     placement="right"
@@ -51,9 +51,9 @@
             <el-table-column prop="pin.note"  label="Pin Note" align="center" width="150">
             </el-table-column>
                 <!-- pin URL -->
-            <el-table-column prop="product.url" label="Pin URL" align="center" width="200">
+            <el-table-column prop="product.url" label="Product URL" align="center" width="180">
                   <template slot-scope="scope"> 
-                   <a :href="scope.row.pin.url" target="_blank">{{scope.row.pin.url}}</a>      
+                   <a :href="scope.row.product.url" target="_blank">{{scope.row.product.url}}</a>      
                   </template>
             </el-table-column>
                 <!-- 价格 -->
