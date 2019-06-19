@@ -278,7 +278,16 @@ export default {
         this.init();
     },
     methods:{
+        //  echarts自适应
         init() {
+            const self = this;//因为箭头函数会改变this指向，指向windows。所以先把this保存
+             setTimeout(() => {
+                window.onresize = function() {
+                    self.chart = echarts.init(self.$refs.myEchart);
+                    self.chart.resize();
+                }
+             },20)
+
             this.loadingState = {
                 dashboardOne:true,
                 dashboardTwo:true,

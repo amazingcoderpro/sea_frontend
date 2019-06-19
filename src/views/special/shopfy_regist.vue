@@ -118,6 +118,7 @@ export default {
       this.registUser.username = base.getQueryString("shop");
       this.registUser.emailstr = base.getQueryString("email");
       this.registUser.id = base.getQueryString("id");
+      //  this.showEmail();
     },
     submitForm(formName) {
       this.isDisable = true // 可以点击
@@ -128,7 +129,7 @@ export default {
               this.isDisable = false;   //执行请求后就不能点击了
               if (res.data.code == 1) {
                 // router.push("/login");
-              // this.getUserEmail
+                this.showEmail();
               } else {
                 this.$message("Interface timeout!");
               }
@@ -138,6 +139,22 @@ export default {
             });
          }
       });
+    },
+    showEmail(){
+      if (this.registUser.emailstr){
+        let title = "registered successfully,"
+            title += "Please go to "+ this.registUser.emailstr +" activate your account!"
+            this.$alert(title, 'Tips', {
+            confirmButtonText: 'Confirm',
+            callback: action => {
+            let address = this.registUser.emailstr.split()[1];
+              window.open(address, "_blank"); 
+              router.push("/login");
+            }
+          });
+      }else{
+              this.$message("Data deficiencies!");
+      }
     }
   }
 };
