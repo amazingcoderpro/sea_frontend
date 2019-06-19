@@ -7,7 +7,7 @@
         </ul>
         <el-form :inline="true" ref="add_data">
             <!-- 时间范围 -->
-            <el-button  type="primary" class="button_left" @click='init()'>Data</el-button>
+            <el-button  type="primary" class="button_left" @click='init()'>Search</el-button>
             <el-form-item class="Publish_right" label="Publish time">
                 <el-date-picker type="daterange" v-model="search.creatTime" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W300'">
                 </el-date-picker>
@@ -34,7 +34,7 @@
                 <!-- ID -->
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
                 <!-- 产品SKU -->
-            <el-table-column prop="product.sku" label="SKU" align="center" width="110"></el-table-column>
+            <el-table-column prop="product.sku" label="SKU" align="center" width="100"></el-table-column>
                 <!-- Pin图 -->
             <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
@@ -71,7 +71,7 @@
             <el-table-column prop="finished_time" label="Publish Time" align="center" width="160">
             </el-table-column> 
                 <!-- 发布状态 --> 
-            <el-table-column prop="state" label="State" align="center" width="124">
+            <el-table-column prop="state" label="State" align="center" width="120">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 3">
                     <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Failed</el-button>
@@ -81,7 +81,7 @@
                 </template>
               </template>
             </el-table-column>
-                 <el-table-column prop="remark" align="center" label="Error" width="123">
+                 <el-table-column prop="remark" align="center" label="Error" width="120" fixed="right">
             </el-table-column>
           </el-table>
         </div>

@@ -80,7 +80,7 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="board_name" label="Board Name"  width="155">
               <template slot-scope="scope"> {{scope.row.board_name}}</template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="Operation" width="280">
+            <el-table-column prop="operation" align="center" label="Operation" width="260" fixed="right">
               <template slot-scope="scope">
                 <template v-if="scope.row.state == -1 || scope.row.state == 0 || scope.row.state == 1">
                   <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>

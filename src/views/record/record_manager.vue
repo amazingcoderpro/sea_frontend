@@ -9,7 +9,7 @@
             <!-- 批量删除 -->
             <el-button type="primary" round class="Bulk_right" @click="cancelAll()">Bulk Cancel</el-button>
             <!-- 时间范围 -->
-            <el-button  type="primary" class="button_left" @click='init()'>Data</el-button>
+            <el-button  type="primary" class="button_left" @click='init()'>Search</el-button>
             <el-form-item class="Publish_right" label="Publish time">
               <el-date-picker type="daterange" v-model="search.creatTime" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W300'">
               </el-date-picker>
@@ -34,7 +34,7 @@
           <el-table :data="tableData" border ref="topictable" class="topictable" :height="tableHeight" @selection-change="handleSelectionChange">
             <el-table-column type="selection" label="批量操作" align="center"  width="55" ></el-table-column>
             <el-table-column type="index"  label="ID" align="center"  width="55"></el-table-column>
-            <el-table-column prop="product.sku" label="SKU" align="center" width="120"></el-table-column>
+            <el-table-column prop="product.sku" label="SKU" align="center" width="110"></el-table-column>
             <el-table-column prop="thumbnail" label="Pin Image" align="center" width="120">
                 <template slot-scope="scope"> 
                   <el-popover
@@ -71,7 +71,7 @@
                   </template>
                 </template>
             </el-table-column>            
-            <el-table-column prop="state" label="State" align="center" width="118">
+            <el-table-column prop="state" label="State" align="center" width="110">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 0">
                     <el-button type="primary" icon="edit" size="small" disabled="">Unpublic</el-button>
@@ -81,7 +81,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="Edit" width="110" >
+            <el-table-column align="center" label="Edit" width="110" fixed="right" >
               <template  slot-scope="scope">
                 <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >Cancel</el-button>
               </template>
