@@ -73,7 +73,7 @@
               <el-table-column prop="account_views" label="View" align="center" width="120"></el-table-column>
               <el-table-column prop="product_clicks" label="Clicks" align="center" width="120"></el-table-column>
               <el-table-column prop="product_sales" label="Sales" align="center" width="120"> </el-table-column>   
-              <el-table-column prop="product_revenue" align="center" label="center" fixed="right" width="120"></el-table-column>
+              <el-table-column prop="product_revenue" align="center" label="Revenue" fixed="right" width="120"></el-table-column>
             </el-table>
         </div>
         <div class="paging">

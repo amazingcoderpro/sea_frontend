@@ -127,7 +127,8 @@ export default {
             .then(res => {
               this.isDisable = false;   //执行请求后就不能点击了
               if (res.data.code == 1) {
-                router.push("/login");
+                // router.push("/login");
+              // this.getUserEmail
               } else {
                 this.$message("Interface timeout!");
               }

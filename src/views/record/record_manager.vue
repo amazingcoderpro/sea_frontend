@@ -295,9 +295,9 @@ export default {
 </script>
 
 <style>
-.record_manager .btnLeft{float:right;width:150px;padding-right:20px;}
+.record_manager .btnLeft{float:right;padding-right:20px;}
 .record_manager .button_right{float:right;margin-right:0px;color: #fff;font-weight: 600;margin-left: 10px;}
-.record_manager .button_left{color: #fff;font-weight: 600;float: right;margin-right: 100px;}
+.record_manager .button_left{color: #fff;font-weight: 600;float: right;margin-right: 60px;}
 .record_manager .Bulk_right{float: right;margin-right: 10px;}
 .record_manager .Publish_right{float:right;margin-right:0px;color: #fff;margin-left: 10px;}
 </style>

@@ -131,7 +131,7 @@ export default {
       ],
       search:{
         state:'[1,3]',
-        product__sku:'',
+        // product__sku:'',
         creatTime:[],
         query_key:''
       },
