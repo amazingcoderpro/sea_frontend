@@ -50,7 +50,7 @@
             </el-table-column>
             <el-table-column prop="product.url" label="Product URL" align="center" width="180">
                 <template slot-scope="scope"> 
-                   <a :href="scope.row.product.url" target="_blank">{{scope.row.product.url}}</a>      
+                   <a :href="scope.row.product.url" target="_blank" alt="123">{{scope.row.product.url}}</a>      
                 </template>
             </el-table-column>
             <el-table-column  class="parentNodeColumn" prop="product.price" label="Price" align="center"  width="120">

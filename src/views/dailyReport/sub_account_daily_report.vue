@@ -46,7 +46,6 @@
         </el-form>  
                 <!-- echarts图表 -->
         <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
-        <!-- <div style="width:1400px;height:400px;" ref="myEchart"></div>  -->
                 <!-- 选择按钮 -->
         <div class="menu">
             <template v-for="item in chartBtnArray" >

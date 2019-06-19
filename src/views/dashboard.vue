@@ -123,7 +123,9 @@
                                     <td>{{item.pin_uri}}</td>
                                     <td>{{item.SKU}}</td>
                                     <td>
-                                        <img :src="'data:image/jpeg;base64,'+ item.image" width="70" height="70" />
+                                        <a :href="item.pin_url" target="_blank">
+                                            <img :src="'data:image/jpeg;base64,'+ item.image" width="70" height="70" />
+                                        </a>
                                     </td>
                                     <td>{{item.pin_date}}</td>
                                     <td>{{item.saves}}</td>
@@ -150,7 +152,7 @@
                                 <tr>
                                     <td>Board Name</td>
                                     <td>Pins</td>
-                                    <td>saves</td>
+                                    <td>Saves</td>
                                     <td>Create Date</td>
                                     <td>Followers</td>
                                     <td>Trends</td>
@@ -158,7 +160,11 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item,index) in BoardArray" :key="index">
-                                    <td>{{item.board_name}}</td>
+                                    <td>
+                                        <a :href="item.board_url" target="_blank">
+                                            {{item.board_name}}
+                                        </a>
+                                    </td>
                                     <td>{{item.pins}}</td>
                                     <td>{{item.saves}}</td>
                                     <td>{{item.create_date}}</td>
@@ -543,4 +549,7 @@ export default {
 .dashboard .RBBox .iconfont_left span{width: 30px;display: inline-block;padding-right: 20px;}
 .dashboard .RTBox .iconfont_left{padding-bottom: 15px;}
 .dashboard .RTBox .iconfont_left span{width: 30px;display: inline-block;padding-right: 10px;}
+.dashboard .RBBox thead td,
+.dashboard .RTBox thead td{font-weight: 600;padding: 20px;}
+.dashboard a:hover{cursor: pointer;color:#ccc;}
 </style>
