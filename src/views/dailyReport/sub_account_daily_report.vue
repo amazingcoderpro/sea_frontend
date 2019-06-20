@@ -68,11 +68,10 @@
               <el-table-column prop="pins" label="Pins" align="center" width="130"></el-table-column>
               <el-table-column prop="pin_saves" label="Saves" align="center"  width="130"></el-table-column>
               <el-table-column prop="pin_comments" label="Comments" align="center"  width="130"></el-table-column>
-              <el-table-column prop="product_visitors" label="Visitors" align="center"  width="130"></el-table-column>
-              <el-table-column prop="product_new_visitors" label="New Vistors" align="center" width="120"></el-table-column>
-              <!-- <el-table-column prop="account_views" label="View" align="center" width="120"></el-table-column> -->
-              <el-table-column prop="product_clicks" label="Clicks" align="center" width="120"></el-table-column>
-              <el-table-column prop="product_sales" label="Sales" align="center" width="120"> </el-table-column>   
+              <el-table-column prop="product_visitors" label="Users" align="center"  width="130"></el-table-column>
+              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="120"></el-table-column>
+              <el-table-column prop="product_clicks" label="Sessions" align="center" width="120"></el-table-column>
+              <el-table-column prop="product_sales" label="Transactions" align="center" width="120"> </el-table-column>   
               <el-table-column prop="product_revenue" align="center" label="Revenue"></el-table-column>
             </el-table>
         </div>
@@ -259,7 +258,7 @@ export default {
         });
     },
     getBodFun:function(){
-      if(this.searchData.pinterest_account_id != ''){
+      if(this.searchData.pinterest_account_id != ''){``
         this.$axios.get(`/api/v1/select/board/?pinterest_account_id=${this.searchData.pinterest_account_id}`)
         .then(res=> {
             if(res.data.code == 1){
@@ -279,6 +278,7 @@ export default {
             this.$message("Interface timeout!");
         });
       }else{
+        
         this.searchData.board_id = '';
         this.searchData.pin_id = '';
         this.searchData.BoardArray = [];

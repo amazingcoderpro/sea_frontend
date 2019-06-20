@@ -79,7 +79,7 @@ export default {
               {"id":2,"menu_name":"Report","menu_url":"1","parent_id":null,"icon":"iconfont icon-report1",
                 "childs":[
                   {"id":3,"menu_name":"Daily Report","menu_url":"/sub_account_daily_report","parent_id":2,"icon":null,"childs":[
-                    //{"id":4,"menu_name":"Sub-Account Daily Report","menu_url":"/sub_account_daily_report","parent_id":3,"icon":null,"childs":[]},
+                    // {"id":4,"menu_name":"Sub-Account Daily Report","menu_url":"/sub_account_daily_report","parent_id":3,"icon":null,"childs":[]},
                     // {"id":5,"menu_name":"Boards Daily Report","menu_url":"/boards_daily_report","parent_id":3,"icon":null,"childs":[]},
                     // {"id":6,"menu_name":"Pins Daily Report","menu_url":"/pins_daily_report","parent_id":3,"icon":null,"childs":[]}
                     ]
@@ -156,40 +156,14 @@ export default {
 };
 </script>
 <style scoped>
-.menu_page {
-  position: fixed;
-  top: 71px;
-  left: 0;
-  background-color: #324057;
-  z-index: 99;
-  overflow-y: auto;
-}
-.el-menu {
-  border: none;
-}
-.fa-margin {
-  margin-right: 5px;
-}
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 240px;
-  min-height: 400px;
-}
-.el-menu-vertical-demo {
-  width: 35px;
-}
-.el-submenu .el-menu-item {
-  min-width: 180px;
-}
+.menu_page{position:fixed;top:71px;left:0;background-color:#324057;z-index:99;overflow-y:auto;}
+.el-menu{border:none;}
+.fa-margin{margin-right:5px;}
+.el-menu-vertical-demo:not(.el-menu--collapse){width:240px;min-height:400px;}
+.el-menu-vertical-demo{width:35px;}
+.el-submenu .el-menu-item{min-width:180px;}
+.hiddenDropdown,.hiddenDropname{display:none;}
+a{text-decoration:none;}
+.iconfont{padding-right:10px;font-size:25px;}
 
-.hiddenDropdown,
-.hiddenDropname {
-  display: none;
-}
-a {
-  text-decoration: none;
-}
-.iconfont{
-  padding-right: 10px;
-  font-size: 25px;
-}
 </style>
