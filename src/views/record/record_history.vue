@@ -66,7 +66,7 @@
               <!-- 所属账户ID -->
             <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
                 <!-- 所属Board ID -->
-            <el-table-column prop="board.name" label="Board Name" align="center" width="120"></el-table-column>
+            <el-table-column prop="board.name" label="Board Name" align="center" width="125"></el-table-column>
                  <!-- 发布时间 -->
             <el-table-column prop="finished_time" label="Publish Time" align="center" width="160">
             </el-table-column> 

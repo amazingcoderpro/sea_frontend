@@ -59,7 +59,7 @@
                 <template slot-scope="scope"> {{scope.row.rule.tag}}</template>
             </el-table-column>
             <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
-            <el-table-column prop="board.name" label="Board Name" align="center" width="120"></el-table-column>
+            <el-table-column prop="board.name" label="Board Name" align="center" width="125"></el-table-column>
             <!-- Publish Time -->
             <el-table-column label="Publish Time" align="center" width="170">
                 <template slot-scope="scope">
@@ -252,7 +252,7 @@ export default {
         var statedata = {
             publish_record_list :pin_list  
         }
-        this.$confirm('Are you sure you wanna delete these pins?', 'Warning', {
+        this.$confirm('Are you sure you want to delete the data?', 'Warning', {
               confirmButtonText: 'Yes, I’m Sure',
               cancelButtonText: 'Cancel',
               type: 'warning'
