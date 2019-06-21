@@ -35,7 +35,7 @@
               </el-select>
               <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="start time" end-placeholder="End time" placeholder="选择时间范围">
               </el-time-picker>
-              <div class="el-form-item__error" :style="'margin-left:244px;'" v-if="timeValState == 2">Must be more than 2 hours</div>
+              <div class="el-form-item__error" :style="'margin-left:244px;'" v-if="timeValState == 2">Must be more than 0.5 hours</div>
               <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="interval_time">
                 <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
@@ -314,7 +314,7 @@ import * as base from '../../assets/js/base'
         var sTime = new Date(this.scheduleRule.timeVal[0]).getTime();
         var eTime = new Date(this.scheduleRule.timeVal[1]).getTime();
         var ctime = eTime - sTime;
-        if(ctime>=7200000){
+        if(ctime>=1800000){
               this.timeValState = 1;
               this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],"hour");
               this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],"hour");

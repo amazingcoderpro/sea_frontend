@@ -69,10 +69,10 @@
               <el-table-column prop="pin_saves" label="Saves" align="center"  width="140"></el-table-column>
               <el-table-column prop="pin_comments" label="Comments" align="center"  width="140"></el-table-column>
               <el-table-column prop="product_visitors" label="Users" align="center"  width="135"></el-table-column>
-              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="135"></el-table-column>
-              <el-table-column prop="product_clicks" label="Sessions" align="center" width="138"></el-table-column>
-              <el-table-column prop="product_sales" label="Transactions" align="center" width="135"> </el-table-column>   
-              <el-table-column prop="product_revenue" align="center" label="Revenue" width="135"></el-table-column>
+              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="130"></el-table-column>
+              <el-table-column prop="product_clicks" label="Sessions" align="center" width="133"></el-table-column>
+              <el-table-column prop="product_sales" label="Transactions" align="center" width="130"> </el-table-column>   
+              <el-table-column prop="product_revenue" label="Revenue"  align="center" fixed="right" width="130"></el-table-column>
             </el-table>
         </div>
         <div class="paging">
@@ -149,7 +149,7 @@ export default {
       },
       width: {
       type: String,
-      default: '100%'
+      default: '1622px'
       },
       height: {
       type: String,
@@ -414,16 +414,5 @@ export default {
 .sub_account_daily_report .topForm .el-form-item{margin-bottom: 20px;}
 .sub_account_daily_report .el-form--inline .el-form-item{margin-right: 0;}
 .sub_account_daily_report .paging{margin-bottom: 25px;}
-
-
-/* 
-[_echarts_instance_] div
-{
-  width:100%!important;
-}
-
-canvas{
-    width:100%!important;
-} */
 
 </style>

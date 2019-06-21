@@ -81,7 +81,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="Edit" width="110" fixed="right" >
+            <el-table-column align="center" label="Edit" width="133">
               <template  slot-scope="scope">
                 <el-button type="danger" icon="edit" size="small" @click="cancelFun(scope.row)" >Cancel</el-button>
               </template>
@@ -205,7 +205,7 @@ export default {
         var statedata = {
             publish_record_list :newArray  
         }
-        this.$confirm('Make sure to cancel?', 'Tips', {
+        this.$confirm('Determine Cancellation?', 'Tips', {
               confirmButtonText: 'Determine',
               cancelButtonText: 'Cancel',
               type: 'warning'

@@ -54,7 +54,7 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Date Of Validity"  width="180">
               <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="348">
+            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="350">
             <template slot-scope="scope" >
                 <div  v-for="item in scope.row.schedule_rule" :key="item.id">
                     <template>
@@ -71,16 +71,16 @@
                 </div>
             </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="155">
+            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="160">
               <template slot-scope="scope"> {{JSON.parse(scope.row.product_list).length }}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="155">
+            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="160">
               <template slot-scope="scope"> {{scope.row.account_name}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="board_name" label="Board Name"  width="155">
+            <el-table-column  align="center" class="parentNodeColumn" prop="board_name" label="Board Name"  width="160">
               <template slot-scope="scope"> {{scope.row.board_name}}</template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="Operation" width="260" fixed="right">
+            <el-table-column prop="operation" align="center" label="Operation" width="262">
               <template slot-scope="scope">
                 <template v-if="scope.row.state == -1 || scope.row.state == 0 || scope.row.state == 1">
                   <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>

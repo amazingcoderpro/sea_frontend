@@ -71,7 +71,7 @@
             <el-table-column prop="finished_time" label="Publish Time" align="center" width="160">
             </el-table-column> 
                 <!-- 发布状态 --> 
-            <el-table-column prop="state" label="State" align="center" width="120">
+            <el-table-column prop="state" label="State" align="center" width="130">
               <template  slot-scope="scope">
                 <template v-if="scope.row.state == 3">
                     <el-button type="primary" icon="edit" size="small" @click="recordHead(scope.row)" >Failed</el-button>
@@ -81,7 +81,7 @@
                 </template>
               </template>
             </el-table-column>
-                 <el-table-column prop="remark" align="center" label="Error" width="120" fixed="right">
+                 <el-table-column prop="remark" align="center" label="Error" width="132">
             </el-table-column>
           </el-table>
         </div>

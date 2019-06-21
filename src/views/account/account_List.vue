@@ -74,7 +74,7 @@
                  Unpublished Today : {{scope.row.pending}}<br/>
               </template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="Edit" width="100">
+            <el-table-column prop="operation" align="center" label="Edit" width="140">
               <template slot-scope="scope">
                 <el-button icon="edit" type="danger" size="small" @click="deteleFun(scope.row)">Delete</el-button>
               </template>

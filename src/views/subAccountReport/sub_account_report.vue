@@ -65,8 +65,8 @@
                 <el-table-column  align="center"  prop="product_visitors" label="Users"  width="140"></el-table-column>
                 <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="140"></el-table-column>
                 <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="140"></el-table-column>
-                <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="120"></el-table-column>
-                <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="120"></el-table-column>
+                <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="130"></el-table-column>
+                <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="127"></el-table-column>
               </el-table>
             </div>
             <!-- 分页 -->
@@ -83,8 +83,8 @@
             <el-table-column  align="center"  prop="product_visitors" label="Users"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="140"></el-table-column>
+            <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="145"></el-table-column>
+            <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="145"></el-table-column>
               </el-table>
             </div>
         </template>
@@ -103,7 +103,7 @@
                   <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="180"></el-table-column>
                   <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="180"></el-table-column>
                   <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="180"></el-table-column>
-                  <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="185"></el-table-column>
+                  <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="180"></el-table-column>
               </el-table>
             </div>
         </template>
