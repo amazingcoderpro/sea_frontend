@@ -52,10 +52,10 @@
             <el-table-column  align="center"  class="parentNodeColumn" prop="board_num" label="Boards"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="pin_num" label="Pins"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="pin_saves" label="Saves"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="visitor_num" label="Visitors"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="click_num" label="Clicks"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Sales"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenues"  ></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="visitor_num" label="Users"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="click_num" label="Sessions"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Transactions"  width="200"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenue"  ></el-table-column>
           </el-table>
         </div>
         <div class="bottomBox">
@@ -240,8 +240,8 @@ export default {
                 YValue:[], 
             },
             chartBtnArray:[
-                {btnName:'Clicks',btnValue:'0'},
-                {btnName:'Sales',btnValue:'1'},
+                {btnName:'Sessions',btnValue:'0'},
+                {btnName:'Transactions',btnValue:'1'},
                 {btnName:'Revenue',btnValue:'2'},
                 {btnName:'Pins',btnValue:'3'},
                 {btnName:'Saves',btnValue:'4'},

@@ -68,11 +68,11 @@
               <el-table-column prop="pins" label="Pins" align="center" width="140"></el-table-column>
               <el-table-column prop="pin_saves" label="Saves" align="center"  width="140"></el-table-column>
               <el-table-column prop="pin_comments" label="Comments" align="center"  width="140"></el-table-column>
-              <el-table-column prop="product_visitors" label="Users" align="center"  width="140"></el-table-column>
-              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="140"></el-table-column>
-              <el-table-column prop="product_clicks" label="Sessions" align="center" width="135"></el-table-column>
-              <el-table-column prop="product_sales" label="Transactions" align="center" width="133"> </el-table-column>   
-              <el-table-column prop="product_revenue" align="center" label="Revenue" width="130"></el-table-column>
+              <el-table-column prop="product_visitors" label="Users" align="center"  width="135"></el-table-column>
+              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="135"></el-table-column>
+              <el-table-column prop="product_clicks" label="Sessions" align="center" width="138"></el-table-column>
+              <el-table-column prop="product_sales" label="Transactions" align="center" width="135"> </el-table-column>   
+              <el-table-column prop="product_revenue" align="center" label="Revenue" width="135"></el-table-column>
             </el-table>
         </div>
         <div class="paging">
@@ -107,8 +107,8 @@ export default {
          YValue:[0], 
       },
       chartBtnArray:[
-        {btnName:'Clicks',btnValue:'0'},
-        {btnName:'Sales',btnValue:'1'},
+        {btnName:'Sessions',btnValue:'0'},
+        {btnName:'Transactions',btnValue:'1'},
         {btnName:'Revenue',btnValue:'2'},
         {btnName:'Pins',btnValue:'3'},
         {btnName:'Saves',btnValue:'4'}

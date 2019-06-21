@@ -84,7 +84,7 @@
             <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="153"></el-table-column>
+            <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="140"></el-table-column>
               </el-table>
             </div>
         </template>
@@ -160,7 +160,7 @@ export default {
   },
   mounted() {
       setTimeout(() => {
-        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 130;
+        this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 410;
       }, 50);
       window.addEventListener('resize', () => {
         if(document.getElementsByClassName("topictable").length>0){
