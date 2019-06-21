@@ -62,10 +62,10 @@
                 <el-table-column  align="center"  prop="pins" label="Pins"  width="140"></el-table-column>
                 <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="140"></el-table-column>
                 <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="140"></el-table-column>
-                <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="140"></el-table-column>
-                <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="140"></el-table-column>
-                <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="140"></el-table-column>
-                <el-table-column  align="center"  prop="product_sales" label="Sales"  width="120"></el-table-column>
+                <el-table-column  align="center"  prop="product_visitors" label="Users"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="140"></el-table-column>
+                <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="120"></el-table-column>
                 <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="120"></el-table-column>
               </el-table>
             </div>
@@ -80,11 +80,11 @@
             <el-table-column  align="center"  prop="pins" label="Pins"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_sales" label="Sales"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_revenue" label="Revenue" ></el-table-column>
+            <el-table-column  align="center"  prop="product_visitors" label="Users"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="153"></el-table-column>
               </el-table>
             </div>
         </template>
@@ -97,12 +97,12 @@
                           <img :src="'data:image/jpeg;base64,' + scope.row.pin_thumbnail"  width="70" height="70" />    
                       </template>
                   </el-table-column>
-                  <el-table-column  align="center"  prop="product_sales" label="Saves"  width="180"></el-table-column>
+                  <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="180"></el-table-column>
                   <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="180"></el-table-column>
-                  <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="180"></el-table-column>
-                  <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="180"></el-table-column>
-                  <el-table-column  align="center"  prop="product_clicks" label="Clicks"  width="180"></el-table-column>
-                  <el-table-column  align="center"  prop="product_sales" label="Sales"  width="180"></el-table-column>
+                  <el-table-column  align="center"  prop="product_visitors" label="Users"  width="180"></el-table-column>
+                  <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="180"></el-table-column>
+                  <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="180"></el-table-column>
+                  <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="180"></el-table-column>
                   <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="185"></el-table-column>
               </el-table>
             </div>

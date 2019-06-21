@@ -61,18 +61,18 @@
         </div>
         <div class="table_right">
             <el-table border ref="topictable" :data="TableReport">
-              <el-table-column prop="date" label="Data" align="center"  width="130" ></el-table-column>
-              <el-table-column prop="boards" label="Boards" align="center"  width="130"></el-table-column>
-              <el-table-column prop="account_followings" label="Following" align="center" width="130"></el-table-column>
-              <el-table-column prop="account_followers" label="Followers" align="center" width="130"></el-table-column>
-              <el-table-column prop="pins" label="Pins" align="center" width="130"></el-table-column>
-              <el-table-column prop="pin_saves" label="Saves" align="center"  width="130"></el-table-column>
-              <el-table-column prop="pin_comments" label="Comments" align="center"  width="130"></el-table-column>
-              <el-table-column prop="product_visitors" label="Users" align="center"  width="130"></el-table-column>
-              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="120"></el-table-column>
-              <el-table-column prop="product_clicks" label="Sessions" align="center" width="120"></el-table-column>
-              <el-table-column prop="product_sales" label="Transactions" align="center" width="120"> </el-table-column>   
-              <el-table-column prop="product_revenue" align="center" label="Revenue"></el-table-column>
+              <el-table-column prop="date" label="Data" align="center"  width="140" ></el-table-column>
+              <el-table-column prop="boards" label="Boards" align="center"  width="140"></el-table-column>
+              <el-table-column prop="account_followings" label="Following" align="center" width="140"></el-table-column>
+              <el-table-column prop="account_followers" label="Followers" align="center" width="140"></el-table-column>
+              <el-table-column prop="pins" label="Pins" align="center" width="140"></el-table-column>
+              <el-table-column prop="pin_saves" label="Saves" align="center"  width="140"></el-table-column>
+              <el-table-column prop="pin_comments" label="Comments" align="center"  width="140"></el-table-column>
+              <el-table-column prop="product_visitors" label="Users" align="center"  width="140"></el-table-column>
+              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="140"></el-table-column>
+              <el-table-column prop="product_clicks" label="Sessions" align="center" width="135"></el-table-column>
+              <el-table-column prop="product_sales" label="Transactions" align="center" width="133"> </el-table-column>   
+              <el-table-column prop="product_revenue" align="center" label="Revenue" width="130"></el-table-column>
             </el-table>
         </div>
         <div class="paging">
