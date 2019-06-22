@@ -523,7 +523,6 @@ export default {
 
 
 <style>
-/* .el-loading-mask.is-fullscreen{display: none!important;} */
 .dashboard{width:calc(100% - 20px)}
 .dashboard .table_right{margin-bottom:10px;}
 .dashboard .leftBox{width:400px;float:left;}

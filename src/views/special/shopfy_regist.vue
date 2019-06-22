@@ -148,7 +148,7 @@ export default {
             confirmButtonText: 'Confirm',
             callback: action => {
             let address = this.registUser.emailstr.split()[1];
-              window.open(address, "_blank"); 
+              // window.open(address, "_blank"); 
               router.push("/login");
             }
           });

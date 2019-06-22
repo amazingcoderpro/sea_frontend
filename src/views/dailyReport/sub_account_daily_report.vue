@@ -149,7 +149,7 @@ export default {
       },
       width: {
       type: String,
-      default: '100%'
+      default: 'calc(100% - 20px)'
       },
       height: {
       type: String,
@@ -416,5 +416,4 @@ export default {
 .sub_account_daily_report .topForm .el-form-item{margin-bottom: 20px;}
 .sub_account_daily_report .el-form--inline .el-form-item{margin-right: 0;}
 .sub_account_daily_report .paging{margin-bottom: 25px;}
-
 </style>
