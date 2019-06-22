@@ -69,10 +69,10 @@
               <el-table-column prop="pin_saves" label="Saves" align="center"  width="140"></el-table-column>
               <el-table-column prop="pin_comments" label="Comments" align="center"  width="140"></el-table-column>
               <el-table-column prop="product_visitors" label="Users" align="center"  width="135"></el-table-column>
-              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="130"></el-table-column>
-              <el-table-column prop="product_clicks" label="Sessions" align="center" width="133"></el-table-column>
-              <el-table-column prop="product_sales" label="Transactions" align="center" width="130"> </el-table-column>   
-              <el-table-column prop="product_revenue" label="Revenue"  align="center" fixed="right" width="130"></el-table-column>
+              <el-table-column prop="product_new_visitors" label="New Users" align="center" width="135"></el-table-column>
+              <el-table-column prop="product_clicks" label="Sessions" align="center" width="135"></el-table-column>
+              <el-table-column prop="product_sales" label="Transactions" align="center" width="138"> </el-table-column>   
+              <el-table-column prop="product_revenue" label="Revenue"  align="center" width="135"></el-table-column>
             </el-table>
         </div>
         <div class="paging">
@@ -149,7 +149,7 @@ export default {
       },
       width: {
       type: String,
-      default: '1622px'
+      default: '100%'
       },
       height: {
       type: String,
@@ -157,18 +157,20 @@ export default {
       }
   },
   mounted() {
-    this.getPinterestFun();
-          const self = this;//因为箭头函数会改变this指向，指向windows。所以先把this保存
+        this.getPinterestFun();
+        this.dataSelect();
+        this.init();
+      },
+  methods: {
+    init(){
+      const self = this;//因为箭头函数会改变this指向，指向windows。所以先把this保存
         setTimeout(() => {
           window.onresize = function() {
               self.chart = echarts.init(self.$refs.myEchart);
               self.chart.resize();
           }
         },20)
-  },
-  methods: {
-    init(){
-      this.dataSelect();
+
       this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
      // this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1]);
       this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60 -1000);

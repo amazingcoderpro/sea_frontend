@@ -54,7 +54,7 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Date Of Validity"  width="180">
               <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="350">
+            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="355">
             <template slot-scope="scope" >
                 <div  v-for="item in scope.row.schedule_rule" :key="item.id">
                     <template>
@@ -66,7 +66,7 @@
                         <span :class="'spanClass'" v-else-if="item.weekday == 5">Saturday </span>
                         <span :class="'spanClass'" v-else>Sunday</span>
                     </template>
-                    |{{item.start_time}}|{{item.end_time}}|发布频率{{item.interval_time}}
+                    |{{item.start_time}}|{{item.end_time}} | Publication frequency | {{item.interval_time}}
                     <br/>
                 </div>
             </template>
@@ -80,7 +80,7 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="board_name" label="Board Name"  width="160">
               <template slot-scope="scope"> {{scope.row.board_name}}</template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="Operation" width="262">
+            <el-table-column prop="operation" align="center" label="Operation" width="255">
               <template slot-scope="scope">
                 <template v-if="scope.row.state == -1 || scope.row.state == 0 || scope.row.state == 1">
                   <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>

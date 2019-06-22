@@ -54,8 +54,8 @@
             <el-table-column  align="center"  class="parentNodeColumn" prop="pin_saves" label="Saves"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="visitor_num" label="Users"  width="200"></el-table-column>
             <el-table-column  align="center"  class="parentNodeColumn" prop="click_num" label="Sessions"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Transactions"  width="200"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenue"  ></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="sales_num" label="Transactions"  width="210"></el-table-column>
+            <el-table-column  align="center"  class="parentNodeColumn" prop="revenue_num" label="Revenue" width="210"></el-table-column>
           </el-table>
         </div>
         <div class="bottomBox">

@@ -47,8 +47,8 @@
               <template slot-scope="scope"> Total:{{scope.row.comments}}<br/>Todays new:{{scope.row.comments_increment}}</template>
             </el-table-column>
             <el-table-column prop="under_board_name" label="Board Name" align="center" width="170"></el-table-column>
-            <el-table-column prop="under_account_name" label="Account Name" align="center" width="170"></el-table-column>
-            <el-table-column prop="operation" align="center" label="Manage Your Pins" fixed="right" width="190">
+            <el-table-column prop="under_account_name" label="Account Name" align="center" width="180"></el-table-column>
+            <el-table-column prop="operation" align="center" label="Manage Your Pins" fixed="right" width="200">
               <template slot-scope="scope">
                   <el-button type="primary" icon="edit" size="small" @click="editFun(scope.row)">Edit</el-button>
                   <el-button type="danger" icon="delete" size="small" @click="deteleFun(scope.row,scope.$index)">Delete</el-button>
