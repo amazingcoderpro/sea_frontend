@@ -31,8 +31,11 @@
             </el-date-picker>
             <el-button type="primary" icon="view" @click="init()">Search</el-button>
         </el-form>
+
+        <!-- echarts -->
         <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
         
+        <!-- 选择条 -->
         <div class="menu">
             <template v-for="item in chartBtnArray" >
                     <div :key="item.btnValue" class="menuSon active"  v-if="tableType == item.btnValue"  @click="tableInit(item.btnValue)" >
@@ -238,7 +241,9 @@ export default {
             tableValue:{
                 XValue:[], 
                 YValue:[], 
-            },
+            },                  
+
+                                // 选择条
             chartBtnArray:[
                 {btnName:'Sessions',btnValue:'0'},
                 {btnName:'Transactions',btnValue:'1'},
@@ -311,17 +316,7 @@ export default {
             this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
             this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60 - 1000);
             this.dataSelect();
-        // 获取表格数据
-            // var DataSelf = window.localStorage.getItem('dashboardOne7');
-            // if(DataSelf && this.searchData.dataType == 3){
-            //     let _thisData = JSON.parse(DataSelf);
-            //     this.bigReport = _thisData.overview_list;
-            //     this.tableData = [];
-            //     this.tableData.push(_thisData.total_data);
-            //     this.tableInit(this.tableType);
-            //     this.loadingState.dashboardOne = false;
-            // }else{
-            // }
+     
             var urlString = `/api/v1/dashboard/1/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString)
             .then(res => {
@@ -451,7 +446,7 @@ export default {
                         boundaryGap: false,
                         data: this.tableValue.XValue
                         },
-                    grid:{               
+                    grid:{              
                         top:"50px",
                         left:"50px",
                         right:"15px",

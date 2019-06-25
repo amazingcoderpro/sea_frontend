@@ -83,8 +83,8 @@
             <el-table-column  align="center"  prop="product_visitors" label="Users"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="150"></el-table-column>
             <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="150"></el-table-column>
-            <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="145"></el-table-column>
-            <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="145"></el-table-column>
+            <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="150"></el-table-column>
+            <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="155"></el-table-column>
               </el-table>
             </div>
         </template>
@@ -101,9 +101,9 @@
                   <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="180"></el-table-column>
                   <el-table-column  align="center"  prop="product_visitors" label="Users"  width="180"></el-table-column>
                   <el-table-column  align="center"  prop="product_new_visitors" label="New Users"  width="180"></el-table-column>
-                  <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="180"></el-table-column>
-                  <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="180"></el-table-column>
-                  <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="180"></el-table-column>
+                  <el-table-column  align="center"  prop="product_clicks" label="Sessions"  width="185"></el-table-column>
+                  <el-table-column  align="center"  prop="product_sales" label="Transactions"  width="185"></el-table-column>
+                  <el-table-column  align="center"  prop="product_revenue" label="Revenue" width="185"></el-table-column>
               </el-table>
             </div>
         </template>

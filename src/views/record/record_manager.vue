@@ -11,7 +11,14 @@
             <!-- 时间范围 -->
             <el-button  type="primary" class="button_left" @click='init()'>Search</el-button>
             <el-form-item class="Publish_right" label="Publish time">
-              <el-date-picker type="daterange" v-model="search.creatTime" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W300'">
+              <el-date-picker type="daterange" 
+                     v-model="search.creatTime" 
+                     :picker-options="pickerOptions" 
+                     range-separator="--" 
+                     start-placeholder="start time" 
+                     end-placeholder="End time" 
+                     :default-time="['12:00:00']" 
+                     :class="'W300'">
               </el-date-picker>
             </el-form-item>
             <!-- SKU -->
@@ -246,6 +253,7 @@ export default {
       var ids = [];
       if(this.multipleSelection.length>0){
         this.multipleSelection.forEach(element =>{
+          console.log(ids)
           ids.push(element.id)
         });
         var pin_list = JSON.stringify(ids);
