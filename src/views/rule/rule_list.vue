@@ -5,12 +5,14 @@
             <li><a><span class="el-icon-right"> </span> Rule Manager</a></li>
         </ul>
         <el-form :inline="true" :model="searchData" class="demo-form-inline" v-if="account_id == null" label-width="100px">
+          <!-- Pinterest -->
           <el-form-item label="Pinterest">
             <el-select v-model="searchData.pinterest" placeholder="Pinterest"  @change="pinterestChange" :class="'W200'">
               <el-option :label="'All'" :value="''"></el-option>
               <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
+          <!-- Board -->
           <el-form-item label="Board">
             <el-select v-model="searchData.board" placeholder="Board" :class="'W200'">
               <el-option :label="'All'" :value="'-1'"> </el-option>
@@ -21,9 +23,11 @@
               </template>
             </el-select>
           </el-form-item>
+          <!-- Tag -->
           <el-form-item label="Tag">
             <el-input placeholder="Tag" v-model="searchData.tag" :class="'W200'"></el-input>
           </el-form-item>
+          <!-- CreatTime -->
           <el-form-item label="CreatTime">
               <el-date-picker type="daterange" v-model="searchData.creatTime" :picker-options="pickerOptions" range-separator="--" start-placeholder="start time" end-placeholder="End time" :default-time="['12:00:00']" :class="'W300'">
               </el-date-picker>
