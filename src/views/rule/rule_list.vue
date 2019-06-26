@@ -49,7 +49,7 @@
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" class="topictable"  :height="tableHeight">
             <el-table-column align="center" type="index"  label="ID" width="50"></el-table-column>
-            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="Tag"  width="155">
+            <el-table-column  align="center"  class="parentNodeColumn" prop="tag" label="Tag"  width="180">
               <template slot-scope="scope"> {{scope.row.tag}}</template>
             </el-table-column>
             <el-table-column  align="center" class="parentNodeColumn" prop="create_time" label="Create Time"  width="180">
@@ -58,7 +58,7 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Date Of Validity"  width="180">
               <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="355">
+            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="360">
             <template slot-scope="scope" >
                 <div  v-for="item in scope.row.schedule_rule" :key="item.id">
                     <template>
@@ -75,26 +75,26 @@
                 </div>
             </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="160">
+            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="180">
               <template slot-scope="scope"> {{JSON.parse(scope.row.product_list).length }}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="160">
+            <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="180">
               <template slot-scope="scope"> {{scope.row.account_name}}</template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="board_name" label="Board Name"  width="160">
+            <el-table-column  align="center" class="parentNodeColumn" prop="board_name" label="Board Name"  width="185">
               <template slot-scope="scope"> {{scope.row.board_name}}</template>
             </el-table-column>
-            <el-table-column prop="operation" align="center" label="Operation" width="255">
+            <el-table-column prop="operation" align="center" label="Operation" width="150">
               <template slot-scope="scope">
                 <template v-if="scope.row.state == -1 || scope.row.state == 0 || scope.row.state == 1">
-                  <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>
+                  <el-button type="danger" style="width:66px;" icon="edit" size="small" @click="stopFun(scope.row)">Stop</el-button>
                 </template>
                 <template v-else>
-                  <el-button type="primary" icon="edit" size="small" @click="stopFun(scope.row)" disabled="">Stop</el-button>
+                  <el-button type="danger" style="width:66px;"  icon="edit" size="small" @click="stopFun(scope.row)" disabled="">Stop</el-button>
                 </template>
-                <el-button type="primary" icon="edit" size="small" @click="cloneFun(scope.row)">Clone</el-button>
+                <el-button type="success" style="width:66px;" icon="edit" size="small" @click="cloneFun(scope.row)">Clone</el-button>
                
-                <el-button type="danger" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
+                <el-button type="primary" style="width:66px;" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -173,7 +173,7 @@ export default {
         if(document.getElementsByClassName("topictable").length>0){
           this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
         }
-     //   this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
+       this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
       });
   },
   methods: {
@@ -349,5 +349,6 @@ export default {
 </script>
 
 <style>
-
+.RuleList .el-button+.el-button{display: block; margin: auto; margin-top: 12px;}
+  
 </style>

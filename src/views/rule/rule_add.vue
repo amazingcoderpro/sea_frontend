@@ -40,7 +40,7 @@
                 <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
               </el-select>
               <el-button type="primary"  @click="scheduleRuleFun()">Add</el-button>
-              <div class="el-form-item__error" v-if="scheduleRruleState == 2">请添加区间</div>
+              <div class="el-form-item__error" v-if="scheduleRruleState == 2">Please add intervals</div>
             </el-form-item>
             <!-- 时间区间的列表，没有数据是处于隐藏状态 -->
             <div v-if="ruleForm.schedule_rule.length>0">
@@ -68,15 +68,29 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">Save</el-button>
-              <el-button @click="resetForm()">Reset</el-button>
+              <el-button class="reset_button" @click="resetForm()">Reset</el-button>
             </el-form-item>
           </el-form>
+
+          
           <el-form :model="serchProduct" :rules="searchRules" ref="serchProduct" label-width="100px" class="demo-serchProduct searchContent">
+            <el-form-item label="Rules Type" prop="">
+                <el-select v-model="serchProduct.Rule_type" placeholder="Long Term Rule" :style="'width: 400px;'" @change="dataSelect">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+            </el-form-item>
+            
             <el-form-item label="Category Name" prop="product__name">
                 <el-input v-model="serchProduct.product__name" :style="'width: 400px;'"></el-input>
             </el-form-item>
-            <el-form-item label="Product Online Time" prop="data1">
-                <el-date-picker v-model="serchProduct.data1" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
+            <el-form-item label="Product Online Time" prop="data1" class="Product_box">
+                <span :class="'Product_time'" v-if="serchProduct.Rule_type == 0">If you don't choose the product online time, the system will send all online products that match this category name by default.</span>
+                <el-date-picker v-model="serchProduct.data1" :disabled="disabledType=='1'" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                 </el-date-picker>
             </el-form-item>
             <!-- <el-form-item label="Time" prop="data2" :class="'specialTime'">
@@ -106,7 +120,7 @@
             <el-form-item label="Number of Products">
               <el-button type="primary"  @click="serchProductFun('serchProduct')" :style="'margin-right:20px;'">Search</el-button>
               <span>{{ruleForm.product_list.length}}个</span>
-              <div class="el-form-item__error" v-if="productListState == 2">请查询出满足以下条件的商品</div>
+              <div class="el-form-item__error" v-if="productListState == 2">Please find the goods that meet the following conditions</div>
             </el-form-item>
 
           </el-form>
@@ -125,7 +139,7 @@ import * as base from '../../assets/js/base'
     data() {
       var scheduleRuleFun = (rule, value, callback) => {
         if (this.ruleForm.schedule_rule.length == 0) {
-          return callback(new Error('请添加区间'));
+          return callback(new Error('Please add intervals'));
         }else{
           callback();
         }
@@ -145,10 +159,20 @@ import * as base from '../../assets/js/base'
               }
             }
         }else{
-          return callback(new Error('请选择日期!'));
+          return callback(new Error('Please choose the date!'));
         }
       };
       return {
+          options: [
+           {
+            value: '0', 
+            label: 'Short Term Rule'
+          },
+          {
+            value: '1',
+            label: 'Long Term Rule'
+          }
+        ],
           pickerOptions: {
               disabledDate(time) {
                   return time.getTime() < Date.now() - 1000 * 60 * 60 * 24;//设置选择今天之前的日期
@@ -183,6 +207,7 @@ import * as base from '../../assets/js/base'
             {"label":"2H","value":"7200"},
           ],
           serchProduct:{
+            Rule_type:'0', //默认第一个
             data1:[],   //产品上架时间初始数据
             data2:[],   //产品特殊时间初始数据
             publish_begin_time:'',//产品上架时间最终数据
@@ -207,20 +232,23 @@ import * as base from '../../assets/js/base'
             tag:'',      //规则标签
           },
           rules: {
-            pinterest: [{ required: true, message: '请选择pinterest', trigger: 'change' }],
-            board: [{ required: true, message: '请选择board', trigger: 'change' }],
+            pinterest: [{ required: true, message: 'Please choose pinterest', trigger: 'change' }],
+            board: [{ required: true, message: 'Please choose board', trigger: 'change' }],
             ruleTime: [{required: true,  trigger: 'change',validator:RuleTimeFun }],
             // schedule_rule:[{required: true,validator:scheduleRuleFun}],
-            tag: [{ required: true, message: '请输入标签', trigger: 'blur' },],
+            tag: [{ required: true, message: 'Please enter the label', trigger: 'blur' },],
           },
           searchRules:{
-            product__name: [{ required: true, message: '请输入商品名', trigger: 'blur' },],
-            data1:[{required: true, message: '请选择商品上架时间', trigger: 'change' }],
-            data2:[{required: true, message: '请选择商品浏览量、销量时间', trigger: 'change' }],
+            product__name: [{ required: true, message: 'Please enter the name of the product.', trigger: 'blur' },],
+            data1:[{required: true, message: 'Please choose the shelf time of the goods.', trigger: 'change' }],
+            data2:[{required: true, message: 'Please select the browsing volume of the goods.Sales time', trigger: 'change' }],
             // sale: [{ required: true, message: '请输入产品销量', trigger: 'blur' },],
             // scan: [{ required: true, message: '请输入产品浏览量', trigger: 'blur'}],
           },
       };
+    },
+     mounted() {
+        this.dataSelect();
     },
     watch:{
       dialog:function (){
@@ -287,13 +315,13 @@ import * as base from '../../assets/js/base'
                 .then(res => {
                     if(res.data.code == 1){
                         this.$message({
-                          message: "添加成功!",
+                          message: "Added Successfully!",
                           type: "success"
                         });
                         this.dialog.show = false;
                         this.$parent.init();
                     }else{
-                      this.$message("添加失败!");
+                      this.$message("Failure to add!");
                     }
                 })
                 .catch(error => {
@@ -370,7 +398,7 @@ import * as base from '../../assets/js/base'
                   if(res.data.code == 1){
                     this.ruleForm.product_list = res.data.data;
                   }else{
-                    this.$message("获取商品列表失败!");
+                    this.$message("Failed to get the list of goods!");
                   }
               })        
           } else {
@@ -380,6 +408,15 @@ import * as base from '../../assets/js/base'
         });
 
 
+      },
+     
+      dataSelect(){        // 当选择Long Term Rule时间选择框禁用
+        if(this.serchProduct.Rule_type == 0){
+              this.disabledType = 0;
+        }else{
+              this.disabledType = 1;
+              
+        }
       },
       pinterestChange(){
         //pinterest账户变更触发的事件
@@ -409,17 +446,14 @@ import * as base from '../../assets/js/base'
 .ruleAdd .scheduleRuleList li{font-size:14px;color:#606266;margin-bottom:5px;}
 .ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
 .ruleAdd .el-dialog__body{position: relative;}
-.ruleAdd .contentBg{height:176px;}
+.ruleAdd .contentBg{height:220px;}
 .ruleAdd .searchContent{position: absolute;top: 82px;}
-.ruleAdd .specialTime{
-    position: absolute;
-    left: 346px;
-}
+.ruleAdd .specialTime{  position: absolute;left: 346px;}
 .ruleAdd input::-webkit-outer-spin-button,
-.ruleAdd input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-.ruleAdd input[type="number"]{
-  -moz-appearance: textfield;
-}
+.ruleAdd input::-webkit-inner-spin-button {-webkit-appearance: none;}
+.ruleAdd input[type="number"]{ -moz-appearance: textfield;}
+.ruleAdd .reset_button{display: inline-block!important; margin-left: 20px!important; color: #fff;background-color: rgba(204, 204, 204, 1);}
+.ruleAdd .Product_box{position: relative;width: 1185px;}
+.ruleAdd .Product_time{display: none; position: absolute;left: 410px;line-height: 20px;}
+.ruleAdd .Product_box:hover .Product_time{display: block;}
 </style>
