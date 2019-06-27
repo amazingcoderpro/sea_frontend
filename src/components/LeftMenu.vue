@@ -97,11 +97,12 @@ export default {
                 // {"id":13,"menu_name":"BoardManager","menu_url":"/board_manager","parent_id":11,"icon":null,"childs":[]},
                 // {"id":14,"menu_name":"PinManager","menu_url":"/pin_manager","parent_id":11,"icon":null,"childs":[]}
               ]},
-              {"id":15,"menu_name":"Rule Manager","menu_url":"3-1","parent_id":null,"icon":"iconfont icon-touruguize",
+              {"id":15,"menu_name":"Posting Rules Settings","menu_url":"3-1","parent_id":null,"icon":"iconfont icon-touruguize",
                 "childs":[
-                  {"id":16,"menu_name":"Rule List","menu_url":"/rule_list","parent_id":15,"icon":null,"childs":[]},
-                  {"id":17,"menu_name":"Record Manager","menu_url":"/record_manager","parent_id":15,"icon":null,"childs":[]},
-                  {"id":17,"menu_name":"Record History","menu_url":"/record_history","parent_id":15,"icon":null,"childs":[]}
+                  {"id":16,"menu_name":"Account Posting Time Setting","menu_url":"/ruleTimeList","parent_id":15,"icon":null,"childs":[]},
+                  {"id":16,"menu_name":"Product Schedule Rules Setting","menu_url":"/rule_list","parent_id":15,"icon":null,"childs":[]},
+                  {"id":17,"menu_name":"Posting History","menu_url":"/record_history","parent_id":15,"icon":null,"childs":[]}
+                  // {"id":17,"menu_name":"Record Manager","menu_url":"/record_manager","parent_id":15,"icon":null,"childs":[]},
                 ]
 
               },

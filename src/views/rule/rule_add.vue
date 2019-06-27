@@ -1,4 +1,3 @@
-
 <template>
     <div class="ruleAdd">
          <el-dialog  :title="dialog.title" :visible.sync="dialog.show" :close-on-click-modal='false' :close-on-press-escape='false' :modal-append-to-body="false" @close='resetForm'>
@@ -71,52 +70,25 @@
               <el-button class="reset_button" @click="resetForm()">Reset</el-button>
             </el-form-item>
           </el-form>
-
-          
           <el-form :model="serchProduct" :rules="searchRules" ref="serchProduct" label-width="100px" class="demo-serchProduct searchContent">
             <el-form-item label="Rules Type" prop="">
                 <el-select v-model="serchProduct.Rule_type" :style="'width: 400px;'" @change="dataSelect">
                   <el-option
-                    v-for="item in options"
+                    v-for="item in ruleTypeArray"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value">
                   </el-option>
                 </el-select>
             </el-form-item>
-            
             <el-form-item label="Category Name" prop="product__name">
                 <el-input v-model="serchProduct.product__name" :style="'width: 400px;'"></el-input>
             </el-form-item>
             <el-form-item label="Product Online Time" prop="data1" class="Product_box">
                 <span :class="'Product_time'" v-if="serchProduct.Rule_type == 0">If you don't choose the product online time, the system will send all online products that match this category name by default.</span>
-                <el-date-picker v-model="serchProduct.data1" :disabled="disabledType=='1'" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
+                <el-date-picker v-model="serchProduct.data1" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                 </el-date-picker>
             </el-form-item>
-            <!-- <el-form-item label="Time" prop="data2" :class="'specialTime'">
-                <el-date-picker v-model="serchProduct.data2" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
-                </el-date-picker>
-            </el-form-item> -->
-            <!-- <el-form-item label="Scan" prop="scan">
-              <el-select :class="'W20'" v-model="serchProduct.scan_sign">
-                <el-option  :label="'='" :value="'=='"> </el-option>
-                <el-option  :label="'>'" :value="'>'"> </el-option>
-                <el-option  :label="'<'" :value="'<'"> </el-option>
-                <el-option  :label="'>='" :value="'>='"> </el-option>
-                <el-option  :label="'<='" :value="'<='"> </el-option>
-              </el-select>
-              <el-input :class="'W36'" v-model="serchProduct.scan" type="number" placeholder="Scan"></el-input>
-            </el-form-item> -->
-            <!-- <el-form-item label="Sale" prop="sale">
-              <el-select :class="'W20'"  v-model="serchProduct.sale_sign">
-                <el-option  :label="'='" :value="'=='"> </el-option>
-                <el-option  :label="'>'" :value="'>'"> </el-option>
-                <el-option  :label="'<'" :value="'<'"> </el-option>
-                <el-option  :label="'>='" :value="'>='"> </el-option>
-                <el-option  :label="'<='" :value="'<='"> </el-option>
-              </el-select>
-              <el-input :class="'W36'" v-model="serchProduct.sale" type="number"  placeholder="Sale"></el-input>
-            </el-form-item> -->
             <el-form-item label="Number of Products">
               <el-button type="primary"  @click="serchProductFun('serchProduct')" :style="'margin-right:20px;'">Search</el-button>
               <span>{{ruleForm.product_list.length}}个</span>
@@ -163,16 +135,10 @@ import * as base from '../../assets/js/base'
         }
       };
       return {
-          options: [
-           {
-            value: '0', 
-            label: 'Short Term Rule'
-          },
-          {
-            value: '1',
-            label: 'Long Term Rule'
-          }
-        ],
+          ruleTypeArray: [
+            {value: '0', label: 'Short Term Rule'},
+            {value: '1',label: 'Long Term Rule'}
+          ],
           pickerOptions: {
               disabledDate(time) {
                   return time.getTime() < Date.now() - 1000 * 60 * 60 * 24;//设置选择今天之前的日期
@@ -291,7 +257,6 @@ import * as base from '../../assets/js/base'
           this.productListState = 2;
         }else{
             this.productListState = 1;
-
         }   
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -304,7 +269,6 @@ import * as base from '../../assets/js/base'
                   schedule_rule:JSON.stringify(this.ruleForm.schedule_rule),         // 
                   product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
                   tag:this.ruleForm.tag,      //规则标签
-
                   product_start:base.dateFormat(this.serchProduct.data1[0]),           //产品的发布时间范围起点
                   product_end:base.dateFormat(this.serchProduct.data1[1]),             //产品的发布时间范围终点
                   product_key:this.serchProduct.product__name,      //产品的搜索关键字
@@ -367,7 +331,6 @@ import * as base from '../../assets/js/base'
         }else{
           this.scheduleRruleState = 1;
         }
-
       },
       deletschedule(index){
         //删除指定分区
@@ -406,16 +369,14 @@ import * as base from '../../assets/js/base'
             return false;
           }
         });
-
-
       },
-     
-      dataSelect(){        // 当选择Long Term Rule时间选择框禁用
+      dataSelect(){        
+        //  0. Short Term Rule  1.Long Term Rule
         if(this.serchProduct.Rule_type == 0){
-              this.disabledType = 0;
+          // 当选择Long Term Rule时间选择框禁用
+              this.rulesTypeState = 0;
         }else{
-              this.disabledType = 1;
-              
+              this.rulesTypeState = 1;
         }
       },
       pinterestChange(){

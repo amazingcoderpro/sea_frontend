@@ -117,20 +117,24 @@ export default {
 
       options: [
         {
-          value: '[1,3]', 
+          value: '[0,1,3]', 
           label: 'All'
         },
         {
+          value: '[0]', 
+          label: 'Published-0'
+        },
+        {
           value: '[1]', 
-          label: 'Published'
+          label: 'Published-1'
         },
         {
           value: '[3]',
-          label: 'Publishing failure'
+          label: 'Publishing failure-3'
         }
       ],
       search:{
-        state:'[1,3]',
+        state:'[0,1,3]',
         // product__sku:'',
         creatTime:[],
         query_key:''

@@ -9,6 +9,9 @@ import AccountList from './views/account/account_List'
 import BoardList from './views/board/board_List'
 import PinManager from './views/pin/pin_manager'
 import RuleList from './views/rule/rule_list'
+import RuleTimeList from './views/ruleTime/ruleTimeList'
+
+
 import RecordManager from './views/record/record_manager'
 import RecordHistory from './views/record/record_history'
 import UserManager from './views/user/user_manager'
@@ -57,6 +60,7 @@ const router = new Router({
         { path: '/board_manager', name: 'board_List', component: BoardList },
         { path: '/pin_manager', name: 'pin_manager', component: PinManager },
         { path: '/rule_list', name: 'rule_list', component: RuleList },
+        { path: '/ruleTimeList', name: 'ruleTimeList', component: RuleTimeList },
         { path: '/record_manager', name: 'record_manager', component: RecordManager },
         { path: '/record_history', name: 'record_history', component: RecordHistory },
         { path: '/user_manager', name: 'user_manager', component: UserManager },
