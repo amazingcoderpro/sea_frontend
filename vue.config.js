@@ -39,17 +39,18 @@ module.exports = {
     },
     devServer: {
         open: true,
-        host: '127.0.0.1',
+        host: '0.0.0.0',
         port: 8080,
         https: false,
         hotOnly: false,
         proxy: { // 配置跨域
             '/api': {
                 //target: 'http://47.112.113.252:8000/api/',
-                //target: 'http://127.0.0.1:8000/api/',
+                // target: 'http://127.0.0.1:8000/api/',
                 // target: 'http://10.252.252.37:8000/api/',
-                //target: 'http://10.252.252.39:8000/api/',
-                target: 'http://10.252.253.62:8000/api/',   //李
+                target: 'https://pinbooster.seamarketings.com/api/',  //发布
+                // target: 'http://172.24.1.139:8000/api/',                //方
+                // target: 'http://172.24.1.168:8000/api/',            //李
                 ws: true,
                 changOrigin: true,
                 pathRewrite: {

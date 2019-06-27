@@ -75,7 +75,7 @@
           
           <el-form :model="serchProduct" :rules="searchRules" ref="serchProduct" label-width="100px" class="demo-serchProduct searchContent">
             <el-form-item label="Rules Type" prop="">
-                <el-select v-model="serchProduct.Rule_type" placeholder="Long Term Rule" :style="'width: 400px;'" @change="dataSelect">
+                <el-select v-model="serchProduct.Rule_type" :style="'width: 400px;'" @change="dataSelect">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
