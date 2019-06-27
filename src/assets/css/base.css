@@ -16,12 +16,16 @@ body,
 .W50{width:50%!important;margin-right:2%!important;}
 .W54{width:54%!important;margin-right:2%!important;}
 .W60{width:60%!important;margin-right:2%!important;}
+
+
+.WW100{width:100px!important;margin-right:10px!important;}
 .W200{width:200px!important;margin-right:10px!important;}
 .W250{width:250px!important;margin-right:10px!important;}
 .W300{width:300px!important;margin-right:10px!important;}
 .W400{width:400px!important;margin-right:10px!important;}
 .W410{width:410px!important;margin-right:10px!important;}
 
+.MB5{margin-bottom:5px!important;}
 .MB10{margin-bottom:10px;}
 
 
