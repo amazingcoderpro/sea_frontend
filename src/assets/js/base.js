@@ -11,6 +11,8 @@ export function dateFormat(timeDate,type){
   var s = time.getSeconds();
   if(type == 'hour'){
     return add0(h)+':'+add0(mm)+':'+add0(s); 
+  }else if( type == 'noSecondsHour'){
+    return add0(h)+':'+add0(mm); 
   }else if( type == 'noyear'){
     return add0(m)+'-'+add0(d)
   }else if( type == 'day'){
