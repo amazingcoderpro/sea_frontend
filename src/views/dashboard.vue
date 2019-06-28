@@ -173,7 +173,7 @@
                                     <td>{{item.create_date}}</td>
                                     <td>{{item.followers}}</td>
                                     <td class="iconfont_left">
-                                        <span>{{item.trends*100+'%'}}</span> 
+                                        <span>{{Math.round(item.trends)*100+'%'}}</span> 
                                         <template v-if="item.trends<0">
                                             <i class="iconfont icon-xiangxiajiantou"></i>
                                         </template>
