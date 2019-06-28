@@ -173,7 +173,6 @@ export default {
         if(document.getElementsByClassName("topictable").length>0){
           this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
         }
-       this.tableHeight = window.innerHeight - this.$refs.topictable.$el.offsetTop - 150;
       });
   },
   methods: {
