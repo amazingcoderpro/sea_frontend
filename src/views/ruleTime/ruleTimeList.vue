@@ -28,57 +28,51 @@
                           </el-form-item>
                           <el-form-item>
                             <el-time-picker v-model="addData.time"></el-time-picker>
+                            <div class="el-form-item__error timeState" v-if="timeState == 2">{{timeStateStr}}</div>
                           </el-form-item>
                           <el-form-item>
-                              <el-button size="medium" class="WW100 MB5" type="primary" @click="AddFun(pinId)">Add</el-button>
+                              <el-button size="medium" class="WW100 MB5" type="primary" @click="addTimeFun()">Add</el-button>
                           </el-form-item>
-
                         </el-form>
                       </div>
                       <div class="FR">
-                        <el-button size="medium" class="WW100 MB5" type="info" @click="handleDelete(pinId)">Reset</el-button>
-                        <el-button size="medium" class="WW100 MB5" type="primary" @click="handleEdit(pinId)">Save</el-button>
-                        <el-button size="medium" class="WW100 MB5" type="danger" @click="handleDelete(pinId)">Clear All</el-button>
+                        <el-button size="medium" class="WW100 MB5" type="info" @click="resetFun()">Reset</el-button>
+                        <el-button size="medium" class="WW100 MB5" type="danger" @click="clearAllFun()">Clear All</el-button>
+                        <el-button size="medium" class="WW100 MB5" type="primary" @click="saveFun()">Save</el-button>
                       </div>
                     </div>
                     <table class="sonTable" cellspacing="0">
                       <thead>
                         <tr>
-                          <td>Monday<el-switch class="switchClass" v-model="weekState.Monday" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
-                          <td>Tuesday<el-switch class="switchClass" v-model="weekState.Tuesday" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
-                          <td>Wednesday<el-switch class="switchClass" v-model="weekState.Wednesday" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
-                          <td>Thursday<el-switch class="switchClass" v-model="weekState.Thursday" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
-                          <td>Friday<el-switch class="switchClass" v-model="weekState.Friday" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
-                          <td>Saturday<el-switch class="switchClass" v-model="weekState.Saturday" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
-                          <td>Sunday<el-switch class="switchClass" v-model="weekState.Sunday" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
+                          <td>Monday<el-switch class="switchClass" v-model="weekState.mon" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
+                          <td>Tuesday<el-switch class="switchClass" v-model="weekState.tues" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
+                          <td>Wednesday<el-switch class="switchClass" v-model="weekState.wed" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
+                          <td>Thursday<el-switch class="switchClass" v-model="weekState.thur" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
+                          <td>Friday<el-switch class="switchClass" v-model="weekState.fri" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
+                          <td>Saturday<el-switch class="switchClass" v-model="weekState.sat" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
+                          <td>Sunday<el-switch class="switchClass" v-model="weekState.sun" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
+                          <td>every</td>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td><template v-for="(item,index) in post_time_little.mon"><span :class="weekState.Monday?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'mon')"></i></span></template></td>
-                          <td><template v-for="(item,index) in post_time_little.tues"><span :class="weekState.Tuesday?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'tues')"></i></span></template></td>
-                          <td><template v-for="(item,index) in post_time_little.wed"><span :class="weekState.Wednesday?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'wed')"></i></span></template></td>
-                          <td><template v-for="(item,index) in post_time_little.thur"><span :class="weekState.Thursday?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'thur')"></i></span></template></td>
-                          <td><template v-for="(item,index) in post_time_little.fri"><span :class="weekState.Friday?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'fri')"></i></span></template></td>
-                          <td><template v-for="(item,index) in post_time_little.sat"><span :class="weekState.Saturday?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'sat')"></i></span></template></td>
-                          <td><template v-for="(item,index) in post_time_little.sun"><span :class="weekState.Sunday?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'sun')"></i></span></template></td>
+                        <tr> 
+                          <td><template v-for="(item,index) in post_time_s.mon.time"><span :class="weekState.mon?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'mon')"></i></span></template></td>
+                          <td><template v-for="(item,index) in post_time_s.tues.time"><span :class="weekState.tues?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'tues')"></i></span></template></td>
+                          <td><template v-for="(item,index) in post_time_s.wed.time"><span :class="weekState.wed?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'wed')"></i></span></template></td>
+                          <td><template v-for="(item,index) in post_time_s.thur.time"><span :class="weekState.thur?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'thur')"></i></span></template></td>
+                          <td><template v-for="(item,index) in post_time_s.fri.time"><span :class="weekState.fri?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'fri')"></i></span></template></td>
+                          <td><template v-for="(item,index) in post_time_s.sat.time"><span :class="weekState.sat?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'sat')"></i></span></template></td>
+                          <td><template v-for="(item,index) in post_time_s.sun.time"><span :class="weekState.sun?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'sun')"></i></span></template></td>
+                          <td><template v-for="(item,index) in post_time_s.every.time"><span class="timerSpan" :key="index">{{item}}</span></template></td>
                         </tr>
                       </tbody>
                     </table>
               </template>
           </el-table-column>
-          <el-table-column label="商品 ID" align="center" prop="id" width="200"></el-table-column>
+          <el-table-column label="Pinterest ID" align="center" prop="id" width="200"></el-table-column>
           <el-table-column label="nickname" align="center" prop="nickname"></el-table-column>
           <el-table-column label="timezone" align="center" prop="timezone"></el-table-column>
           <el-table-column label="update_time" align="center" prop="update_time"></el-table-column>
-          <!-- <el-table-column label="操作" align="center">
-            <template slot-scope="scope">
-                    <el-button size="medium" class="WW100 MB5" type="success" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                    <el-button size="medium" class="WW100 MB5" type="info" @click="handleDelete(scope.$index, scope.row)">Reset</el-button>
-                    <el-button size="medium" class="WW100 MB5" type="primary" @click="handleEdit(scope.$index, scope.row)">Save</el-button>
-                    <el-button size="medium" class="WW100 MB5" type="danger" @click="handleDelete(scope.$index, scope.row)">Clear All</el-button>
-            </template>
-          </el-table-column> -->
       </el-table>
     </div>
 </template>
@@ -90,28 +84,31 @@ export default {
       return {
         tableHeight:"100",
         weekState:{
-          Monday:true,
-          Tuesday:true,
-          Wednesday:true,
-          Thursday:true,
-          Friday:true,
-          Saturday:true,
-          Sunday:true
+          mon:true,
+          tues:true,
+          wed:true,
+          thur:true,
+          fri:true,
+          sat:true,
+          sun:true,
+          every:true
         }, 
         weekArray:[//时间区间的星期几
-          {"label":"Every","value":"7"},
-          {"label":"Monday","value":"0"},
-          {"label":"Tuesday","value":"1"},
-          {"label":"Wednesday","value":"2"},
-          {"label":"Thursday","value":"3"},
-          {"label":"Friday","value":"4"},
-          {"label":"Saturday","value":"5"},
-          {"label":"Sunday","value":"6"},
+          {"label":"Every","value":"every"},
+          {"label":"Monday","value":"mon"},
+          {"label":"Tuesday","value":"tues"},
+          {"label":"Wednesday","value":"wed"},
+          {"label":"Thursday","value":"thur"},
+          {"label":"Friday","value":"fri"},
+          {"label":"Saturday","value":"sat"},
+          {"label":"Sunday","value":"sun"}
         ],
         addData:{
-          weekday:"0",
+          weekday:"mon",
           time:new Date(2016, 9, 10, 0, 0)
         },
+        timeState:1,
+        timeStateStr:'It already exists.',
         searchData:{
           pinterest:'',
           pinterestArray:[],
@@ -119,38 +116,18 @@ export default {
         },
         tableData: [
           //mon-tues-wed-thur-fri-sat-sun-every
-          //   {
-          //     id: '12987122',
-          //     post_time:{"mon": ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
-          //                 "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], 
-          //         "tues": ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
-          //                 "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], 
-          //         "wed": ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
-          //                 "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], 
-          //         "thur": ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
-          //                 "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], 
-          //         "fri": ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
-          //                 "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], 
-          //         "sat": ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
-          //                 "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], 
-          //         "sun": ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
-          //                 "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], 
-          //         "every": ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
-          //                 "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]}
-          // }
         ],
         pinId:'',   //打开了哪一个的id
-        post_time_little:{} //用于展示的那个数据
-
+        post_time_s:{} //用于展示的那个数据
       }
     },
     watch:{
-      tableData: {
-          handler: function() {
-            //  console.log(this.tableData[0].post_time.mon)
-          },
-          deep: true
-      }
+      // post_time_s: {
+      //     handler: function() {
+      //       this.getEveryFun();
+      //     },
+      //     deep: true
+      // }
     },
     mounted() {
         setTimeout(() => {
@@ -202,43 +179,94 @@ export default {
               this.searchData.pinterestIdArray.push(this.searchData.pinterest);
           }
         },
+        addTimeFun(){
+          var _newTime = base.dateFormat(this.addData.time,"noSecondsHour");
+          if(this.addData.weekday !="every"){
+            let _str = _newTime.split(":")[0]+":";
+            let number = 0;
+            this.post_time_s[this.addData.weekday].time.map(e => {
+                if(e.indexOf(_str)>=0){
+                    number +=1;
+                }
+            });
+            if(this.post_time_s[this.addData.weekday].time.indexOf(_newTime)>=0){
+              this.timeState = 2;
+              this.timeStateStr = "It already exists.";
+            }else{
+              if(number == 4){
+                this.timeState = 2;
+                this.timeStateStr = "No more than 4!";
+              }else{
+                this.timeState = 1;
+                this.timeStateStr = "";
+                this.post_time_s[this.addData.weekday].time.push(_newTime);
+                this.post_time_s[this.addData.weekday].time.sort();
+                this.getEveryFun();
+              }
+            }
+          }else{
+            //每一天
+          }
+        },
+        deleteTime(index,type){
+            this.post_time_s[type].time.splice(index,1); 
+            this.getEveryFun();
+        },
+        saveFun(){
+          this.$confirm('Are you sure save it?', '', {
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+              }).then(() => {
+                for (let key in this.weekState) {
+                    let state = this.weekState[key]?1:0;
+                    this.post_time_s[key].state = state;
+                }
+                this.$axios.post("/api/v1/account/post_time/",{"account_id":this.pinId,"post_time":JSON.stringify(this.post_time_s)})
+                .then(res => {
+                    if(res.data.code == 1){
+                        this.$message({message: "Successfully!",type: "success"});
+                        this.init();
+                    }else{
+                        this.$message("Fail!");
+                    }
+                })
+                .catch(error => {
+                    this.$message("Interface timeout!");
+                });
+              }) 
+        },
+        resetFun(){
+          this.weekState = {mon:true,tues:true,wed:true,thur:true,fri:true,sat:true,sun:true}
+          let arr = ["mon","tues","wed","thur","fri","sat","sun","every"]
+          for(var i = 0;i<arr.length;i++){
+            this.post_time_s[arr[i]].time=["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00","13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+          }
+        },
+        clearAllFun(){
+          this.weekState = {mon:false,tues:false,wed:false,thur:false,fri:false,sat:false,sun:false}
+          let arr = ["mon","tues","wed","thur","fri","sat","sun","every"]
+          for(var i = 0;i<arr.length;i++){
+            this.post_time_s[arr[i]].time=[];
+          }
+        },
+        getEveryFun(){
+            let arr = ["mon","tues","wed","thur","fri","sat","sun"]
+            var result = this.post_time_s["mon"].time;
+            for(var i = 0;i<arr.length;i++){
+              let _thisArr = this.post_time_s[arr[i]].time;
+              result = _thisArr.filter(x=>{
+                  return result.some(y=>{
+                    return x==y;
+                  })
+                });
+            }
+            this.post_time_s['every'].time = result;
+        },
         clickTable:function(row, column, cell, event){//展开事件日志列表
             if(cell.cellIndex!=3 && cell.cellIndex!=10){
                 this.$refs.topictable.toggleRowExpansion(row);
             }
-        },
-        AddFun(){
-          // console.log(base.dateFormat(this.addData.time,"noSecondsHour"))
-          // switch(this.addData.weekday) {
-          //     case "0":
-          //         this.post_time_little.mon.splice(index,1)
-          //         break;
-          //     case "1":
-          //         this.post_time_little.tues.splice(index,1)
-          //         break;
-          //     case "2":
-          //         this.post_time_little.wed.splice(index,1)
-          //         break;
-          //     case "3":
-          //         this.post_time_little.thur.splice(index,1)
-          //         break;
-          //     case "4":
-          //         this.post_time_little.fri.splice(index,1)
-          //         break;
-          //     case "5":
-          //         this.post_time_little.sat.splice(index,1)
-          //         break;
-          //     case "6":
-          //         this.post_time_little.sun.splice(index,1)
-          //         break;
-          //     case "7":
-          //         break;
-          //     default:
-          //        // 默认代码块
-          // } 
-        },
-        handleEdit(Pid){
-          console.log(Pid)
         },
         expandSelect:function (row, expandedRows) {
             var that = this
@@ -252,45 +280,11 @@ export default {
                 that.expands = [];
             }
             this.pinId = row.id;
-            this.post_time_little = row.post_time;
-            this.weekState = {
-              Monday:true,
-              Tuesday:true,
-              Wednesday:true,
-              Thursday:true,
-              Friday:true,
-              Saturday:true,
-              Sunday:true
+            this.post_time_s = row.post_time;
+            for (let key in this.post_time_s) {
+                let state = this.post_time_s[key].state == 1?true:false;
+                this.weekState[key] = state;
             }
-        },
-        deleteTime(index,type){
-          switch(type) {
-              case "mon":
-                  this.post_time_little.mon.splice(index,1)
-                  break;
-              case "tues":
-                  this.post_time_little.tues.splice(index,1)
-                  break;
-              case "wed":
-                  this.post_time_little.wed.splice(index,1)
-                  break;
-              case "thur":
-                  this.post_time_little.thur.splice(index,1)
-                  break;
-              case "fri":
-                  this.post_time_little.fri.splice(index,1)
-                  break;
-              case "sat":
-                  this.post_time_little.sat.splice(index,1)
-                  break;
-              case "sun":
-                  this.post_time_little.sun.splice(index,1)
-                  break;
-              case "every":
-                  break;
-              default:
-                 // 默认代码块
-          } 
         }
     },
   }
@@ -299,20 +293,15 @@ export default {
 
 <style>
 .ruleTimeList .sonTableHead th .el-switch__core{top:-10px;}
-.ruleTimeList .el-table__expanded-cell{padding:20px 20px 0 47px;}
-.ruleTimeList .sonTable{width:100%;border:1px solid #ccc;border-right:0;}
+.ruleTimeList .el-table__expanded-cell{padding:20px 20px 20px 47px;}
+.ruleTimeList .sonTable{width:100%;min-height:300px;border:1px solid #ccc;border-right:0;}
 .ruleTimeList .sonTable tr{border-left:1px solid #ccc;border-left:0;}
 .ruleTimeList .sonTable td{text-align:center;}
-.ruleTimeList .sonTable tbody td span{}
-.ruleTimeList .timerSpan{width:100%;display:block;position: relative;}
-.ruleTimeList .timerSpan i{display: none;opacity: 1;
-    cursor: pointer;
-    position: absolute;
-    right: 50%;
-    margin-right: -36px;
-    top: 2px;}
-.ruleTimeList .timerSpan:hover i{display: block;}
-.ruleTimeList .timerSpan.close i{display: none;}
-.ruleTimeList .timerSpan.close{color: #ccc;}
-.ruleTimeList .switchClass{display: block;}
+.ruleTimeList .timerSpan{width:100%;display:block;position:relative;}
+.ruleTimeList .timerSpan i{display:none;opacity:1;cursor:pointer;position:absolute;right:50%;margin-right:-36px;top:2px;}
+.ruleTimeList .timerSpan:hover i{display:block;}
+.ruleTimeList .timerSpan.close i{display:none;}
+.ruleTimeList .timerSpan.close{color:#ccc;}
+.ruleTimeList .switchClass{display:block;}
+.ruleTimeList .el-form-item__error.timeState{position:absolute;width:338px;}
 </style>
