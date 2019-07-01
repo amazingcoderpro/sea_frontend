@@ -29,9 +29,9 @@
                     <el-option v-for="item in weekArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
                   </el-select>
                   <!-- 时间选择器 -->
-                  <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="start time" end-placeholder="End time" placeholder="选择时间范围">
-                  </el-time-picker>
-                  <div class="el-form-item__error" :style="'margin-left:244px;'" v-if="timeValState == 2">Must be more than 0.5 hours</div>
+                  <!-- <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="start time" end-placeholder="End time" placeholder="选择时间范围">
+                  </el-time-picker> -->
+                  <!-- <div class="el-form-item__error" :style="'margin-left:244px;'" v-if="timeValState == 2">Must be more than 0.5 hours</div> -->
                   <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="interval_time">
                     <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
                   </el-select>
@@ -52,8 +52,8 @@
                             <span :class="'spanClass'" v-else-if="item.weekday == 5">Saturday</span>
                             <span :class="'spanClass'" v-else>Sunday</span>
                         </template>
-                        <span class="spanClass">Start:{{item.start_time}}</span>
-                        <span class="spanClass">End:{{item.end_time}}</span>
+                        <!-- <span class="spanClass">Start:{{item.start_time}}</span>
+                        <span class="spanClass">End:{{item.end_time}}</span> -->
                         <span class="spanClass">Interval Time:{{item.interval_time/3600}}H</span>
                         <el-button size="mini"  type="danger" @click="deletschedule(index)">X</el-button>
                       </li>
@@ -77,14 +77,21 @@
                 <el-select v-model="serchProduct.Rule_type" :style="'width: 400px;'" @change="dataSelect">
                   <el-option
                     v-for="item in ruleTypeArray"
-                    :key="item.value"
+                    :key="item.value" 
                     :label="item.label"
                     :value="item.value">
                   </el-option>  
                 </el-select>
             </el-form-item>
-            <!-- Category Name -->
-            <el-form-item label="Category Name" prop="product__name" >
+            <!-- Category -->
+            <el-form-item label="Category">
+                <el-select v-model="serchProduct.Category" :style="'width: 400px;'">
+                  <el-option :label="'All'" :value="''"> </el-option>
+                  <el-option v-for="item in CategoryArray" :key="item.value" :label="item.title" :value="item.id"> </el-option>
+                </el-select>
+            </el-form-item>
+            <!-- Product Name -->
+            <el-form-item label="Product Name" prop="product__name" >
                 <el-input v-model="serchProduct.product__name" :style="'width: 400px;'"></el-input>
                   <i class="iconfont icon-jiahao"  @click="scheduleCategory"></i>
             </el-form-item>
@@ -101,7 +108,7 @@
             <el-form-item label="Product Online Time" class="Product_box">
                 <span :class="'Product_time'" v-if="serchProduct.Rule_type == 0">If you don't choose the product online time, the system will send all online products that match this category name by default.</span>
                 <el-date-picker  v-model="serchProduct.publish_begin_time" type="date" default-time="12:00:00"></el-date-picker>
-                  &nbsp;<span>TO</span>&nbsp;
+                  &nbsp;<span> -- </span>&nbsp;
                 <el-date-picker  v-model="serchProduct.publish_end_time" type="date" :disabled="disabledType=='1'" default-time="12:00:00"></el-date-picker>
                 <i class="iconfont icon-wenhao"></i>
             </el-form-item>
@@ -143,16 +150,24 @@ import * as base from '../../assets/js/base'
           return callback(new Error('Please choose the date!'));
         }
       };
+      var productNameFun = (rule, value, callback) => {
+        if(this.serchProduct.Category){
+            callback();
+        }else{
+         if(this.serchProduct.product__name){
+            callback();
+         }else{
+           return callback(new Error('Please enter the name of the product.'));
+         } 
+        }
+      };
+      
       return {
           ruleTypeArray: [
             {value: '0', label: 'Short Term Rule'},
             {value: '1',label: 'Long Term Rule'}
           ],
-          pickerOptions: {
-              disabledDate(time) {
-                  return time.getTime() < Date.now() - 1000 * 60 * 60 * 24;//设置选择今天之前的日期
-              }
-          },
+          CategoryArray: [],
           disabledType:'1', 
           website:'Chicdb',    
           pinterestArray:[],//Pinterest下拉框数据
@@ -162,8 +177,8 @@ import * as base from '../../assets/js/base'
           timeValState:1,          //时间区间错误提示是否展示  1隐藏 2展示
           scheduleRule:{//时间区间临时数据
               weekday:"0",  
-              start_time:"",  
-              end_time:"",  
+              // start_time:"",  
+              // end_time:"",  
               interval_time:"1800", 
               timeVal:[new Date(2016, 9, 10, 8, 0), new Date(2016, 9, 10, 16, 0)], //El的展示数据
           }, 
@@ -184,6 +199,7 @@ import * as base from '../../assets/js/base'
           ],
           serchProduct:{
             Rule_type:'0', //默认第一个
+            Category:'',
             // start_time:'',   //产品上架时间初始数据
             // Ending_time:'',   //产品特殊时间初始数据
             publish_begin_time:'',//产品上架时间最终数据
@@ -218,11 +234,9 @@ import * as base from '../../assets/js/base'
             tag: [{ required: true, message: 'Please enter the label', trigger: 'blur' },],
           },
           searchRules:{
-            product__name: [{ required: true, message: 'Please enter the name of the product.', trigger: 'blur' },],
+            product__name: [{ message: 'Please enter the name of the product.', trigger: 'blur',validator:productNameFun },],
             data1:[{required: true, message: 'Please choose the shelf time of the goods.', trigger: 'change' }],
             data2:[{required: true, message: 'Please select the browsing volume of the goods.Sales time', trigger: 'change' }],
-            // sale: [{ required: true, message: '请输入产品销量', trigger: 'blur' },],
-            // scan: [{ required: true, message: '请输入产品浏览量', trigger: 'blur'}],
           },
       };
     },
@@ -255,6 +269,18 @@ import * as base from '../../assets/js/base'
             });
           }
         });
+        this.$axios.get(`/api/v1/rule/get_collections/`)
+          .then(res => {      
+              if(res.data.code==1){
+                this.CategoryArray = res.data.data;
+            }
+          })  
+        this.$axios.get(`/api/v1/account/select_time/`)
+          .then(res =>{
+            if(res.data.code==1){
+               this.publishTimeArray = res.data.data;
+            }
+          })
       }
     },
     methods: {
@@ -326,17 +352,17 @@ import * as base from '../../assets/js/base'
         var ctime = eTime - sTime;
         if(ctime>=1800000){
               this.timeValState = 1;
-              this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],"hour");
-              this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],"hour");
+              // this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],"hour");
+              // this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],"hour");
               var _thisObj = {
                     weekday:"0",  
-                    start_time:"",  
-                    end_time:"",  
+                    // start_time:"",  
+                    // end_time:"",  
                     interval_time:"1800"
                 };
               _thisObj.weekday = this.scheduleRule.weekday;
-              _thisObj.start_time = this.scheduleRule.start_time;
-              _thisObj.end_time = this.scheduleRule.end_time;
+              // _thisObj.start_time = this.scheduleRule.start_time;
+              // _thisObj.end_time = this.scheduleRule.end_time;
               _thisObj.interval_time = this.scheduleRule.interval_time;
               this.ruleForm.schedule_rule.push(_thisObj);
         }else{
@@ -381,7 +407,8 @@ import * as base from '../../assets/js/base'
                   }else{
                     this.$message("Failed to get the list of goods!");
                   }
-              })        
+              })  
+    
           } else {
             console.log('error submit!!');
             return false;
@@ -431,12 +458,12 @@ import * as base from '../../assets/js/base'
 .ruleAdd .W40{width:40%;margin-right:2%;}
 .ruleAdd .W54{width:54%;margin-right:2%;}
 .ruleAdd .W60{width:60%;margin-right:2%;}
-.ruleAdd .scheduleRuleList{margin-left:145px;padding:0;margin-bottom:22px;list-style:none;}
-.ruleAdd .scheduleRuleList li{font-size:14px;margin-bottom:5px; padding-left:22px;}
+.ruleAdd .scheduleRuleList{margin-left:145px;padding:0;margin-bottom:0px;list-style:none;margin-top: -10px;}
+.ruleAdd .scheduleRuleList li{font-size:15px;margin-bottom:5px; padding-left:22px;}
 .ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
 .ruleAdd .scheduleRuleList li .spanTitle{color: #169BD5!important;margin-right: 5px;}
 .ruleAdd .el-dialog__body{position: relative;}
-.ruleAdd .contentBg{height:260px;}
+.ruleAdd .contentBg{height:300px;}
 .ruleAdd .searchContent{position: absolute;top: 82px;}
 .ruleAdd .specialTime{  position: absolute;left: 346px;}
 .ruleAdd input::-webkit-outer-spin-button,
