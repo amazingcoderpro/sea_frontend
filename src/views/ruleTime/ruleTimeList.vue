@@ -148,6 +148,7 @@ export default {
                 if(res.data.code == 1){
                   this.tableData = res.data.data;
                   this.tableData.map(e => {
+                    console.log(e.post_time)
                     e.post_time = JSON.parse(e.post_time);
                   });
                 }
