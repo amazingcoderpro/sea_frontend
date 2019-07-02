@@ -7,13 +7,13 @@
             </el-form-item>
             <el-form-item label=" " :class="'contentBg'">
           </el-form-item>
-        
+                <!-- Pinterest -->
           <el-form-item label="Pinterest">
                     <el-select v-model="ruleForm.pinterest" placeholder="Pinterest Account"  @change="pinterestChange">
                       <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <!-- Board Name -->
+                <!-- Board Name -->  
                 <el-form-item label="Board Name" prop="board">
                   <el-select v-model="ruleForm.board" placeholder="Board">
                     <template v-for="item in pinterestArray">
@@ -24,17 +24,14 @@
                   </el-select>
                 </el-form-item>
                 <!-- Posting Time -->
-                <el-form-item label="Posting Time" prop="schedule_rule" ref="scheduleRuleClass" class="scheduleRuleClass">
-                  <el-select :class="'W20'" v-model="scheduleRule.weekday" placeholder="schedule_rule">
+                <el-form-item label="Posting Time">
+                  <el-select :class="'W20'" v-model="scheduleRule.weekday" @change="weekdayChange">
                     <el-option v-for="item in weekArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
                   </el-select>
                   <!-- 时间选择器 -->
-                  <!-- <el-time-picker :class="'W36'" is-range v-model="scheduleRule.timeVal" start-placeholder="start time" end-placeholder="End time" placeholder="选择时间范围">
-                  </el-time-picker> -->
-                  <!-- <div class="el-form-item__error" :style="'margin-left:244px;'" v-if="timeValState == 2">Must be more than 0.5 hours</div> -->
-                  <el-select :class="'W20'" v-model="scheduleRule.interval_time" placeholder="interval_time">
-                    <el-option v-for="item in publishTimeArray" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-                  </el-select>
+                    <el-select :class="'W20'" v-model="scheduleRule.interval_time">
+                      <el-option v-for="(item,index) in publishTimeArray" :key="index" :label="item" :value="item"> </el-option>
+                    </el-select>
                   <el-button type="primary"  @click="scheduleRuleFun()">Add</el-button>
                   <div class="el-form-item__error" v-if="scheduleRruleState == 2">Please add intervals</div>
                 </el-form-item>
@@ -52,9 +49,7 @@
                             <span :class="'spanClass'" v-else-if="item.weekday == 5">Saturday</span>
                             <span :class="'spanClass'" v-else>Sunday</span>
                         </template>
-                        <!-- <span class="spanClass">Start:{{item.start_time}}</span>
-                        <span class="spanClass">End:{{item.end_time}}</span> -->
-                        <span class="spanClass">Interval Time:{{item.interval_time/3600}}H</span>
+                        <span class="spanClass">Interval Time:{{item.interval_time}}</span>
                         <el-button size="mini"  type="danger" @click="deletschedule(index)">X</el-button>
                       </li>
                     </ul>
@@ -176,27 +171,20 @@ import * as base from '../../assets/js/base'
           scheduleRruleState:1,         //添加时区的错误提示
           timeValState:1,          //时间区间错误提示是否展示  1隐藏 2展示
           scheduleRule:{//时间区间临时数据
-              weekday:"0",  
-              // start_time:"",  
-              // end_time:"",  
-              interval_time:"1800", 
-              timeVal:[new Date(2016, 9, 10, 8, 0), new Date(2016, 9, 10, 16, 0)], //El的展示数据
+              weekday:"wed",  
+              interval_time:"", 
           }, 
           weekArray:[//时间区间的星期几
-            {"label":"Monday","value":"0"},
-            {"label":"Tuesday","value":"1"},
-            {"label":"Wednesday","value":"2"},
-            {"label":"Thursday","value":"3"},
-            {"label":"Friday","value":"4"},
-            {"label":"Saturday","value":"5"},
-            {"label":"Sunday","value":"6"},
+          {"label":"Every","value":"every"},
+          {"label":"Monday","value":"mon"},
+          {"label":"Tuesday","value":"tues"},
+          {"label":"Wednesday","value":"wed"},
+          {"label":"Thursday","value":"thur"},
+          {"label":"Friday","value":"fri"},
+          {"label":"Saturday","value":"sat"},
+          {"label":"Sunday","value":"sun"}
           ],
-          publishTimeArray:[//发布频率的时间选择
-            {"label":"0.5H","value":"1800"},
-            {"label":"1H","value":"3600"},
-            {"label":"1.5H","value":"5400"},
-            {"label":"2H","value":"7200"},
-          ],
+          publishTimeArray:[],//可以使用的时间
           serchProduct:{
             Rule_type:'0', //默认第一个
             Category:'',
@@ -220,8 +208,8 @@ import * as base from '../../assets/js/base'
             pinterest:'',
             board:'',
             ruleTime:'',    //规则有效期的初始数据来源
-            start_time:'',           //规则有效期开始时间
-            end_time:'',             //规则有效期结束时间
+            // start_time:'',           //规则有效期开始时间
+            // end_time:'',             //规则有效期结束时间
             schedule_rule:[],         // 
             product_list:[],        //满足条件的商品列表  
             tag:'',      //规则标签
@@ -230,7 +218,6 @@ import * as base from '../../assets/js/base'
             pinterest: [{ required: true, message: 'Please choose pinterest', trigger: 'change' }],
             board: [{ required: true, message: 'Please choose board', trigger: 'change' }],
             ruleTime: [{required: true,  trigger: 'change',validator:RuleTimeFun }],
-            // schedule_rule:[{required: true,validator:scheduleRuleFun}],
             tag: [{ required: true, message: 'Please enter the label', trigger: 'blur' },],
           },
           searchRules:{
@@ -238,6 +225,7 @@ import * as base from '../../assets/js/base'
             data1:[{required: true, message: 'Please choose the shelf time of the goods.', trigger: 'change' }],
             data2:[{required: true, message: 'Please select the browsing volume of the goods.Sales time', trigger: 'change' }],
           },
+          bigTimeDate:null,   // 可用时间数据来源
       };
     },
     mounted() {
@@ -274,13 +262,7 @@ import * as base from '../../assets/js/base'
               if(res.data.code==1){
                 this.CategoryArray = res.data.data;
             }
-          })  
-        this.$axios.get(`/api/v1/account/select_time/`)
-          .then(res =>{
-            if(res.data.code==1){
-               this.publishTimeArray = res.data.data;
-            }
-          })
+        });
       }
     },
     methods: {
@@ -309,8 +291,8 @@ import * as base from '../../assets/js/base'
               var _thisruleForm = {
                   pinterest:this.ruleForm.pinterest,
                   board:this.ruleForm.board,
-                  start_time:base.dateFormat(this.ruleForm.ruleTime[0]),           //规则有效期开始时间
-                  end_time:base.dateFormat(this.ruleForm.ruleTime[1]),             //规则有效期结束时间
+                  // start_time:base.dateFormat(this.ruleForm.ruleTime[0]),           //规则有效期开始时间
+                  // end_time:base.dateFormat(this.ruleForm.ruleTime[1]),             //规则有效期结束时间
                   schedule_rule:JSON.stringify(this.ruleForm.schedule_rule),         // 
                   product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
                   tag:this.ruleForm.tag,      //规则标签
@@ -347,28 +329,18 @@ import * as base from '../../assets/js/base'
         this.$refs['serchProduct'].resetFields();
       },
       scheduleRuleFun(){
-        var sTime = new Date(this.scheduleRule.timeVal[0]).getTime();
-        var eTime = new Date(this.scheduleRule.timeVal[1]).getTime();
-        var ctime = eTime - sTime;
-        if(ctime>=1800000){
-              this.timeValState = 1;
-              // this.scheduleRule.start_time = base.dateFormat(this.scheduleRule.timeVal[0],"hour");
-              // this.scheduleRule.end_time = base.dateFormat(this.scheduleRule.timeVal[1],"hour");
+        if(this.timeValState = 1){
               var _thisObj = {
                     weekday:"0",  
-                    // start_time:"",  
-                    // end_time:"",  
-                    interval_time:"1800"
+                    interval_time:"",
                 };
               _thisObj.weekday = this.scheduleRule.weekday;
-              // _thisObj.start_time = this.scheduleRule.start_time;
-              // _thisObj.end_time = this.scheduleRule.end_time;
               _thisObj.interval_time = this.scheduleRule.interval_time;
               this.ruleForm.schedule_rule.push(_thisObj);
         }else{
-            this.timeValState = 2;
+          this.timeValState = 2;
         }
-        console.log(this.ruleForm.schedule_rule.length)
+           console.log(this.ruleForm.schedule_rule.length)
         if(this.ruleForm.schedule_rule.length == 0){
           //检查是否有满足条件的商品
           this.scheduleRruleState = 2;
@@ -434,7 +406,22 @@ import * as base from '../../assets/js/base'
               this.ruleForm.board = '';
             }
           }
-        });   
+        }); 
+      this.$axios.get(`/api/v1/account/select_time/?account_id=${this.ruleForm.pinterest}`)
+        .then(res =>{
+          if(res.data.code==1){
+            this.bigTimeDate = res.data.data;
+            this.weekdayChange();
+          }
+        });
+      },
+      weekdayChange(){
+          if(this.bigTimeDate[this.scheduleRule.weekday].state == 1 && this.bigTimeDate[this.scheduleRule.weekday].time.length>0){
+              this.publishTimeArray = this.bigTimeDate[this.scheduleRule.weekday].time;
+              this.scheduleRule.interval_time = this.bigTimeDate[this.scheduleRule.weekday].time[0];
+          }else{
+              this.publishTimeArray = [];
+          }
       },
       scheduleCategory(){
         let obj = {
