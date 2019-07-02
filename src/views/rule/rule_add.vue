@@ -7,8 +7,8 @@
             </el-form-item>
             <el-form-item label=" " :class="'contentBg'">
           </el-form-item>
-                <!-- Pinterest -->
-          <el-form-item label="Pinterest">
+                <!--  Pinterest Account -->
+                <el-form-item label=" Pinterest Account">
                     <el-select v-model="ruleForm.pinterest" placeholder="Pinterest Account"  @change="pinterestChange">
                       <el-option v-for="(item,index) in pinterestArray" :key="index" :label="item.account" :value="item.id"></el-option>
                     </el-select>
@@ -23,6 +23,12 @@
                     </template>
                   </el-select>
                 </el-form-item>
+                <!--  Posting Date -->
+              <el-form-item label="Posting Date">
+                  <el-date-picker  v-model="ruleForm.start_time" type="date" default-time="12:00:00"></el-date-picker>
+                    &nbsp;<span> -- </span>&nbsp;
+                  <el-date-picker  v-model="ruleForm.end_time" type="date" default-time="12:00:00"></el-date-picker>
+              </el-form-item>
                 <!-- Posting Time -->
                 <el-form-item label="Posting Time">
                   <el-select :class="'W20'" v-model="scheduleRule.weekday" @change="weekdayChange">
@@ -30,7 +36,14 @@
                   </el-select>
                   <!-- 时间选择器 -->
                     <el-select :class="'W20'" v-model="scheduleRule.interval_time">
-                      <el-option v-for="(item,index) in publishTimeArray" :key="index" :label="item" :value="item"> </el-option>
+                      <template v-for="(item,index) in publishTimeArray" >
+                        <template v-if="item.S == 0">
+                          <el-option :key="index" :label="item.T" :value="item.T" disabled=""></el-option>
+                        </template>
+                        <template v-else>
+                          <el-option :key="index" :label="item.T" :value="item.T"></el-option>
+                        </template>
+                      </template>
                     </el-select>
                   <el-button type="primary"  @click="scheduleRuleFun()">Add</el-button>
                   <div class="el-form-item__error" v-if="scheduleRruleState == 2">Please add intervals</div>
@@ -67,17 +80,6 @@
 
 
           <el-form :model="serchProduct" :rules="searchRules" ref="serchProduct" label-width="100px" class="demo-serchProduct searchContent">
-            <!-- Rules Type -->
-            <el-form-item label="Rules Type" prop="">
-                <el-select v-model="serchProduct.Rule_type" :style="'width: 400px;'" @change="dataSelect">
-                  <el-option
-                    v-for="item in ruleTypeArray"
-                    :key="item.value" 
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>  
-                </el-select>
-            </el-form-item>
             <!-- Category -->
             <el-form-item label="Category">
                 <el-select v-model="serchProduct.Category" :style="'width: 400px;'">
@@ -85,8 +87,8 @@
                   <el-option v-for="item in CategoryArray" :key="item.value" :label="item.title" :value="item.id"> </el-option>
                 </el-select>
             </el-form-item>
-            <!-- Product Name -->
-            <el-form-item label="Product Name" prop="product__name" >
+            <!-- Category Name -->
+            <el-form-item label="Category Name" prop="product__name" >
                 <el-input v-model="serchProduct.product__name" :style="'width: 400px;'"></el-input>
                   <i class="iconfont icon-jiahao"  @click="scheduleCategory"></i>
             </el-form-item>
@@ -100,11 +102,11 @@
                 </ul>
             </div>
             <!-- Product Online Time -->
-            <el-form-item label="Product Online Time" class="Product_box">
-                <span :class="'Product_time'" v-if="serchProduct.Rule_type == 0">If you don't choose the product online time, the system will send all online products that match this category name by default.</span>
+            <el-form-item label="Product Online Time">
+                <span :class="'Product_time'">If you don't choose the product online time, the system will send all online products that match this category name by default.</span>
                 <el-date-picker  v-model="serchProduct.publish_begin_time" type="date" default-time="12:00:00"></el-date-picker>
                   &nbsp;<span> -- </span>&nbsp;
-                <el-date-picker  v-model="serchProduct.publish_end_time" type="date" :disabled="disabledType=='1'" default-time="12:00:00"></el-date-picker>
+                <el-date-picker  v-model="serchProduct.publish_end_time" type="date" default-time="12:00:00"></el-date-picker>
                 <i class="iconfont icon-wenhao"></i>
             </el-form-item>
             <!-- Number of Products -->
@@ -158,12 +160,7 @@ import * as base from '../../assets/js/base'
       };
       
       return {
-          ruleTypeArray: [
-            {value: '0', label: 'Short Term Rule'},
-            {value: '1',label: 'Long Term Rule'}
-          ],
           CategoryArray: [],
-          disabledType:'1', 
           website:'Chicdb',    
           pinterestArray:[],//Pinterest下拉框数据
           boardArray:[],     //board下拉框数据
@@ -189,11 +186,11 @@ import * as base from '../../assets/js/base'
             Rule_type:'0', //默认第一个
             Category:'',
             // start_time:'',   //产品上架时间初始数据
-            // Ending_time:'',   //产品特殊时间初始数据
+            Ending_time:'',   //产品特殊时间初始数据
             publish_begin_time:'',//产品上架时间最终数据
             publish_end_time:'',   
             begin_time:'',        //产品特殊时间最终数据
-            end_time:'',
+            // end_time:'',
             store:'',
             product__name:'',      
             sale_sign:'>',           // 销量标识符
@@ -208,8 +205,8 @@ import * as base from '../../assets/js/base'
             pinterest:'',
             board:'',
             ruleTime:'',    //规则有效期的初始数据来源
-            // start_time:'',           //规则有效期开始时间
-            // end_time:'',             //规则有效期结束时间
+            start_time:'',           //规则有效期开始时间
+            end_time:'',             //规则有效期结束时间
             schedule_rule:[],         // 
             product_list:[],        //满足条件的商品列表  
             tag:'',      //规则标签
@@ -227,9 +224,6 @@ import * as base from '../../assets/js/base'
           },
           bigTimeDate:null,   // 可用时间数据来源
       };
-    },
-    mounted() {
-        this.dataSelect();
     },
     watch:{
       dialog:function (){
@@ -291,8 +285,8 @@ import * as base from '../../assets/js/base'
               var _thisruleForm = {
                   pinterest:this.ruleForm.pinterest,
                   board:this.ruleForm.board,
-                  // start_time:base.dateFormat(this.ruleForm.ruleTime[0]),           //规则有效期开始时间
-                  // end_time:base.dateFormat(this.ruleForm.ruleTime[1]),             //规则有效期结束时间
+                  start_time:base.dateFormat(this.ruleForm.ruleTime[0]),           //规则有效期开始时间
+                  end_time:base.dateFormat(this.ruleForm.ruleTime[1]),             //规则有效期结束时间
                   schedule_rule:JSON.stringify(this.ruleForm.schedule_rule),         // 
                   product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
                   tag:this.ruleForm.tag,      //规则标签
@@ -331,11 +325,15 @@ import * as base from '../../assets/js/base'
       scheduleRuleFun(){
         if(this.timeValState = 1){
               var _thisObj = {
-                    weekday:"0",  
+                    weekday:"0",
+                    // start_time:"",  
+                    // end_time:"",  
                     interval_time:"",
                 };
               _thisObj.weekday = this.scheduleRule.weekday;
               _thisObj.interval_time = this.scheduleRule.interval_time;
+              // _thisObj.start_time = this.scheduleRule.start_time;
+              // _thisObj.end_time = this.scheduleRule.end_time;
               this.ruleForm.schedule_rule.push(_thisObj);
         }else{
           this.timeValState = 2;
@@ -386,15 +384,6 @@ import * as base from '../../assets/js/base'
             return false;
           }
         });
-      },
-      dataSelect(){        
-        //  0. Short Term Rule  1.Long Term Rule
-        if(this.serchProduct.Rule_type == 0){
-          // 当选择Long Term Rule时间选择框禁用
-              this.disabledType = 0;
-        }else{
-              this.disabledType = 1;
-        }
       },
       pinterestChange(){
         //pinterest账户变更触发的事件
@@ -450,7 +439,7 @@ import * as base from '../../assets/js/base'
 .ruleAdd .scheduleRuleList li span.spanClass{margin-right: 15px;}
 .ruleAdd .scheduleRuleList li .spanTitle{color: #169BD5!important;margin-right: 5px;}
 .ruleAdd .el-dialog__body{position: relative;}
-.ruleAdd .contentBg{height:300px;}
+.ruleAdd .contentBg{height:270px;}
 .ruleAdd .searchContent{position: absolute;top: 82px;}
 .ruleAdd .specialTime{  position: absolute;left: 346px;}
 .ruleAdd input::-webkit-outer-spin-button,
