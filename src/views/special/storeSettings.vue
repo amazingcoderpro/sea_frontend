@@ -112,7 +112,6 @@ export default {
         name: "",
         timezone: "",
         url_format: "",
-        // storeID: "",
         store_view_id: ""
       },
       personalUser: {
@@ -161,37 +160,36 @@ export default {
         }
       });
       this.personalUser.personalID = JSON.parse(window.localStorage.getItem("user")).id;
-      this.$axios(
-        `/api/v1/account/users/${this.personalUser.personalID}/`
-      ).then(res => {
-        if (res.data.code == 1) {
-          this.personalUser.first_name = res.data.data.first_name;
-          this.personalUser.last_name = res.data.data.last_name;
-          this.personalUser.email = res.data.data.email;
-        } else {
-          this.$message({
-            message: "code Abnormal!",
-            type: "warning",
-            center: true
-          });
-        }
+      this.$axios(`/api/v1/account/users/${this.personalUser.personalID}/`)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.personalUser.first_name = res.data.data.first_name;
+            this.personalUser.last_name = res.data.data.last_name;
+            this.personalUser.email = res.data.data.email;
+          } else {
+            this.$message({
+              message: "code Abnormal!",
+              type: "warning",
+              center: true
+            });
+          }
       })
     },
     submitForm(formName) {
-        this.$refs[formName].validate(valid => {
-          if (valid) {
-            this.$axios
-              .put(`/api/v1/account/users/${this.personalUser.personalID}/`, this.personalUser)
-              .then(res => {
-                if (res.data.code == 1) {
-                  this.$message({message: res.data.msg,type: 'success'});
-                } else {
-                  this.$message("Successful revision!");
-                }
-              })
-            }
-        });
-      },
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$axios
+            .put(`/api/v1/account/users/${this.personalUser.personalID}/`, this.personalUser)
+            .then(res => {
+              if (res.data.code == 1) {
+                this.$message({message: res.data.msg,type: 'success'});
+              } else {
+                this.$message("Successful revision!");
+              }
+            })
+          }
+      });
+    },
     submitwo() {
       this.$axios
         .put(`/api/v1/store/${this.storeUser.id}/`, this.storeUser)
@@ -241,5 +239,4 @@ export default {
 .storeSetting .url_format_box:hover .url_format_son{display:block;}
 .primary_time {margin-bottom: 20px; text-align: center;}
 .primary_time span {color: gray; font-size: 18px;}
-
 </style>

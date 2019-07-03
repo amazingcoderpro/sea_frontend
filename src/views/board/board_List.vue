@@ -43,7 +43,6 @@
               <template slot-scope="scope">
                  Published Today:{{scope.row.finished}}<br/>
                  Unpublished Today:{{scope.row.failed}}<br/>
-                 <!-- pending:{{scope.row.pending}} -->
               </template> 
             </el-table-column>
             <el-table-column prop="operation" align="center" label="Manage Your Board" width="200">
@@ -64,10 +63,8 @@
 </template>
 
 <script>
-
  import DialogFound from "./board_edit";
-
-export default {
+ export default {
   name: "board_List",
   data() {
     return {
@@ -114,7 +111,6 @@ export default {
         }else{
           this.$axios(`/api/v1/account_list/${this.account_data.pinterest_account_id}/?page=${this.currentPage}&page_size=${this.pagesize}`).then(res => {
             this.tableData = res.data.data.results;
-            // console.log( this.tableData)
             this.total = res.data.data.count;
           });
         }
@@ -131,30 +127,30 @@ export default {
     deteleFun(row, index) {
       // 删除
       console.log(row)
-        this.$confirm('Determine To Delete?', 'Tips', {
-              confirmButtonText: 'Determine',
-              cancelButtonText: 'Cancel',
-              type: 'warning'
-            }).then(() => {
-                this.$axios.delete(`/api/v1/board_manage/${row.board_id}/`)
-                  .then(res => {
-                    if(res.data.code == 1){
-                      this.$message({type: 'success',message: 'Successful Deletion!'});
-                      this.dialog.show = false;
-                      this.$parent.init();
-                    }else{
-                      this.$message.error('Delete Failed!');
-                    }
-                  })
-                  .catch(error => {
-                     this.$message.error('Interface Timeout!');
-                  }); 
-            }) 
+      this.$confirm('Determine To Delete?', 'Tips', {
+            confirmButtonText: 'Determine',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+        }).then(() => {
+            this.$axios.delete(`/api/v1/board_manage/${row.board_id}/`)
+              .then(res => {
+                if(res.data.code == 1){
+                  this.$message({type: 'success',message: 'Successful Deletion!'});
+                  this.dialog.show = false;
+                  this.$parent.init();
+                }else{
+                  this.$message.error('Delete Failed!');
+                }
+              })
+          .catch(error => {
+              this.$message.error('Interface Timeout!');
+          }); 
+      }) 
     },
     PinManagerFun(row) {
-      // 去pin列表页面
-      localStorage.setItem("board_data",JSON.stringify(row) );
-      this.$router.push({path:"/pin_manager"});
+        // 去pin列表页面
+        localStorage.setItem("board_data",JSON.stringify(row) );
+        this.$router.push({path:"/pin_manager"});
     },
     current_change(val){
         //点击数字时触发
@@ -170,14 +166,10 @@ export default {
     }
   }
 };
-
 </script>
 
 <style>
-.board_List .headImg{width: 90px;
-    position: absolute;
-    left: 20px;
-    top: 83px;}
+.board_List .headImg{width: 90px;position: absolute;left: 20px;top: 83px;}
 .board_List .massage p{margin:5px 0;padding-left:150px;font-size:16px;}
 .board_List .tableTitle span{width:268px;}
 </style>

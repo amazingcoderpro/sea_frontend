@@ -1,25 +1,21 @@
 <template>
     <div class="login">
         <section class="form_container">
-                  <span class="title">PinBooster</span>
-                  <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
-                    
-                    <el-form-item label="User Name" prop="username">
-                      <el-input v-model="loginUser.username" placeholder="User Name"></el-input>
-                    </el-form-item>
-
-                    <el-form-item label="Password" prop="password">
-                      <el-input type="password" v-model="loginUser.password" placeholder="Password"></el-input>
-                    </el-form-item>
-
-                    <el-form-item>
-                      <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')" >Login</el-button>
-                    </el-form-item>
-
-                    <div class="tiparea">
-                        <p>No User Name?Now <router-link to='/shopfy_regist'>Regist</router-link> </p>
-                    </div>
-                  </el-form>
+                <span class="title">PinBooster</span>
+                <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
+                  <el-form-item label="User Name" prop="username">
+                    <el-input v-model="loginUser.username" placeholder="User Name"></el-input>
+                  </el-form-item>
+                  <el-form-item label="Password" prop="password">
+                    <el-input type="password" v-model="loginUser.password" placeholder="Password"></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" class="submit_btn" @click="submitForm('loginForm')" >Login</el-button>
+                  </el-form-item>
+                  <div class="tiparea">
+                      <p>No User Name?Now <router-link to='/shopfy_regist'>Regist</router-link> </p>
+                  </div>
+                </el-form>
         </section>
     </div>
 </template>
@@ -27,7 +23,6 @@
 
 <script>
 import * as base from '../assets/js/base'
-// import jwt_decode from 'jwt-decode';
 import router from '../router'
 import Menufilter from '../components/menufilter.js'
 export default {
@@ -53,19 +48,19 @@ export default {
       }
     },
     created(){            // 回车事件
-        this.loginUser.username = base.getQueryString('username') == null?'':base.getQueryString('username');
-        var _self = this;
-        document.onkeydown = function(e){
-          if(window.event == undefined){
-            var key = e.keyCode;
-          }else{
-            var key = window.event.keyCode;
-          }
-          if(key == 13){
-            _self.submitForm('loginForm');
-          }
+      this.loginUser.username = base.getQueryString('username') == null?'':base.getQueryString('username');
+      var _self = this;
+      document.onkeydown = function(e){
+        if(window.event == undefined){
+          var key = e.keyCode;
+        }else{
+          var key = window.event.keyCode;
         }
-      },
+        if(key == 13){
+          _self.submitForm('loginForm');
+        }
+      }
+    },
     methods: {
       submitForm(formName) {
         this.loginUser.code = base.getQueryString("code") == null?'':base.getQueryString("code");
@@ -95,7 +90,7 @@ export default {
               .catch(error => {
                   this.$message("Interface timeout!");
               });
-          }
+           }
         });
       },
       isEmpty(value) {
@@ -119,5 +114,4 @@ export default {
 .form_container .submit_btn{width:100%;}
 .form_container .tiparea{text-align:right;font-size:12px;color:#333;}
 .form_container .tiparea p a{color:#409eff;}
-
 </style>

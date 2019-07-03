@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Notfount from './components/404.vue'
 import Login from './views/login.vue'
-
 import Index from './views/index'
 import Dashboard from './views/dashboard'
 import AccountList from './views/account/account_List'
@@ -10,23 +9,17 @@ import BoardList from './views/board/board_List'
 import PinManager from './views/pin/pin_manager'
 import RuleList from './views/rule/rule_list'
 import RuleTimeList from './views/ruleTime/ruleTimeList'
-
-
 import RecordManager from './views/record/record_manager'
 import RecordHistory from './views/record/record_history'
 import UserManager from './views/user/user_manager'
 import RoleManager from './views/role/role_manager'
 import StoreManager from './views/store/store_manager'
-
-
 import SubAccountDailyReport from './views/dailyReport/sub_account_daily_report'
 import PinsDailyReport from './views/dailyReport/pins_daily_report'
 import BoardsDailyReport from './views/dailyReport/boards_daily_report'
-
 import SubAccountReport from './views/subAccountReport/sub_account_report'
 import BoardReport from './views/subAccountReport/board_report'
 import PinsReport from './views/subAccountReport/pins_report'
-
 import AutState from './views/special/aut_state'
 import Personal from './views/special/personal.vue'
 import ShopfyRegist from './views/special/shopfy_regist.vue'
@@ -35,7 +28,6 @@ import Privacy from './views/special/privacy.vue'
 
 
 Vue.use(Router)
-
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -68,7 +60,6 @@ const router = new Router({
         { path: '/store_manager', name: 'store_manager', component: StoreManager },
         { path: '/storeSettings', name: 'storeSettings', component: StoreSettings },
         { path: '/personal', name: 'personal', component: Personal },
-        
       ]
     },
     {
@@ -97,7 +88,6 @@ const router = new Router({
       name: '/404',
       component: Notfount
     },
-
   ]
 })
 
@@ -107,20 +97,12 @@ router.beforeEach((to,from,next) =>{
   if(to.path == "/login" || to.path == "/shopfy_regist" || to.path == "/privacy" || to.path == "/aut_state" ){
     next()
   }else{
-    //isLogin ? next() : next('/login');
     if(isLogin) {
       next()
-   
-      // let refreshPath = window.localStorage.getItem('router_tree') ? JSON.parse(window.localStorage.getItem('router_tree')) : this.$store.getters.router_tree
-      //   if(refreshPath.indexOf(to.path)>=0){
-      //     next()
-      //   }else{
-      //     next('/login')
-      //   }
       }else{
         next('/login')
       }
-  }
+   }
 });
 
 

@@ -63,11 +63,11 @@
             <el-table-column prop="rule.tag" label="Tag" align="center" width="120">
                 <template slot-scope="scope"> {{scope.row.rule.tag}}</template>
             </el-table-column>
-              <!-- 所属账户ID -->
+                <!-- 所属账户ID -->
             <el-table-column prop="board.pinterest_account.nickname" label="Pinterest Account Name" align="center" width="200"></el-table-column>
                 <!-- 所属Board ID -->
             <el-table-column prop="board.name" label="Board Name" align="center" width="125"></el-table-column>
-                 <!-- 发布时间 -->
+                <!-- 发布时间 -->
             <el-table-column prop="finished_time" label="Publish Time" align="center" width="160">
             </el-table-column> 
                 <!-- 发布状态 --> 
@@ -85,19 +85,15 @@
             </el-table-column>
           </el-table>
         </div>
-        <!-- 分页 -->
+                 <!-- 分页 -->
         <div class="paging">
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
-        <!-- 展示请求权限的弹窗 -->
-        <!-- <DialogFound :dialog='dialog'  ref="dailog" ></DialogFound> -->
     </div>
 
 </template>
 
 <script>
-
-// import DialogFound from "./dialog/board_manager_dialog";
 import * as base from '../../assets/js/base'
 export default {
   name: "record_history",
@@ -113,8 +109,6 @@ export default {
       pagesizes:[10, 20, 30, 40],//分组数量
       currentPage:1,//默认开始页面
       tableHeight:"100",
-
-
       options: [
         {
           value: '[0,1,3]', 
@@ -135,11 +129,9 @@ export default {
       ],
       search:{
         state:'[0,1,3]',
-        // product__sku:'',
         creatTime:[],
         query_key:''
       },
-
       recordID:'',  
       account_data:{},
       board_data:{},
@@ -150,7 +142,6 @@ export default {
         title: "",
         option: "edit"
       }
-
     };
   },
   mounted() {
@@ -160,11 +151,10 @@ export default {
       window.addEventListener('resize', () => {
         if(document.getElementsByClassName("topictable").length>0){
             this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
-        }
+          }
       });
   },
   components: {
-    //  DialogFound
   },
   created() {
     this.init();
@@ -207,24 +197,24 @@ export default {
       };
     },
     recordHead(row){             //发布状态
-        this.$confirm('Do you want to publish manually?', 'Tips', {
-              confirmButtonText: 'Yes',
-              cancelButtonText: 'Cancel',
-              type: 'warning'
-            }).then(() => {
-                this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
-                  .then(res => {
-                    if(res.data.code == 1){
-                      this.$message({type: 'success',message: 'Successful release!'});
-                      this.init();
-                    }else{
-                      this.$message.error( res.data.msg.detail);
-                    }
-                  })
-                  .catch(error => {
-                     this.$message.error('Interface timeout!');
-                  }); 
-            }) 
+      this.$confirm('Do you want to publish manually?', 'Tips', {
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+              this.$axios.post(`/api/v1//rule/report/send_pin/${row.id}/`)
+                .then(res => {
+                  if(res.data.code == 1){
+                    this.$message({type: 'success',message: 'Successful release!'});
+                    this.init();
+                  }else{
+                    this.$message.error( res.data.msg.detail);
+                  }
+                })
+                .catch(error => {
+                    this.$message.error('Interface timeout!');
+                }); 
+          }) 
     },
     current_change(val){
         //点击数字时触发

@@ -79,43 +79,17 @@
                 <el-date-picker v-model="serchProduct.data1" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
                 </el-date-picker>
             </el-form-item>
-            <!-- <el-form-item label="Time" prop="data2" :class="'specialTime'">
-                <el-date-picker v-model="serchProduct.data2" type="datetimerange" start-placeholder="start time" end-placeholder="End time" :default-time="['00:00:00']">
-                </el-date-picker>
-            </el-form-item> -->
-            <!-- <el-form-item label="Scan" prop="scan">
-              <el-select :class="'W20'" v-model="serchProduct.scan_sign">
-                <el-option  :label="'='" :value="'=='"> </el-option>
-                <el-option  :label="'>'" :value="'>'"> </el-option>
-                <el-option  :label="'<'" :value="'<'"> </el-option>
-                <el-option  :label="'>='" :value="'>='"> </el-option>
-                <el-option  :label="'<='" :value="'<='"> </el-option>
-              </el-select>
-              <el-input :class="'W36'" v-model="serchProduct.scan" type="number" placeholder="Scan"></el-input>
-            </el-form-item> -->
-            <!-- <el-form-item label="Sale" prop="sale">
-              <el-select :class="'W20'"  v-model="serchProduct.sale_sign">
-                <el-option  :label="'='" :value="'=='"> </el-option>
-                <el-option  :label="'>'" :value="'>'"> </el-option>
-                <el-option  :label="'<'" :value="'<'"> </el-option>
-                <el-option  :label="'>='" :value="'>='"> </el-option>
-                <el-option  :label="'<='" :value="'<='"> </el-option>
-              </el-select>
-              <el-input :class="'W36'" v-model="serchProduct.sale" type="number"  placeholder="Sale"></el-input>
-            </el-form-item> -->
             <el-form-item label="Number of Products">
               <el-button type="primary"  @click="serchProductFun('serchProduct')" :style="'margin-right:20px;'">Search</el-button>
               <span>{{ruleForm.product_list.length}}个</span>
               <div class="el-form-item__error" v-if="productListState == 2">请查询出满足以下条件的商品</div>
             </el-form-item>
-
           </el-form>
         </el-dialog>
     </div>
 </template>
 
 <script>
-
 import * as base from '../../assets/js/base'
   export default {
     name: "rule_clone",
@@ -211,15 +185,12 @@ import * as base from '../../assets/js/base'
             pinterest: [{ required: true, message: '请选择pinterest', trigger: 'change' }],
             board: [{ required: true, message: '请选择board', trigger: 'change' }],
             ruleTime: [{required: true,  trigger: 'change',validator:RuleTimeFun }],
-            // schedule_rule:[{required: true,validator:scheduleRuleFun}],
             tag: [{ required: true, message: '请输入标签', trigger: 'blur' },],
           },
           searchRules:{
             product__name: [{ required: true, message: '请输入商品名', trigger: 'blur' },],
             data1:[{required: true, message: '请选择商品上架时间', trigger: 'change' }],
             data2:[{required: true, message: '请选择商品浏览量、销量时间', trigger: 'change' }],
-            // sale: [{ required: true, message: '请输入产品销量', trigger: 'blur' },],
-            // scan: [{ required: true, message: '请输入产品浏览量', trigger: 'blur'}],
           },
       };
     },
@@ -257,10 +228,8 @@ import * as base from '../../assets/js/base'
         let rule_end = new Date(this.cloneData.end_time);
         let product_start = new Date(this.cloneData.product_start);
         let product_end = new Date(this.cloneData.product_end);
-
         this.serchProduct.product__name = this.cloneData.product_key;
         this.serchProduct.data1 = [product_start,product_end];
-        
         this.ruleForm.pinterest = this.cloneData.pinterest_account;
         this.ruleForm.board = this.cloneData.board;
         this.ruleForm.board = this.cloneData.board;
@@ -272,7 +241,7 @@ import * as base from '../../assets/js/base'
                 start_time:e.start_time,
                 end_time:e.end_time,
                 interval_time:e.interval_time,         
-          }
+           }
           this.ruleForm.schedule_rule.push(_thisData)
         });  
       },
@@ -301,7 +270,6 @@ import * as base from '../../assets/js/base'
                   schedule_rule:JSON.stringify(this.ruleForm.schedule_rule),         // 
                   product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
                   tag:this.ruleForm.tag,      //规则标签
-
                   product_start:base.dateFormat(this.serchProduct.data1[0]),           //产品的发布时间范围起点
                   product_end:base.dateFormat(this.serchProduct.data1[1]),             //产品的发布时间范围终点
                   product_key:this.serchProduct.product__name,      //产品的搜索关键字
@@ -363,7 +331,6 @@ import * as base from '../../assets/js/base'
         }else{
           this.scheduleRruleState = 1;
         }
-
       },
       deletschedule(index){
         //删除指定分区
@@ -402,8 +369,6 @@ import * as base from '../../assets/js/base'
             return false;
           }
         });
-
-
       },
       pinterestChange(){
         //pinterest账户变更触发的事件
@@ -435,15 +400,8 @@ import * as base from '../../assets/js/base'
 .rule_clone .el-dialog__body{position: relative;}
 .rule_clone .contentBg{height:176px;}
 .rule_clone .searchContent{position: absolute;top: 82px;}
-.rule_clone .specialTime{
-    position: absolute;
-    left: 346px;
-}
+.rule_clone .specialTime{position: absolute;left: 346px;}
 .rule_clone input::-webkit-outer-spin-button,
-.rule_clone input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-.rule_clone input[type="number"]{
-  -moz-appearance: textfield;
-}
+.rule_clone input::-webkit-inner-spin-button {-webkit-appearance: none;}
+.rule_clone input[type="number"]{-moz-appearance: textfield;}
 </style>

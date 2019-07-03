@@ -2,7 +2,6 @@
     <div class="board_report">
         <div class="tableTitle"><span>BoardReport</span></div>
         <el-form  :inline="true" :model="searchData" class="demo-form-inline">
-
             <el-form-item label="Filter" prop="dep">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" class="Filter_week W200"  @change="getBodFun">
                    <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
@@ -48,7 +47,6 @@
             <el-table-column  align="center"  prop="board_followers" label="Followers"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pins" label="Pins"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="pin_saves" label="Saves"  width="100"></el-table-column>
-            <!-- <el-table-column  align="center"  prop="pin_likes" label="Like"  width="100"></el-table-column> -->
             <el-table-column  align="center"  prop="pin_comments" label="Comments"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_visitors" label="Visitors"  width="100"></el-table-column>
             <el-table-column  align="center"  prop="product_new_visitors" label="New Vistors"  width="150"></el-table-column>
@@ -89,7 +87,6 @@ export default {
           board_id:'',
           pinterest_account_id:'',
           store_id:'',
-
           PinterestArray:[],        //Pinterest的下拉框数据源
           BoardArray:[],            //Board的下拉框数据源
           PinsArray:[],             //Pins的下拉框数据源
@@ -125,7 +122,6 @@ export default {
             urlString +=`&start_time=${this.searchData.start_time}`;
             urlString +=`&end_time=${this.searchData.end_time}`;
         }
-
         this.$axios.get(urlString).then(res => {
           if(res.data.code==1){ 
               this.tableData = res.data.data.results;
@@ -217,8 +213,6 @@ export default {
     }
   }
 };
-
-
 
 </script>
 

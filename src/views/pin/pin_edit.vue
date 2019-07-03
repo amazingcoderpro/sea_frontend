@@ -14,7 +14,6 @@
                <el-form-item label="Pin Description" prop="note">
                 <el-input v-model="editData.note"></el-input>
               </el-form-item>
-              
               <el-form-item>
                 <el-button type="primary" @click="submitForm('form')">Save</el-button>
                 <el-button @click="resetForm('form')">Reset</el-button>
@@ -58,7 +57,7 @@
                   });
                 }
               });
-          }
+            }
         });
       },
       resetForm(formName) {
@@ -68,6 +67,5 @@
   }
 </script>
 <style>
-/* .pin_edit  */
 
 </style>

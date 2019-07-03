@@ -13,7 +13,6 @@
                     :model="form"
                     :rules="form_rules"
                     label-width="150px" >
-
                     <el-form-item label="password:" prop="password">
                       <el-input type="password" v-model="form.password"></el-input>
                     </el-form-item>
@@ -28,7 +27,6 @@
             </div>
         </el-dialog>
     </div>
-  
 </template>
 
 <script>

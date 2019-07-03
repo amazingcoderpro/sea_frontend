@@ -12,7 +12,7 @@
                 <el-input v-model="pinID"  placeholder="Pin Descripttion/SKU"></el-input>
                 <el-button  type="primary" @click='init()'>Search</el-button>
             </el-form-item>
-             <el-button type="primary" round class="button_right" @click="deleteAll()">Bulk Delete</el-button>
+            <el-button type="primary" round class="button_right" @click="deleteAll()">Bulk Delete</el-button>
         </el-form>
         <!-- 表单部分 -->
         <div class="table_right">
@@ -37,9 +37,6 @@
                 </template>
             </el-table-column>
             <el-table-column prop="product_sku" label="Product SKU" align="center" width="160"></el-table-column>
-            <!-- <el-table-column  class="parentNodeColumn" prop="view,view_increment" label="View" align="center"  width="150">
-              <template slot-scope="scope"> Total:{{scope.row.views}}<br/>Todays new:{{scope.row.views_increment}}</template>
-            </el-table-column> -->
             <el-table-column  class="parentNodeColumn" prop="saves,saves_increment" label="Saves" align="center"  width="170">
               <template slot-scope="scope"> Total:{{scope.row.saves}}<br/>Todays new:{{scope.row.saves_increment}}</template>
             </el-table-column>
@@ -63,13 +60,10 @@
         <!-- 展示请求权限的弹窗 -->
         <DialogFound :dialog='dialog' :editData='editData'  ref="dailog" ></DialogFound>
     </div>
-
 </template>
 
 <script>
-
 import DialogFound from "./pin_edit";
-
 export default {
   name: "pin_manager",
   data() {
@@ -108,11 +102,11 @@ export default {
       DialogFound
   },
   created() {
-    this.init();
+      this.init();
   },
   methods: {
     init() {
-      // 获取表格数据
+        // 获取表格数据
         this.account_data =JSON.parse(localStorage.getItem("account_data"));
         this.board_data =JSON.parse(localStorage.getItem("board_data"));
         var url = `/api/v1/account_list/${this.account_data.pinterest_account_id}/${this.board_data.board_id}/`;
@@ -135,7 +129,6 @@ export default {
         url:row.pin_url,
         note:row.pin_note
       }
-
       this.dialog = {
         show: true,
         title: "Edit Pin",
@@ -146,27 +139,25 @@ export default {
       var ids = [];
           ids.push(row.pin_id);
       var pin_list = JSON.stringify(ids);
-  
-
       // 删除
-        this.$confirm('Determine to delete', 'Tips', {
-              confirmButtonText: 'Determine',
-              cancelButtonText: 'Cancel',
-              type: 'warning'
-            }).then(() => {
-                this.$axios.delete(`/api/v1/pin_manage/?pin_list=`+pin_list)
-                  .then(res => {
-                    if(res.data.code == 1){
-                      this.$message({type: 'success',message: 'Successful deletion!'});
-                      this.dialog.show = false;
-                      this.init();
-                    }else{
-                      this.$message.error('Delete failed!');
-                    }
-                  })
-                  .catch(error => {
-                     this.$message.error('Interface timeout!');
-                  }); 
+      this.$confirm('Determine to delete', 'Tips', {
+          confirmButtonText: 'Determine',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+          }).then(() => {
+              this.$axios.delete(`/api/v1/pin_manage/?pin_list=`+pin_list)
+                .then(res => {
+                  if(res.data.code == 1){
+                    this.$message({type: 'success',message: 'Successful deletion!'});
+                    this.dialog.show = false;
+                    this.init();
+                  }else{
+                    this.$message.error('Delete failed!');
+                  }
+                })
+                .catch(error => {
+                    this.$message.error('Interface timeout!');
+                }); 
             }) 
     },
     // 批量刪除
@@ -178,24 +169,24 @@ export default {
         });
         var pin_list = JSON.stringify(ids);
         this.$confirm('Are you sure you wanna delete this account?', 'Warning', {
-              confirmButtonText: 'Yes, I’m Sure',
-              cancelButtonText: 'Cancel',
-              type: 'warning'
-            }).then(() => {
-                this.$axios.delete(`/api/v1/pin_manage/?pin_list=` + pin_list)
-                  .then(res => {
-                    if(res.data.code == 1){
-                      this.$message({type: 'success',message: 'Successful deletion!'});
-                      this.dialog.show = false;
-                      this.init();
-                    }else{
-                      this.$message.error('Delete failed!');
-                    }
-                  })
-                  .catch(error => {
-                      this.$message.error('Interface timeout!');
-                  }); 
-            }) 
+            confirmButtonText: 'Yes, I’m Sure',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+              this.$axios.delete(`/api/v1/pin_manage/?pin_list=` + pin_list)
+                .then(res => {
+                  if(res.data.code == 1){
+                    this.$message({type: 'success',message: 'Successful deletion!'});
+                    this.dialog.show = false;
+                    this.init();
+                  }else{
+                    this.$message.error('Delete failed!');
+                  }
+                })
+                .catch(error => {
+                    this.$message.error('Interface timeout!');
+                }); 
+          }) 
       }else{
           this.$message.error('Please choose at least one!');
       }
@@ -217,22 +208,12 @@ export default {
     }
   }
 };
-
 </script>
 
 <style>
 .pin_manager .tableTitle span{width: 230px;}
-.pin_manager .btnRight .el-form-item__content{
-   width: 300px; 
-}
-.pin_manager .btnRight .el-form-item__content .el-input{
-   width: 200px; 
-}
-.pin_manager .btnRight .el-form-item__content .el-button.el-button--primary{
-    float:right;
-}
-.pin_manager .button_right{
-   float: right;
-   margin-right: 20px;
-}
+.pin_manager .btnRight .el-form-item__content{width: 300px;}
+.pin_manager .btnRight .el-form-item__content .el-input{width: 200px;}
+.pin_manager .btnRight .el-form-item__content .el-button.el-button--primary{float:right;}
+.pin_manager .button_right{float: right;margin-right: 20px;}
 </style>

@@ -20,8 +20,7 @@
         :data="tableData"
         ref="topictable"
         :height="tableHeight"
-        border
-        >
+        border>
         <el-table-column prop="name" label="角色" align="center" width="400"></el-table-column>
         <el-table-column prop="create_time" label="创建时间" align="center" width="400">
           <template slot-scope="scope">
@@ -42,22 +41,20 @@
               type="danger"
               icon="delete"
               size="small"
-              @click="handleDelete(scope.row,scope.$index)"
-            >删除</el-button>
+              @click="handleDelete(scope.row,scope.$index)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <!-- 分页 -->
         <div class="paging" style="text-align: right;  padding-right: 20px;padding-top: 20px;">
-          <el-pagination
-            :page-sizes="pagesizes"
-            :page-size="pagesize"
-            @current-change="current_change"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total=total
-          >
-          </el-pagination>
+            <el-pagination
+              :page-sizes="pagesizes"
+              :page-size="pagesize"
+              @current-change="current_change"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total=total>
+            </el-pagination>
         </div>
     <!-- 弹框页面 -->
     <DialogFound :dialog="dialog" :form="form" @update="getProfile"></DialogFound>
@@ -66,7 +63,6 @@
 
 <script>
 import DialogFound from "./role_add";
-
 export default {
   name: "role_manager",
   data() {
@@ -77,7 +73,6 @@ export default {
       currentPage:1,//默认开始页面
       tableHeight:"100",
       input: '',
-
       tableData: [],
       dialog: {
         show: false,
@@ -102,9 +97,8 @@ export default {
   created() {
     this.getProfile();
   },
-  
   methods: {
-     current_change(currentPage){
+      current_change(currentPage){
       this.currentPage = currentPage;
     },
     getProfile() {
@@ -173,29 +167,10 @@ export default {
 };
 </script>
 <style scoped>
-.fillcontain {
-  width: 100%;
-  height: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-}
-.role_manager .btnLeft {
-  float: left;
-  display: flex;
-}
-.seek {
-  margin-left: 5px;
-  padding: 11px 20px;
-}
-.btnRight {
-  float: right;
-}
-.pagination {
-  text-align: right;
-  margin-top: 10px;
-}
-.block {
-  float: right;
-  padding-top: 10px;
-}
+.fillcontain{width:100%;height:100%;padding:16px;box-sizing:border-box;}
+.role_manager .btnLeft{float:left;display:flex;}
+.seek{margin-left:5px;padding:11px 20px;}
+.btnRight{float:right;}
+.pagination{text-align:right;margin-top:10px;}
+.block{float:right;padding-top:10px;}
 </style>

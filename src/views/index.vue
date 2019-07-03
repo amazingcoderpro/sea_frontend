@@ -22,17 +22,6 @@ export default {
 
 <style>
 html, body {margin: 0;padding: 0;}
-.index{
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.rightContainer {
-  position: relative;
-  top: 0;
-  left: 260px;
-  width: calc(100% - 260px);
-  height: calc(100% - 71px);
-  overflow: auto;
-}
+.index{width:100%;height:100%;overflow:hidden;}
+.rightContainer{position:relative;top:0;left:260px;width:calc(100% - 260px);height:calc(100% - 71px);overflow:auto;}
 </style>

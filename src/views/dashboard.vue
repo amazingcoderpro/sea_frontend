@@ -12,8 +12,7 @@
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
-                    class="W200"
-                    >
+                    class="W200">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -26,15 +25,12 @@
                 end-placeholder="End time"
                 :disabled="disabledType=='1'"
                 :picker-options="pickerOptions"
-                class="W300"
-                >
+                class="W300">
             </el-date-picker>
             <el-button type="primary" icon="view" @click="init()">Search</el-button>
         </el-form>
-
         <!-- echarts -->
         <div :class="className" :id="id" :style="{height:height,width:width}" ref="myEchart"></div>
-        
         <!-- 选择条 -->
         <div class="menu">
             <template v-for="item in chartBtnArray" >
@@ -140,7 +136,6 @@
                                         <template v-else>
                                             <i class="iconfont icon-xiangshangjiantou"></i>
                                         </template>
-
                                     </td>
                                 </tr>
                             </tbody>
@@ -190,12 +185,11 @@
         </div>
         <div class="el-loading-mask is-fullscreen" style="background-color: rgba(0, 0, 0, 0.7); z-index: 2000;" v-if="loadingState.dashboardOne || loadingState.dashboardTwo || loadingState.dashboardThree || loadingState.dashboardFour || loadingState.dashboardFive ">
             <div class="el-loading-spinner">
-            <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
-            <p class="el-loading-text">加载中...</p>
+                <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                <p class="el-loading-text">加载中...</p>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -242,7 +236,6 @@ export default {
                 XValue:[], 
                 YValue:[], 
             },                  
-
                                 // 选择条
             chartBtnArray:[
                 {btnName:'Sessions',btnValue:'0'},
@@ -267,8 +260,6 @@ export default {
             tableData:[],
             dataArray:[//时间区间的星期几
                 {"label":"Custom","value":"0"},
-                // {"label":"Yesterday","value":"1"},
-                // {"label":"Today","value":"2"},
                 {"label":"Last 7 Days","value":"3"},
                 {"label":"Current Month","value":"4"},
                 {"label":"This Year","value":"5"},
@@ -300,7 +291,6 @@ export default {
                     }
                 }
              },20)
-
             this.loadingState = {
                 dashboardOne:true,
                 dashboardTwo:true,
@@ -318,7 +308,6 @@ export default {
             this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
             this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60 - 1000);
             this.dataSelect();
-     
             var urlString = `/api/v1/dashboard/1/?start_time=${this.searchData.start_time}&end_time=${this.searchData.end_time}`;
             this.$axios.get(urlString)
             .then(res => {
@@ -340,7 +329,6 @@ export default {
         },
         updates() {
         // 获取表格数据
-
             var _startTime = base.dateFormat(this.searchData.timeArray[0],"day"); 
             var _endTime = base.dateFormat(this.searchData.timeArray[1],"day"); 
             if(_endTime != _startTime){
@@ -418,7 +406,6 @@ export default {
                 }else{
                     this.tableValue.XValue.unshift(base.dateFormat(e.date,"noyear"))
                 }
-
               if(this.tableType == 0){
                 this.tableValue.YValue.unshift(parseFloat(e.click_num));
               }
@@ -442,36 +429,34 @@ export default {
         initChart() {
             this.chart = echarts.init(this.$refs.myEchart);
             // 把配置和数据放这里
-                    this.chart.setOption({
-                    xAxis: {
-                        type: 'category',
-                        boundaryGap: false,
-                        data: this.tableValue.XValue
-                        },
-                    grid:{              
-                        top:"50px",
-                        left:"50px",
-                        right:"15px",
-                        bottom:"50px"
+                this.chart.setOption({
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: this.tableValue.XValue
                     },
-                    tooltip: {
-                                trigger: 'axis'  //鼠标滑过时显示数据
-                            },
-                    yAxis: {
-                        type: 'value',
-                        //max: 3000,   //纵坐标的数据  最大最小值  如果不给 系统会默认分配值 会跟着值的变化而变化
-                        min: 0,
-                    },
-                    series: [{
-                        data:  this.tableValue.YValue,
-                        type: 'line',
-                        areaStyle: {},
-                        color:['#0065a3'], //设置折线图内容颜色
-                        smooth:true,//折点是圆弧状的
-                        symbolSize: 12,   //设定实心点的大小
-                    
-                    }]
-                })
+                grid:{              
+                    top:"50px",
+                    left:"50px",
+                    right:"15px",
+                    bottom:"50px"
+                },
+                tooltip: {
+                            trigger: 'axis'  //鼠标滑过时显示数据
+                },
+                yAxis: {
+                            type: 'value',
+                            min: 0,
+                },
+                series: [{
+                    data:  this.tableValue.YValue,
+                    type: 'line',
+                    areaStyle: {},
+                    color:['#0065a3'], //设置折线图内容颜色
+                    smooth:true,//折点是圆弧状的
+                    symbolSize: 12,   //设定实心点的大小
+                }]
+            })
         },
         dataSelect(){
             if(this.searchData.dataType == 0){
@@ -503,7 +488,7 @@ export default {
                      _star = new Date(base.dateFormat(time.getFullYear()+"-1-1"+ " 00:00:00"));
                      _end = new Date(base.dateFormat(new Date(new Date().getTime()),"day") + " 00:00:00");
                 }
-                this.searchData.timeArray = [_star,_end]
+                     this.searchData.timeArray = [_star,_end]
             }
         }
     },
@@ -515,9 +500,7 @@ export default {
         this.chart = null;
     }
 }
-
 </script>
-
 
 <style>
 .dashboard{width:calc(100% - 20px)}

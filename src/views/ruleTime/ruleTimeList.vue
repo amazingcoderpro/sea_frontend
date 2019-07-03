@@ -115,19 +115,13 @@ export default {
           pinterestIdArray:[],
         },
         tableData: [
-          //mon-tues-wed-thur-fri-sat-sun-every
         ],
         pinId:'',   //打开了哪一个的id
         post_time_s:{} //用于展示的那个数据
       }
     },
     watch:{
-      // post_time_s: {
-      //     handler: function() {
-      //       this.getEveryFun();
-      //     },
-      //     deep: true
-      // }
+    
     },
     mounted() {
         setTimeout(() => {
@@ -138,7 +132,7 @@ export default {
             this.tableHeight = window.innerHeight - document.getElementsByClassName("topictable")[0].offsetTop - 150;
           }
         });
-        this.searchInit();
+        this.searchInit();  
     },
     methods: {
         init(){

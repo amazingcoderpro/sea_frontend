@@ -6,7 +6,6 @@
         </ul>
         <el-form :inline="true" ref="add_data">
               <el-form-item class="btnRight">
-                <!-- <el-button  type="primary" @click='addFun()'>Add</el-button> -->
                 <el-button  type="primary" @click='AuthorizedFun()'>Authorized</el-button>
             </el-form-item>
         </el-form>
@@ -30,17 +29,6 @@
                 Account Type : <span v-if='scope.row.account_type == 0'>Individual</span><span v-else>business</span>
               </template>
             </el-table-column>
-            <!-- <el-table-column prop="account_authorized" align="center" label="Authorization" width="150">
-              <template slot-scope="scope">
-                <template v-if="scope.row.account_authorized == 1">
-                    <span>Authorized</span>
-                    <el-button  type="danger"  size="small" @click="cancelAut(scope.row)">Cancel</el-button>
-                </template>
-                <template v-else>
-                  <el-button  type="primary"  size="small" @click="confirmFun(scope.row)">Go Authorize</el-button>
-                </template>
-              </template>
-            </el-table-column> -->
             <el-table-column  class="parentNodeColumn" prop="pins,pins_increment" align="center" label="Pins"  width="120">
               <template slot-scope="scope"> Total : {{scope.row.pins}}<br/> New: {{scope.row.pins_increment}}</template>
             </el-table-column>
@@ -185,17 +173,17 @@ export default {
     },
     AuthorizedFun(){
       this.$axios.get(`/api/v1/auth/pinterest_account/`)
-                      .then(res => {
-                          if(res.data.code == 1){
-                            window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
-                          }else{
-                            this.$message("Failure to add!");
-                          }
-                      })
-                      .catch(error => {
-                        this.$message("Interface timeout!");
-                      });       
-    },
+        .then(res => {
+            if(res.data.code == 1){
+              window.open(res.data.data.message, 'newwindow', 'height=700, width=700, top=200, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
+            }else{
+              this.$message("Failure to add!");
+            }
+        })
+        .catch(error => {
+          this.$message("Interface timeout!");
+        });       
+      },
     EditFun(row) {
       // 添加
       this.dialog = {
@@ -213,21 +201,21 @@ export default {
               confirmButtonText: 'Confirm',
               cancelButtonText: 'Cancel',
               type: 'warning'
-            }).then(() => {
-                this.$axios.delete(`/api/v1/account_manage/${row.pinterest_account_id}/`,statedata)
-                  .then(res => {
-                    if(res.data.code == 1){
-                      this.$message({type: 'success',message: 'Deleted successfully!'});
-                      this.init();
-                    }else{
-                      this.$message.error('Delete failed!');
-                    }
-                  })
-                  .catch(error => {
-                     this.$message.error('Interface timeout!');
-                  }); 
+          }).then(() => {
+              this.$axios.delete(`/api/v1/account_manage/${row.pinterest_account_id}/`,statedata)
+                .then(res => {
+                  if(res.data.code == 1){
+                    this.$message({type: 'success',message: 'Deleted successfully!'});
+                    this.init();
+                  }else{
+                    this.$message.error('Delete failed!');
+                  }
+                })
+                .catch(error => {
+                    this.$message.error('Interface timeout!');
+                }); 
             }) 
-    },
+        },
     AutFun() {
       if(this.pinterest_account_url ==''){
       // 获取授权
@@ -263,24 +251,24 @@ export default {
     },
     cancelAut(row){
       // 取消授权
-      this.$confirm('Are you sure you wanna cancel this authorized?', 'Warning', {
-            confirmButtonText: 'Confirm',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }).then(() => {
+        this.$confirm('Are you sure you wanna cancel this authorized?', 'Warning', {
+              confirmButtonText: 'Confirm',
+              cancelButtonText: 'Cancel',
+              type: 'warning'
+            }).then(() => {
               var data = {
                 authorized:0,
                 token:''
-              }
-              this.$axios.put(`/api/v1/auth/pinterest_account/cancel_auth/${row.pinterest_account_id}/`,data).then(res => {
-                  if(res.data.code == 1){
-                    this.$message({type: 'success',message: res.data.msg});
-                    this.init();
-                  }else{
-                    this.$message.error('Delete failed!');
-                  }
-              })
-          }) 
+            }
+        this.$axios.put(`/api/v1/auth/pinterest_account/cancel_auth/${row.pinterest_account_id}/`,data).then(res => {
+            if(res.data.code == 1){
+              this.$message({type: 'success',message: res.data.msg});
+              this.init();
+            }else{
+              this.$message.error('Delete failed!');
+            }
+        })
+      }) 
     },
     confirmFunTwo(url){
       this.pinterest_account_url = url;

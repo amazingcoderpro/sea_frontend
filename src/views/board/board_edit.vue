@@ -63,20 +63,20 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-                this.$axios.put(`/api/v1/board_manage/${this.formData.board_id}/`,this.editData)
-                .then(res => {
-                    if(res.data.code == 1){
-                      this.dialog.show = false;
-                      this.$message({message: res.data.msg,type: 'success'});
-                      this.$parent.init();
-                    }else{
-                      this.dialog.show = false; 
-                      this.$message("Modification failed!");
-                    }
-                })
-                .catch(error => {
-                  this.$message("Interface timeout!");
-                });
+              this.$axios.put(`/api/v1/board_manage/${this.formData.board_id}/`,this.editData)
+              .then(res => {
+                  if(res.data.code == 1){
+                    this.dialog.show = false;
+                    this.$message({message: res.data.msg,type: 'success'});
+                    this.$parent.init();
+                  }else{
+                    this.dialog.show = false; 
+                    this.$message("Modification failed!");
+                  }
+              })
+              .catch(error => {
+                this.$message("Interface timeout!");
+              });
           }
         });
       },

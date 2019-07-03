@@ -196,7 +196,6 @@ export default {
               urlString +=`&start_time=${this.searchData.start_time}`;
               urlString +=`&end_time=${this.searchData.end_time}`;
           }
-
         this.$axios.get(urlString).then(res => {
           if(res.data.code==1){ 
               this.tableData = res.data.data.results;
@@ -285,9 +284,7 @@ export default {
         this.searchData.pin_id = '';
         this.searchData.PinsArray = [];
         this.tableState = 2;
-
       }
-
     },
     dataSelect(){
         if(this.searchData.dataType == 0){

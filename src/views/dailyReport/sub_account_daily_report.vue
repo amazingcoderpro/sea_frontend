@@ -84,7 +84,6 @@
 <script>
 import echarts from 'echarts'
 import * as base from '../../assets/js/base'
-
 export default {
   data() {
     return {
@@ -171,9 +170,8 @@ export default {
                   self.chart.resize();
               }
           }
-        },20)
+      },20)
       this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
-     // this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1]);
       this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60 -1000);
       var url = `/api/v1/select/daily_report/?index=1`;
       if(this.searchData.pinterest_account_id != ''){
@@ -192,21 +190,21 @@ export default {
           url +=`&start_time=${this.searchData.start_time}`;
           url +=`&end_time=${this.searchData.end_time}`;
       }
-    this.$axios.get(url)
-      .then(res=> {
-          if(res.data.code == 1){
-            if(res.data.data.results.length>0){
-              this.bigReport = res.data.data.results;
-              this.chartInit(0);
-              this.tableInit();
+      this.$axios.get(url)
+        .then(res=> {
+            if(res.data.code == 1){
+              if(res.data.data.results.length>0){
+                this.bigReport = res.data.data.results;
+                this.chartInit(0);
+                this.tableInit();
+              }else{
+                this.initChart();
+              }
             }else{
-              this.initChart();
+              this.$message("Acquisition failure!");
             }
-          }else{
-            this.$message("Acquisition failure!");
-          }
-      })
-    },
+        })
+      },
     tableInit(){
       this.total = this.bigReport.length; 
       this.TableReport = this.bigReport.slice((this.currentPage - 1)*this.pagesize ,this.currentPage*this.pagesize)
@@ -281,7 +279,6 @@ export default {
             this.$message("Interface timeout!");
         });
       }else{
-        
         this.searchData.board_id = '';
         this.searchData.pin_id = '';
         this.searchData.BoardArray = [];
@@ -361,11 +358,10 @@ export default {
               bottom:"50px"
         },
         tooltip: {
-                    trigger: 'axis'  //鼠标滑过时显示数据
-                },
+              trigger: 'axis'  //鼠标滑过时显示数据
+        },
         yAxis: {
-            type: 'value',
-              //max: 3000,   //纵坐标的数据  最大最小值  如果不给 系统会默认分配值 会跟着值的变化而变化
+              type: 'value',
               min: 0,
         },
         series: [{
@@ -375,7 +371,6 @@ export default {
             color:['#0065a3'], //设置折线图内容颜色
             smooth:true,//折点是圆弧状的
             symbolSize: 12,   //设定实心点的大小
-         
         }]
       })
     },

@@ -7,8 +7,7 @@
         :rules="rules"
         ref="loginForm"
         label-width="160px"
-        class="loginForm"
-      >
+        class="loginForm">
         <!-- 账号 -->
         <el-form-item label="Shop Url :" prop="username">
           <el-input v-model="registUser.username" disabled></el-input>

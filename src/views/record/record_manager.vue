@@ -35,7 +35,6 @@
                 </el-option>
             </el-select>
         </el-form>
-        
         <!-- 表单部分 -->
         <div class="table_right">
           <el-table :data="tableData" border ref="topictable" class="topictable" :height="tableHeight" @selection-change="handleSelectionChange">
@@ -99,15 +98,9 @@
         <div class="paging">
           <el-pagination :page-sizes="pagesizes" :page-size="pagesize" @size-change="handleSizeChange" @current-change="current_change" layout="total, sizes, prev, pager, next, jumper" :total=total></el-pagination>
         </div>
-        <!-- 展示请求权限的弹窗 -->
-        <!-- <DialogFound :dialog='dialog'  ref="dailog" ></DialogFound> -->
     </div>
-
 </template>
-
 <script>
-
-// import DialogFound from "./dialog/board_manager_dialog";
 import * as base from '../../assets/js/base'
 export default {
   name: "record_manager",
@@ -143,7 +136,6 @@ export default {
         query_key:'',
         creatTime:[],
       },
-
       recordID:'',  
       account_data:{},
       board_data:{},
@@ -154,7 +146,6 @@ export default {
         title: "",
         option: "edit"
       }
-
     };
   },
   mounted() {
@@ -167,14 +158,11 @@ export default {
         }
       });
   },
- 
   components: {
-    //  DialogFound
   },
   created() {
     this.init();
   },
-  
   methods: {
     init() {
       // 获取表格数据
@@ -203,7 +191,6 @@ export default {
         .catch(error => {
           this.$message("Interface timeout!");
         });   
-           
     },
     cancelFun(row){
         let newArray = [];
@@ -299,7 +286,6 @@ export default {
     }
   }
 };
-
 </script>
 
 <style>
@@ -308,10 +294,6 @@ export default {
 .record_manager .button_left{color: #fff;font-weight: 600;float: right;margin-right: 60px;}
 .record_manager .Bulk_right{float: right;margin-right: 10px;}
 .record_manager .Publish_right{float:right;margin-right:0px;color: #fff;margin-left: 10px;}
-@media screen and (max-width:1400px){ 
-  .record_manager .btnLeft {float: left;width: auto;}
-}
-@media screen and (max-width:1180px){ 
-  .record_manager .btnRight{float:left;width: auto;}
-}
+@media screen and (max-width:1400px){.record_manager .btnLeft {float: left;width: auto;}}
+@media screen and (max-width:1180px){.record_manager .btnRight{float:left;width: auto;}}
 </style>

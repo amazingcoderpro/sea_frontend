@@ -2,7 +2,6 @@
     <div class="pins_peport">
         <div class="tableTitle"><span>PinsReport</span></div>
         <el-form  :inline="true" :model="searchData" class="demo-form-inline">
-
             <el-form-item label="Filter" prop="dep">
                 <el-select v-model="searchData.pinterest_account_id" placeholder="Pinterest Account 1" class="Filter_week W200" @change="getBodFun">
                    <el-option v-for="item in searchData.PinterestArray" :key="item.name" :label="item.nickname" :value="item.id"></el-option>
@@ -31,8 +30,7 @@
                     range-separator="--"
                     start-placeholder="start time"
                     end-placeholder="End time"
-                    class="W300"
-                  >
+                    class="W300">
                 </el-date-picker>
                 <el-input v-model="searchData.search" @keyup.enter.native="init()"  class="W200"></el-input>
                 <el-button type="primary" size="small" icon="view" @click="init()">Search</el-button>
@@ -45,7 +43,6 @@
             <el-table-column  align="center"  prop="pin_uri" label="Pin ID"  width="200"></el-table-column>
             <el-table-column  align="center"  prop="pin_thumbnail" label="Image"  width="200">
                 <template slot-scope="scope"> 
-                    <!-- <img :src="scope.row.pin_thumbnail"  min-width="70" height="70" />   -->
                     <img :src="'data:image/jpeg;base64,'+scope.row.pin_thumbnail"  min-width="70" height="70" />        
                 </template>
             </el-table-column>
@@ -89,7 +86,6 @@ export default {
           board_id:'',
           pinterest_account_id:'',
           store_id:'',
-
           PinterestArray:[],        //Pinterest的下拉框数据源
           BoardArray:[],            //Board的下拉框数据源
           PinsArray:[],             //Pins的下拉框数据源
@@ -216,8 +212,6 @@ export default {
     }
   }
 };
-
-
 
 </script>
 
