@@ -394,7 +394,7 @@ import * as base from '../../assets/js/base'
         }else{
             this.productListState = 1;
         }   
-
+        let _schedule_rule_big = this.ruleForm.schedule_rule_big.splice(0,7);
         this.$refs[formName].validate((valid) => {
           if (valid) {
               if(this.scheduleRruleState == 1 && this.productListState == 1){
@@ -406,7 +406,7 @@ import * as base from '../../assets/js/base'
                   product_category_list:JSON.stringify(_CategoryArray),
                   start_time:base.dateFormat(this.ruleForm.start_time),           //规则有效期开始时间
                   end_time:base.dateFormat(this.ruleForm.end_time),             //规则有效期结束时间
-                  schedule_rule:JSON.stringify(this.ruleForm.schedule_rule_big),         // 规则集合
+                  schedule_rule:JSON.stringify(_schedule_rule_big),         // 规则集合
                   product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
                   tag:this.ruleForm.tag,      //规则标签
                   product_start:base.dateFormat(this.serchProduct.publish_begin_time),           //产品的发布时间范围起点
@@ -422,7 +422,7 @@ import * as base from '../../assets/js/base'
                           type: "success"
                         });
                         this.dialog.show = false;
-                        this.$parent.init();
+                        //this.$parent.init();
                     }else{
                       this.$message("Failure to add!");
                     }
