@@ -166,11 +166,12 @@ export default {
       const self = this;//因为箭头函数会改变this指向，指向windows。所以先把this保存
         setTimeout(() => {
           window.onresize = function() {
-              self.chart = echarts.init(self.$refs.myEchart);
-              self.chart.resize();
+              if(document.getElementsByClassName("yourClassName").length>0){
+                  self.chart = echarts.init(self.$refs.myEchart);
+                  self.chart.resize();
+              }
           }
         },20)
-
       this.searchData.start_time = base.dateFormat(this.searchData.timeArray[0]);
      // this.searchData.end_time =  base.dateFormat(this.searchData.timeArray[1]);
       this.searchData.end_time =  base.dateFormat(new Date(this.searchData.timeArray[1]).getTime() + 1000 * 24 * 60 * 60 -1000);

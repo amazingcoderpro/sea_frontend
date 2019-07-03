@@ -294,8 +294,10 @@ export default {
             const self = this;//因为箭头函数会改变this指向，指向windows。所以先把this保存
              setTimeout(() => {
                 window.onresize = function() {
-                    self.chart = echarts.init(self.$refs.myEchart);
-                    self.chart.resize();
+                    if(document.getElementsByClassName("yourClassName").length>0){
+                        self.chart = echarts.init(self.$refs.myEchart);
+                        self.chart.resize();
+                    }
                 }
              },20)
 
