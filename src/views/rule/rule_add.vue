@@ -332,7 +332,7 @@ import * as base from '../../assets/js/base'
             board: [{ required: true, message: 'Please choose board', trigger: 'change' }],
             ruleTime: [{required: true,  trigger: 'change',validator:RuleTimeFun }],
             postingDate: [{required: true,  trigger: 'change',validator:postingDateFun }],
-            tag: [{ required: true, message: 'Please enter the label', trigger: 'blur' },],
+            tag: [{ required: true, message: 'Please enter the tag', trigger: 'blur' },],
           },
           searchRules:{
             product__name: [{ message: 'Please enter the name of the product.', trigger: 'blur',validator:productNameFun },],
@@ -371,6 +371,7 @@ import * as base from '../../assets/js/base'
           .then(res => {      
               if(res.data.code==1){
                 this.CategoryArray = res.data.data;
+                console.log(this.CategoryArray)
             }
         });
       }
@@ -393,15 +394,18 @@ import * as base from '../../assets/js/base'
         }else{
             this.productListState = 1;
         }   
-        console.log(this.ruleForm.schedule_rule_big)
+
         this.$refs[formName].validate((valid) => {
           if (valid) {
               if(this.scheduleRruleState == 1 && this.productListState == 1){
-              var _thisruleForm = {
+                let _CategoryArray = [];
+                    _CategoryArray.push(this.serchProduct.Category)
+                 var _thisruleForm = {
                   pinterest:this.ruleForm.pinterest,
                   board:this.ruleForm.board,
-                  start_time:base.dateFormat(this.ruleForm.ruleTime[0]),           //规则有效期开始时间
-                  end_time:base.dateFormat(this.ruleForm.ruleTime[1]),             //规则有效期结束时间
+                  product_category_list:JSON.stringify(_CategoryArray),
+                  start_time:base.dateFormat(this.ruleForm.start_time),           //规则有效期开始时间
+                  end_time:base.dateFormat(this.ruleForm.end_time),             //规则有效期结束时间
                   schedule_rule:JSON.stringify(this.ruleForm.schedule_rule_big),         // 规则集合
                   product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
                   tag:this.ruleForm.tag,      //规则标签

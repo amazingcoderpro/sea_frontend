@@ -92,7 +92,7 @@
                 <template v-else>
                   <el-button type="danger" style="width:66px;"  icon="edit" size="small" @click="stopFun(scope.row)" disabled="">Stop</el-button>
                 </template>
-                <el-button type="success" style="width:66px;" icon="edit" size="small" @click="cloneFun(scope.row)">Clone</el-button>
+                <!-- <el-button type="success" style="width:66px;" icon="edit" size="small" @click="cloneFun(scope.row)">Clone</el-button> -->
                
                 <el-button type="primary" style="width:66px;" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
               </template>

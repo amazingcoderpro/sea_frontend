@@ -37,7 +37,7 @@
             <el-table-column prop="product.sku" label="SKU" align="center" width="100"></el-table-column>
                 <!-- Pin图 -->
             <el-table-column prop="pin.image_url" label="Pin Image" align="center" width="130">
-                <template slot-scope="scope"> 
+                <template slot-scope="scope" v-if="scope.row.pin"> 
                   <el-popover
                     placement="right"
                     title=""
@@ -52,7 +52,7 @@
             </el-table-column>
                 <!-- pin URL -->
             <el-table-column prop="pin.url" label="Pin URL" align="center" width="180">
-                  <template slot-scope="scope"> 
+                  <template slot-scope="scope" v-if="scope.row.pin"> 
                    <a :href="scope.row.pin.url" target="_blank">{{scope.row.pin.url}}</a>      
                   </template>
             </el-table-column>
@@ -179,7 +179,9 @@ export default {
           if(res.data.code == 1){
             this.tableData = res.data.data.results;
             this.tableData.map(e => {
-              e.finished_time = base.getLastTime(e.finished_time);
+              if(e.finished_time){
+                e.finished_time = base.getLastTime(e.finished_time);
+              }
             }); 
             this.total = res.data.data.count;
           }
