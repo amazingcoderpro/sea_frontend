@@ -58,7 +58,7 @@
             <el-table-column  align="center" class="parentNodeColumn" prop="start_time,end_time" label="Date Of Validity"  width="180">
               <template slot-scope="scope"> {{scope.row.start_time}}<br/>{{scope.row.end_time}}  </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="360">
+            <el-table-column  align="center" class="parentNodeColumn" prop="schedule_rule" label="Time Of Validity"  width="500">
             <template slot-scope="scope" >
                 <div  v-for="item in scope.row.schedule_rule" :key="item.id">
                     <template>
@@ -70,12 +70,20 @@
                         <span :class="'spanClass'" v-else-if="item.weekday == 5">Saturday </span>
                         <span :class="'spanClass'" v-else>Sunday</span>
                     </template>
-                    |{{item.start_time}}|{{item.end_time}} | Publication frequency | {{item.interval_time}}
+                    |
+                    <template v-for="(itemSon,index) in item.post_time">
+                      <span v-if="index==item.post_time.length-1" :key="itemSon">
+                        {{itemSon}}
+                      </span>
+                      <span v-else :key="itemSon">
+                        {{itemSon}} -
+                      </span>
+                    </template>
                     <br/>
                 </div>
             </template>
             </el-table-column>
-            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="180">
+            <el-table-column  align="center" class="parentNodeColumn" prop="product_list" label="Products"  width="100">
               <template slot-scope="scope"> {{JSON.parse(scope.row.product_list).length }}</template>
             </el-table-column>
             <el-table-column  align="center" class="parentNodeColumn" prop="account_name" label="Account Name"  width="180">
@@ -92,8 +100,7 @@
                 <template v-else>
                   <el-button type="danger" style="width:66px;"  icon="edit" size="small" @click="stopFun(scope.row)" disabled="">Stop</el-button>
                 </template>
-                <!-- <el-button type="success" style="width:66px;" icon="edit" size="small" @click="cloneFun(scope.row)">Clone</el-button> -->
-               
+                <el-button type="success" style="width:66px;" icon="edit" size="small" @click="cloneFun(scope.row)">Clone</el-button>
                 <el-button type="primary" style="width:66px;" icon="edit" size="small" @click="deteleFun(scope.row)">Detele</el-button>
               </template>
             </el-table-column>
@@ -211,6 +218,14 @@ export default {
                 e.create_time = base.getLastTime(e.create_time);
                 e.end_time = base.getLastTime(e.end_time);
                 e.start_time = base.getLastTime(e.start_time);
+                let num = 0;
+                e.schedule_rule.map(b =>{
+                  if(b.post_time){
+                    b.post_time = b.post_time.replace(/\'/g,'"');
+                    e.schedule_rule[num].post_time = JSON.parse(b.post_time);
+                    num++; 
+                  }
+                });
               });   
               this.tableData = res.data.data.results;
               this.total = res.data.data.count;

@@ -403,15 +403,16 @@ import * as base from '../../assets/js/base'
                   board:this.ruleForm.board,
                   product_category_list:JSON.stringify(this.serchProduct.Category),
                   start_time:base.dateFormat(this.ruleForm.start_time),           //规则有效期开始时间
-                  end_time:base.dateFormat(this.ruleForm.end_time),             //规则有效期结束时间
+                  end_time:base.dateFormat(this.ruleForm.end_time,"day")+" 23:59:59",             //规则有效期结束时间
                   schedule_rule:JSON.stringify(_schedule_rule_big),         // 规则集合
                   product_list:JSON.stringify(this.ruleForm.product_list),        //满足条件的商品列表  
                   tag:this.ruleForm.tag,      //规则标签
                   product_start:base.dateFormat(this.serchProduct.publish_begin_time),           //产品的发布时间范围起点
-                  product_end:base.dateFormat(this.serchProduct.publish_end_time),             //产品的发布时间范围终点
+                  product_end:base.dateFormat(this.serchProduct.publish_end_time,"day")+" 23:59:59",             //产品的发布时间范围终点
                   product_key:this.serchProduct.product__name,      //产品的搜索关键字
                   pinterest_account:this.ruleForm.pinterest,      //pinterest账号id 
                 }
+                console.log(_thisruleForm)
                 this.$axios.post(`/api/v1/rule/`, _thisruleForm)
                 .then(res => {
                     if(res.data.code == 1){
