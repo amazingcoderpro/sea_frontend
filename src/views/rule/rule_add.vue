@@ -160,7 +160,7 @@
           <el-form :model="serchProduct" :rules="searchRules" ref="serchProduct" label-width="100px" class="demo-serchProduct searchContent">
             <!-- Category -->
             <el-form-item label="Category">
-                <el-select v-model="serchProduct.Category" :style="'width: 400px;'">
+                <el-select v-model="serchProduct.Category"  multiple :style="'width: 400px;'">
                   <el-option :label="'All'" :value="''"> </el-option>
                   <el-option v-for="item in CategoryArray" :key="item.value" :label="item.title" :value="item.id"> </el-option>
                 </el-select>
@@ -224,7 +224,7 @@ import * as base from '../../assets/js/base'
         }
       };
       var productNameFun = (rule, value, callback) => {
-        if(this.serchProduct.Category){
+        if(this.serchProduct.Category.length>0){
             callback();
         }else{
          if(this.serchProduct.product__name){
@@ -240,7 +240,7 @@ import * as base from '../../assets/js/base'
       };
       var productTimeFun = (rule, value, callback) => {
           if(this.serchProduct.publish_begin_time){
-            if(this.serchProduct.Category ==""){
+            if(this.serchProduct.Category.length == 0){
               if(this.serchProduct.publish_end_time){
                 callback();
               }else{
@@ -290,7 +290,7 @@ import * as base from '../../assets/js/base'
           publishTimeArray:[],//可以使用的时间
           serchProduct:{
             Rule_type:'0', //默认第一个
-            Category:'',
+            Category:[],
             // start_time:'',   //产品上架时间初始数据
             Ending_time:'',   //产品特殊时间初始数据
             publish_begin_time:'',//产品上架时间最终数据
@@ -394,16 +394,14 @@ import * as base from '../../assets/js/base'
         }else{
             this.productListState = 1;
         }   
-        let _schedule_rule_big = this.ruleForm.schedule_rule_big.splice(0,7);
         this.$refs[formName].validate((valid) => {
           if (valid) {
+              let _schedule_rule_big = this.changeSchedule();
               if(this.scheduleRruleState == 1 && this.productListState == 1){
-                let _CategoryArray = [];
-                    _CategoryArray.push(this.serchProduct.Category)
                  var _thisruleForm = {
                   pinterest:this.ruleForm.pinterest,
                   board:this.ruleForm.board,
-                  product_category_list:JSON.stringify(_CategoryArray),
+                  product_category_list:JSON.stringify(this.serchProduct.Category),
                   start_time:base.dateFormat(this.ruleForm.start_time),           //规则有效期开始时间
                   end_time:base.dateFormat(this.ruleForm.end_time),             //规则有效期结束时间
                   schedule_rule:JSON.stringify(_schedule_rule_big),         // 规则集合
@@ -421,8 +419,9 @@ import * as base from '../../assets/js/base'
                           message: "Added Successfully!",
                           type: "success"
                         });
+                        this.resetForm();
                         this.dialog.show = false;
-                        //this.$parent.init();
+                        this.$parent.init();
                     }else{
                       this.$message("Failure to add!");
                     }
@@ -440,6 +439,15 @@ import * as base from '../../assets/js/base'
       resetForm() {
         this.$refs['ruleForm'].resetFields();
         this.$refs['serchProduct'].resetFields();
+      },
+      changeSchedule(){
+          let _schedule_rule_big = [] // this.ruleForm.schedule_rule_big;
+          this.ruleForm.schedule_rule_big.map(e =>{
+            if(e.weekday !=7 && e.post_time.length>0){
+              _schedule_rule_big.push(e)
+            }
+          });
+          return _schedule_rule_big;
       },
       scheduleRuleFun(){
         if(this.scheduleRule.interval_time){
@@ -527,11 +535,16 @@ import * as base from '../../assets/js/base'
               if(this.serchProduct.publish_begin_time != ""){
                   url += "&publish_begin_time="+ base.dateFormat(this.serchProduct.publish_begin_time);
               }
-              if(this.serchProduct.publish_end_time != ""){
+              console.log(this.serchProduct.publish_end_time)
+              if(this.serchProduct.publish_end_time != "" && this.serchProduct.publish_end_time != null){
                   url += "&publish_end_time="+ base.dateFormat(this.serchProduct.publish_end_time);
               }
               if(this.serchProduct.product__name != ""){
                   url += "&name="+this.serchProduct.product__name;
+              }
+
+              if(this.serchProduct.Category.length!=0){
+                  url += "&product_category_list="+ JSON.stringify(this.serchProduct.Category);
               }
               // if(this.serchProduct.product__name != ""){
               //     let _thisArray = [];

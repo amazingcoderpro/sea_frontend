@@ -69,6 +69,12 @@
             <el-table-column prop="board.name" label="Board Name" align="center" width="125"></el-table-column>
                 <!-- 发布时间 -->
             <el-table-column prop="finished_time" label="Publish Time" align="center" width="160">
+              <template v-if="scope.row.finished_time" slot-scope="scope">
+                  {{scope.row.finished_time}}
+              </template>
+              <template v-else slot-scope="scope">
+                  {{scope.row.execute_time}}
+              </template>
             </el-table-column> 
                 <!-- 发布状态 --> 
             <el-table-column prop="state" label="State" align="center" width="130">
