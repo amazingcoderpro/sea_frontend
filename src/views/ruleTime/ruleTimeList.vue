@@ -51,7 +51,7 @@
                           <td>Friday<el-switch class="switchClass" v-model="weekState.fri" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
                           <td>Saturday<el-switch class="switchClass" v-model="weekState.sat" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
                           <td>Sunday<el-switch class="switchClass" v-model="weekState.sun" active-color="#13ce66" inactive-color="#ff4949"></el-switch></td>
-                          <td>every</td>
+                          <!-- <td>every</td> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -63,7 +63,7 @@
                           <td><template v-for="(item,index) in post_time_s.fri.time"><span :class="weekState.fri?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'fri')"></i></span></template></td>
                           <td><template v-for="(item,index) in post_time_s.sat.time"><span :class="weekState.sat?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'sat')"></i></span></template></td>
                           <td><template v-for="(item,index) in post_time_s.sun.time"><span :class="weekState.sun?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'sun')"></i></span></template></td>
-                          <td><template v-for="(item,index) in post_time_s.every.time"><span class="timerSpan" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'every')"></i></span></template></td>
+                          <!-- <td><template v-for="(item,index) in post_time_s.every.time"><span class="timerSpan" :key="index">{{item}}</span></template></td> -->
                         </tr>
                       </tbody>
                     </table>
@@ -91,17 +91,20 @@ export default {
           fri:true,
           sat:true,
           sun:true,
-          every:true
+          every:true,
+          day:true
         }, 
         weekArray:[//时间区间的星期几
-          {"label":"Every","value":"every"},
+          {"label":"Everyday","value":"every"},
           {"label":"Monday","value":"mon"},
           {"label":"Tuesday","value":"tues"},
           {"label":"Wednesday","value":"wed"},
           {"label":"Thursday","value":"thur"},
           {"label":"Friday","value":"fri"},
           {"label":"Saturday","value":"sat"},
-          {"label":"Sunday","value":"sun"}
+          {"label":"Sunday","value":"sun"},
+          {"label":"Weekday","value":"weekday"},
+          {"label":"Weekend","value":"weekend"}
         ],
         addData:{
           weekday:"mon",
@@ -134,7 +137,7 @@ export default {
         });
         this.searchInit();  
     },
-    methods: {
+      methods: {
         init(){
             let pinterestIdArrayStr = JSON.stringify(this.searchData.pinterestIdArray);
             this.$axios.get(`/api/v1/account/post_time/?account_list=${pinterestIdArrayStr}`)
@@ -142,8 +145,9 @@ export default {
                 if(res.data.code == 1){
                   this.tableData = res.data.data;
                   this.tableData.map(e => {
-                    console.log(e.post_time)
-                    e.post_time = JSON.parse(e.post_time);
+                    if(e.post_time){
+                      e.post_time = JSON.parse(e.post_time);
+                    }
                   });
                 }
             })
@@ -176,7 +180,7 @@ export default {
         },
         addTimeFun(){
           var _newTime = base.dateFormat(this.addData.time,"noSecondsHour");
-          if(this.addData.weekday !="every"){
+          if(this.addData.weekday !="every" && this.addData.weekday !="weekday" && this.addData.weekday !="weekend" ){
             let _str = _newTime.split(":")[0]+":";
             let number = 0;
             this.post_time_s[this.addData.weekday].time.map(e => {
@@ -185,10 +189,11 @@ export default {
                 }
             });
             if(this.post_time_s[this.addData.weekday].time.indexOf(_newTime)>=0){
-              this.timeState = 2;
-              this.timeStateStr = "It already exists.";
+                this.timeState = 2;
+                this.timeStateStr = "It already exists.";
             }else{
               if(number == 4){
+                //一小时内不得超过四条
                 this.timeState = 2;
                 this.timeStateStr = "No more than 4!";
               }else{
@@ -199,10 +204,33 @@ export default {
                 this.getEveryFun();
               }
             }
-          }else if(this.addData.weekday =="every"){
-             var _newTime = base.dateFormat(this.addData.time,"noSecondsHour");
-             this.post_time_s[this.addData.weekday].time.push(_newTime);
-             this.post_time_s[this.addData.weekday].time.sort();
+          }else{
+              if(this.addData.weekday =="every"){
+                  let arr = ["mon","tues","wed","thur","fri","sat","sun","every"];
+                  if(this.post_time_s[this.addData.weekday].time.indexOf(_newTime)>=0){
+                    this.timeState = 2;
+                    this.timeStateStr = "It already exists.";
+                  }else{
+                    this.changePostFun(arr);
+                  }
+              }else if(this.addData.weekday == "weekday"){
+                  let arr = ["mon","tues","wed","thur","fri"];
+                    this.changePostFun(arr);
+                    this.getEveryFun();
+              }else if(this.addData.weekday == "weekend"){
+                  let arr = ["sat","sun"];
+                    this.changePostFun(arr);
+                    this.getEveryFun();
+              }
+              }
+         },
+        changePostFun(arr){
+          var _newTime = base.dateFormat(this.addData.time,"noSecondsHour");
+          for(var i = 0;i<arr.length;i++){
+            if(this.post_time_s[arr[i]].time.indexOf(_newTime)<0){
+              this.post_time_s[arr[i]].time.push(_newTime);
+              this.post_time_s[arr[i]].time.sort();
+            }
           }
         },
         deleteTime(index,type){
@@ -248,7 +276,7 @@ export default {
           }
         },
         getEveryFun(){
-            let arr = ["mon","tues","wed","thur","fri","sat","sun","every"]
+            let arr = ["mon","tues","wed","thur","fri","sat","sun"]
             var result = this.post_time_s["mon"].time;
             for(var i = 0;i<arr.length;i++){
               let _thisArr = this.post_time_s[arr[i]].time;

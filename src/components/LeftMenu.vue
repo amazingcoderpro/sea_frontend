@@ -160,7 +160,7 @@ export default {
 .menu_page{position:fixed;top:71px;left:0;background-color:#324057;z-index:99;overflow-y:auto;}
 .el-menu{border:none;}
 .fa-margin{margin-right:5px;}
-.el-menu-vertical-demo:not(.el-menu--collapse){width:240px;min-height:400px;}
+.el-menu-vertical-demo:not(.el-menu--collapse){width:255px;min-height:400px;}
 .el-menu-vertical-demo{width:35px;}
 .el-submenu .el-menu-item{min-width:180px;}
 .hiddenDropdown,.hiddenDropname{display:none;}

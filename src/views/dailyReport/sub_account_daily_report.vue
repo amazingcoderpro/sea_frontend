@@ -71,7 +71,7 @@
               <el-table-column prop="product_visitors" label="Users" align="center"  width="135"></el-table-column>
               <el-table-column prop="product_new_visitors" label="New Users" align="center" width="135"></el-table-column>
               <el-table-column prop="product_clicks" label="Sessions" align="center" width="135"></el-table-column>
-              <el-table-column prop="product_sales" label="Transactions" align="center" width="138"> </el-table-column>   
+              <el-table-column prop="product_sales" label="Transactions" align="center" width="132"> </el-table-column>   
               <el-table-column prop="product_revenue" label="Revenue"  align="center" width="135"></el-table-column>
             </el-table>
         </div>
