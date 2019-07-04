@@ -63,7 +63,7 @@
                           <td><template v-for="(item,index) in post_time_s.fri.time"><span :class="weekState.fri?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'fri')"></i></span></template></td>
                           <td><template v-for="(item,index) in post_time_s.sat.time"><span :class="weekState.sat?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'sat')"></i></span></template></td>
                           <td><template v-for="(item,index) in post_time_s.sun.time"><span :class="weekState.sun?'timerSpan':'timerSpan close'" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'sun')"></i></span></template></td>
-                          <td><template v-for="(item,index) in post_time_s.every.time"><span class="timerSpan" :key="index">{{item}}</span></template></td>
+                          <td><template v-for="(item,index) in post_time_s.every.time"><span class="timerSpan" :key="index">{{item}}<i class="el-icon-close" @click="deleteTime(index,'every')"></i></span></template></td>
                         </tr>
                       </tbody>
                     </table>
@@ -142,10 +142,8 @@ export default {
                 if(res.data.code == 1){
                   this.tableData = res.data.data;
                   this.tableData.map(e => {
-                    if(e.post_time){
-                      console.log(e.post_time)
-                      e.post_time = JSON.parse(e.post_time);
-                    }
+                    console.log(e.post_time)
+                    e.post_time = JSON.parse(e.post_time);
                   });
                 }
             })
@@ -201,8 +199,10 @@ export default {
                 this.getEveryFun();
               }
             }
-          }else{
-            //每一天
+          }else if(this.addData.weekday =="every"){
+             var _newTime = base.dateFormat(this.addData.time,"noSecondsHour");
+             this.post_time_s[this.addData.weekday].time.push(_newTime);
+             this.post_time_s[this.addData.weekday].time.sort();
           }
         },
         deleteTime(index,type){
@@ -248,7 +248,7 @@ export default {
           }
         },
         getEveryFun(){
-            let arr = ["mon","tues","wed","thur","fri","sat","sun"]
+            let arr = ["mon","tues","wed","thur","fri","sat","sun","every"]
             var result = this.post_time_s["mon"].time;
             for(var i = 0;i<arr.length;i++){
               let _thisArr = this.post_time_s[arr[i]].time;
