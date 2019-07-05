@@ -412,7 +412,9 @@ import * as base from '../../assets/js/base'
                   product_key:this.serchProduct.product__name,      //产品的搜索关键字
                   pinterest_account:this.ruleForm.pinterest,      //pinterest账号id 
                 }
-                console.log(_thisruleForm)
+                if(this.serchProduct.Category.length == 0){
+                    _thisruleForm.product_category_list = "";
+                }
                 this.$axios.post(`/api/v1/rule/`, _thisruleForm)
                 .then(res => {
                     if(res.data.code == 1){
