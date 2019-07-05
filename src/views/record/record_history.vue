@@ -122,15 +122,15 @@ export default {
         },
         {
           value: '[0]', 
-          label: 'Published-0'
+          label: 'Wait Publish'
         },
         {
           value: '[1]', 
-          label: 'Published-1'
+          label: 'Published'
         },
         {
           value: '[3]',
-          label: 'Publishing failure-3'
+          label: 'Publishing failure'
         }
       ],
       search:{
