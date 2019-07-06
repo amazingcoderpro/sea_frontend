@@ -71,6 +71,7 @@
           </el-table-column>
           <el-table-column label="Pinterest ID" align="center" prop="id" width="200"></el-table-column>
           <el-table-column label="nickname" align="center" prop="nickname"></el-table-column>
+          <el-table-column align="center" width="1"></el-table-column>
           <el-table-column label="timezone" align="center" prop="timezone"></el-table-column>
           <el-table-column label="update_time" align="center" prop="update_time"></el-table-column>
       </el-table>
