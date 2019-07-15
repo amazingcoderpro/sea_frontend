@@ -129,7 +129,8 @@
                                     <td>{{item.pin_date}}</td>
                                     <td>{{item.saves}}</td>
                                     <td class="iconfont_left">
-                                        <span>{{item.trends*100+'%'}}</span>
+                                        <span>{{Math.round(item.trends*100)+'%'}}</span>
+                                        <!-- <span>{{(item.trends*100)+'%'}}</span> -->
                                         <template v-if="item.trends<0">
                                             <i class="iconfont icon-xiangxiajiantou"></i>
                                         </template>
@@ -168,7 +169,8 @@
                                     <td>{{item.create_date}}</td>
                                     <td>{{item.followers}}</td>
                                     <td class="iconfont_left">
-                                        <span>{{Math.round(item.trends)*100+'%'}}</span> 
+                                        <!-- <span>{{Math.floor(item.trends*100)+'%'}}</span> -->
+                                        <span>{{(item.trends*100)+'%'}}</span>
                                         <template v-if="item.trends<0">
                                             <i class="iconfont icon-xiangxiajiantou"></i>
                                         </template>
@@ -523,9 +525,9 @@ export default {
 .dashboard .menu .menuSon.active .point{width:20px;height:20px;top:-12px;margin-left: -5px; background:#006699;}
 .dashboard .menu .menuSon .name{position:absolute;left:0;top:15px;width:100%;color:#0066AA;}
 .dashboard .rightBox .iconfont.icon-xiangxiajiantou{color: red;font-size: 30px;}
-.dashboard .rightBox .iconfont.icon-xiangshangjiantou{color: green;font-size: 30px;}
+.dashboard .rightBox .iconfont.icon-xiangshangjiantou{color: green;font-size: 30px;margin-left: 15px;}
 .dashboard .RBBox .iconfont_left{padding-bottom: 15px;}
-.dashboard .RBBox .iconfont_left span{width: 30px;display: inline-block;padding-right: 20px;}
+.dashboard .RBBox .iconfont_left span{width: 30px;display: inline-block;padding-right: 10px;}
 .dashboard .RTBox .iconfont_left{padding-bottom: 15px;}
 .dashboard .RTBox .iconfont_left span{width: 30px;display: inline-block;padding-right: 10px;}
 .dashboard .RBBox thead td,
