@@ -170,7 +170,7 @@
                                     <td>{{item.followers}}</td>
                                     <td class="iconfont_left">
                                         <!-- <span>{{Math.floor(item.trends*100)+'%'}}</span> -->
-                                        <span>{{(item.trends*100)+'%'}}</span>
+                                        <span style="margin-right:20px;">{{(item.trends*100).toFixed(2)+'%'}}</span>
                                         <template v-if="item.trends<0">
                                             <i class="iconfont icon-xiangxiajiantou"></i>
                                         </template>
